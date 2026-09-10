@@ -37,6 +37,37 @@ for _,p in ipairs(points) do for _,time in ipairs({0,3,5,7}) do
  end end
 end end
 print('PASS: old/new mask decisions match across flat, slope, wall, jump and rotor scenarios')
+for _,level in ipairs({8,10,11,12,14}) do
+ local course=Courses[level]
+ for _,time in ipairs({0,1.2,3.8,7.1,10}) do
+  for _,m in ipairs(course.mechanisms) do
+   local cx,cy=Mechanisms.pose(m,time)
+   for _,offset in ipairs({{-m.w/2-8,0},{m.w/2+8,0},{0,-m.h/2-8},{0,m.h/2+8}}) do
+    local x,y=cx+offset[1],cy+offset[2]
+    for _,height in ipairs({-4,10,85}) do
+     local z=course:height(x,y)+height
+     local project=function(a,b,h) return 200+(a-b-x+y)*0.9,124+(a+b-x-y)*0.45-h*0.65 end
+     local before=Reference.occluders(course,time,project,186,98-z*0.65,28,28)
+     local after=Spatial.occluders(course,time,project,186,98-z*0.65,28,28,z)
+     for row=-8,8,4 do for col=-8,8,4 do
+      assert(Reference.visible(before,x,y,z,col,row)==Spatial.visible(after,x,y,z,col,row),'moving mechanism broad-phase changed occlusion')
+     end end
+    end
+   end
+  end
+ end
+end
+print('PASS: dynamic occlusion culling matches reference at multiple poses, sides and heights')
+local box={x=240,y=80,w=16,h=104,c=1,s=0,bottom=0,top=80,slope=0}
+local project=function(x,y,z) return (x-y)*0.9,(x+y)*0.45-z*0.65 end
+local output={}
+for i=1,10 do Spatial.maskPolygon(box,222,80,project,0,0,output) end
+collectgarbage('collect');collectgarbage('stop')
+local memory=collectgarbage('count')
+for i=1,1000 do Spatial.maskPolygon(box,222,80,project,0,0,output) end
+local growth=collectgarbage('count')-memory;collectgarbage('restart')
+assert(growth<32,'reusable mask buffer must not allocate geometry tables each call')
+print(string.format('PASS: 1000 pooled masks with GC paused grew Lua memory by %.2f KB',growth))
 ''')
 for name,code in [('v0.5.3',old),('current',new)]:
     lua=LuaRuntime()

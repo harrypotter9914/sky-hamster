@@ -1,5 +1,6 @@
 Spatial={}
 local S=Spatial
+local empty={}
 S.thickness=12/0.65
 local function clamp(x,a,b) return math.max(a,math.min(b,x)) end
 -- Resolve low airborne contact with platform volume, never treat it as landing.
@@ -30,7 +31,7 @@ function S.sides(course,x,y,vx,vy,z,t)
    box(i*32+16,j*32+16,32,32,0,course:height(clamp(x,i*32,(i+1)*32),clamp(y,j*32,(j+1)*32)))
   end
  end end
- for _,m in ipairs(course.mechanisms or {}) do
+ for _,m in ipairs(course.mechanisms or empty) do
   if m.kind=='ferry' or m.kind=='rotor' or (m.kind=='trap' and not Mechanisms.open(m,t)) then
    local cx,cy,a=Mechanisms.pose(m,t);box(cx,cy,m.w,m.h,a,course:height(cx,cy))
   end
@@ -91,13 +92,26 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
   out[#out+1]=b
  end
  if needTerrain then for _,b in ipairs(course.occlusionCache) do add(b) end end
- for _,m in ipairs(course.mechanisms or {}) do
+ for _,m in ipairs(course.mechanisms or empty) do
   local open=(m.kind=='gate' or m.kind=='trap') and Mechanisms.open(m,t)
   if not open then
    local x,y,a=Mechanisms.pose(m,t);local floor=course:height(x,y)
    local wall=m.kind=='gate' or m.kind=='sweeper'
    local roof=wall and floor+(m.wallHeight or 80) or floor
-   if not minZ or roof>minZ then add(makeBox(x,y,m.w,m.h,a,wall and floor or floor-1,roof,0)) end
+   if not minZ or roof>minZ then
+    -- Reject distant mechanisms before building their eight-corner volume.
+    -- Bounds cover every rotation under the isometric projection.
+    local cx,cy=(x-y)*0.9,(x+y)*0.45-floor*0.65
+    local ex,ey=(m.w+m.h)*0.64,(m.w+m.h)*0.32
+    if cx+ex>=left and cx-ex<=right and cy+ey+0.65>=top and cy-ey-(roof-floor)*0.65<=bottom then
+     local cached=m.occluder
+     if not cached or cached.x~=x or cached.y~=y or cached.w~=m.w or cached.h~=m.h or cached.angle~=a or cached.floor~=floor or cached.top~=roof then
+      cached=makeBox(x,y,m.w,m.h,a,wall and floor or floor-1,roof,0)
+      cached.angle=a;cached.floor=floor;m.occluder=cached
+     end
+     add(cached)
+    end
+   end
   end
  end
  return out
@@ -109,31 +123,42 @@ end
 -- Clip a convex volume to the half-space in front of the ball billboard.
 -- Its projected convex hull is exactly the occluding region; native rasterization
 -- replaces hundreds of Lua ray queries per frame.
-function S.maskPolygon(box,bx,by,project,left,top)
- local vertices={};local points={};local near=bx+by+0.002
+local corners={{-1,-1},{1,-1},{1,1},{-1,1}}
+local edges={{1,2},{5,6},{1,5},{2,3},{6,7},{2,6},{3,4},{7,8},{3,7},{4,1},{8,5},{4,8}}
+local vertices,pointPool,points,hull={},{},{},{}
+for i=1,8 do vertices[i]={0,0,0} end
+for i=1,20 do pointPool[i]={0,0} end
+local function pointOrder(a,b) return a[1]==b[1] and a[2]<b[2] or a[1]<b[1] end
+local function cross(o,a,b) return (a[1]-o[1])*(b[2]-o[2])-(a[2]-o[2])*(b[1]-o[1]) end
+-- Scratch geometry is reused synchronously. The returned polygon is independent
+-- unless the caller explicitly supplies its own reusable output buffer.
+function S.maskPolygon(box,bx,by,project,left,top,out)
+ local near=bx+by+0.002
+ for i=#points,1,-1 do points[i]=nil end
+ for i=#hull,1,-1 do hull[i]=nil end
  for layer=0,1 do
-  for _,p in ipairs({{-1,-1},{1,-1},{1,1},{-1,1}}) do
+  for i,p in ipairs(corners) do
    local u,v=p[1]*box.w/2,p[2]*box.h/2
    local x,y=box.x+u*box.c-v*box.s,box.y+u*box.s+v*box.c
    local z=(layer==0 and box.bottom or box.top)+box.slope*(x-box.x)
-   vertices[#vertices+1]={x,y,z}
+   local v=vertices[layer*4+i];v[1],v[2],v[3]=x,y,z
   end
  end
- local function add(x,y,z)
-  local sx,sy=project(x,y,z);points[#points+1]={sx-left,sy-top}
- end
- for _,v in ipairs(vertices) do if v[1]+v[2]>=near then add(v[1],v[2],v[3]) end end
- local function edge(a,b)
-  local p,q=vertices[a],vertices[b];local da,db=p[1]+p[2]-near,q[1]+q[2]-near
+ local n=0
+ for _,v in ipairs(vertices) do if v[1]+v[2]>=near then
+  local sx,sy=project(v[1],v[2],v[3]);n=n+1
+  local point=pointPool[n];point[1],point[2]=sx-left,sy-top;points[n]=point
+ end end
+ for _,edge in ipairs(edges) do
+  local p,q=vertices[edge[1]],vertices[edge[2]];local da,db=p[1]+p[2]-near,q[1]+q[2]-near
   if (da<0 and db>0) or (da>0 and db<0) then
-   local u=da/(da-db);add(p[1]+(q[1]-p[1])*u,p[2]+(q[2]-p[2])*u,p[3]+(q[3]-p[3])*u)
+   local u=da/(da-db)
+   local sx,sy=project(p[1]+(q[1]-p[1])*u,p[2]+(q[2]-p[2])*u,p[3]+(q[3]-p[3])*u);n=n+1
+   local point=pointPool[n];point[1],point[2]=sx-left,sy-top;points[n]=point
   end
  end
- for i=1,4 do edge(i,i%4+1);edge(i+4,i%4+5);edge(i,i+4) end
  if #points<3 then return nil end
- table.sort(points,function(a,b) return a[1]==b[1] and a[2]<b[2] or a[1]<b[1] end)
- local function cross(o,a,b) return (a[1]-o[1])*(b[2]-o[2])-(a[2]-o[2])*(b[1]-o[1]) end
- local hull={}
+ table.sort(points,pointOrder)
  for _,p in ipairs(points) do
   while #hull>=2 and cross(hull[#hull-1],hull[#hull],p)<=0 do hull[#hull]=nil end
   hull[#hull+1]=p
@@ -146,6 +171,7 @@ function S.maskPolygon(box,bx,by,project,left,top)
  end
  hull[#hull]=nil
  if #hull<3 then return nil end
- local out={};for _,p in ipairs(hull) do out[#out+1]=p[1];out[#out+1]=p[2] end
+ out=out or {};for i=#out,1,-1 do out[i]=nil end
+ for _,p in ipairs(hull) do out[#out+1]=p[1];out[#out+1]=p[2] end
  return out
 end

@@ -11,6 +11,8 @@ import "terrain"
 if Build.classroom then Classroom.apply() end
 local pd,g=playdate,playdate.graphics
 pd.display.setRefreshRate(30)
+-- Collect transient geometry during spare frame time, before a forced full GC.
+if pd.setGCScaling then pd.setGCScaling(0,0) end
 local level=1
 local course=Courses[level]
 local x,y,vx,vy,throttle,elapsed,falls,state,fallTime,braking,ballHeight
@@ -28,6 +30,7 @@ local jumpEnabled=false
 local worldTime=0
 local ballImage=g.image.new(28,28,g.kColorClear)
 local ballMask=g.image.new(28,28,g.kColorWhite)
+local maskPolygon={}
 local terrainImage,terrainX,terrainY,terrainCourse
 local terrainChunks
 local needsPower=false
@@ -253,7 +256,7 @@ function pd.update()
  if silhouette then silhouette:draw(0,0) end
  g.setColor(g.kColorBlack)
  for _,box in ipairs(boxes) do
-  local poly=Spatial.maskPolygon(box,x,y,project,left,top)
+  local poly=Spatial.maskPolygon(box,x,y,project,left,top,maskPolygon)
   if poly then g.fillPolygon(table.unpack(poly)) end
  end
  g.popContext();ballImage:setMaskImage(ballMask)
