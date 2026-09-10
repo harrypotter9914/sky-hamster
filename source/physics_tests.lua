@@ -94,3 +94,18 @@ for _,course in ipairs(Courses) do
  if course.checkpoint then check(M.support(course,course.checkpoint[1],course.checkpoint[2],0),'checkpoint is safe after reset') end
 end
 print('PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints')
+
+import "spatial"
+local wall={x=240,y=80,w=16,h=104,c=1,s=0,bottom=0,top=80,slope=0}
+check(Spatial.hidden(wall,222,80,18),'wall hides ball behind it')
+check(not Spatial.hidden(wall,270,80,18),'wall does not hide ball in front')
+check(not Spatial.hidden(wall,222,80,100),'ball above wall remains visible')
+local edge={x=208,y=80,w=32,h=32,c=1,s=0,bottom=-Spatial.thickness,top=0,slope=0}
+check(Spatial.hidden(edge,187,80,-8),'far platform hides a low falling ball')
+ax,ay,avx=Spatial.sides(Courses[5],188,80,100,0,-5,0)
+check(ax<=183.01 and avx<0,'low jump hits far lip and rebounds')
+ax,ay,avx=Spatial.sides(Courses[5],188,80,100,0,4,0)
+check(ax==188 and avx==100,'jump above lip is not blocked')
+ax,ay,avx=Spatial.sides(Courses[5],188,80,100,0,-60,0)
+check(ax==188 and avx==100,'fully below platform is not caught by invisible wall')
+print('PASS: front/back occlusion, platform lip contact and clear jump passage')

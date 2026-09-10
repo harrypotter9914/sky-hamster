@@ -20,7 +20,7 @@ lua.execute('''
 clock=0; pressed={}; held={}; crank=0; menu={}
 kTextAlignment={center=0}
 local noop=function() end
-local gfx=setmetatable({getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
+local gfx=setmetatable({image={new=function() return {setMaskImage=noop,draw=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
 playdate={graphics=gfx,display={setRefreshRate=noop},kButtonA='a',kButtonB='b',kButtonLeft='left',kButtonRight='right',kButtonUp='up',kButtonDown='down',
  getCurrentTimeMilliseconds=function() return clock end,
  buttonJustPressed=function(k) return pressed[k] end,
@@ -82,4 +82,11 @@ frame();assert(up('state')=='fall','trap opening drops player')
 selectLevel(14);set('x',Courses[14].goal[1]);set('y',Courses[14].goal[2]);frame()
 assert(up('state')=='win','last course finish detection');frame({a=true});assert(up('choosing'),'final win opens selector')
 print('PASS: all 14 live update paths, selector, tutorial gating, pause, riding and falling')
+selectLevel(5);set('lesson',false);set('x',181);set('y',80);set('airborne',true);set('jumpZ',-4);set('jumpV',-40);set('vx',120)
+for i=1,3 do frame() end
+assert(up('x')<184 and up('vx')<0 and up('airborne'),'short jump bounces off lip and keeps falling')
+selectLevel(5);set('lesson',false);set('x',188);set('y',80);set('airborne',true);set('jumpZ',4);set('jumpV',-25);set('vx',120)
+for i=1,8 do frame() end
+assert(up('state')=='play' and not up('airborne') and up('x')>192,'adequate jump lands normally')
+print('PASS: real update short-jump collision and successful landing')
 ''')

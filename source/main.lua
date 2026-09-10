@@ -2,6 +2,7 @@ import "CoreLibs/graphics"
 import "physics"
 import "courses"
 import "mechanisms"
+import "spatial"
 import "physics_tests"
 import "ui"
 local pd,g=playdate,playdate.graphics
@@ -21,6 +22,8 @@ local lesson=true
 local completed={}
 local jumpEnabled=false
 local worldTime=0
+local ballImage=g.image.new(28,28,g.kColorClear)
+local ballMask=g.image.new(28,28,g.kColorWhite)
 local function reset(full)
  if full then elapsed=0;falls=0;checkpoint=false end
  worldTime=0
@@ -129,11 +132,10 @@ function pd.update()
     jumpZ,jumpV=Physics.air(jumpZ,jumpV,step)
     x,y=x+vx*step,y+vy*step
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,jumpZ-course:height(x,y),worldTime,step)
+    x,y,vx,vy=Spatial.sides(course,x,y,vx,vy,jumpZ,worldTime)
     local floor=course:height(x,y)
     if support(x,y) and jumpZ<=floor and oldZ>=floor and jumpV<0 then
      airborne=false;ballHeight=floor;jumpZ=floor;jumpV=0
-    elseif support(x,y) and jumpZ<floor-1 then
-     state='fall';falls=falls+1;fallTime=0;break
     elseif jumpZ < -140 then state='fall';falls=falls+1;fallTime=0;break end
    else
     local _,sx,sy=course:height(x,y)
@@ -152,21 +154,25 @@ function pd.update()
  camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65
  g.clear(g.kColorWhite)
  for _,t in ipairs(course.tiles) do drawTile(t) end
+ if state~='fall' and support(x,y) then
+  local sx,sy=project(x,y,course:height(x,y))
+  g.setColor(g.kColorBlack);g.fillEllipseInRect(sx-8,sy-2,16,4)
+  if not airborne and controls.charge>0.05 then
+   for i=0,3 do local yy=sy-2-i*(2-controls.charge);g.drawLine(sx-4,yy,sx+4,yy-1) end
+  end
+ end
  Mechanisms.draw(course,worldTime,project)
  marker(course.start,'START');marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE');marker(course.goal,'GOAL')
  -- Rolling shell and rotating hamster face follow distance travelled.
  local ground=course:height(x,y)
  local bx,shadowY=project(x,y,ground)
  local _,by=project(x,y,airborne and jumpZ or ballHeight)
- if state~='fall' and support(x,y) then g.setColor(g.kColorBlack);g.fillEllipseInRect(bx-8,shadowY-2,16,4) end
  local squash=not airborne and controls.charge*4 or 0
  by=by-12+squash
  if state=='fall' then by=by+fallTime*fallTime*150 end
  local radius=state=='fall' and math.max(3,11-fallTime*8) or 11
- if not airborne and controls.charge>0.05 then
-  g.setColor(g.kColorBlack)
-  for i=0,3 do local yy=shadowY-2-i*(2-controls.charge);g.drawLine(bx-4,yy,bx+4,yy-1) end
- end
+ local screenX,screenY=bx,by
+ g.pushContext(ballImage);g.clear(g.kColorClear);bx,by=14,14
  g.setColor(g.kColorWhite);g.fillCircleAtPoint(bx,by,radius)
  g.setColor(g.kColorBlack);g.drawCircleAtPoint(bx,by,radius)
  local function rot(a,b) return bx+a*math.cos(rollAngle)-b*math.sin(rollAngle),by+a*math.sin(rollAngle)+b*math.cos(rollAngle) end
@@ -178,6 +184,21 @@ function pd.update()
   for _,p in ipairs({{-3,-1},{3,-1},{0,3}}) do ex,ey=rot(p[1],p[2]);g.fillCircleAtPoint(ex,ey,1) end
   ex,ey=rot(8,0);local fx,fy=rot(-8,0);g.drawLine(ex,ey,fx,fy)
  end
+ g.popContext()
+ local left,top=screenX-14,screenY-14
+ local boxes=Spatial.occluders(course,worldTime,project,left,top,28,28)
+ local z=airborne and jumpZ or ballHeight
+ z=z-squash/0.65-(state=='fall' and fallTime*fallTime*150/0.65 or 0)
+ g.pushContext(ballMask);g.clear(g.kColorBlack);g.setColor(g.kColorWhite)
+ for row=0,27 do
+  local start=nil
+  for col=0,28 do
+   local visible=col<28 and ballImage:sample(col,row)~=g.kColorClear and Spatial.visible(boxes,x,y,z,col-14,row-14)
+   if visible and not start then start=col end
+   if not visible and start then g.fillRect(start,row,col-start,1);start=nil end
+  end
+ end
+ g.popContext();ballImage:setMaskImage(ballMask);ballImage:draw(left,top)
  g.setColor(g.kColorWhite);g.fillRect(0,0,400,44);g.fillRect(0,204,400,36)
  g.setColor(g.kColorBlack);g.fillRect(0,0,400,21)
  g.setImageDrawMode(g.kDrawModeFillWhite)
