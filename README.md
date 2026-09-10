@@ -1,6 +1,6 @@
 # Sky Hamster — v0.4.1
 
-Playdate 单人控球原型，Lua 编写。设计：Wang Yibo；AI 辅助实现。
+Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。代码与素材来源见 [ATTRIBUTION.md](ATTRIBUTION.md)。
 
 当前原始 source 快照：前四关关闭跳跃，第五关起引入跳跃；新增选关界面、教学提示、清晰 POWER/JUMP 条、架高标牌和地图标记。
 
