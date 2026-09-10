@@ -97,7 +97,7 @@ function UI.lesson(jump,kind)
   g.drawText('Hold a direction to push. Stop to coast.',17,75)
   g.drawText('Above the notch: a sharp reversal',17,108)
   g.drawText('resets POWER. Turn again to push.',17,128)
-  g.drawText('Jump unlocks in level 05.',17,164)
+  g.drawText(Build.classroom and 'Reach FINISH without falling.' or 'Jump unlocks in level 05.',17,164)
  end
  g.drawText('A: start    B: level select',17,214)
 end

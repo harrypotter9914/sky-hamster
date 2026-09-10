@@ -5,6 +5,9 @@ import "mechanisms"
 import "spatial"
 import "physics_tests"
 import "ui"
+import "build"
+import "classroom"
+if Build.classroom then Classroom.apply() end
 local pd,g=playdate,playdate.graphics
 pd.display.setRefreshRate(30)
 local level=1

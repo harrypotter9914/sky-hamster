@@ -1,6 +1,8 @@
-# Sky Hamster — v0.5.4
+# Sky Hamster — v0.5.5
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
+
+9 月 10 日课堂请使用 **Sky Hamster Core Test**，只测试短路线中的推进与惯性。运行 `./build.ps1 -Classroom` 构建；下述默认工程仍保留完整版。见 [课堂试玩计划](docs/classroom-playtest.md)。
 
 当前共 14 关：前四关练习滚动，第五关引入跳跃，第八关起介绍定时挡板、开合地板、移动平台和旋转地板，最后两关组合多种机制。方向键控制推进方向，顺摇增加 POWER，逆摇增加 JUMP，A 跳跃，B 重试；系统菜单提供分页选关和暂停地图。
 

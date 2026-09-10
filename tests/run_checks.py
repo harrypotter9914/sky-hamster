@@ -94,4 +94,16 @@ selectLevel(5);set('lesson',false);set('x',188);set('y',80);set('airborne',true)
 for i=1,8 do frame() end
 assert(up('state')=='play' and not up('airborne') and up('x')>192,'adequate jump lands normally')
 print('PASS: real update short-jump collision and successful landing')
+Build.classroom=true;Classroom.apply();selectLevel(1)
+assert(#Courses==2 and not Courses[1].jump and not Courses[2].jump,'classroom exposes core only')
+frame({a=true});frame({}, {right=true},360)
+assert(up('controls').power>0 and up('x')>48,'classroom crank drives ball')
+frame({}, {},-270);assert(up('controls').charge==0,'classroom reverse crank cannot charge jump')
+frame({a=true});assert(not up('airborne'),'classroom has no jump')
+for n=1,2 do
+ selectLevel(n);if up('lesson') then frame({a=true}) end
+ assert(not Courses[n].mechanisms,'classroom has no moving obstacles')
+ set('x',Courses[n].goal[1]);set('y',Courses[n].goal[2]);frame();assert(up('state')=='win','classroom finish reachable')
+end
+print('PASS: classroom core controls, disabled extras and both finishes')
 ''')
