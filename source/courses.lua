@@ -28,5 +28,10 @@ c:rect(0,16,1,3)
 c=create('04 / BRAKE AT THE BEND','Gain speed downhill. Brake before the narrow turn.',{{0,100},{64,100},{224,12},{640,12}},{80,80},{560,208})
 c:rect(0,6,1,3);c:rect(7,10,2,2);c:rect(10,10,3,6);c:rect(11,14,6,6);c:rect(15,18,5,7)
 c.checkpoint={336,80}
+c=create('05 / FIRST HOP','Reverse crank charges. A jumps. Keep momentum.',{{0,0},{800,0}},{48,80},{368,80})
+c:rect(0,4,1,3);c:rect(6,12,1,3)
+c=create('06 / PRECISION LANDING','Choose speed AND jump charge for the landing.',{{0,0},{800,0}},{48,80},{448,80})
+c:rect(0,4,1,3);c:rect(7,9,2,2);c:rect(11,15,1,3)
+c.checkpoint={272,80}
 for _,course in ipairs(Courses) do table.sort(course.tiles,function(a,b) return a.x+a.y<b.x+b.y end) end
 
