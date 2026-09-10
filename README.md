@@ -13,6 +13,12 @@ Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
 用 Playdate Simulator 打开构建的 .pdx。
 
+## 开发模板
+
+本项目最初使用 [SquidGodDev/playdate-template](https://github.com/SquidGodDev/playdate-template) 搭建开发环境。模板提供 VS Code 构建、调试和补全配置；当前工程仍保留其中的编辑器配置，以及 notpeter 的 Playdate LuaCATS 类型定义。游戏的控球、坡道、跳跃、关卡和界面替换了原始演示程序。第三方许可证保留在 `.vscode/playdate-luacats/`。
+
+模板许可核查及当前保留内容见 [模板说明](docs/template-notes.md)。
+
 ## 版本记录的真实性
 这些 Git 提交是在归档时建立的，提交时间不是原始开发时间。0.1 与 0.4 有原始源码快照；0.2 与 0.3 是依据代码与对话记录重建的可运行比较版本。不能把重建版本当作当时逐字保留的代码。
 
