@@ -76,18 +76,32 @@ function M.draw(course,t,project)
   local opened=(m.kind=='gate' or m.kind=='trap') and M.open(m,t)
   local h=course:height(m.x,m.y)
   for _,p in ipairs(points) do local sx,sy=project(p[1],p[2],h);poly[#poly+1]=sx;poly[#poly+1]=sy end
-  g.setColor(g.kColorWhite);if not opened then g.fillPolygon(table.unpack(poly)) end
-  g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(poly))
-  if not opened then
-   g.drawLine(poly[1],poly[2],poly[5],poly[6]);g.drawLine(poly[3],poly[4],poly[7],poly[8])
-   if wall then
-    -- Tall screen with hatch marks; even a fully charged jump cannot bypass it.
-    g.setColor(g.kColorWhite);g.fillPolygon(poly[3],poly[4],poly[5],poly[6],poly[5],poly[6]-34,poly[3],poly[4]-34)
-    g.setColor(g.kColorBlack);g.drawPolygon(poly[3],poly[4],poly[5],poly[6],poly[5],poly[6]-34,poly[3],poly[4]-34)
-    g.drawLine(poly[3],poly[4]-17,poly[5],poly[6]-17)
+  if wall and not opened then
+   -- One closed prism: both long faces, both end caps, and the top.
+   -- Project the same world height used by collision rather than a fake lip.
+   local top={}
+   for _,p in ipairs(points) do local sx,sy=project(p[1],p[2],h+(m.wallHeight or 80));top[#top+1]=sx;top[#top+1]=sy end
+   for _,i in ipairs({1,4,2,3}) do
+    local j=i%4+1;local a,b=2*i-1,2*j-1
+    local face={poly[a],poly[a+1],poly[b],poly[b+1],top[b],top[b+1],top[a],top[a+1]}
+    g.setColor(g.kColorWhite);g.fillPolygon(table.unpack(face))
+    g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(face))
+    for k=1,3 do
+     local u=k/4
+     g.drawLine(poly[a]+(poly[b]-poly[a])*u,poly[a+1]+(poly[b+1]-poly[a+1])*u,
+      top[a]+(top[b]-top[a])*u,top[a+1]+(top[b+1]-top[a+1])*u)
+    end
    end
+   g.setColor(g.kColorWhite);g.fillPolygon(table.unpack(top))
+   g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(top))
+  else
+   g.setColor(g.kColorWhite);if not opened then g.fillPolygon(table.unpack(poly)) end
+   g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(poly))
   end
-  local cx,cy=M.pose(m,t);local sx,sy=project(cx,cy,h)
+  if not opened and not wall then
+   g.drawLine(poly[1],poly[2],poly[5],poly[6]);g.drawLine(poly[3],poly[4],poly[7],poly[8])
+  end
+  local cx,cy=M.pose(m,t);local sx,sy=project(cx,cy,h+(wall and not opened and (m.wallHeight or 80) or 0))
   local label=m.kind=='gate' and (opened and 'GO' or 'WAIT') or m.kind=='trap' and (opened and 'HOLE' or M.warning(m,t) and 'OPENING!' or 'CROSS') or m.kind=='rotor' and 'ROTATE' or m.kind=='ferry' and 'RIDE' or 'WATCH'
   local width=g.getTextSize(label)
   g.setColor(g.kColorWhite);g.fillRect(sx-width/2-3,sy-29,width+6,18)
