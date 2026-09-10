@@ -94,6 +94,20 @@ selectLevel(5);set('lesson',false);set('x',188);set('y',80);set('airborne',true)
 for i=1,8 do frame() end
 assert(up('state')=='play' and not up('airborne') and up('x')>192,'adequate jump lands normally')
 print('PASS: real update short-jump collision and successful landing')
+for _,edge in ipairs({{0.2,80,-60,0},{159.8,80,60,0},{48,32.2,0,-60},{48,127.8,0,60}}) do
+ selectLevel(5);set('lesson',false);set('x',edge[1]);set('y',edge[2]);set('vx',edge[3]);set('vy',edge[4]);frame()
+ assert(up('state')=='fall','rolling off any edge starts a fall')
+ local oldX,oldY,cameraX,cameraY=up('x'),up('y'),up('camX'),up('camY')
+ for i=1,6 do frame() end
+ assert(up('jumpZ')<0,'fall height follows gravity')
+ assert((up('x')-oldX)*edge[3]+(up('y')-oldY)*edge[4]>0,'fall retains outward movement')
+ assert(up('camX')==cameraX and up('camY')==cameraY,'camera holds at edge')
+ assert(not Mechanisms.support(Courses[5],up('x'),up('y'),up('worldTime')),'fall stays outside platform')
+ assert(up('falls')==1,'fall counted only once')
+ for i=1,24 do frame() end
+ assert(up('state')=='play','fall retries automatically')
+end
+print('PASS: four-edge world-space falls, momentum, camera, support and retry')
 Build.classroom=true;Classroom.apply();selectLevel(1)
 assert(#Courses==2 and not Courses[1].jump and not Courses[2].jump,'classroom exposes core only')
 frame({a=true}, {right=true},90)
@@ -117,4 +131,8 @@ for _,mode in ipairs({'image','chunks'}) do
  if mode=='chunks' then assert(up('terrainChunks').misses==0,'initial viewport warmed before play') end
 end
 print('PASS: simultaneous start input, held direction, power hint and terrain modes')
+selectLevel(1);frame({a=true});set('x',0.2);set('y',80);set('vx',-60);frame()
+for i=1,6 do frame() end
+assert(up('state')=='fall' and up('x')< -9 and up('jumpZ')<0,'classroom receives the same edge fix')
+print('PASS: classroom edge fall uses world-space trajectory')
 ''')

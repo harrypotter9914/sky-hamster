@@ -43,6 +43,10 @@ local function reset(full)
  x,y=point[1],point[2];vx,vy,throttle=0,0,0
  state='play';fallTime=0;braking=false;ballHeight=course:height(x,y);controls=Physics.newControls();airborne=false;jumpZ=ballHeight;jumpV=0;rollAngle=0
 end
+local function beginFall(height,verticalSpeed)
+ state='fall';falls=falls+1;fallTime=0
+ jumpZ=height;jumpV=verticalSpeed;airborne=false
+end
 local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true);if prepareTerrain then prepareTerrain() end end
 reset(true)
 local camX,camY=0,0
@@ -194,13 +198,13 @@ function pd.update()
     local floor=course:height(x,y)
     if support(x,y) and jumpZ<=floor and oldZ>=floor and jumpV<0 then
      airborne=false;ballHeight=floor;jumpZ=floor;jumpV=0
-    elseif jumpZ < -140 then state='fall';falls=falls+1;fallTime=0;break end
+    elseif jumpZ < -140 then beginFall(jumpZ,jumpV);break end
    else
     local _,sx,sy=course:height(x,y)
     local b;vx,vy,b=Physics.step(vx,vy,dx,dy,throttle,sx,sy,step);braking=braking or b
     x,y=x+vx*step,y+vy*step
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,0,worldTime,step)
-    if not support(x,y) then state='fall';falls=falls+1;fallTime=0;break end
+    if not support(x,y) then beginFall(ballHeight,0);break end
     ballHeight=course:height(x,y);jumpZ=ballHeight
    end
    local travel=math.sqrt((x-oldX)^2+(y-oldY)^2)
@@ -208,8 +212,20 @@ function pd.update()
    rollAngle=(rollAngle+sign*travel/11)%(math.pi*2)
   end  if course.checkpoint and not airborne and state=='play' and math.abs(x-course.checkpoint[1])<14 and math.abs(y-course.checkpoint[2])<14 then checkpoint=true end
   if state=='play' and not airborne and math.abs(x-course.goal[1])<17 and math.abs(y-course.goal[2])<22 then state='win';completed[level]=true end
- elseif state=='fall' and not overview then fallTime=fallTime+dt;if fallTime>0.8 then reset(false) end end
- camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65
+ elseif state=='fall' and not overview then
+  fallTime=fallTime+dt
+  local steps=math.max(4,math.ceil(math.sqrt(vx*vx+vy*vy)*dt/3))
+  for _=1,steps do
+   local step=dt/steps;worldTime=worldTime+step
+   jumpZ,jumpV=Physics.air(jumpZ,jumpV,step)
+   x,y=x+vx*step,y+vy*step
+   -- Falling remains world-space motion: the sphere clears the platform lip.
+   x,y,vx,vy=Spatial.sides(course,x,y,vx,vy,jumpZ,worldTime)
+  end
+  if fallTime>0.8 then reset(false) end
+ end
+ -- Hold the camera at the edge while the ball falls away from the track.
+ if state~='fall' then camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65 end
  g.clear(g.kColorWhite)
  if terrainChunks then Terrain.draw(terrainChunks,camX,camY) else terrainImage:draw(terrainX-camX,terrainY-camY) end
  if state~='fall' and support(x,y) then
@@ -224,11 +240,10 @@ function pd.update()
  -- Rolling shell and rotating hamster face follow distance travelled.
  local ground=course:height(x,y)
  local bx,shadowY=project(x,y,ground)
- local _,by=project(x,y,airborne and jumpZ or ballHeight)
- local squash=not airborne and controls.charge*4 or 0
+ local _,by=project(x,y,(airborne or state=='fall') and jumpZ or ballHeight)
+ local squash=state=='play' and not airborne and controls.charge*4 or 0
  by=by-12+squash
- if state=='fall' then by=by+fallTime*fallTime*150 end
- local radius=state=='fall' and math.max(3,11-fallTime*8) or 11
+ local radius=11
  local screenX,screenY=bx,by
  g.pushContext(ballImage);g.clear(g.kColorClear);bx,by=14,14
  g.setColor(g.kColorWhite);g.fillCircleAtPoint(bx,by,radius)
@@ -246,8 +261,8 @@ function pd.update()
  end
  g.popContext()
  local left,top=screenX-14,screenY-14
- local z=airborne and jumpZ or ballHeight
- z=z-squash/0.65-(state=='fall' and fallTime*fallTime*150/0.65 or 0)
+ local z=(airborne or state=='fall') and jumpZ or ballHeight
+ z=z-squash/0.65
  local boxes=Spatial.occluders(course,worldTime,project,left,top,28,28,z)
  if #boxes>0 then
  -- Copy the native silhouette once instead of sampling 784 pixels across the SDK boundary.
