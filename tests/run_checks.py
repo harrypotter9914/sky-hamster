@@ -42,6 +42,11 @@ local function set(name,value)
  error('missing state '..name)
 end
 local selectLevel=up('selectLevel')
+assert(UI.moveSelection(1,'down',14)==2 and UI.moveSelection(2,'down',14)==3,'left column is 1 2 3')
+assert(UI.moveSelection(2,'right',14)==5 and UI.moveSelection(5,'left',14)==2,'horizontal moves keep row')
+assert(UI.moveSelection(4,'right',14)==7 and UI.moveSelection(7,'left',14)==4,'horizontal page transition')
+assert(UI.moveSelection(12,'right',14)==14 and UI.moveSelection(14,'down',14)==14,'short final page')
+assert(UI.moveSelection(3,'down',14)==3 and UI.moveSelection(4,'up',14)==4,'vertical movement stays in column')
 for n=1,#Courses do
  selectLevel(n)
  if up('lesson') then frame({a=true}) end

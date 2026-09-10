@@ -75,10 +75,10 @@ local last=pd.getCurrentTimeMilliseconds()
 function pd.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
  if choosing then
-  if pd.buttonJustPressed(pd.kButtonLeft) then selected=math.max(1,selected-1) end
-  if pd.buttonJustPressed(pd.kButtonRight) then selected=math.min(#Courses,selected+1) end
-  if pd.buttonJustPressed(pd.kButtonUp) then selected=math.max(1,selected-2) end
-  if pd.buttonJustPressed(pd.kButtonDown) then selected=math.min(#Courses,selected+2) end
+  if pd.buttonJustPressed(pd.kButtonLeft) then selected=UI.moveSelection(selected,'left',#Courses) end
+  if pd.buttonJustPressed(pd.kButtonRight) then selected=UI.moveSelection(selected,'right',#Courses) end
+  if pd.buttonJustPressed(pd.kButtonUp) then selected=UI.moveSelection(selected,'up',#Courses) end
+  if pd.buttonJustPressed(pd.kButtonDown) then selected=UI.moveSelection(selected,'down',#Courses) end
   if pd.buttonJustPressed(pd.kButtonA) then selectLevel(selected)
   elseif pd.buttonJustPressed(pd.kButtonB) then choosing=false end
   pd.getCrankChange();UI.selector(selected,completed);return

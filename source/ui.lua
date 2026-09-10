@@ -1,5 +1,23 @@
 -- High-contrast interface drawn at the device's native 400 x 240 resolution.
 UI={}
+function UI.moveSelection(selected,direction,count)
+ local first=math.floor((selected-1)/6)*6+1
+ local col=math.floor((selected-first)/3);local row=(selected-first)%3
+ local column=first+col*3
+ if direction=='up' then return math.max(column,selected-1) end
+ if direction=='down' then return math.min(column+2,count,selected+1) end
+ if direction=='right' then
+  local target=column+3
+  if target>count then return selected end
+  return math.min(target+row,count)
+ end
+ if direction=='left' then
+  local target=column-3
+  if target<1 then return selected end
+  return target+row
+ end
+ return selected
+end
 function UI.panel(x,y,w,h)
  local g=playdate.graphics
  g.setColor(g.kColorBlack);g.fillRoundRect(x+3,y+3,w,h,5)
@@ -16,7 +34,7 @@ function UI.selector(selected,completed)
  local page=math.floor((selected-1)/6);local first=page*6+1
  UI.header('SKY HAMSTER / SELECT LEVEL',string.format('Page %d / %d   -   %d courses',page+1,math.ceil(#Courses/6),#Courses))
  for i=first,math.min(first+5,#Courses) do
-  local col=(i-first)%2;local row=math.floor((i-first)/2);local x,y=12+col*194,65+row*46
+  local col=math.floor((i-first)/3);local row=(i-first)%3;local x,y=12+col*194,65+row*46
   if i==selected then g.fillRoundRect(x,y,182,40,4);g.setImageDrawMode(g.kDrawModeFillWhite) else g.drawRoundRect(x,y,182,40,4) end
   g.drawText(string.format('%02d  %s',i,Courses[i].shortName),x+7,y+3)
   g.drawText(completed[i] and 'CLEAR' or (i<5 and 'ROLLING' or i<8 and 'JUMP' or i<13 and 'TIMING' or 'MIXED'),x+7,y+21)
