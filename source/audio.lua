@@ -31,7 +31,7 @@ function A.update(dt,rolling,speed,charge)
  A.cooldown=math.max(0,A.cooldown-dt)
  local player=A.players.roll
  if rolling and speed>5 and A.effects then
-  player:setRate(math.min(1.65,0.55+speed/180));player:setVolume(math.min(0.72,0.12+speed/320))
+  player:setRate(math.min(1.65,0.55+speed/180));player:setVolume(math.min(0.50,0.04+speed/420))
   if not player:isPlaying() then player:play(0) end
  else player:stop() end
  local step=math.floor(charge*4)

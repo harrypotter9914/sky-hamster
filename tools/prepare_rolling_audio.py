@@ -4,23 +4,23 @@ import math, random, struct, wave
 ROOT = Path(__file__).resolve().parents[1]
 RATE = 22050
 DURATION = 4
-rng = random.Random(53065)
+rng = random.Random(53066)
 data = [0.0] * (RATE * DURATION)
 # Damped inharmonic modes: no drop transient, noise bed, bass or long bell ring.
 time = 0.0
 while time < DURATION:
     gain = rng.uniform(.045, .075)
-    pitch = rng.uniform(.92, 1.08)
-    for i in range(round(.028 * RATE)):
+    pitch = rng.uniform(.98, 1.02)
+    for i in range(round(.012 * RATE)):
         t = i / RATE
         attack = 1 - math.exp(-t / .0008)
         contact = 0.0
-        for frequency, weight, decay in ((1150, 1, .0045), (2370, .48, .003), (3910, .18, .0018)):
+        for frequency, weight, decay in ((1700, 1, .0012), (2830, .38, .0008), (4210, .12, .0005)):
             contact += weight * math.sin(2 * math.pi * frequency * pitch * t) * math.exp(-t / decay)
         data[(round(time * RATE) + i) % len(data)] += gain * attack * contact
-    time += rng.uniform(.010, .020)
+    time += rng.uniform(.105, .165)
 # Wrap event tails for a continuous loop, normalize below collision loudness.
-scale = .30 / max(abs(x) for x in data)
+scale = .20 / max(abs(x) for x in data)
 data = [x * scale for x in data]
 assert all(math.isfinite(x) and abs(x) < .95 for x in data)
 target = ROOT / 'source/audio/roll.wav'
