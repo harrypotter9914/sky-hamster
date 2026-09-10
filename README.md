@@ -1,4 +1,4 @@
-# Sky Hamster — v0.4.0
+# Sky Hamster — v0.4.1
 
 Playdate 单人控球原型，Lua 编写。设计：Wang Yibo；AI 辅助实现。
 

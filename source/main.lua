@@ -25,7 +25,7 @@ local function reset(full)
  x,y=point[1],point[2];vx,vy,throttle=0,0,0
  state='play';fallTime=0;braking=false;ballHeight=course:height(x,y);controls=Physics.newControls();airborne=false;jumpZ=ballHeight;jumpV=0;rollAngle=0
 end
-local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=n>=5;overview=false;choosing=false;lesson=(n==1 or n>=5);reset(true) end
+local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=n>=5;overview=false;choosing=false;lesson=(n==1 or n==5);reset(true) end
 reset(true)
 local camX,camY=0,0
 local function project(a,b,h) return 200+(a-b)*0.9-camX,124+(a+b)*0.45-(h or 0)*0.65-camY end
@@ -193,5 +193,4 @@ end
 pd.getSystemMenu():addMenuItem('Level select',function() choosing=true;selected=level end)
 pd.getSystemMenu():addMenuItem('Map / pause',function() overview=not overview end)
 pd.getSystemMenu():addMenuItem('Restart level',function() choosing=false;overview=false;reset(true) end)
-
 

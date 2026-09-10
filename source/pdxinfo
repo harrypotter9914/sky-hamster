@@ -2,8 +2,7 @@ name=Sky Hamster Prototype
 author=Student prototype
 description=Crank throttle, inertial steering, floating track.
 bundleID=com.playdateworkshop.skyhamster
-version=0.4.0
-buildNumber=4
-
+version=0.4.1
+buildNumber=5
 
 
