@@ -1,0 +1,4 @@
+builds/
+.sentry-native/
+*.bak
+.DS_Store
