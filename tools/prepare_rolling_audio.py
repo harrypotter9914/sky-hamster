@@ -18,7 +18,7 @@ while time < DURATION:
         for frequency, weight, decay in ((1700, 1, .0012), (2830, .38, .0008), (4210, .12, .0005)):
             contact += weight * math.sin(2 * math.pi * frequency * pitch * t) * math.exp(-t / decay)
         data[(round(time * RATE) + i) % len(data)] += gain * attack * contact
-    time += rng.uniform(.105, .165)
+    time += rng.uniform(.070, .110)
 # Wrap event tails for a continuous loop, normalize below collision loudness.
 scale = .20 / max(abs(x) for x in data)
 data = [x * scale for x in data]
