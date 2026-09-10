@@ -1,6 +1,6 @@
 # 声音设计与资源
 
-当前声音全部由 [生成脚本](../tools/make_audio.py) 确定性合成，未使用外部录音或采样。运行脚本可重新生成 `source/audio/*.wav`。格式为 22050 Hz、16-bit、单声道 PCM；SDK 编译为 PDA，总大小约 663 KiB。音乐 12 秒，常驻内存循环播放，避免运行中流式读盘或实时合成。
+滚动声使用 JuandreSound 的 [Marble Roll.mp3](https://freesound.org/people/JuandreSound/sounds/490913/) 真实瓷砖滚珠录音，许可 CC0。处理脚本为 `tools/prepare_rolling_audio.py`，原始参考与来源记录保存在 `assets/audio-source/`。其他音效和音乐由 `tools/make_audio.py` 合成，该脚本不覆盖滚动声。游戏音频为 22050 Hz、16-bit、单声道 PCM，预先处理后播放，不增加实时合成。
 
 | 声音 | 触发规则 |
 |---|---|
@@ -14,5 +14,3 @@
 | 音乐 | 安静的短旋律循环，默认低音量，可独立关闭 |
 
 没有单独的加速音效。系统暂停时暂停音乐、停止短音效和滚动声；返回游戏后恢复音乐。课堂配置不加载音频，构建时也不包含音频目录。
-
-以后需要更写实的录音，可参考 [Kenney Impact Sounds](https://kenney.nl/assets/impact-sounds)，页面标注 CC0；[Kenney 许可说明](https://kenney.nl/support) 说明资产页资源可用于商业项目。也可以在 [Freesound](https://freesound.org/help/faq/) 检索 rolling、marble、wood impact 等，每条资源的许可需分别查看。这些网站是后续素材选项，本版未下载使用其中的文件。
