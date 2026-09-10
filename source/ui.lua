@@ -1,5 +1,23 @@
 -- High-contrast interface drawn at the device's native 400 x 240 resolution.
 UI={}
+local markerCandidates={{20,-45},{-92,-45},{20,18},{-92,18}}
+function UI.markerOffset(course,point)
+ course.markerOffsets=course.markerOffsets or {}
+ local cached=course.markerOffsets[point];if cached then return cached[1],cached[2] end
+ local best,minimum=markerCandidates[1],math.huge
+ -- Pick once from static terrain, so the sign doesn't jump as the ball moves.
+ for _,candidate in ipairs(markerCandidates) do
+  local score=0
+  for dx=12,60,24 do for dy=5,17,12 do
+   local sx,sy=candidate[1]+dx,candidate[2]+dy
+   local x=point[1]+sx/1.8+sy/0.9
+   local y=point[2]-sx/1.8+sy/0.9
+   if course.lookup[math.floor(x/32)..','..math.floor(y/32)] then score=score+1 end
+  end end
+  if score<minimum then best,minimum=candidate,score end
+ end
+ course.markerOffsets[point]=best;return best[1],best[2]
+end
 function UI.title(choice,effects,music)
  local g=playdate.graphics
  if not UI.titleImage then

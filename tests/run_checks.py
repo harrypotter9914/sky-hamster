@@ -49,6 +49,10 @@ local function set(name,value)
 end
 local selectLevel=up('selectLevel')
 assert(up('title'),'full edition starts on dedicated title screen')
+set('titleChoice',2);frame({a=true});assert(up('choosing') and not up('title'),'title opens selector')
+frame({down=true});frame({b=true});assert(up('title') and not up('choosing') and up('titleChoice')==2,'B returns to title and its selection')
+menu['Level select']();frame({b=true});assert(up('title'),'system selector opened on title returns to title')
+set('titleChoice',1)
 frame({down=true});frame({down=true});frame({a=true});assert(not Audio.effects,'title toggles effects')
 frame({a=true});frame({down=true});frame({a=true});assert(not Audio.musicEnabled,'title toggles music')
 frame({a=true});set('titleChoice',1);frame({a=true});assert(not up('title') and up('lesson'),'play leads to separate lesson')
@@ -57,6 +61,27 @@ assert(UI.moveSelection(2,'right',14)==5 and UI.moveSelection(5,'left',14)==2,'h
 assert(UI.moveSelection(4,'right',14)==7 and UI.moveSelection(7,'left',14)==4,'horizontal page transition')
 assert(UI.moveSelection(12,'right',14)==14 and UI.moveSelection(14,'down',14)==14,'short final page')
 assert(UI.moveSelection(3,'down',14)==3 and UI.moveSelection(4,'up',14)==4,'vertical movement stays in column')
+selectLevel(6);set('lesson',false);set('x',245);set('y',80);set('vx',30);set('vy',-4);set('airborne',true);set('jumpZ',25);set('jumpV',-8);set('checkpoint',true)
+up('controls').power=0.7;up('controls').charge=0.4
+local savedTime=up('worldTime')
+menu['Level select']();frame({right=true});menu['Level select']()
+for i=1,10 do frame() end
+frame({b=true})
+assert(not up('title') and not up('choosing') and up('level')==6,'cancel returns to current game, not another course')
+assert(up('x')==245 and up('y')==80 and up('vx')==30 and up('vy')==-4 and up('jumpZ')==25 and up('jumpV')==-8 and up('airborne') and up('checkpoint'),'cancel preserves position, momentum, jump and checkpoint')
+assert(up('worldTime')==savedTime and up('controls').power==0.7 and up('controls').charge==0.4,'selector pauses world and meters')
+selectLevel(5);menu['Level select']();frame({b=true});assert(up('lesson'),'cancel restores lesson')
+selectLevel(6);menu['Map / pause']();menu['Level select']();frame({b=true});assert(up('overview'),'cancel restores paused map');frame({b=true})
+selectLevel(1);set('lesson',false);set('x',272);set('y',176);set('checkpoint',true)
+local order={};local ball=up('ballImage');local oldDraw=ball.draw;local oldText=playdate.graphics.drawText
+ball.draw=function() order[#order+1]='ball' end
+playdate.graphics.drawText=function(text,...) if text=='SAVED' then order[#order+1]='label' end end
+frame();ball.draw=oldDraw;playdate.graphics.drawText=oldText
+assert(order[1]=='ball' and order[2]=='label','checkpoint label is drawn above ball')
+local ox,oy=UI.markerOffset(Courses[1],Courses[1].checkpoint)
+local ox2,oy2=UI.markerOffset(Courses[1],Courses[1].checkpoint)
+assert(ox==ox2 and oy==oy2,'marker placement is stable')
+print('PASS: selector origin, paused state preservation and foreground checkpoint label')
 for n=1,#Courses do
  selectLevel(n)
  if up('lesson') then frame({a=true}) end

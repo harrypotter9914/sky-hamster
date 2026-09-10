@@ -29,6 +29,7 @@ local selected=1
 local lesson=true
 local title=not Build.classroom
 local titleChoice=1
+local selectorReturn
 local completed={}
 local jumpEnabled=false
 local worldTime=0
@@ -54,6 +55,18 @@ local function beginFall(height,verticalSpeed)
  Audio.quiet();Audio.play('fall')
 end
 local function selectLevel(n) title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true);if prepareTerrain then prepareTerrain() end end
+local function openSelector()
+ if choosing then return end
+ selectorReturn={title=title,overview=overview,lesson=lesson}
+ title=false;overview=false;choosing=true;selected=level;Audio.quiet()
+end
+local function closeSelector()
+ choosing=false
+ if selectorReturn then
+  title=selectorReturn.title;overview=selectorReturn.overview;lesson=selectorReturn.lesson
+ end
+ selectorReturn=nil
+end
 reset(true)
 local camX,camY=0,0
 local function project(a,b,h) return 200+(a-b)*0.9-camX,124+(a+b)*0.45-(h or 0)*0.65-camY end
@@ -86,6 +99,8 @@ local function drawTile(t)
 end
 prepareTerrain=function()
  if terrainCourse==course then return end
+ UI.markerOffset(course,course.start);UI.markerOffset(course,course.goal)
+ if course.checkpoint then UI.markerOffset(course,course.checkpoint) end
  -- Allocate slope occlusion and HUD caches before the playable frame.
  Spatial.occluders(course,0,project,0,0,400,240,-1e9)
  UI.hud(course,level,jumpEnabled,0,0,0,0,0)
@@ -116,16 +131,21 @@ prepareTerrain=function()
  -- Clear transition allocations before timed play rather than during a jump.
  collectgarbage('collect')
 end
-local function marker(point,label)
+local function marker(point,label,foreground)
  if not point then return end
  local p,q=project(point[1],point[2],course:height(point[1],point[2]))
  if p < -70 or p>440 or q<50 or q>210 then return end
  local text=label=='SAVE' and 'CHECK' or label=='SAVED' and 'SAVED' or label=='GOAL' and 'FINISH' or 'START'
- local tx=math.max(5,math.min(321,p+20));local ty=q-45
+ if not foreground then
  g.setColor(g.kColorBlack);g.drawEllipseInRect(p-11,q-5,22,10)
  g.setColor(g.kColorWhite);g.fillCircleAtPoint(p,q,3);g.setColor(g.kColorBlack);g.drawCircleAtPoint(p,q,3)
+ return
+ end
+ local ox,oy=UI.markerOffset(course,point)
+ local tx=math.max(5,math.min(323,p+ox));local ty=math.max(46,math.min(176,q+oy))
  -- Raised sign with a leader to the exact pad, never text on the road surface.
- g.drawLine(p,q,tx,ty+21)
+ g.setColor(g.kColorBlack)
+ g.drawLine(p,q,math.max(tx+4,math.min(tx+68,p)),math.max(ty+3,math.min(ty+20,q)))
  g.setColor(g.kColorWhite);g.fillRoundRect(tx,ty,72,23,3)
  g.setColor(g.kColorBlack);g.drawRoundRect(tx,ty,72,23,3);g.drawText(text,tx+5,ty+3)
  if label=='GOAL' then
@@ -145,7 +165,7 @@ function pd.update()
   if pd.buttonJustPressed(pd.kButtonA) then
    Audio.play('menu')
    if titleChoice==1 then selectLevel(level)
-   elseif titleChoice==2 then title=false;choosing=true;selected=level
+   elseif titleChoice==2 then openSelector()
    elseif titleChoice==3 then Audio.toggleEffects()
    else Audio.toggleMusic() end
   end
@@ -155,7 +175,7 @@ function pd.update()
   Audio.quiet()
   if pd.buttonJustPressed(pd.kButtonA) then Audio.play('menu');reset(false);started=true
   else
-   if pd.buttonJustPressed(pd.kButtonB) then Audio.play('menu');choosing=true;selected=level end
+   if pd.buttonJustPressed(pd.kButtonB) then Audio.play('menu');openSelector() end
    pd.getCrankChange();UI.failure(falls,checkpoint);return
   end
  end
@@ -167,14 +187,14 @@ function pd.update()
   if pd.buttonJustPressed(pd.kButtonDown) then selected=UI.moveSelection(selected,'down',#Courses) end
   if selected~=previous then Audio.play('menu') end
   if pd.buttonJustPressed(pd.kButtonA) then Audio.play('menu');selectLevel(selected)
-  elseif pd.buttonJustPressed(pd.kButtonB) then choosing=false end
+  elseif pd.buttonJustPressed(pd.kButtonB) then Audio.play('menu');closeSelector() end
   pd.getCrankChange();UI.selector(selected,completed);return
  end
  if lesson then
   Audio.quiet()
   if pd.buttonJustPressed(pd.kButtonA) then lesson=false;started=true
   else
-   if pd.buttonJustPressed(pd.kButtonB) then choosing=true end
+   if pd.buttonJustPressed(pd.kButtonB) then openSelector() end
    pd.getCrankChange();UI.lesson(jumpEnabled,course.lesson);return
   end
  end
@@ -185,7 +205,7 @@ function pd.update()
  end
  if not started and pd.buttonJustPressed(pd.kButtonA) then
   if state=='win' then
-   if level==#Courses then choosing=true;selected=level else selectLevel(level+1) end
+   if level==#Courses then openSelector() else selectLevel(level+1) end
    return
   elseif jumpEnabled and state=='play' and not airborne and controls.charge>=0.05 then
    local _,riding=support(x,y)
@@ -315,6 +335,7 @@ function pd.update()
  g.popContext();ballImage:setMaskImage(ballMask)
  end
  ballImage:draw(left,top)
+ marker(course.start,'START',true);marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE',true);marker(course.goal,'GOAL',true)
  UI.hud(course,level,jumpEnabled,throttle,controls.charge,elapsed,falls,math.sqrt(vx*vx+vy*vy))
  if controls.flash>0 then
   UI.panel(99,48,202,22);g.drawTextAligned('Turn again for POWER',200,51,kTextAlignment.center)
@@ -327,13 +348,13 @@ function pd.update()
   g.drawTextAligned(level==#Courses and 'A: level select   B: retry' or 'A: next level   B: retry',200,137,kTextAlignment.center)
  end
 end
-pd.getSystemMenu():addMenuItem('Level select',function() choosing=true;selected=level end)
+pd.getSystemMenu():addMenuItem('Level select',openSelector)
 pd.getSystemMenu():addMenuItem('Map / pause',function() overview=not overview end)
 pd.getSystemMenu():addMenuItem('Restart level',function() choosing=false;overview=false;reset(true) end)
 if not Build.classroom then
  -- Playdate permits three custom system menu entries: replace restart with home.
  pd.getSystemMenu():removeAllMenuItems()
- pd.getSystemMenu():addMenuItem('Level select',function() title=false;choosing=true;selected=level;Audio.quiet() end)
+ pd.getSystemMenu():addMenuItem('Level select',openSelector)
  pd.getSystemMenu():addMenuItem('Map / pause',function() if not title then overview=not overview end;Audio.quiet() end)
  pd.getSystemMenu():addMenuItem('Title / sound',function() title=true;choosing=false;overview=false;titleChoice=1;Audio.quiet() end)
 end
