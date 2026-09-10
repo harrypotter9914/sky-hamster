@@ -1,5 +1,5 @@
 -- High-contrast interface drawn at the device's native 400 x 240 resolution.
-UI={names={'Corner school','Downhill','Momentum valley','Brake at the bend','First hop','Precision landing'}}
+UI={}
 function UI.panel(x,y,w,h)
  local g=playdate.graphics
  g.setColor(g.kColorBlack);g.fillRoundRect(x+3,y+3,w,h,5)
@@ -13,18 +13,30 @@ function UI.header(title,subtitle)
 end
 function UI.selector(selected,completed)
  local g=playdate.graphics
- UI.header('SKY HAMSTER / SELECT LEVEL','01-04: rolling     05-06: rolling + jump')
- for i=1,6 do
-  local col=(i-1)%2;local row=math.floor((i-1)/2);local x,y=12+col*194,65+row*46
+ local page=math.floor((selected-1)/6);local first=page*6+1
+ UI.header('SKY HAMSTER / SELECT LEVEL',string.format('Page %d / %d   -   %d courses',page+1,math.ceil(#Courses/6),#Courses))
+ for i=first,math.min(first+5,#Courses) do
+  local col=(i-first)%2;local row=math.floor((i-first)/2);local x,y=12+col*194,65+row*46
   if i==selected then g.fillRoundRect(x,y,182,40,4);g.setImageDrawMode(g.kDrawModeFillWhite) else g.drawRoundRect(x,y,182,40,4) end
-  g.drawText(string.format('%02d  %s',i,UI.names[i]),x+7,y+3)
-  g.drawText(completed[i] and 'CLEAR' or (i<5 and 'ROLLING' or 'JUMP'),x+7,y+21)
+  g.drawText(string.format('%02d  %s',i,Courses[i].shortName),x+7,y+3)
+  g.drawText(completed[i] and 'CLEAR' or (i<5 and 'ROLLING' or i<8 and 'JUMP' or i<13 and 'TIMING' or 'MIXED'),x+7,y+21)
   g.setImageDrawMode(g.kDrawModeCopy)
  end
  g.drawText('D-pad: choose    A: play    B: back',12,216)
 end
-function UI.lesson(jump)
+function UI.lesson(jump,kind)
  local g=playdate.graphics
+ local lessons={
+ gate={'TIMED GATE', 'The panel blocks your path.', 'Wait on solid ground for GO.', 'Release POWER before the barrier.', 'Build a little push and cross the opening.'},
+ trap={'VANISHING FLOOR', 'CROSS means the floor is solid.', 'OPENING! warns that it will disappear.', 'HOLE is empty space: you will fall.', 'Time your crossing, or jump the gap.'},
+ ferry={'MOVING PLATFORM', 'Wait for the platform at the dock.', 'Roll aboard, then release POWER.', 'The platform carries you across.', 'Roll off when it pauses at the far dock.'},
+ rotor={'ROTATING FLOOR', 'Board the outer end near your dock.', 'Coast and let the floor carry you.', 'It turns halfway, then pauses.', 'Roll off at the opposite dock.'},
+ sweeper={'MOVING PANELS', 'These panels sweep across the road.', 'Watch for the clear lane.', 'Contact pushes the ball sideways.', 'Stay away from the edge and time your run.'}}
+ if kind and lessons[kind] then
+  local lines=lessons[kind];UI.header('NEW OBSTACLE / '..lines[1])
+  for i=2,#lines do g.drawText(lines[i],12,49+(i-2)*31) end
+  g.drawText('A: start    B: level select',17,214);return
+ end
  UI.header(jump and 'NEW ABILITY / SPRING JUMP' or 'WELCOME / LEARN TO ROLL')
  if jump then
   g.drawText('Turn counterclockwise to fill JUMP.',17,49)
@@ -41,14 +53,23 @@ function UI.lesson(jump)
  end
  g.drawText('A: start    B: level select',17,214)
 end
-function UI.map(course,x,y)
+function UI.map(course,x,y,t)
  local g=playdate.graphics
  UI.header('ROUTE MAP / PAUSED','S  Start     C  Checkpoint     F  Finish')
  local maxX,maxY=1,1
  for _,t in ipairs(course.tiles) do maxX=math.max(maxX,t.x+1);maxY=math.max(maxY,t.y+1) end
+ for _,m in ipairs(course.mechanisms or {}) do
+  maxX=math.max(maxX,(math.max(m.x,m.toX or m.x)+math.max(m.w,m.h)/2)/32)
+  maxY=math.max(maxY,(math.max(m.y,m.toY or m.y)+math.max(m.w,m.h)/2+(m.range or 0))/32)
+ end
  local scale=math.min(350/maxX,111/maxY)
  local ox,oy=(400-maxX*scale)/2,67
  for _,t in ipairs(course.tiles) do g.drawRect(ox+t.x*scale,oy+t.y*scale,scale,scale) end
+ for _,m in ipairs(course.mechanisms or {}) do
+  local poly={}
+  for _,p in ipairs(Mechanisms.corners(m,t or 0)) do poly[#poly+1]=ox+p[1]/32*scale;poly[#poly+1]=oy+p[2]/32*scale end
+  g.drawPolygon(table.unpack(poly))
+ end
  local function pin(p,label)
   if not p then return end
   local px,py=ox+p[1]/32*scale,oy+p[2]/32*scale

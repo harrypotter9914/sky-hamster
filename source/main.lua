@@ -1,6 +1,7 @@
 import "CoreLibs/graphics"
 import "physics"
 import "courses"
+import "mechanisms"
 import "physics_tests"
 import "ui"
 local pd,g=playdate,playdate.graphics
@@ -19,17 +20,19 @@ local selected=1
 local lesson=true
 local completed={}
 local jumpEnabled=false
+local worldTime=0
 local function reset(full)
  if full then elapsed=0;falls=0;checkpoint=false end
+ worldTime=0
  local point=checkpoint and course.checkpoint or course.start
  x,y=point[1],point[2];vx,vy,throttle=0,0,0
  state='play';fallTime=0;braking=false;ballHeight=course:height(x,y);controls=Physics.newControls();airborne=false;jumpZ=ballHeight;jumpV=0;rollAngle=0
 end
-local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=n>=5;overview=false;choosing=false;lesson=(n==1 or n==5);reset(true) end
+local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true) end
 reset(true)
 local camX,camY=0,0
 local function project(a,b,h) return 200+(a-b)*0.9-camX,124+(a+b)*0.45-(h or 0)*0.65-camY end
-local function support(a,b) return course.lookup[math.floor(a/32)..','..math.floor(b/32)] end
+local function support(a,b) return Mechanisms.support(course,a,b,worldTime) end
 local function drawTile(t)
  local a,b=t.x*32,t.y*32
  local p,q=project(a,b,course:height(a,b));local r,s=project(a+32,b,course:height(a+32,b))
@@ -70,9 +73,9 @@ function pd.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
  if choosing then
   if pd.buttonJustPressed(pd.kButtonLeft) then selected=math.max(1,selected-1) end
-  if pd.buttonJustPressed(pd.kButtonRight) then selected=math.min(6,selected+1) end
+  if pd.buttonJustPressed(pd.kButtonRight) then selected=math.min(#Courses,selected+1) end
   if pd.buttonJustPressed(pd.kButtonUp) then selected=math.max(1,selected-2) end
-  if pd.buttonJustPressed(pd.kButtonDown) then selected=math.min(6,selected+2) end
+  if pd.buttonJustPressed(pd.kButtonDown) then selected=math.min(#Courses,selected+2) end
   if pd.buttonJustPressed(pd.kButtonA) then selectLevel(selected)
   elseif pd.buttonJustPressed(pd.kButtonB) then choosing=false end
   pd.getCrankChange();UI.selector(selected,completed);return
@@ -80,17 +83,22 @@ function pd.update()
  if lesson then
   if pd.buttonJustPressed(pd.kButtonA) then lesson=false
   elseif pd.buttonJustPressed(pd.kButtonB) then choosing=true end
-  pd.getCrankChange();UI.lesson(jumpEnabled);return
+  pd.getCrankChange();UI.lesson(jumpEnabled,course.lesson);return
  end
  if overview then
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then overview=false end
-  pd.getCrankChange();UI.map(course,x,y);return
+  pd.getCrankChange();UI.map(course,x,y,worldTime);return
  end
  if pd.buttonJustPressed(pd.kButtonA) then
   if state=='win' then
    if level==#Courses then choosing=true;selected=level else selectLevel(level+1) end
    return
   elseif jumpEnabled and state=='play' and not airborne and controls.charge>=0.05 then
+   local _,riding=support(x,y)
+   if riding and (riding.kind=='ferry' or riding.kind=='rotor') then
+    local ax,ay=Mechanisms.carry(riding,x,y,worldTime,worldTime+1/120)
+    vx,vy=vx+(ax-x)*120,vy+(ay-y)*120
+   end
    airborne=true;jumpZ=ballHeight;jumpV=Physics.launch(controls.charge);controls.charge=0
   end
  end
@@ -110,10 +118,17 @@ function pd.update()
   for _=1,steps do
    local step=dt/steps
    local oldX,oldY=x,y
+   local beforeTime=worldTime
+   local _,riding=support(x,y)
+   worldTime=worldTime+step
+   if not airborne and riding and (riding.kind=="ferry" or riding.kind=="rotor") then
+    x,y=Mechanisms.carry(riding,x,y,beforeTime,worldTime)
+   end
    if airborne then
     local oldZ=jumpZ
     jumpZ,jumpV=Physics.air(jumpZ,jumpV,step)
     x,y=x+vx*step,y+vy*step
+    x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,jumpZ-course:height(x,y),worldTime,step)
     local floor=course:height(x,y)
     if support(x,y) and jumpZ<=floor and oldZ>=floor and jumpV<0 then
      airborne=false;ballHeight=floor;jumpZ=floor;jumpV=0
@@ -124,6 +139,7 @@ function pd.update()
     local _,sx,sy=course:height(x,y)
     local b;vx,vy,b=Physics.step(vx,vy,dx,dy,throttle,sx,sy,step);braking=braking or b
     x,y=x+vx*step,y+vy*step
+    x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,0,worldTime,step)
     if not support(x,y) then state='fall';falls=falls+1;fallTime=0;break end
     ballHeight=course:height(x,y);jumpZ=ballHeight
    end
@@ -136,6 +152,7 @@ function pd.update()
  camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65
  g.clear(g.kColorWhite)
  for _,t in ipairs(course.tiles) do drawTile(t) end
+ Mechanisms.draw(course,worldTime,project)
  marker(course.start,'START');marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE');marker(course.goal,'GOAL')
  -- Rolling shell and rotating hamster face follow distance travelled.
  local ground=course:height(x,y)
@@ -164,7 +181,7 @@ function pd.update()
  g.setColor(g.kColorWhite);g.fillRect(0,0,400,44);g.fillRect(0,204,400,36)
  g.setColor(g.kColorBlack);g.fillRect(0,0,400,21)
  g.setImageDrawMode(g.kDrawModeFillWhite)
- g.drawText(string.format('%02d  %s',level,UI.names[level]),7,2)
+ g.drawText(string.format('%02d  %s',level,course.shortName),7,2)
  g.drawText(string.format('%.1fs  /  %d falls',elapsed,falls),264,2)
  g.setImageDrawMode(g.kDrawModeCopy)
  g.drawText('POWER',7,25);g.drawRect(67,28,86,8);g.fillRect(68,29,math.floor(throttle*84),6)
@@ -187,10 +204,9 @@ function pd.update()
   g.setColor(g.kColorWhite);g.fillRoundRect(55,75,290,88,8);g.setColor(g.kColorBlack);g.drawRoundRect(55,75,290,88,8)
   g.drawTextAligned('COURSE CLEAR!',200,84,kTextAlignment.center)
   g.drawTextAligned(string.format('%.1f seconds / %d falls',elapsed,falls),200,108,kTextAlignment.center)
-  g.drawTextAligned(level==6 and 'A: level select   B: retry' or 'A: next level   B: retry',200,137,kTextAlignment.center)
+  g.drawTextAligned(level==#Courses and 'A: level select   B: retry' or 'A: next level   B: retry',200,137,kTextAlignment.center)
  end
 end
 pd.getSystemMenu():addMenuItem('Level select',function() choosing=true;selected=level end)
 pd.getSystemMenu():addMenuItem('Map / pause',function() overview=not overview end)
 pd.getSystemMenu():addMenuItem('Restart level',function() choosing=false;overview=false;reset(true) end)
-

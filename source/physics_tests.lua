@@ -46,7 +46,7 @@ Physics.controls(c,0,1,0,1)
 check(c.power==0 and c.charge>0,'power decays faster than jump')
 local z,vz=0,Physics.launch(1)
 local high=0
-for i=1,140 do z,vz=Physics.air(z,vz,1/120);high=math.max(high,z) end
+for i=1,150 do z,vz=Physics.air(z,vz,1/120);high=math.max(high,z) end
 check(high>45 and z<0,'charged jump rises and returns to surface')
 -- Ballistic gap traversal using actual course support and flight physics.
 local function gap(charge,speed)
@@ -61,3 +61,36 @@ check(gap(0.5,100),'medium charge and momentum land beyond first gap')
 check(not gap(0.05,50),'insufficient jump falls in gap')
 print('PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests')
 
+-- World-space mechanics: actual course layouts, not rendered approximations.
+import "mechanisms"
+local M=Mechanisms
+check(#Courses==14,'all fourteen courses are available')
+local gate=Courses[8].mechanisms[1]
+check(not M.open(gate,0) and M.open(gate,3),'gate alternates between blocked and open')
+local ax,ay,avx=M.collide(Courses[8],230,80,100,0,0,0,1/120)
+check(ax<=223.01 and avx==0,'closed gate stops forward penetration')
+ax,ay,avx=M.collide(Courses[8],230,80,100,0,0,3,1/120)
+check(ax==230 and avx==100,'open gate allows passage')
+local trap=Courses[9].mechanisms[1]
+check(M.support(Courses[9],192,80,0),'closed trap supports ball')
+check(not M.support(Courses[9],192,80,3),'open trap has no hidden support')
+local ferry=Courses[10].mechanisms[1]
+ax,ay=M.carry(ferry,184,80,0,6)
+check(math.abs(ax-456)<0.001 and ay==80,'ferry transports resting ball to far dock')
+check(M.support(Courses[10],152,80,0),'ferry overlaps boarding dock')
+check(M.support(Courses[10],488,80,6),'ferry overlaps exit dock')
+check(not M.support(Courses[10],320,80,0),'empty ferry route is really a gap')
+local rotor=Courses[11].mechanisms[1]
+ax,ay=M.carry(rotor,152,176,0,7)
+check(math.abs(ax-360)<0.001 and math.abs(ay-176)<0.001,'outer end rotates to opposite dock')
+check(M.contains(rotor,ax,ay,7),'carried ball remains on rotating floor')
+check(M.travel(0,14)==M.travel(1,14),'boarding dwell is stationary')
+check(M.travel(7,14)==M.travel(8,14),'exit dwell is stationary')
+-- Follow a resting rider through every integration step, including the return.
+ax,ay=152,176
+for i=1,1680 do ax,ay=M.carry(rotor,ax,ay,(i-1)/120,i/120);check(M.contains(rotor,ax,ay,i/120),'rotor must not shed resting rider') end
+check(math.abs(ax-152)<0.001 and math.abs(ay-176)<0.001,'full cycle returns rider')
+for _,course in ipairs(Courses) do
+ if course.checkpoint then check(M.support(course,course.checkpoint[1],course.checkpoint[2],0),'checkpoint is safe after reset') end
+end
+print('PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints')

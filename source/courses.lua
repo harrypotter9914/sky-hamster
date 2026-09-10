@@ -33,5 +33,36 @@ c:rect(0,4,1,3);c:rect(6,12,1,3)
 c=create('06 / PRECISION LANDING','Choose speed AND jump charge for the landing.',{{0,0},{800,0}},{48,80},{448,80})
 c:rect(0,4,1,3);c:rect(7,9,2,2);c:rect(11,15,1,3)
 c.checkpoint={272,80}
-for _,course in ipairs(Courses) do table.sort(course.tiles,function(a,b) return a.x+a.y<b.x+b.y end) end
-
+c=create('07 / JUMP CHAIN','Land, rebuild charge, and jump again.',{{0,0},{1200,0}},{48,80},{720,80})
+c:rect(0,4,1,3);c:rect(6,10,1,3);c:rect(13,17,1,3);c:rect(19,24,1,3);c.checkpoint={464,80}
+c=create('08 / TIMED GATE','Wait for GO. Coast into the opening.',{{0,0},{800,0}},{48,80},{528,80})
+c:rect(0,17,1,3);c.mechanisms={{kind='gate',x=240,y=80,w=16,h=104,period=6,openFor=0.45,phase=3}}
+c.lesson='gate'
+c=create('09 / VANISHING FLOOR','CROSS is solid. HOLE means empty space.',{{0,0},{800,0}},{48,80},{560,80})
+c:rect(0,4,1,3);c:rect(7,11,1,3);c:rect(14,18,1,3);c.checkpoint={304,80}
+c.mechanisms={{kind='trap',x=192,y=80,w=64,h=96,period=6,phase=3},{kind='trap',x=416,y=80,w=64,h=96,period=7,phase=4}}
+c.lesson='trap'
+c=create('10 / SHUTTLE','Board at the dock. Coast while you ride.',{{0,0},{900,0}},{48,80},{592,80})
+c:rect(0,4,1,3);c:rect(15,19,1,3)
+c.mechanisms={{kind='ferry',x=184,y=80,toX=456,toY=80,w=80,h=80,period=12}}
+c.lesson='ferry'
+c=create('11 / TURN TABLE','Ride the outer end to the other dock.',{{0,0},{800,0}},{48,176},{496,176})
+c:rect(0,4,4,6);c:rect(11,16,4,6)
+c.mechanisms={{kind='rotor',x=256,y=176,w=224,h=64,period=14}}
+c.lesson='rotor'
+c=create('12 / SIDE SWEEP','Watch the panels, then take the clear lane.',{{0,0},{900,0}},{48,112},{656,112})
+c:rect(0,6,1,5);c:rect(7,11,2,4);c:rect(12,21,1,5);c.checkpoint={464,112}
+c.mechanisms={{kind='sweeper',x=240,y=112,w=18,h=70,range=74,period=5},{kind='sweeper',x=448,y=112,w=18,h=78,range=80,period=6,phase=2}}
+c.lesson='sweeper'
+c=create('13 / VALLEY RELAY','Slope, gate, jump, then ride to the finish.',{{0,96},{64,96},{224,0},{1400,0}},{80,80},{1168,80})
+c:rect(0,13,1,3);c:rect(16,22,1,3);c:rect(33,37,1,3);c.checkpoint={592,80}
+c.mechanisms={{kind='gate',x=336,y=80,w=16,h=104,period=6,phase=3},{kind='ferry',x=760,y=80,toX=1032,toY=80,w=80,h=80,period=12}}
+c=create('14 / SKY CIRCUIT','Jump, turn, rotate, dodge, and time the floor.',{{0,72},{64,72},{192,0},{2000,0}},{48,176},{1488,80})
+c:rect(0,7,4,6);c:rect(10,15,4,6);c:rect(22,27,4,6);c:rect(26,28,2,4);c:rect(29,35,1,3);c:rect(38,47,1,3)
+c.checkpoint={784,176}
+c.mechanisms={{kind='rotor',x=608,y=176,w=256,h=64,period=14},{kind='sweeper',x=976,y=80,w=18,h=60,range=64,period=5},{kind='trap',x=1184,y=80,w=64,h=96,period=7,phase=4},{kind='gate',x=1376,y=80,w=16,h=104,period=6,phase=3}}
+local names={'Corner school','Downhill','Momentum valley','Brake bend','First hop','Precision','Jump chain','Timed gate','Vanishing floor','Shuttle','Turn table','Side sweep','Valley relay','Sky circuit'}
+for i,course in ipairs(Courses) do
+ course.shortName=names[i];course.jump=i>=5
+ table.sort(course.tiles,function(a,b) return a.x+a.y<b.x+b.y end)
+end
