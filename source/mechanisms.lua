@@ -8,7 +8,8 @@ function M.travel(t,period,phase)
  elseif u<0.7 then return 1 else return (1+math.cos((u-0.7)/0.3*math.pi))/2 end
 end
 function M.pose(m,t)
- local u=M.travel(t,m.period or 10,m.phase)
+ if m.kind~='ferry' and m.kind~='rotor' and m.kind~='sweeper' then return m.x,m.y,0 end
+ local u=(m.kind=='ferry' or m.kind=='rotor') and M.travel(t,m.period or 10,m.phase) or 0
  if m.kind=='ferry' then return m.x+(m.toX-m.x)*u,m.y+(m.toY-m.y)*u,0 end
  if m.kind=='rotor' then return m.x,m.y,(m.angle or 0)+u*math.pi end
  if m.kind=='sweeper' then return m.x,m.y+math.sin((t+(m.phase or 0))*math.pi*2/m.period)*m.range,0 end

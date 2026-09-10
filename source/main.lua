@@ -24,6 +24,9 @@ local jumpEnabled=false
 local worldTime=0
 local ballImage=g.image.new(28,28,g.kColorClear)
 local ballMask=g.image.new(28,28,g.kColorWhite)
+local terrainImage,terrainX,terrainY,terrainCourse
+local prepareTerrain
+local cachingTerrain=false
 local function reset(full)
  if full then elapsed=0;falls=0;checkpoint=false end
  worldTime=0
@@ -31,28 +34,54 @@ local function reset(full)
  x,y=point[1],point[2];vx,vy,throttle=0,0,0
  state='play';fallTime=0;braking=false;ballHeight=course:height(x,y);controls=Physics.newControls();airborne=false;jumpZ=ballHeight;jumpV=0;rollAngle=0
 end
-local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true) end
+local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true);if prepareTerrain then prepareTerrain() end end
 reset(true)
 local camX,camY=0,0
 local function project(a,b,h) return 200+(a-b)*0.9-camX,124+(a+b)*0.45-(h or 0)*0.65-camY end
 local function support(a,b) return Mechanisms.support(course,a,b,worldTime) end
 local function drawTile(t)
  local a,b=t.x*32,t.y*32
- local p,q=project(a,b,course:height(a,b));local r,s=project(a+32,b,course:height(a+32,b))
- local u,v=project(a+32,b+32,course:height(a+32,b+32));local w,z=project(a,b+32,course:height(a,b+32))
- if math.max(p,r,u,w)<0 or math.min(p,r,u,w)>400 or math.max(q,s,v,z)<42 or math.min(q,s,v,z)>212 then return end
+ if not t.renderCache then
+  local function fixed(x,y) return 200+(x-y)*0.9,124+(x+y)*0.45-course:height(x,y)*0.65 end
+  local p,q=fixed(a,b);local r,s=fixed(a+32,b);local u,v=fixed(a+32,b+32);local w,z=fixed(a,b+32)
+  local cx,cy=fixed(a+16,b+16);local _,slope=course:height(a+16,b+16)
+  local sign=slope<0 and 1 or -1;local tx,ty=fixed(a+16+sign*8,b+16)
+  t.renderCache={p,q,r,s,u,v,w,z,cx,cy,slope,sign,tx,ty}
+ end
+ local c=t.renderCache
+ local p,q,r,s=c[1]-camX,c[2]-camY,c[3]-camX,c[4]-camY
+ local u,v,w,z=c[5]-camX,c[6]-camY,c[7]-camX,c[8]-camY
+ if not cachingTerrain and (math.max(p,r,u,w)<0 or math.min(p,r,u,w)>400 or math.max(q,s,v,z)<42 or math.min(q,s,v,z)>212) then return end
  g.setColor(g.kColorBlack)
  g.fillPolygon(r,s,u,v,u,v+12,r,s+12);g.fillPolygon(w,z,u,v,u,v+12,w,z+12)
  g.setColor(g.kColorWhite);g.fillPolygon(p,q,r,s,u,v,w,z)
  g.setColor(g.kColorBlack);g.drawPolygon(p,q,r,s,u,v,w,z)
- local _,sx=course:height(a+16,b+16)
- local cx,cy=project(a+16,b+16,course:height(a+16,b+16))
+ local sx=c[11]
+ local cx,cy=c[9]-camX,c[10]-camY
  if math.abs(sx)>0.01 then
   -- Arrow points DOWN the slope, independent of the travel direction.
-  local sign=sx<0 and 1 or -1
-  local tipX,tipY=project(a+16+sign*8,b+16,course:height(a+16+sign*8,b+16))
+  local sign=c[12]
+  local tipX,tipY=c[13]-camX,c[14]-camY
   g.drawLine(cx,cy,tipX,tipY);g.drawLine(tipX,tipY,tipX-sign*5,tipY-3);g.drawLine(tipX,tipY,tipX-sign*5,tipY+2)
  else g.fillCircleAtPoint(cx,cy,1) end
+end
+prepareTerrain=function()
+ if terrainCourse==course then return end
+ local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
+ for _,tile in ipairs(course.tiles) do
+  for dx=0,1 do for dy=0,1 do
+   local x,y=(tile.x+dx)*32,(tile.y+dy)*32
+   local sx,sy=200+(x-y)*0.9,124+(x+y)*0.45-course:height(x,y)*0.65
+   minX,minY=math.min(minX,sx),math.min(minY,sy);maxX,maxY=math.max(maxX,sx),math.max(maxY,sy+12)
+  end end
+ end
+ terrainX,terrainY=math.floor(minX)-2,math.floor(minY)-2
+ terrainImage=g.image.new(math.ceil(maxX-terrainX)+3,math.ceil(maxY-terrainY)+3,g.kColorClear)
+ local oldX,oldY=camX,camY;camX,camY=terrainX,terrainY;cachingTerrain=true
+ g.pushContext(terrainImage);for _,tile in ipairs(course.tiles) do drawTile(tile) end;g.popContext()
+ cachingTerrain=false;camX,camY=oldX,oldY;terrainCourse=course
+ -- Clear transition allocations before timed play rather than during a jump.
+ collectgarbage('collect')
 end
 local function marker(point,label)
  if not point then return end
@@ -71,6 +100,7 @@ local function marker(point,label)
   for i=0,2 do for j=0,1 do if (i+j)%2==0 then g.fillRect(p-15+i*4,q-23+j*4,4,4) end end end
  end
 end
+prepareTerrain()
 local last=pd.getCurrentTimeMilliseconds()
 function pd.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
@@ -153,7 +183,7 @@ function pd.update()
  elseif state=='fall' and not overview then fallTime=fallTime+dt;if fallTime>0.8 then reset(false) end end
  camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65
  g.clear(g.kColorWhite)
- for _,t in ipairs(course.tiles) do drawTile(t) end
+ terrainImage:draw(terrainX-camX,terrainY-camY)
  if state~='fall' and support(x,y) then
   local sx,sy=project(x,y,course:height(x,y))
   g.setColor(g.kColorBlack);g.fillEllipseInRect(sx-8,sy-2,16,4)
@@ -186,39 +216,23 @@ function pd.update()
  end
  g.popContext()
  local left,top=screenX-14,screenY-14
- local boxes=Spatial.occluders(course,worldTime,project,left,top,28,28)
  local z=airborne and jumpZ or ballHeight
  z=z-squash/0.65-(state=='fall' and fallTime*fallTime*150/0.65 or 0)
- g.pushContext(ballMask);g.clear(g.kColorBlack);g.setColor(g.kColorWhite)
- for row=0,27 do
-  local start=nil
-  for col=0,28 do
-   local visible=col<28 and ballImage:sample(col,row)~=g.kColorClear and Spatial.visible(boxes,x,y,z,col-14,row-14)
-   if visible and not start then start=col end
-   if not visible and start then g.fillRect(start,row,col-start,1);start=nil end
-  end
+ local boxes=Spatial.occluders(course,worldTime,project,left,top,28,28,z)
+ if #boxes>0 then
+ -- Copy the native silhouette once instead of sampling 784 pixels across the SDK boundary.
+ local silhouette=ballImage:getMaskImage()
+ g.pushContext(ballMask);g.clear(g.kColorWhite)
+ if silhouette then silhouette:draw(0,0) end
+ g.setColor(g.kColorBlack)
+ for _,box in ipairs(boxes) do
+  local poly=Spatial.maskPolygon(box,x,y,project,left,top)
+  if poly then g.fillPolygon(table.unpack(poly)) end
  end
- g.popContext();ballImage:setMaskImage(ballMask);ballImage:draw(left,top)
- g.setColor(g.kColorWhite);g.fillRect(0,0,400,44);g.fillRect(0,204,400,36)
- g.setColor(g.kColorBlack);g.fillRect(0,0,400,21)
- g.setImageDrawMode(g.kDrawModeFillWhite)
- g.drawText(string.format('%02d  %s',level,course.shortName),7,2)
- g.drawText(string.format('%.1fs  /  %d falls',elapsed,falls),264,2)
- g.setImageDrawMode(g.kDrawModeCopy)
- g.drawText('POWER',7,25);g.drawRect(67,28,86,8);g.fillRect(68,29,math.floor(throttle*84),6)
- local latchX=68+84*Physics.tuning.latch;g.drawLine(latchX,24,latchX,38);g.fillTriangle(latchX-3,23,latchX+3,23,latchX,26)
- if jumpEnabled then
-  g.drawText('JUMP',164,25);g.drawRect(211,28,66,8);g.fillRect(212,29,math.floor(controls.charge*64),6)
- else g.drawText('ROLLING LESSON',165,25) end
- g.drawText(string.format('%03d',math.floor(math.sqrt(vx*vx+vy*vy))),293,25);g.drawText('speed',341,25)
- g.drawLine(0,203,400,203)
- if jumpEnabled then
-  g.drawText('Clockwise: POWER    B: retry',7,204)
-  g.drawText('Counterclockwise: JUMP    A: jump',7,222)
- else
-  g.drawText('Turn clockwise: POWER    B: retry',7,204)
-  g.drawText('D-pad: steer    Menu: map / levels',7,222)
+ g.popContext();ballImage:setMaskImage(ballMask)
  end
+ ballImage:draw(left,top)
+ UI.hud(course,level,jumpEnabled,throttle,controls.charge,elapsed,falls,math.sqrt(vx*vx+vy*vy))
  if controls.flash>0 then
   UI.panel(99,48,202,22);g.drawTextAligned('Turn again for POWER',200,51,kTextAlignment.center)
  end if state=='win' then

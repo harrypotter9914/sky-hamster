@@ -1,5 +1,35 @@
 -- High-contrast interface drawn at the device's native 400 x 240 resolution.
 UI={}
+function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
+ local g=playdate.graphics
+ if UI.hudCourse~=course then
+  UI.hudCourse=course;UI.timerText=nil;UI.speedText=nil
+  UI.hudTop=g.image.new(400,44,g.kColorWhite);UI.hudBottom=g.image.new(400,36,g.kColorWhite)
+  UI.timerImage=g.image.new(136,21,g.kColorBlack);UI.speedImage=g.image.new(43,20,g.kColorWhite)
+  g.pushContext(UI.hudTop);g.setColor(g.kColorBlack);g.fillRect(0,0,400,21)
+  g.setImageDrawMode(g.kDrawModeFillWhite);g.drawText(string.format('%02d  %s',level,course.shortName),7,2);g.setImageDrawMode(g.kDrawModeCopy)
+  g.drawText('POWER',7,25);g.drawRect(67,28,86,8)
+  local notch=68+84*Physics.tuning.latch;g.drawLine(notch,24,notch,38);g.fillTriangle(notch-3,23,notch+3,23,notch,26)
+  if jump then g.drawText('JUMP',164,25);g.drawRect(211,28,66,8) else g.drawText('ROLLING LESSON',165,25) end
+  g.drawText('speed',341,25);g.popContext()
+  g.pushContext(UI.hudBottom);g.setColor(g.kColorBlack)
+  g.drawText(jump and 'Clockwise: POWER    B: retry' or 'Turn clockwise: POWER    B: retry',7,0)
+  g.drawText(jump and 'Counterclockwise: JUMP    A: jump' or 'D-pad: steer    Menu: map / levels',7,18);g.popContext()
+ end
+ local timer=string.format('%.1fs  /  %d falls',elapsed,falls)
+ if UI.timerText~=timer then
+  UI.timerText=timer;g.pushContext(UI.timerImage);g.clear(g.kColorBlack)
+  g.setImageDrawMode(g.kDrawModeFillWhite);g.drawText(timer,0,2);g.popContext()
+ end
+ local value=math.floor(speed)
+ if UI.speedText~=value then
+  UI.speedText=value;g.pushContext(UI.speedImage);g.clear(g.kColorWhite);g.setColor(g.kColorBlack);g.drawText(string.format('%03d',value),0,0);g.popContext()
+ end
+ UI.hudTop:draw(0,0);UI.timerImage:draw(264,0);UI.speedImage:draw(293,25);UI.hudBottom:draw(0,204)
+ g.setColor(g.kColorBlack);g.fillRect(68,29,math.floor(power*84),6)
+ if jump then g.fillRect(212,29,math.floor(charge*64),6) end
+ g.drawLine(0,203,400,203)
+end
 function UI.moveSelection(selected,direction,count)
  local first=math.floor((selected-1)/6)*6+1
  local col=math.floor((selected-first)/3);local row=(selected-first)%3

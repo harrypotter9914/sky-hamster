@@ -20,7 +20,7 @@ lua.execute('''
 clock=0; pressed={}; held={}; crank=0; menu={}
 kTextAlignment={center=0}
 local noop=function() end
-local gfx=setmetatable({image={new=function() return {setMaskImage=noop,draw=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
+local gfx=setmetatable({image={new=function() return {setMaskImage=noop,getMaskImage=function() return {draw=noop} end,draw=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
 playdate={graphics=gfx,display={setRefreshRate=noop},kButtonA='a',kButtonB='b',kButtonLeft='left',kButtonRight='right',kButtonUp='up',kButtonDown='down',
  getCurrentTimeMilliseconds=function() return clock end,
  buttonJustPressed=function(k) return pressed[k] end,
