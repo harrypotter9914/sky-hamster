@@ -42,15 +42,25 @@ def melody(length, notes):
 write('checkpoint',melody(.4,[(0,72,.18,.38),(.12,79,.28,.38)]))
 write('win',melody(.9,[(0,69,.3,.36),(.15,72,.3,.36),(.3,76,.3,.36),(.45,81,.45,.34)]))
 write('charge',chirp(.055,360,430,0,.23))
-# Seamless rolling body plus short bright contacts, like a marble on a hard track.
-roll=[]
-partials=[(rng.randrange(12,120),rng.random()*math.tau,rng.random()) for _ in range(28)]
-for i in range(RATE):
-    t=i/RATE
-    texture=sum(math.sin(math.tau*k*t+p)*a for k,p,a in partials)/28
-    contact=max(0,math.sin(math.tau*9*t))**12
-    glass=contact*(math.sin(math.tau*780*t)+.4*math.sin(math.tau*1270*t)+.2*math.sin(math.tau*1910*t))
-    roll.append(.4*texture+.025*math.sin(math.tau*48*t)+.06*glass)
+# Aperiodic, unpitched micro-contacts: no bass oscillator or metronomic pulse.
+roll_rng=random.Random(53063)
+roll=[0.0]*(RATE*3)
+time=0.0
+while time<3:
+    duration=roll_rng.uniform(.005,.014)
+    gain=roll_rng.uniform(.12,.32)
+    low=0.0;band=0.0
+    for i in range(round(duration*RATE)):
+        t=i/RATE
+        noise=roll_rng.uniform(-1,1)
+        low+=.13*(noise-low)
+        band+=.65*((noise-low)-band)
+        envelope=min(1,t/.0005)*math.exp(-t/(duration*.22))*(1-t/duration)
+        roll[(round(time*RATE)+i)%len(roll)]+=gain*band*envelope
+    time+=roll_rng.uniform(.004,.009) if roll_rng.random()<.23 else roll_rng.uniform(.016,.040)
+# Match a useful peak without restoring a low-frequency drone.
+scale=.26/max(abs(x) for x in roll)
+roll=[x*scale for x in roll]
 write('roll',roll)
 notes=[]
 for bar,root in enumerate([57,53,60,55]):
