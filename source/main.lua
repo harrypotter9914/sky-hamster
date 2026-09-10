@@ -7,6 +7,7 @@ import "physics_tests"
 import "ui"
 import "build"
 import "classroom"
+import "terrain"
 if Build.classroom then Classroom.apply() end
 local pd,g=playdate,playdate.graphics
 pd.display.setRefreshRate(30)
@@ -28,6 +29,8 @@ local worldTime=0
 local ballImage=g.image.new(28,28,g.kColorClear)
 local ballMask=g.image.new(28,28,g.kColorWhite)
 local terrainImage,terrainX,terrainY,terrainCourse
+local terrainChunks
+local needsPower=false
 local prepareTerrain
 local cachingTerrain=false
 local function reset(full)
@@ -70,6 +73,20 @@ local function drawTile(t)
 end
 prepareTerrain=function()
  if terrainCourse==course then return end
+ -- Allocate slope occlusion and HUD caches before the playable frame.
+ Spatial.occluders(course,0,project,0,0,400,240,-1e9)
+ UI.hud(course,level,jumpEnabled,0,0,0,0,0)
+ if Build.terrainMode=='chunks' then
+  terrainImage=nil
+  terrainChunks=Terrain.new(course,function(image,tiles,ox,oy)
+   local oldX,oldY=camX,camY;camX,camY=ox,oy;cachingTerrain=true
+   g.pushContext(image);for _,tile in ipairs(tiles) do drawTile(tile) end;g.popContext()
+   cachingTerrain=false;camX,camY=oldX,oldY
+  end)
+  Terrain.warm(terrainChunks,(x-y)*0.9,(x+y)*0.45-ballHeight*0.65)
+  terrainCourse=course;collectgarbage('collect');return
+ end
+ terrainChunks=nil
  local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
  for _,tile in ipairs(course.tiles) do
   for dx=0,1 do for dy=0,1 do
@@ -107,6 +124,8 @@ prepareTerrain()
 local last=pd.getCurrentTimeMilliseconds()
 function pd.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
+ local started=false
+ needsPower=false
  if choosing then
   if pd.buttonJustPressed(pd.kButtonLeft) then selected=UI.moveSelection(selected,'left',#Courses) end
   if pd.buttonJustPressed(pd.kButtonRight) then selected=UI.moveSelection(selected,'right',#Courses) end
@@ -117,15 +136,17 @@ function pd.update()
   pd.getCrankChange();UI.selector(selected,completed);return
  end
  if lesson then
-  if pd.buttonJustPressed(pd.kButtonA) then lesson=false
-  elseif pd.buttonJustPressed(pd.kButtonB) then choosing=true end
-  pd.getCrankChange();UI.lesson(jumpEnabled,course.lesson);return
+  if pd.buttonJustPressed(pd.kButtonA) then lesson=false;started=true
+  else
+   if pd.buttonJustPressed(pd.kButtonB) then choosing=true end
+   pd.getCrankChange();UI.lesson(jumpEnabled,course.lesson);return
+  end
  end
  if overview then
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then overview=false end
   pd.getCrankChange();UI.map(course,x,y,worldTime);return
  end
- if pd.buttonJustPressed(pd.kButtonA) then
+ if not started and pd.buttonJustPressed(pd.kButtonA) then
   if state=='win' then
    if level==#Courses then choosing=true;selected=level else selectLevel(level+1) end
    return
@@ -148,6 +169,7 @@ function pd.update()
   if pd.buttonIsPressed(pd.kButtonDown) then dy=dy+1 end
   if pd.buttonIsPressed(pd.kButtonUp) then dy=dy-1 end
   dx,dy=Physics.controls(controls,jumpEnabled and crank or math.max(0,crank),dx,dy,dt);throttle=controls.power
+  needsPower=(dx~=0 or dy~=0) and throttle<0.05 and vx*vx+vy*vy<4
   if not jumpEnabled then controls.charge=0 end
   braking=false
   local steps=math.max(4,math.ceil(math.sqrt(vx*vx+vy*vy)*dt/3))
@@ -186,7 +208,7 @@ function pd.update()
  elseif state=='fall' and not overview then fallTime=fallTime+dt;if fallTime>0.8 then reset(false) end end
  camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65
  g.clear(g.kColorWhite)
- terrainImage:draw(terrainX-camX,terrainY-camY)
+ if terrainChunks then Terrain.draw(terrainChunks,camX,camY) else terrainImage:draw(terrainX-camX,terrainY-camY) end
  if state~='fall' and support(x,y) then
   local sx,sy=project(x,y,course:height(x,y))
   g.setColor(g.kColorBlack);g.fillEllipseInRect(sx-8,sy-2,16,4)
@@ -214,7 +236,9 @@ function pd.update()
   ex,ey=rot(4,-4);g.fillCircleAtPoint(ex,ey,3)
   g.setColor(g.kColorWhite);g.fillCircleAtPoint(bx,by+1,6)
   g.setColor(g.kColorBlack);g.drawCircleAtPoint(bx,by+1,6)
-  for _,p in ipairs({{-3,-1},{3,-1},{0,3}}) do ex,ey=rot(p[1],p[2]);g.fillCircleAtPoint(ex,ey,1) end
+  ex,ey=rot(-3,-1);g.fillCircleAtPoint(ex,ey,1)
+  ex,ey=rot(3,-1);g.fillCircleAtPoint(ex,ey,1)
+  ex,ey=rot(0,3);g.fillCircleAtPoint(ex,ey,1)
   ex,ey=rot(8,0);local fx,fy=rot(-8,0);g.drawLine(ex,ey,fx,fy)
  end
  g.popContext()
@@ -238,6 +262,8 @@ function pd.update()
  UI.hud(course,level,jumpEnabled,throttle,controls.charge,elapsed,falls,math.sqrt(vx*vx+vy*vy))
  if controls.flash>0 then
   UI.panel(99,48,202,22);g.drawTextAligned('Turn again for POWER',200,51,kTextAlignment.center)
+ elseif needsPower and state=='play' then
+  UI.powerHint:draw(87,48)
  end if state=='win' then
   g.setColor(g.kColorWhite);g.fillRoundRect(55,75,290,88,8);g.setColor(g.kColorBlack);g.drawRoundRect(55,75,290,88,8)
   g.drawTextAligned('COURSE CLEAR!',200,84,kTextAlignment.center)

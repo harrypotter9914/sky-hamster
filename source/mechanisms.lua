@@ -1,5 +1,6 @@
 Mechanisms={}
 local M=Mechanisms
+local empty={}
 local function clamp(x,a,b) return math.max(a,math.min(b,x)) end
 -- Smooth travel with a genuine pause at each dock (quarter of a cycle).
 function M.travel(t,period,phase)
@@ -33,7 +34,7 @@ function M.carry(m,x,y,t,nextT)
  return cx+a*math.cos(r)-b*math.sin(r),cy+a*math.sin(r)+b*math.cos(r)
 end
 function M.support(course,x,y,t)
- for _,m in ipairs(course.mechanisms or {}) do
+ for _,m in ipairs(course.mechanisms or empty) do
   if (m.kind=='ferry' or m.kind=='rotor' or (m.kind=='trap' and not M.open(m,t))) and M.contains(m,x,y,t) then return true,m end
  end
  return course.lookup[math.floor(x/32)..','..math.floor(y/32)]==true,nil
@@ -41,7 +42,7 @@ end
 -- Circle / moving AABB response. Substeps prevent tunnelling; no bonus brake.
 function M.collide(course,x,y,vx,vy,z,t,dt)
  local hit=false
- for _,m in ipairs(course.mechanisms or {}) do
+ for _,m in ipairs(course.mechanisms or empty) do
   if (m.kind=='sweeper' or (m.kind=='gate' and not M.open(m,t))) and z<(m.wallHeight or 80) then
    local cx,cy=M.pose(m,t);local px,py=M.pose(m,t-dt)
    local nx,ny=x-clamp(x,cx-m.w/2,cx+m.w/2),y-clamp(y,cy-m.h/2,cy+m.h/2)
@@ -72,7 +73,13 @@ function M.corners(m,t)
 end
 function M.draw(course,t,project)
  local g=playdate.graphics
- for _,m in ipairs(course.mechanisms or {}) do
+ for _,m in ipairs(course.mechanisms or empty) do
+  local cx,cy=M.pose(m,t)
+  local sx,sy=project(cx,cy,course:height(m.x,m.y))
+  -- Conservative rotated bounds, including wall height and the raised label.
+  local extent=(m.w+m.h)*0.64+40
+  local rise=(m.wallHeight or 80)*0.65+30
+  if sx+extent>=-32 and sx-extent<=432 and sy+extent>=12 and sy-extent-rise<=236 then
   local points=M.corners(m,t);local poly={};local wall=m.kind=='gate' or m.kind=='sweeper'
   local opened=(m.kind=='gate' or m.kind=='trap') and M.open(m,t)
   local h=course:height(m.x,m.y)
@@ -107,5 +114,6 @@ function M.draw(course,t,project)
   local width=g.getTextSize(label)
   g.setColor(g.kColorWhite);g.fillRect(sx-width/2-3,sy-29,width+6,18)
   g.setColor(g.kColorBlack);g.drawTextAligned(label,sx,sy-28,kTextAlignment.center)
+  end
  end
 end

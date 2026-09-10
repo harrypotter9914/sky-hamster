@@ -2,6 +2,11 @@
 UI={}
 function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  local g=playdate.graphics
+ if not UI.powerHint then
+  UI.powerHint=g.image.new(226,24,g.kColorWhite)
+  g.pushContext(UI.powerHint);g.setColor(g.kColorBlack);g.drawRect(0,0,226,24)
+  g.drawText('Turn clockwise for POWER',5,3);g.popContext()
+ end
  if UI.hudCourse~=course then
   UI.hudCourse=course;UI.timerText=nil;UI.speedText=nil
   UI.hudTop=g.image.new(400,44,g.kColorWhite);UI.hudBottom=g.image.new(400,36,g.kColorWhite)
@@ -10,7 +15,7 @@ function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
   g.setImageDrawMode(g.kDrawModeFillWhite);g.drawText(string.format('%02d  %s',level,course.shortName),7,2);g.setImageDrawMode(g.kDrawModeCopy)
   g.drawText('POWER',7,25);g.drawRect(67,28,86,8)
   local notch=68+84*Physics.tuning.latch;g.drawLine(notch,24,notch,38);g.fillTriangle(notch-3,23,notch+3,23,notch,26)
-  if jump then g.drawText('JUMP',164,25);g.drawRect(211,28,66,8) else g.drawText('ROLLING LESSON',165,25) end
+  if jump then g.drawText('JUMP',164,25);g.drawRect(211,28,66,8) else g.drawText('ROLL',165,25) end
   g.drawText('speed',341,25);g.popContext()
   g.pushContext(UI.hudBottom);g.setColor(g.kColorBlack)
   g.drawText(jump and 'Clockwise: POWER    B: retry' or 'Turn clockwise: POWER    B: retry',7,0)

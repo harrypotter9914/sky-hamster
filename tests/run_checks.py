@@ -96,7 +96,10 @@ assert(up('state')=='play' and not up('airborne') and up('x')>192,'adequate jump
 print('PASS: real update short-jump collision and successful landing')
 Build.classroom=true;Classroom.apply();selectLevel(1)
 assert(#Courses==2 and not Courses[1].jump and not Courses[2].jump,'classroom exposes core only')
-frame({a=true});frame({}, {right=true},360)
+frame({a=true}, {right=true},90)
+assert(up('controls').power>0 and up('x')>48,'start accepts simultaneous A, held direction and crank')
+local firstX=up('x');frame({}, {right=true},15)
+assert(up('x')>firstX,'held direction continues without a second button press')
 assert(up('controls').power>0 and up('x')>48,'classroom crank drives ball')
 frame({}, {},-270);assert(up('controls').charge==0,'classroom reverse crank cannot charge jump')
 frame({a=true});assert(not up('airborne'),'classroom has no jump')
@@ -106,4 +109,12 @@ for n=1,2 do
  set('x',Courses[n].goal[1]);set('y',Courses[n].goal[2]);frame();assert(up('state')=='win','classroom finish reachable')
 end
 print('PASS: classroom core controls, disabled extras and both finishes')
+selectLevel(1);frame({a=true},{right=true})
+assert(up('needsPower') and up('x')==48,'zero power explains why direction alone cannot move')
+for _,mode in ipairs({'image','chunks'}) do
+ Build.terrainMode=mode;selectLevel(2);frame();selectLevel(1);frame({a=true},{right=true},90)
+ assert(up('x')>48,'both terrain modes preserve start input')
+ if mode=='chunks' then assert(up('terrainChunks').misses==0,'initial viewport warmed before play') end
+end
+print('PASS: simultaneous start input, held direction, power hint and terrain modes')
 ''')
