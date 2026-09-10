@@ -1,8 +1,8 @@
-# Sky Hamster — v0.3.0
+# Sky Hamster — v0.4.0
 
 Playdate 单人控球原型，Lua 编写。设计：Wang Yibo；AI 辅助实现。
 
-重建版本（不是当时完整快照）：顺摇累积推进力度，停摇快速回缩；逆摇蓄跳，A 起跳；高力度大幅反向清空推进条；取消额外刹车；六关及滚动仓鼠。界面根据迭代记录回退，不能视为逐字还原。
+当前原始 source 快照：前四关关闭跳跃，第五关起引入跳跃；新增选关界面、教学提示、清晰 POWER/JUMP 条、架高标牌和地图标记。
 
 ## 构建
 安装 Playdate SDK，并配置 PLAYDATE_SDK_PATH。使用 SDK 的 pdc 编译：

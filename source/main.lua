@@ -2,6 +2,7 @@ import "CoreLibs/graphics"
 import "physics"
 import "courses"
 import "physics_tests"
+import "ui"
 local pd,g=playdate,playdate.graphics
 pd.display.setRefreshRate(30)
 local level=1
@@ -13,13 +14,18 @@ local jumpZ,jumpV=0,0
 local rollAngle=0
 local checkpoint=false
 local overview=false
+local choosing=false
+local selected=1
+local lesson=true
+local completed={}
+local jumpEnabled=false
 local function reset(full)
  if full then elapsed=0;falls=0;checkpoint=false end
  local point=checkpoint and course.checkpoint or course.start
  x,y=point[1],point[2];vx,vy,throttle=0,0,0
  state='play';fallTime=0;braking=false;ballHeight=course:height(x,y);controls=Physics.newControls();airborne=false;jumpZ=ballHeight;jumpV=0;rollAngle=0
 end
-local function selectLevel(n) level=n;course=Courses[level];overview=false;reset(true) end
+local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=n>=5;overview=false;choosing=false;lesson=(n==1 or n>=5);reset(true) end
 reset(true)
 local camX,camY=0,0
 local function project(a,b,h) return 200+(a-b)*0.9-camX,124+(a+b)*0.45-(h or 0)*0.65-camY end
@@ -45,19 +51,50 @@ end
 local function marker(point,label)
  if not point then return end
  local p,q=project(point[1],point[2],course:height(point[1],point[2]))
- g.setColor(g.kColorBlack);g.drawEllipseInRect(p-12,q-6,24,12);g.drawText(label,p-14,q+10)
+ if p < -70 or p>440 or q<50 or q>210 then return end
+ local text=label=='SAVE' and 'CHECK' or label=='SAVED' and 'SAVED' or label=='GOAL' and 'FINISH' or 'START'
+ local tx=math.max(5,math.min(321,p+20));local ty=q-45
+ g.setColor(g.kColorBlack);g.drawEllipseInRect(p-11,q-5,22,10)
+ g.setColor(g.kColorWhite);g.fillCircleAtPoint(p,q,3);g.setColor(g.kColorBlack);g.drawCircleAtPoint(p,q,3)
+ -- Raised sign with a leader to the exact pad, never text on the road surface.
+ g.drawLine(p,q,tx,ty+21)
+ g.setColor(g.kColorWhite);g.fillRoundRect(tx,ty,72,23,3)
+ g.setColor(g.kColorBlack);g.drawRoundRect(tx,ty,72,23,3);g.drawText(text,tx+5,ty+3)
+ if label=='GOAL' then
+  g.drawLine(p-15,q,p-15,q-23)
+  for i=0,2 do for j=0,1 do if (i+j)%2==0 then g.fillRect(p-15+i*4,q-23+j*4,4,4) end end end
+ end
 end
 local last=pd.getCurrentTimeMilliseconds()
 function pd.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
+ if choosing then
+  if pd.buttonJustPressed(pd.kButtonLeft) then selected=math.max(1,selected-1) end
+  if pd.buttonJustPressed(pd.kButtonRight) then selected=math.min(6,selected+1) end
+  if pd.buttonJustPressed(pd.kButtonUp) then selected=math.max(1,selected-2) end
+  if pd.buttonJustPressed(pd.kButtonDown) then selected=math.min(6,selected+2) end
+  if pd.buttonJustPressed(pd.kButtonA) then selectLevel(selected)
+  elseif pd.buttonJustPressed(pd.kButtonB) then choosing=false end
+  pd.getCrankChange();UI.selector(selected,completed);return
+ end
+ if lesson then
+  if pd.buttonJustPressed(pd.kButtonA) then lesson=false
+  elseif pd.buttonJustPressed(pd.kButtonB) then choosing=true end
+  pd.getCrankChange();UI.lesson(jumpEnabled);return
+ end
+ if overview then
+  if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then overview=false end
+  pd.getCrankChange();UI.map(course,x,y);return
+ end
  if pd.buttonJustPressed(pd.kButtonA) then
-  if state=='win' then selectLevel(level%#Courses+1)
-  elseif not overview and state=='play' and not airborne and controls.charge>=0.05 then
+  if state=='win' then
+   if level==#Courses then choosing=true;selected=level else selectLevel(level+1) end
+   return
+  elseif jumpEnabled and state=='play' and not airborne and controls.charge>=0.05 then
    airborne=true;jumpZ=ballHeight;jumpV=Physics.launch(controls.charge);controls.charge=0
   end
  end
- if pd.buttonJustPressed(pd.kButtonB) then overview=false;reset(state=='win') end
- local crank=pd.getCrankChange()
+ if pd.buttonJustPressed(pd.kButtonB) then reset(state=='win') end local crank=pd.getCrankChange()
  if state=='play' and not overview then
   elapsed=elapsed+dt
   -- Control meters are updated after reading direction.
@@ -66,7 +103,8 @@ function pd.update()
   if pd.buttonIsPressed(pd.kButtonLeft) then dx=dx-1 end
   if pd.buttonIsPressed(pd.kButtonDown) then dy=dy+1 end
   if pd.buttonIsPressed(pd.kButtonUp) then dy=dy-1 end
-  dx,dy=Physics.controls(controls,crank,dx,dy,dt);throttle=controls.power
+  dx,dy=Physics.controls(controls,jumpEnabled and crank or math.max(0,crank),dx,dy,dt);throttle=controls.power
+  if not jumpEnabled then controls.charge=0 end
   braking=false
   local steps=math.max(4,math.ceil(math.sqrt(vx*vx+vy*vy)*dt/3))
   for _=1,steps do
@@ -93,7 +131,7 @@ function pd.update()
    local sign=(vx-vy)<0 and -1 or 1
    rollAngle=(rollAngle+sign*travel/11)%(math.pi*2)
   end  if course.checkpoint and not airborne and state=='play' and math.abs(x-course.checkpoint[1])<14 and math.abs(y-course.checkpoint[2])<14 then checkpoint=true end
-  if state=='play' and not airborne and math.abs(x-course.goal[1])<17 and math.abs(y-course.goal[2])<22 then state='win' end
+  if state=='play' and not airborne and math.abs(x-course.goal[1])<17 and math.abs(y-course.goal[2])<22 then state='win';completed[level]=true end
  elseif state=='fall' and not overview then fallTime=fallTime+dt;if fallTime>0.8 then reset(false) end end
  camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65
  g.clear(g.kColorWhite)
@@ -123,29 +161,37 @@ function pd.update()
   for _,p in ipairs({{-3,-1},{3,-1},{0,3}}) do ex,ey=rot(p[1],p[2]);g.fillCircleAtPoint(ex,ey,1) end
   ex,ey=rot(8,0);local fx,fy=rot(-8,0);g.drawLine(ex,ey,fx,fy)
  end
- g.setColor(g.kColorWhite);g.fillRect(0,0,400,43);g.fillRect(0,212,400,28)
- g.setColor(g.kColorBlack);g.drawLine(0,42,400,42)
- g.drawText(course.name,6,2);g.drawText(string.format('%.1fs / %d falls',elapsed,falls),263,2)
- g.drawText('PWR',6,23);g.drawRect(40,26,84,7);g.fillRect(41,27,math.floor(throttle*82),5)
- local latchX=41+82*Physics.tuning.latch;g.drawLine(latchX,22,latchX,35)
- g.drawText('JUMP',136,23);g.drawRect(182,26,67,7);g.fillRect(183,27,math.floor(controls.charge*65),5)
- g.drawText(string.format('SPD %03d',math.floor(math.sqrt(vx*vx+vy*vy))),264,23)
- g.drawText('CW: push  CCW: charge  A: jump  B: retry',4,218)
- if controls.flash>0 then g.drawTextAligned('RE-CRANK TO PUSH',200,48,kTextAlignment.center) end
- if overview then
-  g.setColor(g.kColorWhite);g.fillRect(10,48,380,158);g.setColor(g.kColorBlack);g.drawRect(10,48,380,158)
-  g.drawText(course.hint,16,52)
-  for _,t in ipairs(course.tiles) do g.drawRect(30+t.x*16,83+t.y*12,16,12) end
-  g.fillCircleAtPoint(30+x/2,83+y*0.375,3)
-  g.drawText('UP = upper-right. RIGHT = lower-right.',16,180)
+ g.setColor(g.kColorWhite);g.fillRect(0,0,400,44);g.fillRect(0,204,400,36)
+ g.setColor(g.kColorBlack);g.fillRect(0,0,400,21)
+ g.setImageDrawMode(g.kDrawModeFillWhite)
+ g.drawText(string.format('%02d  %s',level,UI.names[level]),7,2)
+ g.drawText(string.format('%.1fs  /  %d falls',elapsed,falls),264,2)
+ g.setImageDrawMode(g.kDrawModeCopy)
+ g.drawText('POWER',7,25);g.drawRect(67,28,86,8);g.fillRect(68,29,math.floor(throttle*84),6)
+ local latchX=68+84*Physics.tuning.latch;g.drawLine(latchX,24,latchX,38);g.fillTriangle(latchX-3,23,latchX+3,23,latchX,26)
+ if jumpEnabled then
+  g.drawText('JUMP',164,25);g.drawRect(211,28,66,8);g.fillRect(212,29,math.floor(controls.charge*64),6)
+ else g.drawText('ROLLING LESSON',165,25) end
+ g.drawText(string.format('%03d',math.floor(math.sqrt(vx*vx+vy*vy))),293,25);g.drawText('speed',341,25)
+ g.drawLine(0,203,400,203)
+ if jumpEnabled then
+  g.drawText('Clockwise: POWER    B: retry',7,204)
+  g.drawText('Counterclockwise: JUMP    A: jump',7,222)
+ else
+  g.drawText('Turn clockwise: POWER    B: retry',7,204)
+  g.drawText('D-pad: steer    Menu: map / levels',7,222)
  end
- if state=='win' then
+ if controls.flash>0 then
+  UI.panel(99,48,202,22);g.drawTextAligned('Turn again for POWER',200,51,kTextAlignment.center)
+ end if state=='win' then
   g.setColor(g.kColorWhite);g.fillRoundRect(55,75,290,88,8);g.setColor(g.kColorBlack);g.drawRoundRect(55,75,290,88,8)
   g.drawTextAligned('COURSE CLEAR!',200,84,kTextAlignment.center)
   g.drawTextAligned(string.format('%.1f seconds / %d falls',elapsed,falls),200,108,kTextAlignment.center)
-  g.drawTextAligned('A: next course   B: retry',200,137,kTextAlignment.center)
+  g.drawTextAligned(level==6 and 'A: level select   B: retry' or 'A: next level   B: retry',200,137,kTextAlignment.center)
  end
 end
-pd.getSystemMenu():addOptionsMenuItem('Course',{'1 Corners','2 Downhill','3 Valley','4 Brake bend','5 First hop','6 Precision'},'1 Corners',function(value) selectLevel(tonumber(string.sub(value,1,1))) end)
+pd.getSystemMenu():addMenuItem('Level select',function() choosing=true;selected=level end)
 pd.getSystemMenu():addMenuItem('Map / pause',function() overview=not overview end)
-pd.getSystemMenu():addMenuItem('Restart course',function() reset(true) end)
+pd.getSystemMenu():addMenuItem('Restart level',function() choosing=false;overview=false;reset(true) end)
+
+
