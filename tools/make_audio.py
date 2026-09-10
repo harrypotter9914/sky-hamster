@@ -1,4 +1,4 @@
-"""Deterministic synthesized effects and music; recorded roll is prepared separately."""
+"""Deterministic synthesized effects and music; rolling is generated separately."""
 from pathlib import Path
 import math
 import random
@@ -42,7 +42,7 @@ def melody(length, notes):
 write('checkpoint',melody(.4,[(0,72,.18,.38),(.12,79,.28,.38)]))
 write('win',melody(.9,[(0,69,.3,.36),(.15,72,.3,.36),(.3,76,.3,.36),(.45,81,.45,.34)]))
 write('charge',chirp(.055,360,430,0,.23))
-# roll.wav is prepared separately from a recorded marble; see prepare_rolling_audio.py.
+# roll.wav is synthesized separately; see prepare_rolling_audio.py.
 notes=[]
 for bar,root in enumerate([57,53,60,55]):
     for beat in (0,2): notes.append((bar*3+beat*.75,root,1.2,.13))

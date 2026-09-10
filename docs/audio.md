@@ -1,6 +1,8 @@
 # 声音设计与资源
 
-滚动声使用 JuandreSound 的 [Marble Roll.mp3](https://freesound.org/people/JuandreSound/sounds/490913/) 真实瓷砖滚珠录音，许可 CC0。处理脚本为 `tools/prepare_rolling_audio.py`，原始参考与来源记录保存在 `assets/audio-source/`。其他音效和音乐由 `tools/make_audio.py` 合成，该脚本不覆盖滚动声。游戏音频为 22050 Hz、16-bit、单声道 PCM，预先处理后播放，不增加实时合成。
+当前滚动声由 `tools/prepare_rolling_audio.py` 独立合成，不读取或截取外部录音。用短衰减的非整数倍频率共鸣模拟轻微滚动接触，不加入落地大碰撞、持续白噪声或低音振荡。速度控制播放速率和音量。其他音效与音乐由 `tools/make_audio.py` 生成。采样为 22050 Hz、16-bit、单声道 PCM，预先生成，不在游戏中实时合成。
+
+0.6.4 使用过的 CC0 录音保留在 `assets/audio-source/` 作为历史参考，不再用于当前声音，也不进入游戏构建。
 
 | 声音 | 触发规则 |
 |---|---|

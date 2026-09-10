@@ -1,24 +1,30 @@
-"""Prepare the vendored CC0 marble recording (requires numpy/scipy/soundfile)."""
+"""Synthesize glass rolling microcontacts without recordings or noise grains."""
 from pathlib import Path
-import numpy as np
-import soundfile as sf
-from scipy.signal import butter, sosfiltfilt, resample_poly
-
+import math, random, struct, wave
 ROOT = Path(__file__).resolve().parents[1]
-data, rate = sf.read(ROOT / 'assets/audio-source/marble-roll.mp3')
-# A sustained opening roll, avoiding the initial release and later quiet gaps.
-data = data[round(.5 * rate):round(4.6 * rate)].mean(axis=1)
-# Remove rumble and soften hiss; retain the recorded contact transients.
-data = sosfiltfilt(butter(2, [180, 6500], btype='bandpass', fs=rate, output='sos'), data)
-data = resample_poly(data, 1, 2)
-rate //= 2
-# Overlap the ends so the loop boundary follows the original waveform.
-n = round(.1 * rate)
-t = np.linspace(0, 1, n, endpoint=False)
-join = data[-n:] * (1-t) + data[:n] * t
-data = np.concatenate((join, data[n:-n]))
-data *= .65 / np.max(np.abs(data))
+RATE = 22050
+DURATION = 4
+rng = random.Random(53065)
+data = [0.0] * (RATE * DURATION)
+# Damped inharmonic modes: no drop transient, noise bed, bass or long bell ring.
+time = 0.0
+while time < DURATION:
+    gain = rng.uniform(.045, .075)
+    pitch = rng.uniform(.92, 1.08)
+    for i in range(round(.028 * RATE)):
+        t = i / RATE
+        attack = 1 - math.exp(-t / .0008)
+        contact = 0.0
+        for frequency, weight, decay in ((1150, 1, .0045), (2370, .48, .003), (3910, .18, .0018)):
+            contact += weight * math.sin(2 * math.pi * frequency * pitch * t) * math.exp(-t / decay)
+        data[(round(time * RATE) + i) % len(data)] += gain * attack * contact
+    time += rng.uniform(.010, .020)
+# Wrap event tails for a continuous loop, normalize below collision loudness.
+scale = .30 / max(abs(x) for x in data)
+data = [x * scale for x in data]
+assert all(math.isfinite(x) and abs(x) < .95 for x in data)
 target = ROOT / 'source/audio/roll.wav'
-sf.write(target, data, rate, subtype='PCM_16')
-assert np.isfinite(data).all() and np.max(np.abs(data)) < .95
-print(f'{target}: {len(data)/rate:.2f}s, mono {rate}Hz PCM16, peak={np.max(np.abs(data)):.3f}, seam={abs(data[-1]-data[0]):.6f}')
+with wave.open(str(target), 'wb') as output:
+    output.setparams((1, 2, RATE, 0, 'NONE', 'not compressed'))
+    output.writeframes(b''.join(struct.pack('<h', round(x * 32767)) for x in data))
+print(f'{target}: {DURATION}s mono PCM16 {RATE}Hz peak={max(abs(x) for x in data):.3f}')

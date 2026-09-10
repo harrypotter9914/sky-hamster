@@ -8,3 +8,5 @@
 - Processing: `tools/prepare_rolling_audio.py`; excerpt 0.5–4.6 seconds, mono, gentle bandpass, 22050 Hz conversion, 100 ms loop overlap, peak normalization.
 
 The original preview is retained for reproducible processing and is not included in the game package.
+
+As of v0.6.5 this file is historical reference only. The current rolling generator does not read or sample it. The processing notes above describe v0.6.4.
