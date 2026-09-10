@@ -1,10 +1,12 @@
-# Sky Hamster — v0.5.8
+# Sky Hamster — v0.6.0
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
-9 月 10 日课堂请使用 **Sky Hamster Core Test**，只测试短路线中的推进与惯性。运行 `./build.ps1 -Classroom` 构建；下述默认工程仍保留完整版。见 [课堂试玩计划](docs/classroom-playtest.md)。
+9 月 10 日课堂请使用已安装的 **Sky Hamster Core Test 0.5.8-core**，包含边缘掉落修复，只测试推进与惯性。完整版 0.6.0 新增声音、独立开始画面和失败重试界面。`./build.ps1 -Classroom` 仍可生成关闭这些功能、排除音频资产的课堂配置。见 [课堂试玩计划](docs/classroom-playtest.md)。
 
 当前共 14 关：前四关练习滚动，第五关引入跳跃，第八关起介绍定时挡板、开合地板、移动平台和旋转地板，最后两关组合多种机制。方向键控制推进方向，顺摇增加 POWER，逆摇增加 JUMP，A 跳跃，B 重试；系统菜单提供分页选关和暂停地图。
+
+完整版从独立标题菜单进入；音效和音乐可分别开关，系统菜单的 Title / sound 可返回设置。掉落失败后 A 从起点或检查点重试，B 选关。课堂配置没有声音、标题菜单或失败面板，继续自动重试。
 
 ## 构建
 安装 Playdate SDK，并配置 PLAYDATE_SDK_PATH。使用 SDK 的 pdc 编译：

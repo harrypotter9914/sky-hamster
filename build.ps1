@@ -8,9 +8,9 @@ $version=[regex]::Match($info,'(?m)^version=([^\r\n]+)').Groups[1].Value
 if(-not $version){throw 'Missing version in source/pdxinfo'}
 $output=Join-Path $PSScriptRoot "builds/sky-hamster-v$version.pdx"
 if($Classroom){
- $staging=Join-Path $PSScriptRoot 'builds/classroom-source'
+ $staging=Join-Path $PSScriptRoot "builds/classroom-source-v$version"
  New-Item -ItemType Directory -Path $staging -Force | Out-Null
- Copy-Item -Path "$source/*" -Destination $staging -Force
+ Get-ChildItem -LiteralPath $source | Where-Object Name -ne 'audio' | Copy-Item -Destination $staging -Recurse -Force
  $config=(Get-Content (Join-Path $source 'build.lua') -Raw).Replace('classroom=false','classroom=true')
  Set-Content (Join-Path $staging 'build.lua') $config
  $info=Get-Content (Join-Path $staging 'pdxinfo') -Raw

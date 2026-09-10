@@ -9,6 +9,8 @@ stage.mkdir(parents=True, exist_ok=True)
 for p in (root / 'source').iterdir():
     if p.is_file():
         shutil.copy2(p, stage / p.name)
+    elif p.is_dir():
+        shutil.copytree(p,stage / p.name,dirs_exist_ok=True)
 s = (stage / 'main.lua').read_text(encoding='utf-8')
 s = 'Profile={marks={}}\nfunction Profile.mark(i) Profile.marks[i]=playdate.getElapsedTime() end\n' + s
 anchors = [

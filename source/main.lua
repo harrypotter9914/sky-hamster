@@ -8,7 +8,9 @@ import "ui"
 import "build"
 import "classroom"
 import "terrain"
+import "audio"
 if Build.classroom then Classroom.apply() end
+Audio.init(not Build.classroom)
 local pd,g=playdate,playdate.graphics
 pd.display.setRefreshRate(30)
 -- Collect transient geometry during spare frame time, before a forced full GC.
@@ -25,6 +27,8 @@ local overview=false
 local choosing=false
 local selected=1
 local lesson=true
+local title=not Build.classroom
+local titleChoice=1
 local completed={}
 local jumpEnabled=false
 local worldTime=0
@@ -37,6 +41,7 @@ local needsPower=false
 local prepareTerrain
 local cachingTerrain=false
 local function reset(full)
+ Audio.quiet()
  if full then elapsed=0;falls=0;checkpoint=false end
  worldTime=0
  local point=checkpoint and course.checkpoint or course.start
@@ -46,8 +51,9 @@ end
 local function beginFall(height,verticalSpeed)
  state='fall';falls=falls+1;fallTime=0
  jumpZ=height;jumpV=verticalSpeed;airborne=false
+ Audio.quiet();Audio.play('fall')
 end
-local function selectLevel(n) level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true);if prepareTerrain then prepareTerrain() end end
+local function selectLevel(n) title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true);if prepareTerrain then prepareTerrain() end end
 reset(true)
 local camX,camY=0,0
 local function project(a,b,h) return 200+(a-b)*0.9-camX,124+(a+b)*0.45-(h or 0)*0.65-camY end
@@ -133,16 +139,39 @@ function pd.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
  local started=false
  needsPower=false
+ if title then
+  if pd.buttonJustPressed(pd.kButtonUp) then titleChoice=math.max(1,titleChoice-1);Audio.play('menu') end
+  if pd.buttonJustPressed(pd.kButtonDown) then titleChoice=math.min(4,titleChoice+1);Audio.play('menu') end
+  if pd.buttonJustPressed(pd.kButtonA) then
+   Audio.play('menu')
+   if titleChoice==1 then selectLevel(level)
+   elseif titleChoice==2 then title=false;choosing=true;selected=level
+   elseif titleChoice==3 then Audio.toggleEffects()
+   else Audio.toggleMusic() end
+  end
+  pd.getCrankChange();Audio.quiet();UI.title(titleChoice,Audio.effects,Audio.musicEnabled);return
+ end
+ if state=='dead' and not choosing then
+  Audio.quiet()
+  if pd.buttonJustPressed(pd.kButtonA) then Audio.play('menu');reset(false);started=true
+  else
+   if pd.buttonJustPressed(pd.kButtonB) then Audio.play('menu');choosing=true;selected=level end
+   pd.getCrankChange();UI.failure(falls,checkpoint);return
+  end
+ end
  if choosing then
+  Audio.quiet();local previous=selected
   if pd.buttonJustPressed(pd.kButtonLeft) then selected=UI.moveSelection(selected,'left',#Courses) end
   if pd.buttonJustPressed(pd.kButtonRight) then selected=UI.moveSelection(selected,'right',#Courses) end
   if pd.buttonJustPressed(pd.kButtonUp) then selected=UI.moveSelection(selected,'up',#Courses) end
   if pd.buttonJustPressed(pd.kButtonDown) then selected=UI.moveSelection(selected,'down',#Courses) end
-  if pd.buttonJustPressed(pd.kButtonA) then selectLevel(selected)
+  if selected~=previous then Audio.play('menu') end
+  if pd.buttonJustPressed(pd.kButtonA) then Audio.play('menu');selectLevel(selected)
   elseif pd.buttonJustPressed(pd.kButtonB) then choosing=false end
   pd.getCrankChange();UI.selector(selected,completed);return
  end
  if lesson then
+  Audio.quiet()
   if pd.buttonJustPressed(pd.kButtonA) then lesson=false;started=true
   else
    if pd.buttonJustPressed(pd.kButtonB) then choosing=true end
@@ -150,6 +179,7 @@ function pd.update()
   end
  end
  if overview then
+  Audio.quiet()
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then overview=false end
   pd.getCrankChange();UI.map(course,x,y,worldTime);return
  end
@@ -164,6 +194,7 @@ function pd.update()
     vx,vy=vx+(ax-x)*120,vy+(ay-y)*120
    end
    airborne=true;jumpZ=ballHeight;jumpV=Physics.launch(controls.charge);controls.charge=0
+   Audio.play('jump')
   end
  end
  if pd.buttonJustPressed(pd.kButtonB) then reset(state=='win') end local crank=pd.getCrankChange()
@@ -193,25 +224,30 @@ function pd.update()
     local oldZ=jumpZ
     jumpZ,jumpV=Physics.air(jumpZ,jumpV,step)
     x,y=x+vx*step,y+vy*step
+    local oldVX,oldVY=vx,vy
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,jumpZ-course:height(x,y),worldTime,step)
     x,y,vx,vy=Spatial.sides(course,x,y,vx,vy,jumpZ,worldTime)
+    if vx~=oldVX or vy~=oldVY then Audio.impact(math.sqrt((vx-oldVX)^2+(vy-oldVY)^2)) end
     local floor=course:height(x,y)
     if support(x,y) and jumpZ<=floor and oldZ>=floor and jumpV<0 then
      airborne=false;ballHeight=floor;jumpZ=floor;jumpV=0
+     Audio.play('land',0.45)
     elseif jumpZ < -140 then beginFall(jumpZ,jumpV);break end
    else
     local _,sx,sy=course:height(x,y)
     local b;vx,vy,b=Physics.step(vx,vy,dx,dy,throttle,sx,sy,step);braking=braking or b
     x,y=x+vx*step,y+vy*step
+    local oldVX,oldVY=vx,vy
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,0,worldTime,step)
+    if vx~=oldVX or vy~=oldVY then Audio.impact(math.sqrt((vx-oldVX)^2+(vy-oldVY)^2)) end
     if not support(x,y) then beginFall(ballHeight,0);break end
     ballHeight=course:height(x,y);jumpZ=ballHeight
    end
    local travel=math.sqrt((x-oldX)^2+(y-oldY)^2)
    local sign=(vx-vy)<0 and -1 or 1
    rollAngle=(rollAngle+sign*travel/11)%(math.pi*2)
-  end  if course.checkpoint and not airborne and state=='play' and math.abs(x-course.checkpoint[1])<14 and math.abs(y-course.checkpoint[2])<14 then checkpoint=true end
-  if state=='play' and not airborne and math.abs(x-course.goal[1])<17 and math.abs(y-course.goal[2])<22 then state='win';completed[level]=true end
+  end  if course.checkpoint and not checkpoint and not airborne and state=='play' and math.abs(x-course.checkpoint[1])<14 and math.abs(y-course.checkpoint[2])<14 then checkpoint=true;Audio.play('checkpoint') end
+  if state=='play' and not airborne and math.abs(x-course.goal[1])<17 and math.abs(y-course.goal[2])<22 then state='win';completed[level]=true;Audio.play('win') end
  elseif state=='fall' and not overview then
   fallTime=fallTime+dt
   local steps=math.max(4,math.ceil(math.sqrt(vx*vx+vy*vy)*dt/3))
@@ -222,8 +258,10 @@ function pd.update()
    -- Falling remains world-space motion: the sphere clears the platform lip.
    x,y,vx,vy=Spatial.sides(course,x,y,vx,vy,jumpZ,worldTime)
   end
-  if fallTime>0.8 then reset(false) end
+  if fallTime>0.8 then if Build.classroom then reset(false) else state='dead' end end
  end
+ Audio.update(dt,state=='play' and not airborne,math.sqrt(vx*vx+vy*vy),controls.charge)
+ if state=='dead' then UI.failure(falls,checkpoint);return end
  -- Hold the camera at the edge while the ball falls away from the track.
  if state~='fall' then camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65 end
  g.clear(g.kColorWhite)
@@ -292,3 +330,12 @@ end
 pd.getSystemMenu():addMenuItem('Level select',function() choosing=true;selected=level end)
 pd.getSystemMenu():addMenuItem('Map / pause',function() overview=not overview end)
 pd.getSystemMenu():addMenuItem('Restart level',function() choosing=false;overview=false;reset(true) end)
+if not Build.classroom then
+ -- Playdate permits three custom system menu entries: replace restart with home.
+ pd.getSystemMenu():removeAllMenuItems()
+ pd.getSystemMenu():addMenuItem('Level select',function() title=false;choosing=true;selected=level;Audio.quiet() end)
+ pd.getSystemMenu():addMenuItem('Map / pause',function() if not title then overview=not overview end;Audio.quiet() end)
+ pd.getSystemMenu():addMenuItem('Title / sound',function() title=true;choosing=false;overview=false;titleChoice=1;Audio.quiet() end)
+end
+pd.gameWillPause=function() Audio.pause() end
+pd.gameWillResume=function() last=pd.getCurrentTimeMilliseconds();Audio.resume() end

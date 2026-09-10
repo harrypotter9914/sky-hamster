@@ -13,7 +13,7 @@ function pd.update()
   scene=scene+1
   if scene>3 then print('SOAK DONE');pd.update=function() end;return end
   Courses=fullCourses
-  if scene==3 then Build.classroom=true;Classroom.apply();selectLevel(1)
+  if scene==3 then if Audio then Audio.pause() end;Build.classroom=true;Classroom.apply();selectLevel(1)
   else selectLevel(scene==1 and 13 or 14);lesson=false end
   total,maximum,gapMax,slow,gaps,firstTime,lastTime=0,0,0,0,0,pd.getElapsedTime(),nil
  end

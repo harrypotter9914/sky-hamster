@@ -1,5 +1,42 @@
 -- High-contrast interface drawn at the device's native 400 x 240 resolution.
 UI={}
+function UI.title(choice,effects,music)
+ local g=playdate.graphics
+ if not UI.titleImage then
+  UI.titleImage=g.image.new(400,240,g.kColorWhite)
+  local lettering=g.image.new(180,23,g.kColorClear)
+  g.pushContext(lettering);g.setColor(g.kColorBlack);g.drawTextAligned('SKY HAMSTER',90,2,kTextAlignment.center);g.popContext()
+  g.pushContext(UI.titleImage);g.setColor(g.kColorBlack)
+  lettering:drawScaled(20,15,2)
+  g.drawTextAligned('A little ball. A long way down.',200,60,kTextAlignment.center)
+  -- A small floating track and its hamster, using the game's native line work.
+  g.fillPolygon(112,107,190,130,284,102,284,111,190,139,112,116)
+  g.setColor(g.kColorWhite);g.fillPolygon(112,107,190,84,284,102,190,130)
+  g.setColor(g.kColorBlack);g.drawPolygon(112,107,190,84,284,102,190,130)
+  g.drawLine(150,95,236,116);g.drawLine(157,120,237,93)
+  g.setColor(g.kColorWhite);g.fillCircleAtPoint(199,95,16)
+  g.setColor(g.kColorBlack);g.drawCircleAtPoint(199,95,16)
+  g.fillCircleAtPoint(192,89,4);g.fillCircleAtPoint(205,89,4)
+  g.drawCircleAtPoint(199,98,9);g.fillCircleAtPoint(196,96,1);g.fillCircleAtPoint(202,96,1);g.fillCircleAtPoint(199,101,2)
+  g.drawText('D-pad: choose    A: confirm',82,221);g.popContext()
+ end
+ UI.titleImage:draw(0,0)
+ local labels={'PLAY','SELECT LEVEL',effects and 'SOUND FX: ON' or 'SOUND FX: OFF',music and 'MUSIC: ON' or 'MUSIC: OFF'}
+ for i=1,4 do
+  local yy=139+(i-1)*19
+  if i==choice then g.setColor(g.kColorBlack);g.fillRoundRect(96,yy,208,19,3);g.setImageDrawMode(g.kDrawModeFillWhite) end
+  g.drawTextAligned(labels[i],200,yy+1,kTextAlignment.center);g.setImageDrawMode(g.kDrawModeCopy)
+ end
+end
+function UI.failure(falls,checkpoint)
+ local g=playdate.graphics
+ UI.header('OFF THE TRACK','One more try?')
+ g.drawCircleAtPoint(200,99,24);g.drawLine(188,91,196,99);g.drawLine(196,91,188,99)
+ g.drawLine(204,91,212,99);g.drawLine(212,91,204,99);g.drawLine(194,110,206,110)
+ g.drawTextAligned(string.format('Falls: %d',falls),200,139,kTextAlignment.center)
+ g.drawTextAligned(checkpoint and 'Your checkpoint is safe.' or 'Back to the starting pad.',200,165,kTextAlignment.center)
+ g.drawTextAligned('A: retry    B: select level',200,208,kTextAlignment.center)
+end
 function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  local g=playdate.graphics
  if not UI.powerHint then

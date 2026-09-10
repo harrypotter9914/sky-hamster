@@ -20,13 +20,19 @@ lua.execute('''
 clock=0; pressed={}; held={}; crank=0; menu={}
 kTextAlignment={center=0}
 local noop=function() end
-local gfx=setmetatable({image={new=function() return {setMaskImage=noop,getMaskImage=function() return {draw=noop} end,draw=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
+local gfx=setmetatable({image={new=function() return {setMaskImage=noop,getMaskImage=function() return {draw=noop} end,draw=noop,drawScaled=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
+local function player()
+ return {plays=0,playing=false,setVolume=noop,setRate=noop,setPaused=noop,
+ play=function(self) self.plays=self.plays+1;self.playing=true end,
+ stop=function(self) self.playing=false end,isPlaying=function(self) return self.playing end}
+end
 playdate={graphics=gfx,display={setRefreshRate=noop},kButtonA='a',kButtonB='b',kButtonLeft='left',kButtonRight='right',kButtonUp='up',kButtonDown='down',
+ sound={sampleplayer={new=player}},
  getCurrentTimeMilliseconds=function() return clock end,
  buttonJustPressed=function(k) return pressed[k] end,
  buttonIsPressed=function(k) return held[k] end,
  getCrankChange=function() local c=crank;crank=0;return c end,
- getSystemMenu=function() return {addMenuItem=function(self,k,f) menu[k]=f end} end}
+ getSystemMenu=function() return {addMenuItem=function(self,k,f) menu[k]=f end,removeAllMenuItems=function() menu={} end} end}
 function frame(keys,down,angle)
  clock=clock+1000/30;pressed=keys or {};held=down or {};crank=angle or 0;playdate.update();pressed={}
 end
@@ -42,6 +48,10 @@ local function set(name,value)
  error('missing state '..name)
 end
 local selectLevel=up('selectLevel')
+assert(up('title'),'full edition starts on dedicated title screen')
+frame({down=true});frame({down=true});frame({a=true});assert(not Audio.effects,'title toggles effects')
+frame({a=true});frame({down=true});frame({a=true});assert(not Audio.musicEnabled,'title toggles music')
+frame({a=true});set('titleChoice',1);frame({a=true});assert(not up('title') and up('lesson'),'play leads to separate lesson')
 assert(UI.moveSelection(1,'down',14)==2 and UI.moveSelection(2,'down',14)==3,'left column is 1 2 3')
 assert(UI.moveSelection(2,'right',14)==5 and UI.moveSelection(5,'left',14)==2,'horizontal moves keep row')
 assert(UI.moveSelection(4,'right',14)==7 and UI.moveSelection(7,'left',14)==4,'horizontal page transition')
@@ -105,9 +115,17 @@ for _,edge in ipairs({{0.2,80,-60,0},{159.8,80,60,0},{48,32.2,0,-60},{48,127.8,0
  assert(not Mechanisms.support(Courses[5],up('x'),up('y'),up('worldTime')),'fall stays outside platform')
  assert(up('falls')==1,'fall counted only once')
  for i=1,24 do frame() end
- assert(up('state')=='play','fall retries automatically')
+ assert(up('state')=='dead','full edition offers deliberate retry after a fall')
+ frame({a=true});assert(up('state')=='play','A retries after failure')
 end
-print('PASS: four-edge world-space falls, momentum, camera, support and retry')
+print('PASS: four-edge world-space falls, momentum, camera, support and failure retry')
+selectLevel(8);set('lesson',false);set('x',215);set('y',80);set('vx',600)
+local hits=Audio.players.wall.plays;frame();assert(Audio.players.wall.plays==hits+1,'impact sound follows collision')
+Audio.impact(100);assert(Audio.players.wall.plays==hits+1,'impact cooldown prevents repeated chatter')
+selectLevel(5);set('lesson',false);up('controls').charge=0.5
+local jumps=Audio.players.jump.plays;frame({a=true});assert(Audio.players.jump.plays==jumps+1,'jump sound fires once')
+menu['Title / sound']();frame();assert(up('title'),'system menu can return to title')
+print('PASS: title, sound switches, collision cooldown and jump audio events')
 Build.classroom=true;Classroom.apply();selectLevel(1)
 assert(#Courses==2 and not Courses[1].jump and not Courses[2].jump,'classroom exposes core only')
 frame({a=true}, {right=true},90)
@@ -135,4 +153,9 @@ selectLevel(1);frame({a=true});set('x',0.2);set('y',80);set('vx',-60);frame()
 for i=1,6 do frame() end
 assert(up('state')=='fall' and up('x')< -9 and up('jumpZ')<0,'classroom receives the same edge fix')
 print('PASS: classroom edge fall uses world-space trajectory')
+for i=1,24 do frame() end
+assert(up('state')=='play','classroom retains automatic retry')
+local sounds=Audio.players.jump.plays+Audio.players.fall.plays
+Audio.play('jump');Audio.play('fall')
+assert(Audio.players.jump.plays+Audio.players.fall.plays==sounds,'classroom suppresses sound events')
 ''')
