@@ -1,6 +1,6 @@
-name=SH 6 Signed Thrust
+name=Variation 6
 author=Wang Yibo
 description=Control comparison prototype 6
 bundleID=com.wangyibo.skyhamster.variant.reverse
-version=experiment-1.0
-buildNumber=1
+version=experiment-1.0.1
+buildNumber=2

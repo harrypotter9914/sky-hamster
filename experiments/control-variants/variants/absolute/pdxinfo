@@ -1,6 +1,6 @@
-name=SH 9 Absolute Steer
+name=Variation 9
 author=Wang Yibo
 description=Control comparison prototype 9
 bundleID=com.wangyibo.skyhamster.variant.absolute
-version=experiment-1.0
-buildNumber=1
+version=experiment-1.0.1
+buildNumber=2

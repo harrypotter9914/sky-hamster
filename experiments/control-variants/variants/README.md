@@ -57,3 +57,7 @@ VS Code：命令面板 → Tasks: Run Task → Run a variant → 选择规则。
 模拟器检查不等于五版实机验证或真实玩家测试，后两项仍待完成。
 
 设计来源：`docs/reflections/v0.1.0.md`、`v0.2.0.md`、`v0.3.0.md`。本轮规则代码、打包与测试由 AI 辅助实现，最终设计选择与试玩判断由设计者完成。
+
+## 统一显示名称（experiment-1.0.1）
+
+设备列表、引导页与 HUD 按原顺序显示 Variation 1–9。规则标识和 bundleID 不变。编号映射及本轮验证见 [真机记录](../device-variations.md)。Windows 在实验目录运行 `./build-variants.ps1`。

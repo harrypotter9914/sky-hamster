@@ -1,6 +1,6 @@
-name=SH 2 Held Throttle
+name=Variation 2
 author=Wang Yibo
 description=Reconstructed control comparison prototype 2. Shared core tracks.
 bundleID=com.wangyibo.skyhamster.variant.throttle
-version=experiment-1.0
-buildNumber=1
+version=experiment-1.0.1
+buildNumber=2

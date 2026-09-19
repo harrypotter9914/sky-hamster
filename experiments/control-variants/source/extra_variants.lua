@@ -1,10 +1,10 @@
 ExtraVariants={}
 local E=ExtraVariants
 E.rules={
- reverse={'06 SIGNED THRUST','CW: forward. CCW: reverse thrust.','D-pad: axis. B: retry.', 'Reverse thrust slows, then backs up.','Stop cranking and thrust fades.'},
- track={'07 ROTATE TRACK','At CONTROL: hold A + turn crank.','Else: CW thrust / D-pad. B: retry.','Stop on CONTROL and rotate the bridge.','Release A, then roll across to GOAL.'},
- lock={'08 ZERO TO TURN','CW: thrust. Stop until bar is zero.','Direction locked above zero. B: retry.','Choose a direction before adding thrust.','Wait for zero before changing direction.'},
- absolute={'09 ABSOLUTE STEER','Crank position: direction. Hold A: push.','Hold longer: faster. Release A: coast.','Crank position sets thrust direction.','Hold A to accelerate; release to coast.'}
+ reverse={'Variation 6','CW: forward. CCW: reverse thrust.','D-pad: axis. B: retry.', 'Reverse thrust slows, then backs up.','Stop cranking and thrust fades.'},
+ track={'Variation 7','At CONTROL: hold A + turn crank.','Else: CW thrust / D-pad. B: retry.','Stop on CONTROL and rotate the bridge.','Release A, then roll across to GOAL.'},
+ lock={'Variation 8','CW: thrust. Stop until bar is zero.','Direction locked above zero. B: retry.','Choose a direction before adding thrust.','Wait for zero before changing direction.'},
+ absolute={'Variation 9','Crank position: direction. Hold A: push.','Hold longer: faster. Release A: coast.','Crank position sets thrust direction.','Hold A to accelerate; release to coast.'}
 }
 function E.context(course,x,y,vx,vy)
  E.course=course

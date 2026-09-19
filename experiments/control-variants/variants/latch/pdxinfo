@@ -1,6 +1,6 @@
-name=SH 5 Power Latch
+name=Variation 5
 author=Wang Yibo
 description=Reconstructed control comparison prototype 5. Shared core tracks.
 bundleID=com.wangyibo.skyhamster.variant.latch
-version=experiment-1.0
-buildNumber=1
+version=experiment-1.0.1
+buildNumber=2

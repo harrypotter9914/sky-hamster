@@ -1,15 +1,15 @@
 -- Newly reconstructed comparison prototypes, not original historical releases.
 Variants={}
 Variants.rules={
- speed={'01 SPEED DIAL','CW: raise speed. CCW: lower speed.','D-pad: direction. B: retry.',
+ speed={'Variation 1','CW: raise speed. CCW: lower speed.','D-pad: direction. B: retry.',
   'Set a target speed with the crank.','The dial stays where you leave it.','Steering approaches the target velocity.'},
- throttle={'02 HELD THROTTLE','CW: more thrust. CCW: less thrust.','D-pad: push / reverse brake. B: retry.',
+ throttle={'Variation 2','CW: more thrust. CCW: less thrust.','D-pad: push / reverse brake. B: retry.',
   'Set thrust; it remains after you stop.','Gravity still works with zero thrust.','Opposite direction adds strong braking.'},
- brake={'03 REVERSE BRAKE','CW: thrust. CCW: active brake.','D-pad: thrust direction. B: retry.',
+ brake={'Variation 3','CW: thrust. CCW: active brake.','D-pad: thrust direction. B: retry.',
   'Keep cranking clockwise to add thrust.','Stop cranking and thrust fades.','Crank backwards to slow without reversing.'},
- steering={'04 CRANK STEERING','Crank: turn heading. Hold A: thrust.','Release A: coast. B: retry.',
+ steering={'Variation 4','Crank: turn heading. Hold A: thrust.','Release A: coast. B: retry.',
   'The crank turns your thrust heading.','Hold A to push; release A to coast.','The arrow shows direction on the track.'},
- latch={'05 POWER LATCH','CW: thrust. Stop: thrust fades.','D-pad: direction. B: retry.',
+ latch={'Variation 5','CW: thrust. Stop: thrust fades.','D-pad: direction. B: retry.',
   'Keep cranking clockwise to add thrust.','High-power reversal clears the meter.','Crank again to build thrust; no brake boost.'}
 }
 function Variants.apply(id)
