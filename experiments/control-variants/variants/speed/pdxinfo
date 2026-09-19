@@ -1,0 +1,6 @@
+name=SH 1 Speed Dial
+author=Wang Yibo
+description=Reconstructed control comparison prototype 1. Shared core tracks.
+bundleID=com.wangyibo.skyhamster.variant.speed
+version=experiment-1.0
+buildNumber=1

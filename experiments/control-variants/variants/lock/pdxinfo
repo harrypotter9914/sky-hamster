@@ -1,0 +1,6 @@
+name=SH 8 Zero To Turn
+author=Wang Yibo
+description=Control comparison prototype 8
+bundleID=com.wangyibo.skyhamster.variant.lock
+version=experiment-1.0
+buildNumber=1

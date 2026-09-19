@@ -1,0 +1,6 @@
+name=SH 3 Reverse Brake
+author=Wang Yibo
+description=Reconstructed control comparison prototype 3. Shared core tracks.
+bundleID=com.wangyibo.skyhamster.variant.brake
+version=experiment-1.0
+buildNumber=1

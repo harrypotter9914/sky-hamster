@@ -1,0 +1,6 @@
+name=SH 4 Crank Steering
+author=Wang Yibo
+description=Reconstructed control comparison prototype 4. Shared core tracks.
+bundleID=com.wangyibo.skyhamster.variant.steering
+version=experiment-1.0
+buildNumber=1
