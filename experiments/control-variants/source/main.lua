@@ -222,7 +222,11 @@ function pd.update()
    Audio.play('jump')
   end
  end
- if pd.buttonJustPressed(pd.kButtonB) then reset(state=='win') end local crank=pd.getCrankChange()
+ if ExtraVariants.active and state=='play' then x,y,vx,vy=ExtraVariants.context(course,x,y,vx,vy) end
+ if pd.buttonJustPressed(pd.kButtonB) then
+  if not (state=='play' and ExtraVariants.active and ExtraVariants.release()) then reset(state=='win') end
+ end
+ local crank=pd.getCrankChange()
  if state=='play' and not overview then
   elapsed=elapsed+dt
   -- Control meters are updated after reading direction.
@@ -231,7 +235,6 @@ function pd.update()
   if pd.buttonIsPressed(pd.kButtonLeft) then dx=dx-1 end
   if pd.buttonIsPressed(pd.kButtonDown) then dy=dy+1 end
   if pd.buttonIsPressed(pd.kButtonUp) then dy=dy-1 end
-  if ExtraVariants.active then ExtraVariants.context(course,x,y,vx,vy) end
   dx,dy=Physics.controls(controls,(Build.variant or jumpEnabled) and crank or math.max(0,crank),dx,dy,dt);throttle=controls.power
   needsPower=(dx~=0 or dy~=0) and throttle<0.05 and vx*vx+vy*vy<4
   if not jumpEnabled then controls.charge=0 end
@@ -263,6 +266,7 @@ function pd.update()
     local _,sx,sy=course:height(x,y)
     local b;vx,vy,b=Physics.step(vx,vy,dx,dy,throttle,sx,sy,step);braking=braking or b
     x,y=x+vx*step,y+vy*step
+    if ExtraVariants.active then x,y,vx,vy=ExtraVariants.context(course,x,y,vx,vy) end
     local oldVX,oldVY=vx,vy
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,0,worldTime,step)
     if vx~=oldVX or vy~=oldVY then Audio.impact(math.sqrt((vx-oldVX)^2+(vy-oldVY)^2)) end

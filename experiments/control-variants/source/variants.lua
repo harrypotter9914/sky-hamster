@@ -7,8 +7,6 @@ Variants.rules={
   'Set thrust; it remains after you stop.','Gravity still works with zero thrust.','Opposite direction adds strong braking.'},
  brake={'Variation 3','CW: thrust. CCW: active brake.','D-pad: thrust direction. B: retry.',
   'Keep cranking clockwise to add thrust.','Stop cranking and thrust fades.','Crank backwards to slow without reversing.'},
- steering={'Variation 4','Crank: turn heading. Hold A: thrust.','Release A: coast. B: retry.',
-  'The crank turns your thrust heading.','Hold A to push; release A to coast.','The arrow shows direction on the track.'},
  latch={'Variation 5','CW: thrust. Stop: thrust fades.','D-pad: direction. B: retry.',
   'Keep cranking clockwise to add thrust.','High-power reversal clears the meter.','Crank again to build thrust; no brake boost.'}
 }
@@ -34,10 +32,6 @@ function Variants.apply(id)
   c.flash=0;c.charge=0
   if id=='speed' or id=='throttle' then
    c.power=math.max(0,math.min(1,c.power+crank/540))
-  elseif id=='steering' then
-   c.heading=(c.heading+crank)%360
-   c.power=playdate.buttonIsPressed(playdate.kButtonA) and 1 or 0
-   dx,dy=math.cos(math.rad(c.heading)),math.sin(math.rad(c.heading))
   else
    -- No latch in this alternative. Braking is angle-driven, independent of FPS.
    c.lastX,c.lastY=dx,dy
@@ -74,11 +68,6 @@ function Variants.apply(id)
   g.drawText(id=='speed' and 'SPEED' or 'POWER',7,25);g.drawRect(67,28,86,8);g.fillRect(68,29,math.floor(power*84),6)
   if id=='latch' then g.drawLine(118,24,118,39)
   elseif id=='brake' and active and active.brake>0 then g.drawText('BRAKE',165,25)
-  elseif id=='steering' and active then
-   -- Use the same isometric projection as the track, not a screen-space compass.
-   local a=math.rad(active.heading);local dx,dy=math.cos(a),math.sin(a)
-   local ex,ey=212+14*(dx-dy),33+7*(dx+dy)
-   g.drawLine(212,33,ex,ey);g.fillCircleAtPoint(ex,ey,2)
   end
   g.drawText(rule[2],5,204);g.drawText(rule[3],5,222)
  end
@@ -92,5 +81,5 @@ function Variants.apply(id)
  local g=playdate.graphics
  UI.powerHint=g.image.new(226,24,g.kColorWhite)
  g.pushContext(UI.powerHint);g.setColor(g.kColorBlack);g.drawRect(0,0,226,24)
- g.drawText(id=='steering' and 'Hold A for POWER' or id=='speed' and 'Turn clockwise for SPEED' or 'Turn clockwise for POWER',5,3);g.popContext()
+ g.drawText(id=='speed' and 'Turn clockwise for SPEED' or 'Turn clockwise for POWER',5,3);g.popContext()
 end

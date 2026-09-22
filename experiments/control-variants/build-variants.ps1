@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 $sdk = if ($env:PLAYDATE_SDK_PATH) { $env:PLAYDATE_SDK_PATH } else { 'C:/Users/12063/Documents/PlaydateSDK' }
-$rules = @('speed','throttle','brake','steering','latch','reverse','track','lock','absolute')
+$rules = @('speed','throttle','brake','direct','latch','reverse','track','lock')
 $out = Join-Path $PSScriptRoot 'builds/variants'
 New-Item -ItemType Directory -Force $out | Out-Null
 foreach ($rule in $rules) {
@@ -11,4 +11,4 @@ foreach ($rule in $rules) {
     & "$sdk/bin/pdc.exe" -sdkpath $sdk $stage "$out/sky-hamster-$rule.pdx"
     if ($LASTEXITCODE -ne 0) { throw "Build failed: $rule" }
 }
-Write-Output "Nine games: $out"
+Write-Output "Eight games: $out"

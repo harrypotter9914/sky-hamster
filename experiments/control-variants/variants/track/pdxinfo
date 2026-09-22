@@ -2,5 +2,5 @@ name=Variation 7
 author=Wang Yibo
 description=Control comparison prototype 7
 bundleID=com.wangyibo.skyhamster.variant.track
-version=experiment-1.0.1
-buildNumber=2
+version=experiment-1.1.0
+buildNumber=3
