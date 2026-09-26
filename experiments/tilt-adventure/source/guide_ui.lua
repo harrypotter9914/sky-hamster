@@ -44,6 +44,11 @@ local info={
  slider={'YOUR OWN SKY FERRY','Dock on the deck. Crank across; B releases.'},
  fan={'READ THE WIND','Counter-tilt. At a dial, crank to aim.'},
  windcontrol={'TURN THE WIND','Dock at the dial. Crank to aim; B releases.'},
+ conveyor={'THE ROAD IS MOVING','Belts carry grounded balls. Tilt or jump clear.'},
+ jet={'WAIT FOR QUIET','Nozzles pulse. Cross between the bursts.'},
+ magnet={'FEEL THE PULL','Stay away from the magnet. Counter-tilt early.'},
+ extend={'BUILD YOUR CROSSING','Dock. Crank to extend the road. B releases.'},
+ switch={'CHOOSE YOUR ROUTE','Crank the dial. One lane opens, one closes.'},
  bumper={'GIVE SPRINGS SOME SPACE','Springs bounce you away. Steer around them.'}}
 local machineArt={}
 for _,name in ipairs({'lift','slider','fan','bumper'}) do
@@ -123,6 +128,25 @@ function UI.lesson(kind,time)
    if t>=1 and t<3 then for i=1,6 do ink();g.fillCircleAtPoint(274+i*12,118-24*math.sin(i/6*math.pi)+23*i/6,1) end end
    left=t<1 and 'DOCK SLOWLY' or t<3 and 'TURN TO AIM' or 'PRESS A TO FIRE'
    right=t<1 and 'ENTER THE CANNON' or t<3 and 'CHECK THE ARC' or 'FLY TO THE ROAD'
+  elseif kind=='extend' then
+   slab(207,151,38,13);slab(336,151,37,13)
+   slab(245,151,math.max(5,ease((t-1)/2)*91),13);ball(227,138)
+   left=t<3 and 'CRANK TO EXTEND' or 'B: RELEASE';right=t<3 and 'BUILD THE CROSSING' or 'ROLL ACROSS'
+  elseif kind=='switch' then
+   slab(207,112,166,14);slab(207,150,166,14)
+   local y=t<3 and 150 or 112;ink();g.fillRect(294,y-25,10,25)
+   ball(239,t<3 and 99 or 137);left='TURN THE DIAL';right=t<3 and 'UPPER LANE OPEN' or 'LOWER LANE OPEN'
+  elseif kind=='conveyor' then
+   slab(207,138,166,24)
+   for i=0,4 do arrow(218+(i*29+t*12)%135,151,10,0) end
+   ball(230+ease(t/5)*108,126);left='COUNTER-TILT';right='BELT CARRIES THE BALL'
+  elseif kind=='jet' then
+   slab(207,142,166,22);local on=t<2.4
+   for i=0,4 do ink();g.fillCircleAtPoint(221+i*32,152,3);if on then arrow(221+i*32,148,0,-22) end end
+   ball(on and 228 or 228+ease((t-2.4)/2.8)*120,129);left=on and 'WAIT FOR QUIET' or 'TILT TO CROSS';right=on and 'STEAM IS ACTIVE' or 'NOZZLES ARE QUIET'
+  elseif kind=='magnet' then
+   slab(207,142,166,24);ink();g.setLineWidth(5);g.drawArc(331,110,12,90,270);g.setLineWidth(1)
+   ball(250+math.sin(t)*12,130);arrow(278,125,25,-8);left='COUNTER THE PULL';right='KEEP YOUR DISTANCE'
   elseif kind=='lift' then
    local u=ease((t-1)/2);local sy=148-u*37
    slab(206,157,29,10);slab(335,115,38,10)
@@ -170,7 +194,7 @@ function UI.lesson(kind,time)
   if kind=='jump' then
    liftDevice:draw(48+lift*.31,85+lift*.95)
   else poses[dir][pose]:draw(48,85) end
-  if kind=='control' or kind=='cannon' or kind=='lift' or kind=='slider' or kind=='fan' then
+  if kind=='control' or kind=='cannon' or kind=='lift' or kind=='slider' or kind=='fan' or kind=='extend' or kind=='switch' then
    local a=t*2;ink();g.drawCircleAtPoint(151,135,10);g.drawLine(151,135,151+math.cos(a)*9,135+math.sin(a)*9)
   end
   if left=='PRESS A TO FIRE' then UI.key('A',58,175,'Fire') elseif left=='B: RELEASE' then UI.key('B',49,175,'Release') else center(left,96,177) end

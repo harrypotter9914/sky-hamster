@@ -5,6 +5,7 @@ import "mechanisms"
 import "spatial"
 import "physics_tests"
 import "campaign"
+import "workshop_courses"
 import "ui"
 import "build"
 import "classroom"
@@ -13,6 +14,7 @@ import "audio"
 import "tilt"
 import "dock"
 import "expansion"
+import "workshop"
 import "tilt_ui"
 import "guide"
 import "guide_ui"
@@ -394,7 +396,7 @@ function pd.update()
    local step=dt/steps
    local oldX,oldY=x,y
    local beforeTime=worldTime
-   vx,vy=Mechanisms.wind(course,x,y,vx,vy,(airborne and jumpZ or ballHeight)-floorAt(x,y),step)
+   vx,vy=Mechanisms.wind(course,x,y,vx,vy,(airborne and jumpZ or ballHeight)-floorAt(x,y),step,worldTime)
    local _,riding=support(x,y)
    worldTime=worldTime+step
    if not airborne and riding and (riding.kind=="ferry" or riding.kind=="rotor") then

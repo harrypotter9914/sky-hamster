@@ -92,7 +92,7 @@ select(#Courses);put('lesson',false);put('x',Courses[#Courses].goal[1]);put('y',
 assert(get('state')=='win' and store.saved.completed[#Courses])
 frame({a=true});assert(get('ending'));frame({a=true});assert(get('title') and not get('ending'))
 select(Courses.legacyIndex[1]);put('lesson',false);put('state','dead');frame({a=true});assert(get('state')=='play')
-print('PASS: calibration, neutral drift, proportional tilt, jump debounce, dock re-entry, bridge, cannon landing, 33 courses, map, retry, save and campaign ending')
+print('PASS: calibration, neutral drift, proportional tilt, jump debounce, dock re-entry, bridge, cannon landing, all courses, map, retry, save and campaign ending')
 """)
 
 # Menu transitions and options must never advance the live course.
@@ -210,7 +210,7 @@ local dock=Dock.active;local angle=dock.angle
 frame({right=true});frame(nil,nil,90);frame({b=true});assert(Dock.active==dock and dock.angle==angle)
 frame({left=true});frame({b=true});assert(Dock.active==dock)
 for n,c in ipairs(Courses) do for i=1,#UI.goalPages(c,n) do UI.goal(c,n,i) end end
-print('PASS: Help replay, B return, full replay resume, Goal paging, frozen physics/time, no accidental jump or cannon release, all 33 route notes')
+print('PASS: Help replay, B return, full replay resume, Goal paging, frozen physics/time, no accidental jump or cannon release, all route notes')
 """)
 
 

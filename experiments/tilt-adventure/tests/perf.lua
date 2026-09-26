@@ -9,7 +9,7 @@ playdate.buttonIsPressed=function() return false end
 playdate.getCrankChange=function() return 0 end
 import 'game'
 local update=playdate.update
-local stages={19,23,28,30,32,33}
+local stages={34,36,38,40,42,44}
 local stage,frame=0,0
 local samples,costs={},{}
 local now=playdate.getCurrentTimeMilliseconds

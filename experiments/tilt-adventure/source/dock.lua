@@ -60,7 +60,7 @@ function D.draw(course,project)
     buildCannons();local n=math.max(1,math.min(17,math.floor(((p.angle or 0)+math.pi/3)/(math.pi/24)+1.5)))
     cannonArt[n]:draw(x-51,y-96)
     if D.active==p then for i=1,10 do local t=i*.1;local px,py=project(p.x+math.cos(p.angle)*210*t,p.y+math.sin(p.angle)*210*t,course:height(p.x,p.y)+150*t-150*t*t);g.setColor(g.kColorBlack);g.fillCircleAtPoint(px,py,2) end end
-   elseif p.kind=='bridge' or p.kind=='fan' then
+   elseif p.kind=='bridge' or p.kind=='fan' or p.kind=='extend' or p.kind=='switch' then
     g.setColor(g.kColorBlack);g.fillEllipseInRect(x-23,y-8,46,21)
     g.setColor(g.kColorWhite);g.fillEllipseInRect(x-22,y-10,44,18);g.setColor(g.kColorBlack);g.drawEllipseInRect(x-22,y-10,44,18);g.drawEllipseInRect(x-15,y-7,30,12)
     for i=0,7 do local a=i*math.pi/4;local px,py=x+math.cos(a)*18,y-1+math.sin(a)*7;g.fillRect(px-1,py-1,2,2) end
@@ -69,7 +69,7 @@ function D.draw(course,project)
    if UI and UI.worldSign then
     local tx=math.max(4,math.min(319,x>275 and x-114 or x+48));local ty=math.max(48,math.min(176,y-29))
     g.setColor(g.kColorBlack);g.drawLine(x+18,y-12,tx,ty+11)
-    UI.worldSign(({cannon='CANNON',lift='LIFT',slider='FERRY',fan='WIND'})[p.kind] or 'CRANK',tx,ty)
+    UI.worldSign(({cannon='CANNON',lift='LIFT',slider='FERRY',fan='WIND',extend='EXTEND',switch='ROUTE'})[p.kind] or 'CRANK',tx,ty)
    end
   end
  end

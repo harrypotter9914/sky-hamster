@@ -1,3 +1,5 @@
+Latest — tilt 0.3.0: 44-course build and regressions passed. Installation returned No Playdate device detected. This release is not confirmed installed; device performance is unverified.
+
 Latest — 2026-09-26, tilt 0.2.0: 33-course release built and host/native Simulator checks passed. 0.1.9 was installed and launched on COM4 earlier in this session. Later attempts to install both the 0.2.0 hardware workload and release returned "No Playdate device detected." Last confirmed hardware version: 0.1.9. 0.2.0 is not confirmed installed; physical gesture feel, full route playthrough and hardware frame rate remain unverified. See VALIDATION-v020.md.
 
 Previous attempts (superseded):

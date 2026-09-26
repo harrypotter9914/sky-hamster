@@ -1,7 +1,7 @@
 """Run gameplay regression suite, then exercise the expanded campaign."""
 from check_tilt import lua
 lua.execute('''
-assert(#Courses==33)
+assert(#Courses==44)
 local migrated=Courses.migrate({level=16,completed={['15']=true,['16']=true},best={['16']=12.5}})
 assert(migrated.level==26 and migrated.completed[17] and migrated.completed[26] and migrated.best['26']==12.5)
 assert(Courses.migrate(migrated)==migrated)
@@ -52,5 +52,5 @@ for i,p in ipairs(Courses[33].checkpoints) do
  assert(get('checkpoint')==i,'checkpoint '..i)
 end
 put('state','dead');frame({a=true});assert(get('x')==3536 and get('y')==240)
-print('PASS: 33-course anchors, progress migration, all tutorials, lift stops and height collision, moving dock, wind control, bumper jump clearance, cannon routes, five checkpoints')
+print('PASS: 44-course anchors, progress migration, all tutorials, lift stops and height collision, moving dock, wind control, bumper jump clearance, cannon routes, five checkpoints')
 ''')

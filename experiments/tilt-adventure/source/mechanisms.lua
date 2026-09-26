@@ -137,10 +137,12 @@ function M.draw(course,t,project)
    end
   end
   local cx,cy=M.pose(m,t);local sx,sy=project(cx,cy,h+(wall and not opened and (m.wallHeight or 80) or 0))
-  local label=m.kind=='gate' and (opened and 'GO' or 'WAIT') or m.kind=='trap' and (opened and 'HOLE' or M.warning(m,t) and 'OPENING!' or 'CROSS') or m.kind=='rotor' and 'ROTATE' or m.kind=='ferry' and 'RIDE' or 'WATCH'
+  local label=m.kind=='gate' and (opened and 'GO' or 'WAIT') or m.kind=='trap' and (opened and 'HOLE' or M.warning(m,t) and 'OPENING!' or 'CROSS') or m.retract and 'EXTEND' or m.kind=='rotor' and 'ROTATE' or m.kind=='ferry' and 'RIDE' or 'WATCH'
+  if not m.retract and not m.hideLabel then
   local width=g.getTextSize(label)
   g.setColor(g.kColorWhite);g.fillRect(sx-width/2-3,sy-29,width+6,18)
   g.setColor(g.kColorBlack);g.drawTextAligned(label,sx,sy-28,kTextAlignment.center)
+  end
   end
  end
 end

@@ -103,7 +103,7 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
  end
  for _,m in ipairs(course.mechanisms or empty) do
   local open=(m.kind=='gate' or m.kind=='trap') and Mechanisms.open(m,t)
-  if not open and m.kind~='fan' and m.kind~='bumper' then
+  if not open and m.kind~='fan' and m.kind~='bumper' and m.kind~='conveyor' and m.kind~='jet' and m.kind~='magnet' then
    local x,y,a=Mechanisms.pose(m,t);local floor=m.kind=='lift' and (m.elevation or m.minHeight) or course:height(x,y)
    local wall=m.kind=='gate' or m.kind=='sweeper'
    local roof=wall and floor+(m.wallHeight or 80) or floor

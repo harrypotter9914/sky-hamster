@@ -74,6 +74,7 @@ finale.mechanisms[#finale.mechanisms+1]={kind='sweeper',x=4016,y=240,w=18,h=70,r
 finale.checkpoints={{912,80},{1568,80},{2128,112},{2960,112},{3536,240}}
 local order={old[1],old[2],old[3],old[4],old[5],old[6],old[7],jump,old[8],old[9],old[10],old[11],old[12],bumps,slalom,gust,old[15],bridge,elevator,towers,descent,shuttle,zig,wind,windrelay,old[16],cannons,high,old[13],old[14],old[17],gauntlet,finale}
 Courses=order;Courses.legacy=old;Courses.indexById={};Courses.legacyIndex={}
+Courses.create=create
 for i,c in ipairs(Courses) do
  c.name=string.format('%02d / %s',i,string.upper(c.shortName));Courses.indexById[c.id]=i
  if c.legacyIndex then Courses.legacyIndex[c.legacyIndex]=i end

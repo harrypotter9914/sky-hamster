@@ -63,6 +63,10 @@ function playdate.update()
   export('v20-lift-top',function() world(19,224,80);Dock.update(Courses[19],224,80,0,0,false,384,false,false);Review.place(224,80);Review.render() end)
   export('v20-slider-end',function() world(22,184,80);Dock.update(Courses[22],184,80,0,0,false,540,false,false);Review.place(488,80);Review.render() end)
   print('PASS: v20 campaign and machinery visual exports complete')
+  for _,kind in ipairs({'conveyor','jet','extend','switch','magnet'}) do for i,t in ipairs({0,2,4}) do export('v30-'..kind..'-'..i,function() UI.lesson(kind,t) end) end end
+  for _,v in ipairs({{34,304,112},{36,304,112},{38,144,112},{40,240,112},{42,272,112},{44,4800,240}}) do export('v30-world-'..v[1],function() world(table.unpack(v)) end) end
+  export('v30-extended',function() world(38,144,112);Dock.update(Courses[38],144,112,0,0,false,400,false,false);Review.render() end)
+  export('v30-map',function() UI.map(Courses[44],48,80,0) end)
   done=true
  end
  clock=clock+33;UI.title(1)

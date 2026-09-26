@@ -245,7 +245,7 @@ function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  if bottomKey~=bk then bottomKey=bk;bottom=bitmap(400,37,function()
   g.setColor(g.kColorWhite);g.fillRect(0,0,400,37);ink();g.drawLine(0,0,400,0);g.drawLine(2,2,398,2)
   if dock~='roll' then
-   controlHint('crank',({cannon='Aim',lift='Raise/lower',slider='Travel',fan='Aim wind'})[dock] or 'Rotate',8,2)
+   controlHint('crank',({cannon='Aim',lift='Raise/lower',slider='Travel',fan='Aim wind',extend='Extend',switch='Route'})[dock] or 'Rotate',8,2)
    if dock=='cannon' then controlHint('A','Fire',138,2) end;controlHint('B','Release',292,2)
   else
    controlHint('up','Map',8,2);controlHint('down','Recenter',138,2)
@@ -314,7 +314,12 @@ local machineNotes={
  lift={'LIFT','Dock at the center; crank up or down.','B releases. Match the exit height.'},
  slider={'CRANK FERRY','Dock on the deck; crank to travel.','B releases at the destination.'},
  fan={'WIND','The gust pushes the ball sideways.','At a wind dial, crank to change aim.'},
- bumper={'SPRING BUMPER','Contact rebounds the ball outward.','Steer around or jump over it.'}}
+ bumper={'SPRING BUMPER','Contact rebounds the ball outward.','Steer around or jump over it.'},
+ conveyor={'CONVEYOR','The belt moves a grounded ball.','Counter-tilt or jump off the belt.'},
+ jet={'STEAM NOZZLES','Pulses push hard across the road.','Wait for the quiet part of the cycle.'},
+ magnet={'MAGNETIC FIELD','Attraction gets stronger nearby.','Keep distance; counter-tilt early.'},
+ extend={'EXTENDING BRIDGE','Dock, then crank the bridge outward.','Reach the far road before releasing.'},
+ switch={'ROUTE SWITCH','Crank to open one of two lanes.','One gate opens as the other closes.'}}
 local goalCache={}
 function UI.goalPages(course,level)
  if goalCache[level] then return goalCache[level] end

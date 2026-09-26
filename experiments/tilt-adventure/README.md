@@ -1,4 +1,6 @@
-# Sky Hamster Tilt — 0.2.0
+# Sky Hamster Tilt — 0.3.0
+
+Current release adds five mechanism types and eleven routes, for 44 courses. See [0.3.0 workshop expansion](WORKSHOP-v030.md). Run `python tests/check_workshop.py` for the complete current regression suite. Hardware installation and profiling remain pending device reconnection.
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and other control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
