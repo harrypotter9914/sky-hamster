@@ -42,3 +42,11 @@ SDK compilation passed after the SDK update. Simulator title, tutorial and gamep
 - Accelerometer and launcher asset requirements: https://sdk.play.date/3.1.1/
 - Cover/presentation references: https://play.date/games/crankin/ and https://play.date/games/mars-after-midnight/
 - Original title asset retained at `art/title-original.png`; runtime 400×240 monochrome conversion is `source/title-art.png`.
+
+## UI refresh — 0.1.1
+
+Home has only **Start Game** and **Settings**. Start Game continues the saved course; in-game system menu opens Level select, Map / pause, or Title / settings. Settings persist effects, music, scene animation and lift-to-jump. A remains a jump alternative when lift gestures are disabled.
+
+The 400×240 title is a fixed one-bit scene, with separately cached islands, clouds and a four-frame flag. The HUD, selector, chart, tutorials, calibration and results share pixel icons and frames. Course previews show actual floor layouts, and selection remains column-first.
+
+`art/prepare-title.ps1` exports the source illustration into one-bit runtime and launcher assets. Build with `build.ps1`. Host regression checks: `tests/check_tilt.py` (Python + lupa). Simulator UI export harness: `tests/ui_review.lua`, used only in a separate review bundle, never the shipping game. Real-device performance still needs verification.

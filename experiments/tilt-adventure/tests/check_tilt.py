@@ -91,3 +91,28 @@ frame({a=true});assert(get('ending'));frame({a=true});assert(get('title') and no
 select(1);put('lesson',false);put('state','dead');frame({a=true});assert(get('state')=='play')
 print('PASS: calibration, neutral drift, proportional tilt, jump debounce, dock re-entry, bridge, cannon landing, 17 courses, map, retry, save and campaign ending')
 """)
+
+# Menu transitions and options must never advance the live course.
+lua.execute("""
+menu['Title / settings']();assert(get('title'))
+frame({down=true});frame({down=true});assert(get('titleChoice')==2)
+local elapsed=get('elapsed');local pos=get('x')
+frame({a=true});assert(get('settings'))
+frame({a=true});assert(not Audio.effects and store.saved.options.effects==false)
+frame({down=true});frame({a=true});assert(not Audio.musicEnabled and not store.saved.options.music)
+frame({down=true});frame({a=true});assert(not UI.motion and not store.saved.options.motion)
+frame({down=true});frame({a=true});assert(not get('gesture') and not store.saved.options.gesture)
+for i=1,10 do frame() end
+assert(get('elapsed')==elapsed and get('x')==pos)
+frame({b=true});assert(not get('settings') and get('title'))
+frame({up=true});frame({a=true});assert(not get('title'))
+put('lesson',false);for i=1,40 do frame() end
+local level=get('level');local before=get('elapsed');local xx=get('x')
+menu['Level select']();assert(get('choosing'));frame({right=true});frame({b=true})
+assert(not get('choosing') and get('level')==level and get('x')==xx and get('elapsed')==before)
+for _,kind in ipairs({'gate','trap','ferry','rotor','sweeper','control','cannon','relay'}) do UI.lesson(true,kind) end
+for i=1,#Courses do UI.selector(i,{}) end
+UI.settings(4,false,false,false);UI.calibration();UI.failure(1,true);UI.result(60,1,55,false);UI.ending({[1]=true})
+assert(UI.moveSelection(3,'right',17)==6 and UI.moveSelection(6,'right',17)==9)
+print('PASS: two home entries, settings persistence, paused menus, selector return, all UI states and column-first navigation')
+""")

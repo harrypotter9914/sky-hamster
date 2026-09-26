@@ -32,15 +32,23 @@ local selected=1
 local lesson=true
 local title=not Build.classroom
 local titleChoice=1
+local settings=false
+local settingsChoice=1
+local gesture=true
 local selectorReturn
 local saved=pd.datastore and pd.datastore.read('tilt-progress') or {}
 saved=saved or {}
+local options=saved.options or {}
+UI.motion=options.motion~=false
+gesture=options.gesture~=false
+if options.effects==false then Audio.toggleEffects() end
+if options.music==false then Audio.toggleMusic() end
 local completed={}
 for k,v in pairs(saved.completed or {}) do if tonumber(k) then completed[tonumber(k)]=v end end
 local best=saved.best or {}
 local ending=false
 local function saveProgress()
- if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level},'tilt-progress') end
+ if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
 local jumpEnabled=false
@@ -68,7 +76,7 @@ local function beginFall(height,verticalSpeed)
 end
 local function selectLevel(n) ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true);if prepareTerrain then prepareTerrain() end end
 local function openSelector()
- if choosing then return end
+ if choosing or settings or title then return end
  selectorReturn={title=title,overview=overview,lesson=lesson}
  title=false;overview=false;choosing=true;selected=level;Audio.quiet()
 end
@@ -158,8 +166,7 @@ local function marker(point,label,foreground)
  -- Raised sign with a leader to the exact pad, never text on the road surface.
  g.setColor(g.kColorBlack)
  g.drawLine(p,q,math.max(tx+4,math.min(tx+68,p)),math.max(ty+3,math.min(ty+20,q)))
- g.setColor(g.kColorWhite);g.fillRoundRect(tx,ty,72,23,3)
- g.setColor(g.kColorBlack);g.drawRoundRect(tx,ty,72,23,3);g.drawText(text,tx+5,ty+3)
+ UI.worldSign(text,tx,ty)
  if label=='GOAL' then
   g.drawLine(p-15,q,p-15,q-23)
   for i=0,2 do for j=0,1 do if (i+j)%2==0 then g.fillRect(p-15+i*4,q-23+j*4,4,4) end end end
@@ -178,15 +185,25 @@ function pd.update()
  end
  local started=false
  needsPower=false
+ if settings then
+  Audio.quiet();pd.getCrankChange()
+  if pd.buttonJustPressed(pd.kButtonUp) then settingsChoice=math.max(1,settingsChoice-1) end
+  if pd.buttonJustPressed(pd.kButtonDown) then settingsChoice=math.min(4,settingsChoice+1) end
+  if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonLeft) or pd.buttonJustPressed(pd.kButtonRight) then
+   if settingsChoice==1 then Audio.toggleEffects() elseif settingsChoice==2 then Audio.toggleMusic()
+   elseif settingsChoice==3 then UI.motion=not UI.motion else gesture=not gesture end
+   saveProgress();Audio.play('menu')
+  end
+  if pd.buttonJustPressed(pd.kButtonB) then settings=false;saveProgress() end
+  UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture);return
+ end
  if title then
   if pd.buttonJustPressed(pd.kButtonUp) then titleChoice=math.max(1,titleChoice-1);Audio.play('menu') end
-  if pd.buttonJustPressed(pd.kButtonDown) then titleChoice=math.min(4,titleChoice+1);Audio.play('menu') end
+  if pd.buttonJustPressed(pd.kButtonDown) then titleChoice=math.min(2,titleChoice+1);Audio.play('menu') end
   if pd.buttonJustPressed(pd.kButtonA) then
    Audio.play('menu')
    if titleChoice==1 then Tilt.startCalibration();selectLevel(level)
-   elseif titleChoice==2 then openSelector()
-   elseif titleChoice==3 then Audio.toggleEffects()
-   else Audio.toggleMusic() end
+   else settings=true;settingsChoice=1 end
   end
   pd.getCrankChange();Audio.quiet();UI.title(titleChoice,Audio.effects,Audio.musicEnabled);return
  end
@@ -225,7 +242,7 @@ function pd.update()
  if Tilt.calibrating then Audio.quiet();pd.getCrankChange();UI.calibration();return end
  if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonDown) then Tilt.startCalibration();return end
  if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonUp) then overview=true;Audio.quiet();return end
- local lifted=Tilt.consumeJump()
+ local lifted=Tilt.consumeJump() and gesture
  if not started and not Dock.active and (pd.buttonJustPressed(pd.kButtonA) or lifted) then
   if state=='win' and pd.buttonJustPressed(pd.kButtonA) then
    if level==#Courses then ending=true else selectLevel(level+1) end
@@ -367,10 +384,7 @@ function pd.update()
  elseif needsPower and state=='play' then
   UI.powerHint:draw(87,48)
  end if state=='win' then
-  g.setColor(g.kColorWhite);g.fillRoundRect(55,75,290,88,8);g.setColor(g.kColorBlack);g.drawRoundRect(55,75,290,88,8)
-  g.drawTextAligned('COURSE CLEAR!',200,84,kTextAlignment.center)
-  g.drawTextAligned(string.format('%.1fs / %d falls / Best %.1fs',elapsed,falls,best[tostring(level)] or elapsed),200,108,kTextAlignment.center)
-  g.drawTextAligned(level==#Courses and 'A: journey complete   B: retry' or 'A: next level   B: retry',200,137,kTextAlignment.center)
+  UI.result(elapsed,falls,best[tostring(level)] or elapsed,level==#Courses)
  end
 end
 pd.getSystemMenu():addMenuItem('Level select',openSelector)
@@ -381,7 +395,7 @@ if not Build.classroom then
  pd.getSystemMenu():removeAllMenuItems()
  pd.getSystemMenu():addMenuItem('Level select',openSelector)
  pd.getSystemMenu():addMenuItem('Map / pause',function() if not title then overview=not overview end;Audio.quiet() end)
- pd.getSystemMenu():addMenuItem('Title / sound',function() title=true;choosing=false;overview=false;titleChoice=1;Audio.quiet() end)
+ pd.getSystemMenu():addMenuItem('Title / settings',function() settings=false;ending=false;title=true;choosing=false;overview=false;titleChoice=1;Audio.quiet() end)
 end
 pd.gameWillPause=function() Audio.pause();saveProgress() end
 pd.gameWillResume=function() last=pd.getCurrentTimeMilliseconds();Tilt.cooldown=.75;Tilt.armed=false;Audio.resume() end
