@@ -1,4 +1,4 @@
-# Tutorial and interface art — 0.1.5
+# Tutorial and interface art — 0.7.5
 
 Mode: built-in image_gen. Transparent masters are stored beside this document. `prepare-ui.ps1` crops transparent padding, preserves aspect ratio, scales to runtime dimensions, and thresholds to black/white while retaining alpha. Runtime sprites live in `../source/`. The title scene is unchanged.
 

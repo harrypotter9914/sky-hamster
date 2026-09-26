@@ -17,7 +17,9 @@ end,place=function(a,b)
 end}
 "@ | Add-Content "$qa/game.lua"
 Copy-Item "$PSScriptRoot/ui_review.lua" "$qa/main.lua"
-"name=Tilt UI Review`nbundleID=com.wangyibo.skyhamster.ui-review`nversion=0.1.2" | Set-Content "$qa/pdxinfo"
+$releaseInfo=Get-Content "$root/source/pdxinfo" -Raw
+$releaseVersion=[regex]::Match($releaseInfo,'(?m)^version=([^\r\n]+)').Groups[1].Value
+"name=Tilt UI Review`nbundleID=com.wangyibo.skyhamster.ui-review`nversion=$releaseVersion" | Set-Content "$qa/pdxinfo"
 $sdk=if($env:PLAYDATE_SDK_PATH){$env:PLAYDATE_SDK_PATH}else{'C:/Users/12063/Documents/PlaydateSDK'}
 & "$sdk/bin/pdc.exe" -sdkpath $sdk $qa (Join-Path $repo 'builds/tilt-ui-qa.pdx')
 if($LASTEXITCODE -ne 0){throw 'Review build failed'}

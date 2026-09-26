@@ -1,0 +1,107 @@
+[
+  {
+    "version": "0.7.0",
+    "tag": "v0.7.0",
+    "previous_tag": "tilt-v0.1.0",
+    "original_commit": "29b0ade3bc0389a167f737540c007a926fdc4641",
+    "title": "倾斜控球与完整游戏循环"
+  },
+  {
+    "version": "0.7.1",
+    "tag": "v0.7.1",
+    "previous_tag": "tilt-v0.1.1",
+    "original_commit": "961f16d16e3545f6c40f819b62287cd8a48222e0",
+    "title": "整合标题、设置与像素界面"
+  },
+  {
+    "version": "0.7.2",
+    "tag": "v0.7.2",
+    "previous_tag": "tilt-v0.1.2",
+    "original_commit": "a5bbdb006ed05ad0ee208dd100b5b6f0352125f7",
+    "title": "道路材质与首次机制教学"
+  },
+  {
+    "version": "0.7.3",
+    "tag": "v0.7.3",
+    "previous_tag": "tilt-v0.1.3",
+    "original_commit": "7c51095b4903431dc9b67e13c0360ae5b265ba58",
+    "title": "平放操控校准"
+  },
+  {
+    "version": "0.7.4",
+    "tag": "v0.7.4",
+    "previous_tag": "tilt-v0.1.4",
+    "original_commit": "6f08f38d76fe9e633a78324b043d3df5b7dfa4ea",
+    "title": "球顶方向指示"
+  },
+  {
+    "version": "0.7.5",
+    "tag": "v0.7.5",
+    "previous_tag": "tilt-v0.1.5",
+    "original_commit": "de66ee43807c78988f9fe549c720b5df937513f0",
+    "title": "教学动画与界面细化"
+  },
+  {
+    "version": "0.7.6",
+    "tag": "v0.7.6",
+    "previous_tag": "tilt-v0.1.6",
+    "original_commit": "5748f26b01159ff2bffffc6a55b72a28fb3746b8",
+    "title": "随时查看帮助与关卡目标"
+  },
+  {
+    "version": "0.7.7",
+    "tag": "v0.7.7",
+    "previous_tag": "tilt-v0.1.7",
+    "original_commit": "bfe2b5a8867b4d90207121bb958d61a64a2a94e4",
+    "title": "任意握姿校准与道路方向映射"
+  },
+  {
+    "version": "0.7.8",
+    "tag": "v0.7.8",
+    "previous_tag": "tilt-v0.1.8",
+    "original_commit": "0b6173b869c1af97a4fa571af93524b06521dc9c",
+    "title": "底栏按键图标与对齐"
+  },
+  {
+    "version": "0.7.9",
+    "tag": "v0.7.9",
+    "previous_tag": "tilt-v0.1.9",
+    "original_commit": "57b29279efac2be2d68ee53c09ad556c890e4a9a",
+    "title": "当前朝向跳跃与落地动量修复"
+  },
+  {
+    "version": "0.8.0",
+    "tag": "v0.8.0",
+    "previous_tag": "tilt-v0.2.0",
+    "original_commit": "8a4d809cc309ae7800ee0a712c6da6a7a4f01d6c",
+    "title": "33 关与升降台、横移台、风机、弹簧"
+  },
+  {
+    "version": "0.9.0",
+    "tag": "v0.9.0",
+    "previous_tag": "tilt-v0.3.0",
+    "original_commit": "41d40c725e4e4f437f71f529bebfa40bfabba8cc",
+    "title": "44 关与五类新机关"
+  },
+  {
+    "version": "0.10.0",
+    "tag": "v0.10.0",
+    "previous_tag": "tilt-v0.4.0",
+    "original_commit": "376f33227971dfd25574bcbe6ada1cab41828dfa",
+    "title": "机关专用美术、动画与道路细化"
+  },
+  {
+    "version": "0.10.1",
+    "tag": "v0.10.1",
+    "previous_tag": "tilt-v0.4.1",
+    "original_commit": "1b2d4c100bd1aadf21742043762157857f093249",
+    "title": "保留效果的真机性能优化"
+  },
+  {
+    "version": "0.10.2",
+    "tag": "v0.10.2",
+    "previous_tag": "tilt-v0.4.2",
+    "original_commit": "1b1cc71381349fae13fbf94d18b76e5f0214a8c9",
+    "title": "跳跃灵敏度与轻微操控调整"
+  }
+]

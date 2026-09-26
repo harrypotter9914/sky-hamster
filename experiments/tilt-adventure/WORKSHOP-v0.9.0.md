@@ -1,4 +1,4 @@
-# 0.3.0 — more kinds of decisions
+# 0.9.0 — more kinds of decisions
 
 The campaign now has 44 courses, adding 11 after the existing 33. Existing course numbers and saves stay valid. Each new mechanism has an introduction, a longer practice route, a first-encounter animated guide and a Goal reference page.
 

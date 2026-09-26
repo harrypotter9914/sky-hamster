@@ -1,4 +1,4 @@
-# 0.4.0 machinery and paving assets
+# 0.10.0 machinery and paving assets
 
 Seven transparent machinery masters and one opaque paving master were generated for this release. Runtime PNGs are thresholded to black/white; white is solid paint, alpha remains transparent. Prompts and originals are retained so the material set can be revised consistently.
 

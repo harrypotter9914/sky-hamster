@@ -1,4 +1,4 @@
-# 0.2.0 — 33-course campaign
+# 0.8.0 — 33-course campaign
 
 ## Design references and adaptation
 

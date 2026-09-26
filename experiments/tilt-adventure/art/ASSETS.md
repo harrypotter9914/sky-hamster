@@ -1,4 +1,4 @@
-# 0.1.2 asset notes
+# 0.7.2 asset notes
 
 The title road and oversized cannon were produced with the built-in image generation tool. Runtime exports use deterministic resizing, one-bit thresholding and alpha preservation, with no per-frame image scaling in gameplay.
 

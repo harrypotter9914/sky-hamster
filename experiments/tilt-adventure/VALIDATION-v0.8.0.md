@@ -1,4 +1,4 @@
-# 0.2.0 validation
+# 0.8.0 validation
 
 ## Passed
 
@@ -31,7 +31,7 @@ Terrain occlusion boxes are indexed in projected 128-pixel buckets. Each ball qu
 
 ## Hardware status
 
-0.1.9 was installed and launched on COM4 earlier in this session. The subsequent 0.2.0 hardware workload installation returned `No Playdate device detected`; Windows also showed no Playdate serial device or mounted volume at that check. No 0.2.0 real-device FPS or physical playthrough is claimed yet.
+0.7.9 was installed and launched on COM4 earlier in this session. The subsequent 0.8.0 hardware workload installation returned `No Playdate device detected`; Windows also showed no Playdate serial device or mounted volume at that check. No 0.8.0 real-device FPS or physical playthrough is claimed yet.
 
 `tests/build-perf.ps1` creates an isolated workload source copy and outputs `builds/tilt-perf/sky-hamster-tilt.pdx`. It deliberately uses the release installation filename to avoid accumulating another game entry. The script replaces only test inputs and storage in that copy, scans six demanding routes for 180 frames each, and prints frame intervals, update costs, chunk misses and Lua memory. After measurement, reinstall `builds/sky-hamster-tilt.pdx` to restore the normal game.
 

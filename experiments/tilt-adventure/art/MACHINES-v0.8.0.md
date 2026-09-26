@@ -1,4 +1,4 @@
-# 0.2.0 machinery assets
+# 0.8.0 machinery assets
 
 Prepared with the built-in image generation tool. Original PNGs are retained here. `prepare-machines.ps1` alpha-crops, fits, thresholds to one bit and preserves transparency using System.Drawing. Runtime dimensions: lift 116×86, slider 144×96, fan 52×52, bumper 44×44. Gameplay draws cached images at native size; tutorials cache smaller exports at startup. Existing cannon and Playdate artwork are reused.
 

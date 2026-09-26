@@ -1,6 +1,6 @@
-# Tilt Adventure 0.4.0 — visuals, animation and device validation
+# Tilt Adventure 0.10.0 — visuals, animation and device validation
 
-Release status: 0.4.0 / build 13 installed and launched successfully on the physical Playdate on 2026-09-26. The shipping bundle replaced the workload in `/Games/sky-hamster-tilt.pdx`; startup checks passed and no error was captured. Local release archive: repository-root `builds/sky-hamster-tilt-v0.4.0.zip`.
+Release status: 0.10.0 / build 13 installed and launched successfully on the physical Playdate on 2026-09-26. The shipping bundle replaced the workload in `/Games/sky-hamster-tilt.pdx`; startup checks passed and no error was captured. Local release archive: repository-root `builds/sky-hamster-tilt-v0.4.0.zip`.
 
 ## What changed
 
@@ -22,7 +22,7 @@ The 44-course campaign is unchanged. Five workshop mechanisms now have dedicated
 | Moving panel / timed gate | Riveted metal faces, warning stripes and driven gears; timed gate retracts smoothly |
 | Vanishing floor | Existing reinforced deck and timing; blinking warning rivets before the gap opens |
 
-Tutorials reuse the dedicated workshop sprites and moving components. The wind station sign was moved above the fan to expose its rotor. See [art sources, prompts and native screenshots](art/VISUALS-v040.md).
+Tutorials reuse the dedicated workshop sprites and moving components. The wind station sign was moved above the fan to expose its rotor. See [art sources, prompts and native screenshots](art/VISUALS-v0.10.0.md).
 
 ## Checks
 

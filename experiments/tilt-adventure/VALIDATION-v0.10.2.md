@@ -1,6 +1,6 @@
-# Tilt 0.4.2 — easier lift and small steering adjustment
+# Tilt 0.10.2 — easier lift and small steering adjustment
 
-Date: 2026-09-26. Build 15. This patch changes the tilt edition only.
+Date: 2026-09-26. Originally numbered 0.4.2 / build 15; unified full-game version 0.10.2 / build 38. See [version table](../../docs/VERSIONS.md).
 
 ## Final tuning
 
@@ -33,8 +33,10 @@ With no input, stopping times and distances at all three speeds are exactly unch
 
 ## Build and hardware
 
-SDK build passed: `builds/sky-hamster-tilt.pdx`, version 0.4.2 / build 15. Local version archive: `builds/sky-hamster-tilt-v0.4.2.zip`.
+SDK build passed. The original archive is `builds/sky-hamster-tilt-v0.4.2.zip`. The renumbered package is `builds/sky-hamster-v0.10.2.zip`, containing version 0.10.2 / build 38. Byte comparison confirms that only pdxinfo changed; executable code and assets are identical.
 
 The first installation attempt returned `No Playdate device detected.` After USB reconnection, installation succeeded through COM4 / F:, replacing the existing `sky-hamster-tilt.pdx`. The normal release was launched at `/Games/sky-hamster-tilt.pdx`; the captured startup log reports passing physics/mechanism/occlusion checks with no captured error. See `tests/device-release-v042.log`.
 
 Physical sensitivity and false-trigger behavior still require a hands-on test. Installation and startup checks do not measure human gesture feel; no new hardware frame-rate or complete playthrough claim is made here.
+
+The subsequent numbering-only reinstall returned `No Playdate device detected`. The last confirmed device label is still 0.4.2 / build 15; gameplay is already this version. Current connection status is recorded in device-status.md.
