@@ -13,6 +13,7 @@
 - Actual game update fires and lands the new cannon routes, including elevated launch positions.
 - Five final checkpoints advance and retry at the latest one.
 - SDK simulator exports of new machinery, all new tutorials at multiple phases, maps and dock HUD states; inspected at 400×240.
+- The native Simulator completed the six-route workload without runtime errors (1,080 updates total). Raw report: `tests/simulator-workload-v020.json`, explicitly marked `device: false`. The deliberately accelerated final-route scan produced 14 visible chunk misses; this is a remaining hardware measurement target, not a claim of zero-stutter operation.
 
 ## Problems found and corrected
 

@@ -1,4 +1,4 @@
-Latest — 2026-09-26, tilt 0.1.9: SDK build and host regressions passed, including current-normal jump, steering-pulse isolation, top landing momentum and docking status. Native Simulator checks verified centered keycap glyphs and reviewed tutorials/results/HUD. Installation attempt returned "No Playdate device detected." 0.1.9 is not installed; the last confirmed hardware version is 0.1.8. Physical gesture feel and frame rate remain unverified.
+Latest — 2026-09-26, tilt 0.2.0: 33-course release built and host/native Simulator checks passed. 0.1.9 was installed and launched on COM4 earlier in this session. Later attempts to install both the 0.2.0 hardware workload and release returned "No Playdate device detected." Last confirmed hardware version: 0.1.9. 0.2.0 is not confirmed installed; physical gesture feel, full route playthrough and hardware frame rate remain unverified. See VALIDATION-v020.md.
 
 Previous attempts (superseded):
 2026-09-26: SDK build and host checks passed. Title/tutorial/HUD visually checked in updated Simulator.
