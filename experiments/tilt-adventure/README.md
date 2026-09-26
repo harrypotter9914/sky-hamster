@@ -1,4 +1,6 @@
-# Sky Hamster Tilt — 0.10.2
+# Sky Hamster — 0.10.3
+
+0.10.3 adds a dedicated launcher cover, list icon and loading image. Use `./install.ps1` to build and overwrite the one existing device installation. See [validation and cleanup](VALIDATION-v0.10.3.md) and [artwork](art/LAUNCHER-v0.10.3.md).
 
 This is the continuing full game after 0.6.7, using the single repository version sequence. See the [version table](../../docs/VERSIONS.md). The directory, install folder and bundle ID remain stable for existing saves. Historical raw logs and source commits retain their original identifiers; public release tags and current documentation use the unified numbers.
 
