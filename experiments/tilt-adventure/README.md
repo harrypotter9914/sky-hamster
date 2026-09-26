@@ -1,4 +1,4 @@
-# Sky Hamster Tilt — 0.1.4
+# Sky Hamster Tilt — 0.1.5
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and nine control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
@@ -10,7 +10,7 @@ Title → Start Game → first-encounter animated guides over the level → hold
 
 - Overhead compass: the arrow shows current screen-relative tilt thrust, not velocity. Its length grows with force; the central ring means neutral. Hidden while docked, falling, calibrating or viewing a tutorial.
 - Tilt: screen-relative thrust. Greater tilt increases force, not a forced target speed; momentum and slope gravity remain.
-- Quick upward lift: jump on jump-enabled courses. A is the button alternative. Jump impulse is fixed, preserving horizontal velocity.
+- Quick upward lift: keep the device close to level and move the whole device upward quickly to jump on jump-enabled courses. Upright and large lateral shakes are rejected. A is the button alternative. Jump impulse is fixed, preserving horizontal velocity.
 - A: confirm; on a cannon, fire. On a bridge station, turning the crank directly moves the bridge.
 - B: leave a control station/cannon. Move more than 32 world units away before it can capture the ball again. In menus, return; in guides, replay; at results, retry.
 - D-pad UP: route map and pause. A/B resumes.
@@ -70,3 +70,13 @@ Final title placement: the cannon and its solid saddle sit on the pale foregroun
 ## Flat neutral — 0.1.3
 
 Calibration now accepts only screen-up flat, held still for 0.8 seconds, with bounded sensor trim inside the motion deadzone. The former arbitrary-grip calibration could learn upright as neutral. Tests cover rejected poses, flat zero input, all four screen directions and inertial counter-steering. SDK build and host regressions passed. Installation over COM4 completed, followed by a run command echoed in the device log. Physical handling and frame rate still require hands-on verification.
+
+## Tutorial storyboard and UI pass — 0.1.5
+
+Ten tutorial topics now share a fixed, full-screen storyboard with separate heading, subtitle, demonstration, captions and button rows. Arrival uses three stills on one continuous road. Four-direction movement follows a continuous path; a level-device sprite translates upward for the jump example. Gates, disappearing floors, ferry, rotating deck, crank bridge and cannon have explicit waiting/action/result phases. The game stays paused under these tutorials.
+
+Four transparent illustration masters supply five runtime assets: handheld, flat handheld, small/large hamster marble and finish trophy. They are reused in tutorials, calibration, failure, route results and campaign completion. HUD names have a width limit; the timer uses whole seconds in play (precise results remain). Stations at the starting position replace the overlapping START world callout; the map retains its start marker. Existing map layout and title art are preserved.
+
+Updated guides replay once after upgrading from an older guide revision; progress, settings and records remain. SDK build and regression tests cover the complete campaign plus level upward impulses, single-trigger cooldown, lateral/upright rejection and rearming. The review bundle exports six phases of each of ten topics plus menu/results pages at 400×240. Physical gesture feel and frame rate require hardware playtesting.
+
+Asset prompts, built-in generation mode and source names: `art/UI-ASSETS-v015.md`. Export with `art/prepare-ui.ps1` before building. Tutorial poses and miniature cannon orientations are cached; static imagery is not regenerated during play.

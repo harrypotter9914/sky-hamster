@@ -1,122 +1,144 @@
--- Cached device poses; small animated demonstrations run while the world is paused.
+-- A fixed storyboard grid keeps labels, hardware and demonstrations apart.
 local g=playdate.graphics
 local function ink() g.setColor(g.kColorBlack);g.setImageDrawMode(g.kDrawModeCopy) end
 local function white() g.setColor(g.kColorWhite) end
-local function label(s,x,y) ink();g.drawText(s,x,y) end
 local function center(s,x,y) ink();g.drawTextAligned(s,x,y,kTextAlignment.center) end
-local function sprite(w,h,draw)
+local function image(w,h,draw)
  local im=g.image.new(w,h,g.kColorClear);g.pushContext(im);draw();g.popContext();return im
 end
-local marble=sprite(28,28,function()
- white();g.fillCircleAtPoint(14,14,12);ink();g.drawCircleAtPoint(14,14,12);g.drawCircleAtPoint(13,15,9)
- g.fillCircleAtPoint(9,8,3);g.fillCircleAtPoint(18,8,3);white();g.fillEllipseInRect(6,9,17,14);ink();g.drawEllipseInRect(6,9,17,14)
- g.fillRect(10,12,2,2);g.fillRect(17,12,2,2);g.fillCircleAtPoint(14,17,1)
-end)
-local devices={}
-for n=1,7 do
- local angle=math.rad(({ -14,-7,0,7,14,0,0 })[n]);local pitch=n==6 and .72 or n==7 and .85 or 1
- devices[n]=sprite(94,94,function()
-  local function pt(x,y) return 44+x*math.cos(angle)-y*pitch*math.sin(angle),47+x*math.sin(angle)+y*pitch*math.cos(angle) end
-  local function poly(points,fill)
-   local p={};for i=1,#points,2 do local x,y=pt(points[i],points[i+1]);p[#p+1]=x;p[#p+1]=y end
-   if fill then g.fillPolygon(table.unpack(p)) else g.drawPolygon(table.unpack(p)) end
-  end
-  white();poly({-22,-37,22,-37,27,-32,27,31,21,37,-21,37,-27,31,-27,-32},true)
-  ink();poly({-22,-37,22,-37,27,-32,27,31,21,37,-21,37,-27,31,-27,-32})
-  poly({-21,-30,21,-30,21,6,-21,6});local ax,ay=pt(0,-12);g.drawCircleAtPoint(ax,ay,8)
-  local function line(a,b,c,d) local x,y=pt(a,b);local u,v=pt(c,d);g.drawLine(x,y,u,v) end
-  g.setLineWidth(4);line(-17,20,-5,20);line(-11,14,-11,26);g.setLineWidth(1)
-  for _,p in ipairs({{11,24},{21,17}}) do local x,y=pt(p[1],p[2]);g.drawCircleAtPoint(x,y,4) end
-  line(28,10,37,10);line(37,10,37,20);local x,y=pt(37,21);g.fillCircleAtPoint(x,y,3)
-  if n>5 then local y=n==6 and 14 or 80;g.drawLine(30,y,56,y);g.fillTriangle(41,y-6,35,y,47,y) end
- end)
-end
-local function ball(x,y) marble:draw(math.floor(x-14),math.floor(y-14)) end
+local device=g.image.new('ui-device')
+local flatDevice=g.image.new('ui-device-flat')
+local marble=g.image.new('ui-mascot-small')
+local poses={}
+for i=-2,2 do poses[i]=image(100,90,function() device:drawRotated(50,45,i*7) end) end
+local function ball(x,y) marble:draw(math.floor(x-13),math.floor(y-13)) end
 local function slab(x,y,w,h)
- white();g.fillRect(x,y,w,h);ink();g.drawRect(x,y,w,h);g.fillRect(x,y+h,w,5)
- g.drawLine(x+3,y+3,x+w-3,y+3)
- for a=x+14,x+w-8,21 do g.drawLine(a,y+4,a,y+h-2) end
+ white();g.fillRect(x,y,w,h);ink();g.drawRect(x,y,w,h);g.fillRect(x,y+h,w,4)
+ g.drawLine(x+2,y+3,x+w-3,y+3)
+ for a=x+13,x+w-5,20 do g.drawLine(a,y+4,a,y+h-2) end
 end
 local function arrow(x,y,dx,dy)
- ink();g.setLineWidth(2);g.drawLine(x,y,x+dx,y+dy);g.setLineWidth(1)
- if math.abs(dx)>math.abs(dy) then local s=dx>0 and 1 or -1;g.fillTriangle(x+dx,y+dy,x+dx-s*6,y+dy-4,x+dx-s*6,y+dy+4)
- else local s=dy>0 and 1 or -1;g.fillTriangle(x+dx,y+dy,x+dx-4,y+dy-s*6,x+dx+4,y+dy-s*6) end
+ local n=math.sqrt(dx*dx+dy*dy);if n<1 then return end
+ local ux,uy=dx/n,dy/n;ink();g.setLineWidth(2);g.drawLine(x,y,x+dx,y+dy);g.setLineWidth(1)
+ g.fillTriangle(x+dx,y+dy,x+dx-ux*6-uy*4,y+dy-uy*6+ux*4,x+dx-ux*6+uy*4,y+dy-uy*6-ux*4)
 end
+local function flag(x,y)
+ ink();g.drawLine(x,y,x,y-28);white();g.fillRect(x+1,y-28,17,12);ink();g.drawRect(x+1,y-28,17,12)
+ for a=0,3 do for b=0,2 do if (a+b)%2==0 then g.fillRect(x+2+a*4,y-27+b*4,3,3) end end end
+end
+local function ease(v) v=math.max(0,math.min(1,v));return v*v*(3-2*v) end
 local info={
- arrival={'A LITTLE SKY JOURNEY','A little hamster. A big sky to explore.'},
- roll={'TILT TO ROLL','Lean gently. More tilt gives more force.'},
- jump={'LIFT AND LEAP','Lift quickly to jump. A also works.'},
- control={'CRANK THE BRIDGE','Dock slowly. Crank to turn. B releases.'},
- cannon={'READY, AIM, ROLL!','Dock slowly. Crank aims. A fires. B exits.'},
- gate={'WAIT FOR THE OPENING','Wait safely, then roll through the open gate.'},
- trap={'WATCH THE FLOOR','Wait for solid ground, or jump the gap.'},
- ferry={'CATCH A RIDE','Roll aboard. Balance. Roll off at the far dock.'},
- rotor={'ROUND THE CORNER','Ride the rotating floor, then roll off.'},
- sweeper={'MIND THE SWEEPER','Wait for a clear lane. Avoid the moving panel.'}}
-function UI.lesson(kind,time)
- kind=info[kind] and kind or 'roll';local t=time or 0;local data=info[kind]
- UI.panel(14,44,372,190);label(data[1],28,54)
- g.drawLine(27,75,372,75)
- local phase=t%4;local u=phase/4
- if kind=='arrival' then
-  local frame=math.floor(t/1.6)%3
-  slab(54,155,113,12);slab(247,137,94,12)
-  if frame==0 then ball(104,140);center('A CURIOUS HAMSTER',200,85)
-  elseif frame==1 then ball(106+u*65,129);arrow(178,130,39,-10);center('A ROAD ABOVE THE CLOUDS',200,85)
-  else ball(280,122);g.drawLine(329,139,329,106);g.fillPolygon(329,106,349,112,329,119);center('FIND YOUR WAY TO THE FLAG',200,85) end
-  for i=0,2 do ink();if i==frame then g.fillCircleAtPoint(187+i*13,181,3) else g.drawCircleAtPoint(187+i*13,181,3) end end
- else
-  local n=3;local lift=0
-  if kind=='roll' then
-   if phase<2 then n=math.max(1,math.min(5,3+math.floor(math.sin(phase*math.pi)*2.4))) else n=phase<3 and 6 or 7 end
-  elseif kind=='jump' then lift=phase>.7 and phase<1.15 and -18*math.sin((phase-.7)/.45*math.pi) or 0 end
-  devices[n]:draw(41,85+lift)
-  if kind=='jump' then arrow(145,137,0,-30);center('QUICK LIFT',93,177)
-  elseif kind=='roll' then
-   if phase<2 then arrow(32,125,-13,0);arrow(138,125,13,0);center('LEFT / RIGHT',93,180)
-   else arrow(142,135,0,phase<3 and -25 or 25);center('FORWARD / BACK',93,180) end
-  elseif kind=='control' or kind=='cannon' then
-   local a=t*3;g.drawCircleAtPoint(151,131,12);g.drawLine(151,131,151+math.cos(a)*11,131+math.sin(a)*11);g.fillCircleAtPoint(151+math.cos(a)*11,131+math.sin(a)*11,3)
-   center('TURN THE CRANK',99,180)
-  else center('WATCH THE TIMING',98,180) end
-  arrow(171,135,21,0)
-  if kind=='roll' then
-   slab(212,110,146,51)
-   local bx=285+(phase<2 and math.sin(phase*math.pi)*43 or 0);local by=135+(phase>=2 and -math.sin((phase-2)*math.pi)*15 or 0)
-   ball(bx,by)
-  elseif kind=='jump' then
-   slab(211,158,48,12);slab(311,158,50,12)
-   local flight=math.max(0,math.min(1,(phase-1)/1.7));ball(239+98*flight,144-math.sin(flight*math.pi)*45)
-   if phase<1 then center('READY',284,177) elseif flight<1 then center('JUMP!',284,177) else center('LAND',284,177) end
-  elseif kind=='control' or kind=='rotor' then
-   slab(210,152,36,12);slab(333,152,32,12)
-   local a=kind=='control' and math.max(0,1-phase/2)*math.pi/2 or t*.7
-   local dx,dy=math.cos(a)*52,math.sin(a)*27
-   ink();g.setLineWidth(14);g.drawLine(289-dx,153-dy,289+dx,153+dy);white();g.setLineWidth(10);g.drawLine(289-dx,151-dy,289+dx,151+dy);g.setLineWidth(1);ink();g.drawCircleAtPoint(289,152,6)
-   ball(kind=='control' and 228 or 289+dx*.7,kind=='control' and 137 or 137+dy*.7)
-   center(kind=='control' and 'DOCK > TURN > B' or 'RIDE > ROLL OFF',288,180)
-  elseif kind=='cannon' then
-   slab(211,163,68,9);slab(331,163,32,9)
-   Dock.drawCannon(-.6+math.sin(t)*.15,249,166)
-   for i=1,7 do g.fillCircleAtPoint(271+i*10,122-math.sin(i/7*math.pi)*17,1) end
-   if phase<1 then ball(222+phase*23,147) elseif phase>2 then local q=(phase-2)/2;ball(270+77*q,134-34*math.sin(q*math.pi)+16*q);center('A: FIRE!',292,177) else center('AIM',294,177) end
-  elseif kind=='ferry' then
-   slab(210,158,30,12);slab(339,158,27,12)
-   local travel=(1-math.cos(u*math.pi*2))/2;local px=241+travel*67;slab(px,158,31,12);ball(px+15,144);center('BALANCE ON BOARD',290,102)
-  elseif kind=='trap' then
-   slab(210,158,44,12);slab(315,158,48,12)
-   if phase<2 then slab(254,158,61,12);ball(227+phase*50,144);center('SOLID: CROSS',288,104)
-   else ink();for i=0,6 do g.drawLine(256+i*8,158,259+i*8,158) end;ball(233,144);center('GAP: WAIT / JUMP',287,104) end
-  elseif kind=='gate' then
-   slab(211,160,150,12);local open=phase>2
-   if not open then ink();g.fillRect(289,115,12,45);white();for yy=120,153,10 do g.fillRect(290,yy,10,4) end end
-   ball(open and 267+(phase-2)*36 or 258,145);center(open and 'OPEN: GO' or 'CLOSED: WAIT',287,95)
-  else
-   slab(211,143,150,29);local pos=282+math.sin(t*2)*35;ink();g.fillRect(pos,116,12,46)
-   white();for yy=120,152,10 do g.fillRect(pos+1,yy,10,4) end
-   ball(230,146);center('WAIT FOR A CLEAR LANE',285,96)
-  end
+ arrival={'FOLLOW THE SKY ROAD','Roll along the road to reach the flag.'},
+ roll={'TILT TO ROLL','Lower an edge. The ball rolls that way.'},
+ jump={'LIFT AND LEAP','Keep it level. Lift the whole device quickly.'},
+ control={'CRANK THE BRIDGE','Dock first. Turn the crank. B releases.'},
+ cannon={'READY, AIM, ROLL!','Dock. Aim with the crank. A fires; B exits.'},
+ gate={'WAIT FOR THE OPENING','Wait behind the barrier, then cross.'},
+ trap={'WATCH THE FLOOR','Cross while solid. Wait when it disappears.'},
+ ferry={'CATCH A RIDE','Board at the dock. Ride across. Roll off.'},
+ rotor={'ROUND THE CORNER','Ride the rotating deck to the next road.'},
+ sweeper={'MIND THE SWEEPER','Stay clear until the moving panel passes.'}}
+local cannons={}
+local function smallCannon(x,y,n)
+ if not cannons[n] then
+  local full=image(104,104,function() Dock.drawCannon(-.9+(n-1)*.3,51,96) end)
+  cannons[n]=image(72,72,function() full:drawScaled(0,0,.68) end)
  end
- center(data[2],200,197)
- ink();g.drawLine(28,213,370,213);label('A  '..(Guide and Guide.queue and Guide.index==#Guide.queue and 'Play' or 'Next'),29,215);label('B  Replay',286,215)
+ cannons[n]:draw(x,y)
+end
+function UI.lesson(kind,time)
+ kind=info[kind] and kind or 'roll';local data=info[kind];local t=(time or 0)%6
+ UI.panel(8,8,384,224);center(data[1],200,20)
+ ink();g.drawLine(23,43,377,43)
+ center(data[2],200,49)
+ -- Demonstration lives only inside y=76..169; captions occupy their own rows.
+ local left,right='YOUR PLAYDATE','ON THE ROAD'
+ if kind=='arrival' then
+  local frame=math.floor(t/2)
+  center(({'START ON THE ROAD','FOLLOW THE PATH','REACH THE FINISH'})[frame+1],200,78)
+  slab(49,145,299,15);flag(327,145)
+  -- Three deliberate stills on ONE continuous road: no unexplained drifting.
+  ball(({76,192,299})[frame+1],132)
+  if frame<2 then arrow(frame==0 and 105 or 221,127,57,0) end
+  center('Stay on the stones. Avoid the edge.',200,174)
+  for i=0,2 do ink();if frame==i then g.fillCircleAtPoint(186+i*14,197,3) else g.drawCircleAtPoint(186+i*14,197,3) end end
+ else
+  ink();g.drawLine(179,79,179,190)
+  local phase=t/6
+  local pose,lift=0,0
+  if kind=='roll' then
+   local direction=math.floor(t/1.5);local q=t%1.5
+   local lean=math.sin(math.min(1,q/.9)*math.pi/2)
+   pose=direction==0 and math.floor(lean*2+.5) or direction==1 and -math.floor(lean*2+.5) or 0
+   left=({'RIGHT EDGE DOWN','LEFT EDGE DOWN','TOP EDGE DOWN','BOTTOM EDGE DOWN'})[direction+1]
+   slab(214,100,144,62)
+   local v=ease(q/1.1);local bx,by=257,147
+   if direction==0 then bx=257+v*58 elseif direction==1 then bx=315-v*58 elseif direction==2 then by=147-v*31 else by=116+v*31 end
+   ball(bx,by)
+   if direction==2 then arrow(148,137,0,-27) elseif direction==3 then arrow(148,110,0,27) end
+   right='TILT = PUSH'
+  elseif kind=='jump' then
+   local f=ease((t-1.6)/1.4)
+   if t>=1.6 and t<1.85 then lift=-18*ease((t-1.6)/.25) elseif t>=1.85 and t<3 then lift=-18 elseif t>=3 then lift=-18*(1-ease((t-3)/1.2)) end
+   slab(207,151,53,13);slab(315,151,57,13)
+   ball(235+105*f,138-42*math.sin(f*math.pi))
+   arrow(146,137,0,-34)
+   left=t<1.6 and 'HOLD LEVEL' or t<3 and 'LIFT STRAIGHT UP' or 'LOWER GENTLY'
+   right=t<1.6 and 'READY AT THE GAP' or t<3 and 'CLEAR THE GAP' or 'LAND SAFELY'
+  elseif kind=='control' or kind=='rotor' then
+   slab(209,147,31,14);slab(337,147,34,14)
+   local a=kind=='control' and (1-ease((t-1)/2))*math.pi/2 or (1-ease((t-.8)/3))*math.pi/2
+   local dx,dy=math.cos(a)*51,math.sin(a)*22
+   local nx,ny=-math.sin(a)*6,math.cos(a)*6
+   local ax,ay,bx,by=288-dx,145-dy,288+dx,145+dy
+   ink();g.fillPolygon(ax+nx,ay+ny+4,bx+nx,by+ny+4,bx-nx,by-ny+4,ax-nx,ay-ny+4)
+   white();g.fillPolygon(ax+nx,ay+ny,bx+nx,by+ny,bx-nx,by-ny,ax-nx,ay-ny)
+   ink();g.drawPolygon(ax+nx,ay+ny,bx+nx,by+ny,bx-nx,by-ny,ax-nx,ay-ny)
+   ink();g.drawCircleAtPoint(288,145,5)
+   if kind=='control' then ball(224,134);left='DOCK, THEN CRANK';right=t<3 and 'ALIGN THE BRIDGE' or 'B: RELEASE'
+   else local off=ease((t-4)/1);ball(288+off*66,132);left='KEEP BALANCED';right=t<4 and 'RIDE THE DECK' or 'ROLL OFF NOW' end
+  elseif kind=='cannon' then
+   slab(206,155,78,10);slab(333,155,39,10);smallCannon(208,85,t<1 and 1 or t<2 and 2 or 3)
+   local q=ease((t-3)/1.4)
+   if t<1 then ball(217+ease(t)*20,142)
+   elseif t>=3 then ball(266+87*q,119-29*math.sin(q*math.pi)+23*q) end
+   if t>=1 and t<3 then for i=1,6 do ink();g.fillCircleAtPoint(274+i*12,118-24*math.sin(i/6*math.pi)+23*i/6,1) end end
+   left=t<1 and 'DOCK SLOWLY' or t<3 and 'TURN TO AIM' or 'PRESS A TO FIRE'
+   right=t<1 and 'ENTER THE CANNON' or t<3 and 'CHECK THE ARC' or 'FLY TO THE ROAD'
+  elseif kind=='ferry' then
+   slab(205,151,35,13);slab(336,151,37,13)
+   local travel=ease((t-1.2)/2.6);local px=240+travel*62
+   slab(px,151,34,13)
+   local bx=t<1.2 and 222+ease(t/1.2)*35 or t<4 and px+17 or 319+ease((t-4)/1.1)*34
+   ball(bx,138);left='TILT GENTLY';right=t<1.2 and 'BOARD' or t<4 and 'RIDE' or 'ROLL OFF'
+  elseif kind=='trap' then
+   slab(205,151,51,13);slab(315,151,57,13)
+   local open=t<2
+   if not open then slab(256,151,59,13) else ink();for i=0,6 do g.drawLine(258+i*8,151,261+i*8,151) end end
+   ball(open and 231 or 231+ease((t-2.5)/2.5)*114,138)
+   left='WAIT ON THE ROAD';right=open and 'GAP: WAIT' or 'SOLID: CROSS'
+  elseif kind=='gate' then
+   slab(205,151,167,13);local open=t>=2.5
+   if not open then ink();g.fillRect(285,103,12,48);white();for yy=108,143,10 do g.fillRect(286,yy,10,4) end end
+   ball(open and 258+ease((t-2.7)/2)*85 or 258,138)
+   left='WAIT, THEN TILT';right=open and 'OPEN: CROSS' or 'CLOSED: WAIT'
+  else
+   slab(205,128,167,35);local pos=315+math.sin(t*1.1)*28
+   ink();g.fillRect(pos,101,12,50);white();for yy=108,143,10 do g.fillRect(pos+1,yy,10,4) end
+   ball(233,141);left='KEEP CLEAR';right='WATCH THE PANEL'
+  end
+  if kind=='jump' then
+   flatDevice:draw(60,112+lift)
+   ink();g.drawLine(56,160,142,160)
+  else poses[pose]:draw(48,85) end
+  if kind=='control' or kind=='cannon' then
+   local a=t*2;ink();g.drawCircleAtPoint(151,135,10);g.drawLine(151,135,151+math.cos(a)*9,135+math.sin(a)*9)
+  end
+  center(left,96,177);center(right,281,177)
+  -- Progress dots stay clear of device and game examples.
+  for i=0,2 do ink();if math.floor(t/2)==i then g.fillCircleAtPoint(186+i*14,197,2) else g.drawCircleAtPoint(186+i*14,197,2) end end
+ end
+ ink();g.drawLine(23,205,377,205)
+ g.drawText('A  '..(Guide and Guide.queue and Guide.index==#Guide.queue and 'Play' or 'Next'),25,211)
+ g.drawText('B  Replay',292,211)
 end

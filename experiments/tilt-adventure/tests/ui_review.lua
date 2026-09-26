@@ -20,6 +20,15 @@ function playdate.update()
   export('v12-settings',function() UI.settings(3,true,false,true) end)
   export('v12-selector',function() UI.selector(3,{[1]=true}) end)
   export('v12-map',function() UI.map(Courses[14],784,176,0) end)
+  export('v15-calibration',function() UI.calibration() end)
+  export('v15-failure',function() UI.failure(3,true) end)
+  export('v15-result',function() UI.result(63.7,3,58.2,false) end)
+  export('v15-ending',function() UI.ending({[1]=true}) end)
+  for _,kind in ipairs({'arrival','roll','jump','control','cannon','gate','trap','ferry','rotor','sweeper'}) do
+   for i,t in ipairs({0,1,1.8,2.8,4,5.7}) do
+    export('v15-'..kind..'-'..i,function() UI.lesson(kind,t) end)
+   end
+  end
   local worlds={{1,48,48},{5,120,80},{8,180,80},{9,145,80},{10,140,80},{11,180,176},{12,195,112},{15,112,80},{16,112,80}}
   export('v14-pointer',function() world(1,80,48);UI.tiltPointer(200,112,1,-1,.8) end)
   export('v14-pointer-neutral',function() world(1,80,48);UI.tiltPointer(200,112,0,0,0) end)

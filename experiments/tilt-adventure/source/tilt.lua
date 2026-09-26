@@ -33,7 +33,11 @@ function T.update(dt)
   return
  end
  if math.abs(impulse)<.18 then T.quiet=T.quiet+dt;if T.quiet>.18 then T.armed=true end else T.quiet=0 end
- if T.ready and T.armed and impulse>.65 and T.cooldown==0 then T.jump=true;T.armed=false;T.cooldown=.75 end
+ -- A level, whole-device upward lift produces a positive screen-normal pulse.
+ -- Reject upright shaking and large sideways impulses rather than treating them as jumps.
+ local level=T.fz>.82 and T.fx*T.fx+T.fy*T.fy<.12
+ local lateral=(x-T.fx)^2+(y-T.fy)^2
+ if T.ready and T.armed and level and lateral<.16 and impulse>.65 and T.cooldown==0 then T.jump=true;T.armed=false;T.cooldown=.75 end
  local mag=math.sqrt(T.fx*T.fx+T.fy*T.fy+T.fz*T.fz)
  local sx,sy=T.fx/math.max(mag,.01)-T.nx,T.fy/math.max(mag,.01)-T.ny
  local n=math.sqrt(sx*sx+sy*sy)

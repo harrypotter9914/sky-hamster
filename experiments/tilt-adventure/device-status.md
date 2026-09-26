@@ -1,4 +1,4 @@
-Latest — 2026-09-26, tilt 0.1.4: SDK build and host checks passed. The overhead direction pointer was visually inspected in a native-resolution Simulator export. Playdate detected on COM4; pdutil replaced sky-hamster-tilt.pdx, copied all files and successfully ejected F:. The run command was sent successfully. Physical tilt feel, lift gestures and frame rate remain unverified.
+Latest — 2026-09-26, tilt 0.1.5: SDK build and host checks passed. Ten tutorial topics were exported at six phases each; menu, map, calibration and result pages were reviewed at native resolution. Installation attempt reported "No Playdate device detected." 0.1.5 hardware installation is not confirmed. Physical gesture feel and performance remain unverified. The previous confirmed install was 0.1.4.
 
 Previous attempts (superseded):
 2026-09-26: SDK build and host checks passed. Title/tutorial/HUD visually checked in updated Simulator.

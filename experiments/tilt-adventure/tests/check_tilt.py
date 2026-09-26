@@ -139,7 +139,7 @@ Guide.seen={};select(14)
 local keys={};while Guide.key() do keys[Guide.key()]=true;Guide.advance() end
 assert(keys.arrival and keys.roll and keys.jump and keys.rotor and keys.sweeper and keys.trap and keys.gate)
 for _,kind in ipairs({'arrival','roll','jump','control','cannon','gate','trap','ferry','rotor','sweeper'}) do
- for _,t in ipairs({0,.5,1,1.6,2.4,3.4,4.5}) do UI.lesson(kind,t) end
+ for _,t in ipairs({0,.5,1,1.6,1.85,2.4,3.4,4.5,5.9,6}) do UI.lesson(kind,t) end
 end
 print('PASS: first encounters, persisted acknowledgements, no repeated jump tutorial, replay, paused world, mixed-route queue and every animation phase')
 """)
@@ -170,4 +170,17 @@ assert((vx-vy)*.9>0,'sustained counter-tilt eventually reverses travel')
 Tilt.startCalibration();settle({.06,-.06,.996});assert(Tilt.ready and math.abs(Tilt.nx)<=.025 and math.abs(Tilt.ny)<=.025)
 settle({0,0,1});assert(Tilt.power==0,'limited trim must leave exact flat inside the deadzone')
 print('PASS: upright/sideways/inverted calibration rejected, flat zero, four screen directions, bounded trim and inertial counter-steering')
+""")
+
+# Upward translation is accepted; upright and lateral shakes are rejected.
+lua.execute("""
+local function settle(a) accel=a;for i=1,50 do Tilt.update(1/30) end end
+Tilt.startCalibration();settle({0,0,1})
+accel={0,0,1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
+for i=1,5 do Tilt.update(1/30);assert(not Tilt.consumeJump()) end
+settle({0,1,0});accel={0,1,1};Tilt.update(1/30);assert(not Tilt.consumeJump())
+settle({0,0,1});accel={1,0,1.9};Tilt.update(1/30);assert(not Tilt.consumeJump())
+settle({0,0,1});accel={0,0,1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
+assert(store.saved.guideRevision==2)
+print('PASS: level upward pulse, single trigger, upright/lateral shake rejection, rearming and tutorial revision')
 """)

@@ -40,7 +40,7 @@ local gesture=true
 local selectorReturn
 local saved=pd.datastore and pd.datastore.read('tilt-progress') or {}
 saved=saved or {}
-Guide.seen=saved.guides or {}
+Guide.seen=saved.guideRevision==2 and (saved.guides or {}) or {}
 local options=saved.options or {}
 UI.motion=options.motion~=false
 gesture=options.gesture~=false
@@ -51,7 +51,7 @@ for k,v in pairs(saved.completed or {}) do if tonumber(k) then completed[tonumbe
 local best=saved.best or {}
 local ending=false
 local function saveProgress()
- if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
+ if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,guideRevision=2,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
 local jumpEnabled=false
@@ -177,6 +177,12 @@ prepareTerrain=function()
 end
 local function marker(point,label,foreground)
  if not point then return end
+ -- A station at the spawn already has a callout; avoid stacking START over its barrel.
+ if label=='START' then
+  for _,pad in ipairs(course.pads or {}) do
+   if (point[1]-pad.x)^2+(point[2]-pad.y)^2<28^2 then return end
+  end
+ end
  local p,q=project(point[1],point[2],course:height(point[1],point[2]))
  if p < -70 or p>440 or q<50 or q>210 then return end
  local text=label=='SAVE' and 'CHECK' or label=='SAVED' and 'SAVED' or label=='GOAL' and 'FINISH' or 'START'
