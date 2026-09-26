@@ -1,12 +1,13 @@
 Physics={}
-Physics.tuning={drive=150,gravity=280,friction=7,drag=0.16,latch=0.60,reverseDot=-0.7,powerDelay=0.18,powerDecay=1.4,jumpDelay=0.5,jumpDecay=0.16,jumpGravity=300}
+Physics.tuning={drive=154.5,gravity=280,friction=7,drag=0.16,latch=0.60,reverseDot=-0.7,powerDelay=0.18,powerDecay=1.4,jumpDelay=0.5,jumpDecay=0.16,jumpGravity=300}
 function Physics.step(vx,vy,dx,dy,p,sx,sy,dt)
+ local tuning=Physics.tuning
  local n=math.sqrt(dx*dx+dy*dy)
  if n>0 then dx,dy=dx/n,dy/n end
  local opposing=n>0 and vx*dx+vy*dy<0 and p>0
- vx,vy=vx+(dx*p*150-sx*280)*dt,vy+(dy*p*150-sy*280)*dt
+ vx,vy=vx+(dx*p*tuning.drive-sx*tuning.gravity)*dt,vy+(dy*p*tuning.drive-sy*tuning.gravity)*dt
  local speed=math.sqrt(vx*vx+vy*vy)
- if speed>0 then local s=math.max(0,speed-(7+0.16*speed)*dt);vx,vy=vx*s/speed,vy*s/speed end
+ if speed>0 then local s=math.max(0,speed-(tuning.friction+tuning.drag*speed)*dt);vx,vy=vx*s/speed,vy*s/speed end
  return vx,vy,opposing
 end
 function Physics.newControls() return {power=0,charge=0,powerIdle=0,jumpIdle=0,lastX=0,lastY=0,flash=0} end

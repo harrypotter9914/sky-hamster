@@ -1,8 +1,10 @@
-# Sky Hamster Tilt — 0.4.1
+# Sky Hamster Tilt — 0.4.2
+
+0.4.2 lowers the lift threshold, tolerates slightly oblique lifts and increases ordinary tilt force by just 3%. Unpowered momentum and landing behavior remain unchanged. See [0.4.2 validation](VALIDATION-v042.md). Run `python tests/check_feel.py` for the complete current regression suite.
 
 0.4.1 preserves the 0.4.0 visuals and behavior while reusing exact machinery poses, filtering remote render/occlusion candidates and caching the terrain viewport's chunk lists. See [0.4.1 validation](VALIDATION-v041.md). Run `python tests/check_render_optimization.py` for the current regression suite.
 
-The five workshop mechanisms have dedicated artwork, synchronized machinery animation and irregular stone roads. The campaign still has 44 courses. See [visuals and validation](VALIDATION-v040.md), [art and prompts](art/VISUALS-v040.md), and the [0.3.0 workshop expansion](WORKSHOP-v030.md). The complete current regression suite is `tests/check_render_optimization.py`.
+The five workshop mechanisms have dedicated artwork, synchronized machinery animation and irregular stone roads. The campaign still has 44 courses. See [visuals and validation](VALIDATION-v040.md), [art and prompts](art/VISUALS-v040.md), and the [0.3.0 workshop expansion](WORKSHOP-v030.md).
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and other control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 

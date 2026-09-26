@@ -1,6 +1,8 @@
 -- Neutral follows a steady grip. Thrust axes belong to the world, not the screen projection.
 Tilt={ready=false,cooldown=0,armed=false,quiet=0,fx=0,fy=0,fz=1,nx=0,ny=0,nz=1,power=0,jump=false,seeded=false}
 local T=Tilt
+-- Residual acceleration in g, along the current screen normal, not the saved grip.
+local liftThreshold,lateralLimit=.48,.25
 local function norm(x,y,z) local m=math.sqrt(x*x+y*y+z*z);return x/m,y/m,z/m end
 local function basis()
  -- Project screen-right onto the gravity tangent plane. Near side-on use screen-down.
@@ -35,7 +37,7 @@ function T.update(dt)
  local impulse,lateral=iz,ix*ix+iy*iy
  if not T.calibrating then
   if math.abs(impulse)<.18 then T.quiet=T.quiet+dt;if T.quiet>.18 then T.armed=true end else T.quiet=0 end
-  if T.ready and T.armed and lateral<.16 and impulse>.65 and T.cooldown==0 then
+  if T.ready and T.armed and lateral<lateralLimit and lateral<impulse*impulse and impulse>liftThreshold and T.cooldown==0 then
    T.jump=true;T.armed=false;T.cooldown=.75;T.inputHold=.22
   end
  end
