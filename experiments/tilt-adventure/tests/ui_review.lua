@@ -15,6 +15,15 @@ end
 local done=false
 function playdate.update()
  if not done then
+  for _,button in ipairs({'A','B','up','down','left','right'}) do
+   local cap=g.image.new(17,17,g.kColorClear);g.pushContext(cap);UI.keycap(button,0,0);g.popContext()
+   local x0,y0,x1,y1=17,17,-1,-1
+   for y=0,16 do for x=0,16 do if cap:sample(x,y)==g.kColorWhite then
+    x0=math.min(x0,x);y0=math.min(y0,y);x1=math.max(x1,x);y1=math.max(y1,y)
+   end end end
+   assert(x0+x1==16 and y0+y1==16,'off-center keycap '..button)
+  end
+  print('PASS: all six keycaps have white glyph bounds centered at pixel (8,8)')
   clock=clock+100;UI.title(1);clock=clock+100
   export('v12-title',function() UI.title(1) end)
   export('v12-settings',function() UI.settings(3,true,false,true) end)
@@ -26,6 +35,8 @@ function playdate.update()
   export('v15-ending',function() UI.ending({[1]=true}) end)
   export('v16-goal',function() UI.goal(Courses[14],14,1) end)
   export('v16-machine',function() UI.goal(Courses[16],16,3) end)
+  export('v19-locked',function() UI.hud(Courses[16],16,true,0,0,0,0,0);UI.dockStatus('LOCKED') end)
+  export('v19-unlocked',function() UI.hud(Courses[16],16,true,0,0,0,0,0);UI.dockStatus('UNLOCKED') end)
   export('v16-help',function() Guide.enter(Courses[14],true);UI.lesson(Guide.key(),1) end)
   for i,t in ipairs({.9,2.4,3.9,5.4}) do export('v17-turn-'..i,function() UI.lesson('roll',t) end) end
   for _,kind in ipairs({'arrival','roll','jump','control','cannon','gate','trap','ferry','rotor','sweeper'}) do

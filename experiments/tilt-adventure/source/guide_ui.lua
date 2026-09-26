@@ -7,6 +7,7 @@ local function image(w,h,draw)
  local im=g.image.new(w,h,g.kColorClear);g.pushContext(im);draw();g.popContext();return im
 end
 local flatDevice=g.image.new('ui-device-flat')
+local liftDevice=image(100,90,function() flatDevice:drawRotated(50,45,-18) end)
 local marble=g.image.new('ui-mascot-small')
 local poses={}
 for _,dir in ipairs({'right','left','up','down'}) do
@@ -31,7 +32,7 @@ local function ease(v) v=math.max(0,math.min(1,v));return v*v*(3-2*v) end
 local info={
  arrival={'FOLLOW THE SKY ROAD','Roll along the road to reach the flag.'},
  roll={'TIP TO ROLL','Tip from your grip. Follow the road arrow.'},
- jump={'LIFT AND LEAP','Keep your grip angle. Lift the whole device.'},
+ jump={'LIFT AND LEAP','Push out from the screen, at its current angle.'},
  control={'CRANK THE BRIDGE','Dock first. Turn the crank. B releases.'},
  cannon={'READY, AIM, ROLL!','Dock. Aim with the crank. A fires; B exits.'},
  gate={'WAIT FOR THE OPENING','Wait behind the barrier, then cross.'},
@@ -88,8 +89,8 @@ function UI.lesson(kind,time)
    if t>=1.6 and t<1.85 then lift=-18*ease((t-1.6)/.25) elseif t>=1.85 and t<3 then lift=-18 elseif t>=3 then lift=-18*(1-ease((t-3)/1.2)) end
    slab(207,151,53,13);slab(315,151,57,13)
    ball(235+105*f,138-42*math.sin(f*math.pi))
-   arrow(146,137,0,-34)
-   left=t<1.6 and 'KEEP YOUR GRIP' or t<3 and 'LIFT STRAIGHT UP' or 'LOWER GENTLY'
+   arrow(146,141,-10,-31)
+   left=t<1.6 and 'KEEP YOUR GRIP' or t<3 and 'LIFT SCREENWARD' or 'RETURN GENTLY'
    right=t<1.6 and 'READY AT THE GAP' or t<3 and 'CLEAR THE GAP' or 'LAND SAFELY'
   elseif kind=='control' or kind=='rotor' then
    slab(209,147,31,14);slab(337,147,34,14)
@@ -134,17 +135,17 @@ function UI.lesson(kind,time)
    ball(233,141);left='KEEP CLEAR';right='WATCH THE PANEL'
   end
   if kind=='jump' then
-   flatDevice:draw(60,112+lift)
-   ink();g.drawLine(56,160,142,160)
+   liftDevice:draw(48+lift*.31,85+lift*.95)
   else poses[dir][pose]:draw(48,85) end
   if kind=='control' or kind=='cannon' then
    local a=t*2;ink();g.drawCircleAtPoint(151,135,10);g.drawLine(151,135,151+math.cos(a)*9,135+math.sin(a)*9)
   end
-  center(left,96,177);center(right,281,177)
+  if left=='PRESS A TO FIRE' then UI.key('A',58,175,'Fire') else center(left,96,177) end
+  if right=='B: RELEASE' then UI.key('B',233,175,'Release') else center(right,281,177) end
   -- Progress dots stay clear of device and game examples.
   for i=0,2 do ink();if math.floor(t/2)==i then g.fillCircleAtPoint(186+i*14,197,2) else g.drawCircleAtPoint(186+i*14,197,2) end end
  end
  ink();g.drawLine(23,205,377,205)
- g.drawText('A  '..(Guide and Guide.queue and Guide.index==#Guide.queue and (Guide.manual and 'Resume' or 'Play') or 'Next'),25,211)
- g.drawText(Guide.manual and 'B  Back' or 'B  Replay',292,211)
+ UI.key('A',25,210,Guide and Guide.queue and Guide.index==#Guide.queue and (Guide.manual and 'Resume' or 'Play') or 'Next')
+ UI.key('B',282,210,Guide.manual and 'Back' or 'Replay')
 end

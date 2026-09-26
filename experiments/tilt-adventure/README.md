@@ -1,4 +1,4 @@
-# Sky Hamster Tilt — 0.1.8
+# Sky Hamster Tilt — 0.1.9
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and nine control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
@@ -10,7 +10,7 @@ Title → Start Game → hold still to calibrate → first-encounter animated gu
 
 - Overhead compass: the arrow shows world thrust projected onto the isometric screen, not velocity. Right input points down-right; left points up-left; forward points up-right; back points down-left. Length grows with force; the central ring means neutral. Hidden while docked, falling, calibrating or viewing a tutorial.
 - Tilt: thrust relative to a steady neutral grip, along the world's axes. Greater tilt increases force, not a forced target speed; momentum and slope gravity remain.
-- Quick upward lift: keep close to the calibrated grip angle and lift the whole device quickly to jump on jump-enabled courses. Large transverse shakes are rejected. A is the button alternative. Jump impulse is fixed, preserving horizontal velocity.
+- Quick lift: move the whole device quickly along its CURRENT screen normal, toward the screen-facing side. This uses body-axis Z, independently of the saved neutral grip or world gravity. Large transverse shakes are rejected; a short input hold keeps the pulse from contaminating steering. A is the button alternative. Jump impulse is fixed, preserving horizontal velocity.
 - A: confirm; on a cannon, fire. On a bridge station, turning the crank directly moves the bridge.
 - B: leave a control station/cannon. Move more than 32 world units away before it can capture the ball again. In menus, return; in guides, replay; at results, retry.
 - D-pad UP: route map and pause. A/B resumes.
@@ -30,7 +30,7 @@ Original 14 courses retained. 15 Crank Crossing introduces manual bridge rotatio
 
 Textured stone-road title artwork with separately floating islands/clouds and a waving finish flag. The original wooden menu boards lift when selected; labels remain inside their borders. Launcher includes a static card, list icon and launch image. Full-screen strobing is not used.
 
-Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable position tracker. Lift detection uses a filtered impulse along calibrated gravity, quiet re-arming and a 0.75 second cooldown. Real grip, sensitivity and false positives still need physical playtesting; A remains available. A tangent basis around the neutral gravity vector supports angled and side-on grips without dividing by a vanishing screen-normal component. Rotation around gravity itself is unobservable with this sensor. Opposite tilt applies ordinary counter-force; it does not instantly reverse velocity.
+Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable position tracker. Lift detection uses a filtered impulse along device Z, quiet re-arming and a 0.75 second cooldown. Real grip, sensitivity and false positives still need physical playtesting; A remains available. Steering uses a tangent basis around the neutral gravity vector to support angled and side-on grips without dividing by a vanishing screen-normal component. Rotation around gravity itself is unobservable with this sensor. Opposite tilt applies ordinary counter-force; it does not instantly reverse velocity.
 
 ## Build and verification
 
@@ -96,3 +96,11 @@ The four-direction tutorial uses 28 prebuilt perspective pitch/yaw images of the
 ## Aligned control strip — 0.1.8
 
 Direction words in the bottom strip are replaced by bold pixel arrows in 16×15 keycaps. Keycaps and labels have separate fixed column origins: Map/Help align at x=32, Recenter/Goal at x=162, and action labels at x=316. Docked crank/A/B prompts use the same columns. The strip remains cached and does not allocate icons per gameplay frame. Input behavior is unchanged. SDK build and native-resolution rolling/docked UI review passed.
+
+## Current-normal jump, landing and keycaps — 0.1.9
+
+Jump detection now uses a screen-normal pulse at the current pose rather than calibrated gravity. A 0.22-second steering-estimate hold excludes the triggering gesture from tilt input. This is a brief input-filter hold, not a stop or velocity reset. The revised jump guide replays once; other acknowledged guides remain acknowledged.
+
+Descending top-surface crossings are handled before platform side collision. This fixes the reproduced case where a slightly penetrating landing was incorrectly resolved as a side impact and lost horizontal momentum. Normal ground friction, slopes and real side collisions remain.
+
+All actionable A/B prompts and arrow controls now use the same 17×17 keycaps. Fixed pixel glyphs replace font letters with uneven bearings. Native Simulator checks assert that each of the six white glyph bounds centers on (8,8). Tutorial, footer, results and HUD use the same helper. A fire/jump and B release behavior is preserved. A black/white LOCKED banner appears while docked; B release switches it to UNLOCKED until the ball leaves the 32-unit re-entry exclusion radius. Returning can dock again.

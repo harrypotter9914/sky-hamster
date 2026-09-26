@@ -1,5 +1,9 @@
 Dock={active=nil,blocked=nil}
 local D=Dock
+function D.status()
+ if D.active then return 'LOCKED' end
+ if D.blocked then return 'UNLOCKED' end
+end
 function D.reset(course)
  D.active=nil;D.blocked=nil
  if D.prepareArt and #(course.pads or {})>0 then D.prepareArt() end

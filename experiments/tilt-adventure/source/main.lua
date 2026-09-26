@@ -43,6 +43,7 @@ local selectorReturn
 local saved=pd.datastore and pd.datastore.read('tilt-progress') or {}
 saved=saved or {}
 Guide.seen=saved.guideRevision==3 and (saved.guides or {}) or {}
+if saved.jumpGuideRevision~=1 then Guide.seen.jump=nil end
 local options=saved.options or {}
 UI.motion=options.motion~=false
 gesture=options.gesture~=false
@@ -53,7 +54,7 @@ for k,v in pairs(saved.completed or {}) do if tonumber(k) then completed[tonumbe
 local best=saved.best or {}
 local ending=false
 local function saveProgress()
- if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,guideRevision=3,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
+ if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,guideRevision=3,jumpGuideRevision=1,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
 local jumpEnabled=false
@@ -265,6 +266,7 @@ local function renderWorld()
   UI.tiltPointer(screenX,screenY,Tilt.dx or 0,Tilt.dy or 0,Tilt.power or 0)
  end
  UI.hud(course,level,jumpEnabled,throttle,controls.charge,elapsed,falls,math.sqrt(vx*vx+vy*vy))
+ if state=='play' and not lesson and not Tilt.calibrating then UI.dockStatus(Dock.status()) end
  if controls.flash>0 then
   UI.panel(99,48,202,22);g.drawTextAligned('Turn again for POWER',200,51,kTextAlignment.center)
  elseif needsPower and state=='play' then
@@ -400,9 +402,12 @@ function pd.update()
     x,y=x+vx*step,y+vy*step
     local oldVX,oldVY=vx,vy
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,jumpZ-course:height(x,y),worldTime,step)
-    x,y,vx,vy=Spatial.sides(course,x,y,vx,vy,jumpZ,worldTime)
-    if vx~=oldVX or vy~=oldVY then Audio.impact(math.sqrt((vx-oldVX)^2+(vy-oldVY)^2)) end
     local floor=course:height(x,y)
+    local topContact=support(x,y) and oldZ>=floor and jumpZ<=floor and jumpV<0
+    -- A descending top crossing is a landing, even if this substep penetrated the slab.
+    if not topContact then x,y,vx,vy=Spatial.sides(course,x,y,vx,vy,jumpZ,worldTime) end
+    if vx~=oldVX or vy~=oldVY then Audio.impact(math.sqrt((vx-oldVX)^2+(vy-oldVY)^2)) end
+    floor=course:height(x,y)
     if support(x,y) and jumpZ<=floor and oldZ>=floor and jumpV<0 then
      airborne=false;ballHeight=floor;jumpZ=floor;jumpV=0
      Audio.play('land',0.45)

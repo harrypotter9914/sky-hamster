@@ -16,7 +16,7 @@ end
 local function clearWindow() T.samples=0;T.time=0;T.sx=0;T.sy=0;T.sz=0;T.ax=nil end
 function T.startCalibration()
  T.calibrating=true;clearWindow();T.jump=false;T.ready=false
- T.power=0;T.dx,T.dy=0,0;T.seeded=false;T.stillReady=false
+ T.power=0;T.dx,T.dy=0,0;T.seeded=false;T.stillReady=false;T.inputHold=0
 end
 function T.init()
  if playdate.startAccelerometer then playdate.startAccelerometer() end
@@ -30,7 +30,17 @@ function T.update(dt)
  if not T.seeded then T.fx,T.fy,T.fz=x,y,z;T.seeded=true end
  local ix,iy,iz=x-T.fx,y-T.fy,z-T.fz
  local alpha=1-math.exp(-dt*9)
- T.fx=T.fx+ix*alpha;T.fy=T.fy+iy*alpha;T.fz=T.fz+iz*alpha
+ T.inputHold=math.max(0,(T.inputHold or 0)-dt)
+ -- Sensor Z is attached to the device: it tracks the current screen normal automatically.
+ local impulse,lateral=iz,ix*ix+iy*iy
+ if not T.calibrating then
+  if math.abs(impulse)<.18 then T.quiet=T.quiet+dt;if T.quiet>.18 then T.armed=true end else T.quiet=0 end
+  if T.ready and T.armed and lateral<.16 and impulse>.65 and T.cooldown==0 then
+   T.jump=true;T.armed=false;T.cooldown=.75;T.inputHold=.22
+  end
+ end
+ -- Keep a short lift pulse out of the tilt estimate so it cannot become a braking input.
+ if T.inputHold==0 or T.calibrating then T.fx=T.fx+ix*alpha;T.fy=T.fy+iy*alpha;T.fz=T.fz+iz*alpha end
  if T.calibrating then
   local mag=math.sqrt(x*x+y*y+z*z)
   local drift=T.ax and ((x-T.ax)^2+(y-T.ay)^2+(z-T.az)^2) or 0
@@ -44,12 +54,7 @@ function T.update(dt)
   end
   return
  end
- local impulse=ix*T.nx+iy*T.ny+iz*T.nz
- if math.abs(impulse)<.18 then T.quiet=T.quiet+dt;if T.quiet>.18 then T.armed=true end else T.quiet=0 end
  local mag=math.max(.01,math.sqrt(T.fx*T.fx+T.fy*T.fy+T.fz*T.fz))
- local alignment=(T.fx*T.nx+T.fy*T.ny+T.fz*T.nz)/mag
- local lateral=math.max(0,ix*ix+iy*iy+iz*iz-impulse*impulse)
- if T.ready and T.armed and alignment>.82 and lateral<.16 and impulse>.65 and T.cooldown==0 then T.jump=true;T.armed=false;T.cooldown=.75 end
  local sx=(T.fx*T.rx+T.fy*T.ry+T.fz*T.rz)/mag
  local sy=(T.fx*T.ux+T.fy*T.uy+T.fz*T.uz)/mag
  local n=math.sqrt(sx*sx+sy*sy)

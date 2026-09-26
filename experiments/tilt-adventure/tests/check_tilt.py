@@ -174,17 +174,17 @@ vx,vy=Physics.step(vx,vy,-1,0,1,0,0,1/30);assert(vx>0 and vx<100)
 print('PASS: arbitrary steady grips, stable tangent basis, four world directions and diagonal arrows, motion rejection, per-course calibration and inertial reversal')
 """)
 
-# Upward translation is accepted; upright and lateral shakes are rejected.
+# Current screen-normal translation is accepted; lateral shakes are rejected.
 lua.execute("""
 local function settle(a) accel=a;for i=1,50 do Tilt.update(1/30) end end
 Tilt.startCalibration();settle({0,0,1})
 accel={0,0,1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
 for i=1,5 do Tilt.update(1/30);assert(not Tilt.consumeJump()) end
-settle({0,1,0});accel={0,1,1};Tilt.update(1/30);assert(not Tilt.consumeJump())
+settle({0,1,0});accel={0,1,1};Tilt.update(1/30);assert(Tilt.consumeJump())
 settle({0,0,1});accel={1,0,1.9};Tilt.update(1/30);assert(not Tilt.consumeJump())
 settle({0,0,1});accel={0,0,1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
 assert(store.saved.guideRevision==3)
-print('PASS: level upward pulse, single trigger, upright/lateral shake rejection, rearming and tutorial revision')
+print('PASS: screen-normal pulse, single trigger, upright support and lateral shake rejection, rearming and tutorial revision')
 """)
 
 # Manual help and route notes pause the current run, including a docked cannon.
@@ -218,8 +218,40 @@ lua.execute("""
 for _,n in ipairs({{0,.6,.8},{0,1,0},{1,0,0}}) do
  Tilt.startCalibration();accel=n;for i=1,60 do Tilt.update(1/30) end
  assert(Tilt.ready and Tilt.power==0)
- accel={n[1]*1.9,n[2]*1.9,n[3]*1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
+ accel={n[1],n[2],n[3]+.9};Tilt.update(1/30);assert(Tilt.consumeJump())
  Tilt.update(1/30);assert(not Tilt.consumeJump())
 end
-print('PASS: lift impulse follows the calibrated gravity axis in angled, upright and side-on grips')
+print('PASS: lift impulse follows device Z in angled, upright and side-on grips')
+""")
+
+lua.execute("""
+selectReady(1);put('lesson',false);put('x',80);put('y',80);put('vx',100);put('vy',0)
+put('airborne',true);put('jumpZ',.1);put('jumpV',-120);accel={0,0,1}
+frame()
+assert(not get('airborne') and get('state')=='play','top landing must stay supported')
+assert(get('vx')>98 and math.abs(get('vy'))<.01,'top landing must not be resolved as a side-wall impact')
+print('PASS: downward top contact preserves horizontal momentum')
+""")
+
+
+lua.execute("""
+-- Calibrate one pose, then rotate elsewhere: jump must follow device Z, not old gravity.
+Tilt.startCalibration();accel={0,.6,.8};for i=1,60 do Tilt.update(1/30) end
+accel={.5,0,.866};for i=1,60 do Tilt.update(1/30) end
+local power,dx,dy=Tilt.power,Tilt.dx,Tilt.dy
+accel={.5,0,1.766};Tilt.update(1/30);assert(Tilt.consumeJump())
+assert(math.abs(Tilt.power-power)<.00001 and Tilt.dx==dx and Tilt.dy==dy,'lift pulse must not contaminate steering')
+local c=Courses[16];Dock.reset(c);assert(Dock.status()==nil)
+Dock.update(c,112,80,0,0,false,0,false,false);assert(Dock.status()=='LOCKED')
+Dock.update(c,112,80,0,0,false,0,false,true);assert(Dock.status()=='UNLOCKED')
+assert(not Dock.update(c,115,80,0,0,false,0,false,false));assert(Dock.status()=='UNLOCKED')
+Dock.update(c,48,80,0,0,false,0,false,false);assert(Dock.status()==nil)
+Dock.update(c,112,80,0,0,false,0,false,false);assert(Dock.status()=='LOCKED')
+for _,vel in ipairs({{100,0},{-100,0},{0,100},{0,-100}}) do
+ selectReady(1);put('lesson',false);put('x',80);put('y',48);put('vx',vel[1]);put('vy',vel[2])
+ put('airborne',true);put('jumpZ',.1);put('jumpV',-120);accel={0,0,1};frame()
+ assert(not get('airborne') and get('state')=='play')
+ assert(get('vx')*vel[1]+get('vy')*vel[2]>9800,'landing must preserve travel direction and momentum')
+end
+print('PASS: current pose normal after turning, unpolluted steering, locked/released/leave/relock states, four-direction landing momentum')
 """)

@@ -74,10 +74,30 @@ function UI.panel(x,y,w,h)
  ink();g.fillRect(x+3,y+3,w,h);g.setColor(g.kColorWhite);g.fillRect(x,y,w,h);ink();g.drawRect(x,y,w,h);g.drawRect(x+3,y+3,w-6,h-6)
  for _,dx in ipairs({6,w-8}) do for _,dy in ipairs({6,h-8}) do g.fillRect(x+dx,y+dy,2,2) end end
 end
-local function key(s,x,y,label)
- ink();g.fillRoundRect(x,y,19,19,4);g.setImageDrawMode(g.kDrawModeFillWhite);g.drawTextAligned(s,x+9,y+1,kTextAlignment.center);g.setImageDrawMode(g.kDrawModeCopy)
- if label then text(label,x+24,y+1) end
+local glyphs={
+ A={'0011100','0110110','1100011','1100011','1111111','1100011','1100011','1100011','1100011'},
+ B={'1111100','1100110','1100011','1100110','1111100','1100110','1100011','1100110','1111100'}}
+local upGlyph={'000010000','000111000','001111100','011111110','111111111','000111000','000111000','000111000','000111000'}
+function UI.keycap(button,x,y)
+ ink();g.fillRoundRect(x,y,17,17,3);g.setColor(g.kColorWhite)
+ local glyph=glyphs[button]
+ if glyph then
+  for row,line in ipairs(glyph) do for col=1,#line do if line:sub(col,col)=='1' then g.fillRect(x+4+col,y+3+row,1,1) end end end
+ elseif button=='crank' then
+  g.drawCircleAtPoint(x+6,y+11,3);g.drawLine(x+6,y+11,x+12,y+5);g.fillRect(x+11,y+3,3,5)
+ else
+  for row,line in ipairs(upGlyph) do for col=1,9 do if line:sub(col,col)=='1' then
+   local a,b=col-5,row-5
+   if button=='down' then a,b=-a,-b elseif button=='left' then a,b=b,-a elseif button=='right' then a,b=-b,a end
+   g.fillRect(x+8+a,y+8+b,1,1)
+  end end end
+ end
+ ink()
 end
+function UI.key(button,x,y,label)
+ UI.keycap(button,x,y);if label then text(label,x+24,y) end
+end
+local key=UI.key
 local cloud=bitmap(38,14,function()
  g.setColor(g.kColorWhite);g.fillEllipseInRect(1,6,36,7);g.fillCircleAtPoint(14,7,6);g.fillCircleAtPoint(24,6,5);ink();g.drawLine(5,13,33,13)
 end)
@@ -202,23 +222,7 @@ function UI.map(course,x,y,t)
  footer('resume','resume')
 end
 -- Fixed-size keycaps and fixed label origins keep both rows aligned.
-local function controlHint(button,label,x,y)
- ink();g.fillRoundRect(x,y,16,15,3);g.setColor(g.kColorWhite)
- if button=='up' or button=='down' or button=='left' or button=='right' then
-  local points={0,-5,5,0,2,0,2,5,-2,5,-2,0,-5,0};local p={}
-  for i=1,#points,2 do
-   local a,b=points[i],points[i+1]
-   if button=='down' then a,b=-a,-b elseif button=='left' then a,b=b,-a elseif button=='right' then a,b=-b,a end
-   p[#p+1]=x+7+a;p[#p+1]=y+7+b
-  end
-  g.fillPolygon(table.unpack(p))
- elseif button=='crank' then
-  g.drawCircleAtPoint(x+5,y+10,3);g.drawLine(x+5,y+10,x+11,y+4);g.fillRect(x+10,y+2,3,5)
- else
-  g.setImageDrawMode(g.kDrawModeFillWhite);g.drawTextAligned(button,x+8,y-1,kTextAlignment.center);g.setImageDrawMode(g.kDrawModeCopy)
- end
- text(label,x+24,y-1)
-end
+local function controlHint(button,label,x,y) UI.key(button,x,y,label) end
 local hudBase,hudKey,readout,readoutKey,bottom,bottomKey
 function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  local id=tostring(level)..tostring(jump)
@@ -241,11 +245,11 @@ function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  if bottomKey~=bk then bottomKey=bk;bottom=bitmap(400,37,function()
   g.setColor(g.kColorWhite);g.fillRect(0,0,400,37);ink();g.drawLine(0,0,400,0);g.drawLine(2,2,398,2)
   if dock~='roll' then
-   controlHint('crank',dock=='cannon' and 'Aim' or 'Rotate',8,3)
-   if dock=='cannon' then controlHint('A','Fire',138,3) end;controlHint('B','Release',292,3)
+   controlHint('crank',dock=='cannon' and 'Aim' or 'Rotate',8,2)
+   if dock=='cannon' then controlHint('A','Fire',138,2) end;controlHint('B','Release',292,2)
   else
-   controlHint('up','Map',8,3);controlHint('down','Recenter',138,3)
-   if jump then controlHint('A','Jump',292,3) end
+   controlHint('up','Map',8,2);controlHint('down','Recenter',138,2)
+   if jump then controlHint('A','Jump',292,2) end
   end
   controlHint('left','Help',8,20);controlHint('right','Goal',138,20)
  end) end
@@ -286,7 +290,7 @@ local notes={
  {'Keep level to coast downhill.','Gravity still acts when tilt is neutral.'},
  {'Use the downhill run for momentum.','Carry enough speed up the far slope.'},
  {'Brake early before the narrow bend.','Opposite tilt takes time to slow you.'},
- {'Approach the gap with some speed.','Lift level, or press A, before the edge.'},
+ {'Approach the gap with some speed.','Lift screenward or press A at the edge.'},
  {'Choose your approach speed carefully.','Land on the small middle platform.'},
  {'Land safely before the next leap.','Wait for jump recovery between gaps.'},
  {'Wait on the road while the gate shuts.','Cross when the barrier opens.'},
@@ -312,7 +316,7 @@ function UI.goalPages(course,level)
  if goalCache[level] then return goalCache[level] end
  local hint=notes[level] or {'Stay on the road.','Reach the finish flag.'}
  local pages={{'REACH THE FINISH',hint[1],hint[2]},
-  {'SAFE PROGRESS',course.checkpoint and 'Touch CHECK to save your retry point.' or 'Falls restart this route from START.',course.jump and 'Jump: lift steadily or press A.' or 'No jumping on this route.'}}
+  {'SAFE PROGRESS',course.checkpoint and 'Touch CHECK to save your retry point.' or 'Falls restart this route from START.',course.jump and 'Jump: lift screenward or press A.' or 'No jumping on this route.'}}
  local seen={}
  local function add(k) if machineNotes[k] and not seen[k] then pages[#pages+1]=machineNotes[k];seen[k]=true end end
  for _,m in ipairs(course.mechanisms or {}) do add(m.manual and 'control' or m.kind) end
@@ -326,4 +330,14 @@ function UI.goal(course,level,index)
  center(p[1],200,87);center(p[2],200,117);center(p[3],200,140)
  center(string.format('%d / %d',index,#pages),200,168)
  footer('next page','back')
+end
+
+local dockSigns={}
+function UI.dockStatus(status)
+ if not status then return end
+ if not dockSigns[status] then dockSigns[status]=bitmap(110,23,function()
+  ink();g.fillRoundRect(0,0,110,23,5);g.setImageDrawMode(g.kDrawModeFillWhite)
+  g.drawTextAligned(status,55,4,kTextAlignment.center);g.setImageDrawMode(g.kDrawModeCopy)
+ end) end
+ dockSigns[status]:draw(145,47)
 end
