@@ -32,6 +32,8 @@ local overview=false
 local choosing=false
 local selected=1
 local lesson=true
+local briefing=false
+local infoPage=1
 local title=not Build.classroom
 local titleChoice=1
 local settings=false
@@ -77,9 +79,9 @@ local function beginFall(height,verticalSpeed)
  jumpZ=height;jumpV=verticalSpeed;airborne=false
  Audio.quiet();Audio.play('fall')
 end
-local function selectLevel(n) ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=Guide.enter(course);reset(true);if prepareTerrain then prepareTerrain() end end
+local function selectLevel(n) briefing=false;ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=Guide.enter(course);reset(true);if prepareTerrain then prepareTerrain() end end
 local function openSelector()
- if choosing or settings or title then return end
+ if choosing or settings or title or briefing or (lesson and Guide.manual) then return end
  selectorReturn={title=title,overview=overview,lesson=lesson}
  title=false;overview=false;choosing=true;selected=level;Audio.quiet()
 end
@@ -324,6 +326,14 @@ function pd.update()
   elseif pd.buttonJustPressed(pd.kButtonB) then Audio.play('menu');closeSelector() end
   pd.getCrankChange();UI.selector(selected,completed);return
  end
+ if briefing then
+  Audio.quiet();pd.getCrankChange();Tilt.jump=false
+  local pages=UI.goalPages(course,level)
+  if pd.buttonJustPressed(pd.kButtonB) then briefing=false;Tilt.cooldown=.75;Tilt.armed=false
+  elseif pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonRight) then infoPage=infoPage%#pages+1
+  elseif pd.buttonJustPressed(pd.kButtonLeft) then infoPage=(infoPage-2)%#pages+1 end
+  UI.goal(course,level,infoPage);return
+ end
  if overview then
   Audio.quiet()
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then overview=false end
@@ -332,13 +342,17 @@ function pd.update()
  if lesson then
   Audio.quiet();Guide.time=Guide.time+dt
   if pd.buttonJustPressed(pd.kButtonA) then lesson=Guide.advance();saveProgress();started=true;Tilt.jump=false;Tilt.cooldown=.75
-  elseif pd.buttonJustPressed(pd.kButtonB) then Guide.replay() end
+  elseif pd.buttonJustPressed(pd.kButtonB) then
+   if Guide.manual then lesson=false;Tilt.jump=false;Tilt.cooldown=.75;Tilt.armed=false else Guide.replay() end
+  end
   pd.getCrankChange();renderWorld()
   if lesson then UI.lesson(Guide.key(),Guide.time) end
   return
  end
 
  if Tilt.calibrating then Audio.quiet();pd.getCrankChange();UI.calibration();return end
+ if state=='play' and pd.buttonJustPressed(pd.kButtonLeft) then lesson=Guide.enter(course,true);Audio.quiet();pd.getCrankChange();UI.lesson(Guide.key(),0);return end
+ if state=='play' and pd.buttonJustPressed(pd.kButtonRight) then briefing=true;infoPage=1;Audio.quiet();pd.getCrankChange();UI.goal(course,level,infoPage);return end
  if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonDown) then Tilt.startCalibration();return end
  if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonUp) then overview=true;Audio.quiet();return end
  local lifted=Tilt.consumeJump() and gesture
@@ -431,8 +445,8 @@ if not Build.classroom then
  -- Playdate permits three custom system menu entries: replace restart with home.
  pd.getSystemMenu():removeAllMenuItems()
  pd.getSystemMenu():addMenuItem('Level select',openSelector)
- pd.getSystemMenu():addMenuItem('Map / pause',function() if not title then overview=not overview end;Audio.quiet() end)
- pd.getSystemMenu():addMenuItem('Title / settings',function() settings=false;ending=false;title=true;choosing=false;overview=false;titleChoice=1;Audio.quiet() end)
+ pd.getSystemMenu():addMenuItem('Map / pause',function() if not title and not briefing and not (lesson and Guide.manual) then overview=not overview end;Audio.quiet() end)
+ pd.getSystemMenu():addMenuItem('Title / settings',function() briefing=false;settings=false;ending=false;title=true;choosing=false;overview=false;titleChoice=1;Audio.quiet() end)
 end
 pd.gameWillPause=function() Audio.pause();saveProgress() end
 pd.gameWillResume=function() last=pd.getCurrentTimeMilliseconds();Tilt.cooldown=.75;Tilt.armed=false;Audio.resume() end

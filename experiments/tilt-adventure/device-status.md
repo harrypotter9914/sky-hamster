@@ -1,4 +1,4 @@
-Latest — 2026-09-26, tilt 0.1.5: SDK build and host checks passed. Ten tutorial topics were exported at six phases each; menu, map, calibration and result pages were reviewed at native resolution. Installation attempt reported "No Playdate device detected." 0.1.5 hardware installation is not confirmed. Physical gesture feel and performance remain unverified. The previous confirmed install was 0.1.4.
+Latest — 2026-09-26, tilt 0.1.6: SDK build and host checks passed, including manual Help/Goal pause, return, pagination and docked input handling. Goal pages and the two-row bottom control strip were checked in native-resolution Simulator exports. Device enumeration found no Playdate USB device. 0.1.6 is not installed on hardware. The previous confirmed install was 0.1.4. Physical gesture feel and performance remain unverified.
 
 Previous attempts (superseded):
 2026-09-26: SDK build and host checks passed. Title/tutorial/HUD visually checked in updated Simulator.

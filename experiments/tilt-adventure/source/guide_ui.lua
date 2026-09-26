@@ -139,6 +139,6 @@ function UI.lesson(kind,time)
   for i=0,2 do ink();if math.floor(t/2)==i then g.fillCircleAtPoint(186+i*14,197,2) else g.drawCircleAtPoint(186+i*14,197,2) end end
  end
  ink();g.drawLine(23,205,377,205)
- g.drawText('A  '..(Guide and Guide.queue and Guide.index==#Guide.queue and 'Play' or 'Next'),25,211)
- g.drawText('B  Replay',292,211)
+ g.drawText('A  '..(Guide and Guide.queue and Guide.index==#Guide.queue and (Guide.manual and 'Resume' or 'Play') or 'Next'),25,211)
+ g.drawText(Guide.manual and 'B  Back' or 'B  Replay',292,211)
 end

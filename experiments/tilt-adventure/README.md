@@ -1,4 +1,4 @@
-# Sky Hamster Tilt — 0.1.5
+# Sky Hamster Tilt — 0.1.6
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and nine control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
@@ -14,6 +14,8 @@ Title → Start Game → first-encounter animated guides over the level → hold
 - A: confirm; on a cannon, fire. On a bridge station, turning the crank directly moves the bridge.
 - B: leave a control station/cannon. Move more than 32 world units away before it can capture the ball again. In menus, return; in guides, replay; at results, retry.
 - D-pad UP: route map and pause. A/B resumes.
+- D-pad LEFT / Help: replay this course's control and mechanism guides. A advances; B returns immediately to the current run. Finishing the sequence resumes play.
+- D-pad RIGHT / Goal: read this course's objective, checkpoint/jump rules and mechanism notes. A/right advances a page; left goes back a page; B resumes play.
 - D-pad DOWN: recalibrate with the device lying flat, screen facing up; play pauses during calibration. Keep it still for 0.8 seconds. Upright and tilted poses are not accepted as neutral.
 - Crank: rotate a manual bridge or aim a cannon while docked. It no longer accelerates the ball or charges a jump.
 - System menu: level select, map/pause, title/settings.
@@ -80,3 +82,7 @@ Four transparent illustration masters supply five runtime assets: handheld, flat
 Updated guides replay once after upgrading from an older guide revision; progress, settings and records remain. SDK build and regression tests cover the complete campaign plus level upward impulses, single-trigger cooldown, lateral/upright rejection and rearming. The review bundle exports six phases of each of ten topics plus menu/results pages at 400×240. Physical gesture feel and frame rate require hardware playtesting.
 
 Asset prompts, built-in generation mode and source names: `art/UI-ASSETS-v015.md`. Export with `art/prepare-ui.ps1` before building. Tutorial poses and miniature cannon orientations are cached; static imagery is not regenerated during play.
+
+## Help and route goals — 0.1.6
+
+The bottom control strip now uses two rows. LEFT Help and RIGHT Goal stay visible both while rolling and while docked. The upper row retains map/recenter/jump or crank/fire/release controls. Help and Goal freeze physics, mechanisms and the timer without resetting position, velocity or docking. Input used to close them cannot also jump, fire or leave a cannon. Manual guide replay does not change first-encounter acknowledgements. All 17 courses have tilt-specific notes, replacing obsolete crank-power instructions in this new view.

@@ -223,8 +223,14 @@ function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  local dock=Dock.active and Dock.active.kind or 'roll';local bk=dock..tostring(jump)
  if bottomKey~=bk then bottomKey=bk;bottom=bitmap(400,37,function()
   g.setColor(g.kColorWhite);g.fillRect(0,0,400,37);ink();g.drawLine(0,0,400,0);g.drawLine(2,2,398,2)
-  if dock~='roll' then icon('crank',7,9);text(dock=='cannon' and 'AIM' or 'ROTATE',32,10);if dock=='cannon' then key('A',148,9,'fire') end;key('B',283,9,'release')
-  else icon('tilt',7,9);text('ROLL',32,10);if jump then key('A',95,9,'jump') end;icon('map',193,9);text('UP',218,10);text('DOWN recenter',274,10) end
+  if dock~='roll' then
+   text(dock=='cannon' and 'Crank: aim' or 'Crank: rotate',8,3)
+   if dock=='cannon' then text('A Fire',167,3) end;text('B Release',290,3)
+  else
+   text('UP Map',8,3);text('DOWN Recenter',123,3)
+   if jump then text('A Jump',313,3) end
+  end
+  text('LEFT Help',8,20);text('RIGHT Goal',193,20)
  end) end
  bottom:draw(0,203)
 end
@@ -255,4 +261,52 @@ function UI.worldSign(label,x,y)
   UI.panel(0,0,75,22);g.setFont(bold);g.drawTextAligned(label,37,3,kTextAlignment.center);g.setFont(regular)
  end) end
  signCache[label]:draw(x,y)
+end
+
+-- Course notes are cached and use current tilt controls, never legacy crank-throttle hints.
+local notes={
+ {'Build speed on the straight road.','Counter-tilt before the narrow corners.'},
+ {'Keep level to coast downhill.','Gravity still acts when tilt is neutral.'},
+ {'Use the downhill run for momentum.','Carry enough speed up the far slope.'},
+ {'Brake early before the narrow bend.','Opposite tilt takes time to slow you.'},
+ {'Approach the gap with some speed.','Lift level, or press A, before the edge.'},
+ {'Choose your approach speed carefully.','Land on the small middle platform.'},
+ {'Land safely before the next leap.','Wait for jump recovery between gaps.'},
+ {'Wait on the road while the gate shuts.','Cross when the barrier opens.'},
+ {'Watch the floor before moving ahead.','Cross only while it is solid.'},
+ {'Board the moving platform at the dock.','Balance, ride across, then roll off.'},
+ {'Board the rotating deck when aligned.','Roll off when it reaches the far road.'},
+ {'Keep clear of the moving panels.','Wait for a safe lane, then cross.'},
+ {'Control the descent and time the gate.','Jump the gap, then ride the ferry.'},
+ {'Combine jumps, rotation and timing.','Use the checkpoint before the finale.'},
+ {'Dock at the control station slowly.','Crank the bridge into line; B releases.'},
+ {'Roll slowly into the cannon.','Crank to aim; A fires and B exits.'},
+ {'Aim the cannon toward the next road.','Save at the checkpoint; time the gate.'}}
+local machineNotes={
+ gate={'TIMED GATE','Wait while the barrier is closed.','Roll through during the opening.'},
+ trap={'VANISHING FLOOR','Missing floor cannot support the ball.','Wait on solid ground for it to return.'},
+ ferry={'MOVING PLATFORM','Board only when it reaches your dock.','Balance on it, then roll off across.'},
+ rotor={'ROTATING DECK','Ride the deck as it turns.','Leave when it lines up with the road.'},
+ sweeper={'MOVING PANEL','The panel can push you off the road.','Keep clear and cross behind it.'},
+ control={'CRANK BRIDGE','Dock slowly, then crank to align it.','B releases; leave before docking again.'},
+ cannon={'CANNON','Crank to aim; check the dotted arc.','A fires. B leaves without firing.'}}
+local goalCache={}
+function UI.goalPages(course,level)
+ if goalCache[level] then return goalCache[level] end
+ local hint=notes[level] or {'Stay on the road.','Reach the finish flag.'}
+ local pages={{'REACH THE FINISH',hint[1],hint[2]},
+  {'SAFE PROGRESS',course.checkpoint and 'Touch CHECK to save your retry point.' or 'Falls restart this route from START.',course.jump and 'Jump: lift level or press A.' or 'No jumping on this route.'}}
+ local seen={}
+ local function add(k) if machineNotes[k] and not seen[k] then pages[#pages+1]=machineNotes[k];seen[k]=true end end
+ for _,m in ipairs(course.mechanisms or {}) do add(m.manual and 'control' or m.kind) end
+ for _,p in ipairs(course.pads or {}) do add(p.kind=='bridge' and 'control' or p.kind) end
+ goalCache[level]=pages;return pages
+end
+function UI.goal(course,level,index)
+ local pages=UI.goalPages(course,level);local p=pages[index] or pages[1]
+ page('ROUTE GOAL','flag',string.format('%02d  %s',level,course.shortName))
+ UI.panel(20,76,360,115)
+ center(p[1],200,87);center(p[2],200,117);center(p[3],200,140)
+ center(string.format('%d / %d',index,#pages),200,168)
+ footer('next page','back')
 end

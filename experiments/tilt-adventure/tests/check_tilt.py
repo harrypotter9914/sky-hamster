@@ -184,3 +184,29 @@ settle({0,0,1});accel={0,0,1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
 assert(store.saved.guideRevision==2)
 print('PASS: level upward pulse, single trigger, upright/lateral shake rejection, rearming and tutorial revision')
 """)
+
+# Manual help and route notes pause the current run, including a docked cannon.
+lua.execute("""
+local select=get('selectLevel');select(14);put('lesson',false);Tilt.calibrating=false;accel={0,0,1}
+local xx,yy,tt,wt=get('x'),get('y'),get('elapsed'),get('worldTime')
+frame({left=true});assert(get('lesson') and Guide.manual and Guide.key()=='roll')
+local keys={};for _,k in ipairs(Guide.queue) do keys[k]=true end
+assert(keys.jump and keys.rotor and keys.trap and keys.sweeper and keys.gate and not keys.arrival)
+for i=1,10 do frame() end
+assert(get('x')==xx and get('y')==yy and get('elapsed')==tt and get('worldTime')==wt)
+frame({b=true});assert(not get('lesson') and not get('airborne'))
+frame({right=true});assert(get('briefing'));assert(#UI.goalPages(Courses[14],14)==6)
+for i=1,10 do frame() end
+assert(get('x')==xx and get('elapsed')==tt and get('worldTime')==wt)
+frame({a=true});assert(get('infoPage')==2 and not get('airborne'))
+frame({left=true});assert(get('infoPage')==1)
+frame({b=true});assert(not get('briefing') and get('x')==xx)
+frame({left=true});while get('lesson') do frame({a=true}) end
+assert(get('x')==xx and get('elapsed')==tt)
+select(16);put('lesson',false);put('x',112);put('y',80);frame();assert(Dock.active)
+local dock=Dock.active;local angle=dock.angle
+frame({right=true});frame(nil,nil,90);frame({b=true});assert(Dock.active==dock and dock.angle==angle)
+frame({left=true});frame({b=true});assert(Dock.active==dock)
+for n,c in ipairs(Courses) do for i=1,#UI.goalPages(c,n) do UI.goal(c,n,i) end end
+print('PASS: Help replay, B return, full replay resume, Goal paging, frozen physics/time, no accidental jump or cannon release, all 17 route notes')
+""")

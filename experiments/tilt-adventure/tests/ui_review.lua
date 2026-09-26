@@ -24,6 +24,9 @@ function playdate.update()
   export('v15-failure',function() UI.failure(3,true) end)
   export('v15-result',function() UI.result(63.7,3,58.2,false) end)
   export('v15-ending',function() UI.ending({[1]=true}) end)
+  export('v16-goal',function() UI.goal(Courses[14],14,1) end)
+  export('v16-machine',function() UI.goal(Courses[16],16,3) end)
+  export('v16-help',function() Guide.enter(Courses[14],true);UI.lesson(Guide.key(),1) end)
   for _,kind in ipairs({'arrival','roll','jump','control','cannon','gate','trap','ferry','rotor','sweeper'}) do
    for i,t in ipairs({0,1,1.8,2.8,4,5.7}) do
     export('v15-'..kind..'-'..i,function() UI.lesson(kind,t) end)
