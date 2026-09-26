@@ -1,8 +1,11 @@
 -- One-bit scene layers and a shared, cached instrument-panel vocabulary.
 local g=playdate.graphics
 local scene=g.image.new('title-scene')
-local regular=g.getSystemFont('normal')
-local bold=g.getSystemFont('bold')
+local regular=g.font.new('fonts/ui-bold')
+local bold=regular
+local titleFont=regular
+g.setFont(regular)
+UI.bodyFont=regular;UI.titleFont=titleFont
 UI.motion=true
 local function bitmap(w,h,draw)
  local im=g.image.new(w,h,g.kColorClear);g.pushContext(im);g.setImageDrawMode(g.kDrawModeCopy);draw();g.popContext();return im
@@ -59,22 +62,53 @@ local island=bitmap(32,23,function()
  g.drawLine(2,6,17,10);g.drawLine(17,10,29,6);g.drawLine(17,10,16,20);g.drawLine(8,10,11,15);g.drawLine(22,10,20,15)
 end)
 local flags={}
-for f=1,4 do flags[f]=bitmap(18,26,function()
- g.setColor(g.kColorWhite);g.fillRect(0,0,3,26);ink();g.fillRect(1,0,1,26)
- local d=({0,2,0,-2})[f];g.fillPolygon(2,1,9,3+d,17,1+d,15,10+d,8,11+d,2,8)
- g.setColor(g.kColorWhite);g.fillRect(4,3,3,3);g.fillRect(10,6+d,3,3)
+for f=1,4 do flags[f]=bitmap(30,39,function()
+ g.setColor(g.kColorWhite);g.fillRoundRect(0,0,5,39,2);ink();g.fillRect(2,1,2,37)
+ local d=({0,2,0,-2})[f]
+ g.setColor(g.kColorWhite);g.fillPolygon(4,1,16,4+d,28,2+d,26,19+d,15,21+d,4,17)
+ ink();g.drawPolygon(4,1,16,4+d,28,2+d,26,19+d,15,21+d,4,17)
+ for row=0,2 do for col=0,3 do if (row+col)%2==0 then g.fillRect(6+col*5,5+row*4+math.floor(col*d/3),4,4) end end end
 end) end
+local cannonTitle=g.image.new('cannon-barrel')
+local cannonScene=bitmap(78,75,function()
+ -- A deep three-dimensional saddle on the pale foreground paving.
+ g.setColor(g.kColorWhite);g.fillPolygon(4,45,40,34,74,45,37,57)
+ ink();g.drawPolygon(4,45,40,34,74,45,37,57)
+ g.setColor(g.kColorWhite);g.fillPolygon(4,45,37,57,37,72,4,59)
+ ink();g.drawPolygon(4,45,37,57,37,72,4,59)
+ g.fillPolygon(37,57,74,45,74,60,37,72)
+ g.setColor(g.kColorWhite);g.drawLine(41,59,70,49);g.drawLine(41,68,70,58)
+ cannonTitle:draw(3,0)
+end)
 local floats={{island,246,71,2.5,.63,.4},{island,278,108,3,1.03,2},{cloud,241,29,2,.42,1.7},{cloud,325,96,2, .77,3.1}}
 function UI.scene()
  g.clear(g.kColorBlack);if scene then scene:draw(0,0) end
  local t=UI.motion and playdate.getCurrentTimeMilliseconds()/1000 or 0
  for _,o in ipairs(floats) do o[1]:draw(o[2],o[3]+(UI.motion and math.floor(math.sin(t*o[5]+o[6])*o[4]) or 0)) end
- flags[UI.motion and (math.floor(t*5)%4+1) or 1]:draw(373,63)
+ flags[UI.motion and (math.floor(t*5)%4+1) or 1]:draw(366,48,g.kImageFlippedX)
+ cannonScene:draw(320,161)
 end
-local menuLabels={bitmap(165,19,function() g.setFont(bold);center('START GAME',82,0);g.setFont(regular) end),bitmap(165,19,function() g.setFont(bold);center('SETTINGS',82,0);g.setFont(regular) end)}
+local menuLabels={};local boards={};local boardY={139,172}
+for i,label in ipairs({'Start Game','Settings'}) do
+ menuLabels[i]=bitmap(150,19,function()
+  g.setFont(regular);g.setFontTracking(1);center(label,75,0);g.setFontTracking(0)
+ end)
+ boards[i]=bitmap(188,31,function() scene:draw(-8,-boardY[i]) end)
+end
+local menuLift={0,0};local lastMenuTime
 function UI.title(choice)
  UI.scene()
- for i,y in ipairs({145,178}) do menuLabels[i]:draw(20,y);if i==choice then ball(23,y+8,7);g.drawLine(170,y+5,174,y+8);g.drawLine(174,y+8,170,y+11) end end
+ local now=playdate.getCurrentTimeMilliseconds();local dt=math.min(.1,(now-(lastMenuTime or now))/1000);lastMenuTime=now
+ for i,base in ipairs(boardY) do
+  local target=i==choice and 3 or 0;menuLift[i]=menuLift[i]+(target-menuLift[i])*math.min(1,dt*18)
+  local lift=math.floor(menuLift[i]+.5);local y=base-lift
+  -- Raise the original illustrated board, keeping its wooden posts and border.
+  ink();g.fillRect(8,base,188,31);boards[i]:draw(8,y)
+  menuLabels[i]:draw(27,y+5)
+  if i==choice then
+   ball(29,y+15,5);g.fillTriangle(173,y+12,178,y+15,173,y+18)
+  end
+ end
 end
 local function page(title,symbol,subtitle)
  UI.scene();UI.panel(8,8,384,223)
@@ -107,21 +141,6 @@ function UI.calibration()
  g.fillRect(179,137,14,4);g.fillRect(184,132,4,14);g.drawCircleAtPoint(216,137,4)
  meter(72,171,256,math.min(1,(Tilt.time or 0)/.8));center('Keep still for a moment',200,184)
 end
-local lessonInfo={
- control={'CRANK BRIDGE','crank','Roll slowly onto the control pad.','Turn the crank to rotate the bridge.','B releases you. Move away to re-enter.'},
- cannon={'CLOUD CANNON','crank','Roll slowly into the cannon.','Crank to aim. A fires. B exits.','The dots show your flight path.'},
- relay={'FINAL FLIGHT','flag','Aim your cannon at the far platform.','Keep your momentum across the route.','Reach the final flag to finish the journey.'},
- gate={'TIMED GATE','clock','Watch the barrier open and close.','Wait on solid ground for a clear path.','Tilt gently, then cross in one motion.'},
- trap={'VANISHING FLOOR','clock','The floor disappears on a timer.','Watch a full cycle before you cross.','Jump the gap or wait for solid ground.'},
- ferry={'MOVING PLATFORM','map','Wait for the platform at the dock.','Roll aboard, then hold the device level.','Ride across and roll off at the far dock.'},
- rotor={'ROTATING FLOOR','crank','Board the outer end at your dock.','Balance while the floor carries you.','Roll off when it reaches the other side.'},
- sweeper={'SWEEPING PANELS','clock','Panels sweep across the road.','Watch for an open lane before moving.','Avoid the edge: contact pushes you.'}}
-function UI.lesson(jump,kind)
- local l=lessonInfo[kind] or (jump and {'LIFT AND LEAP','jump','Give the device a quick upward lift.','A also jumps. Keep moving across gaps.','Wait for the jump indicator to refill.'} or {'LEARN TO BALANCE','tilt','Tilt gently in the direction you want.','More tilt gives the ball more force.','Stay on the road and reach the flag.'})
- page(l[1],l[2])
- for i=1,3 do local y=63+(i-1)*39;ball(32,y+9,8);text(tostring(i),27,y+1);text(l[i+2],52,y) end
- icon('map',26,176);text('UP map     DOWN recenter',53,177);footer('start','courses')
-end
 local previews={}
 local function route(course,x,y,w,h,px,py,t)
  local minX,minY,maxX,maxY=0,0,1,1
@@ -148,7 +167,7 @@ function UI.selector(selected,completed)
   if n==selected then ink();g.fillRoundRect(x,y,175,37,3) else g.drawRoundRect(x,y,175,37,3) end
   if not previews[n] then previews[n]=bitmap(38,24,function() route(c,1,2,36,20) end) end
   g.setImageDrawMode(n==selected and g.kDrawModeFillWhite or g.kDrawModeCopy);previews[n]:draw(x+7,y+6)
-  g.drawText(fit(string.format('%02d %s',n,c.shortName),120),x+49,y+1)
+  g.drawText(fit(string.format('%02d %s',n,c.shortName),120),x+49,y+3)
   g.drawText(completed[n] and 'CLEARED' or (c.jump and 'LEAP ROUTE' or 'ROLL ROUTE'),x+49,y+18);g.setImageDrawMode(g.kDrawModeCopy)
  end
  footer('play','back')

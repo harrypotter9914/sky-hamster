@@ -20,7 +20,7 @@ lua.execute('''
 clock=0; pressed={}; held={}; crank=0; menu={}
 kTextAlignment={center=0}
 local noop=function() end
-local gfx=setmetatable({image={new=function() return {setMaskImage=noop,getMaskImage=function() return {draw=noop} end,draw=noop,drawScaled=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
+local gfx=setmetatable({font={new=function() return {getHeight=function() return 14 end} end},image={new=function() return {setMaskImage=noop,getMaskImage=function() return {draw=noop} end,draw=noop,drawRotated=noop,drawScaled=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
 local function player()
  return {plays=0,playing=false,setVolume=noop,setRate=noop,setPaused=noop,
  play=function(self) self.plays=self.plays+1;self.playing=true end,
@@ -110,9 +110,36 @@ put('lesson',false);for i=1,40 do frame() end
 local level=get('level');local before=get('elapsed');local xx=get('x')
 menu['Level select']();assert(get('choosing'));frame({right=true});frame({b=true})
 assert(not get('choosing') and get('level')==level and get('x')==xx and get('elapsed')==before)
-for _,kind in ipairs({'gate','trap','ferry','rotor','sweeper','control','cannon','relay'}) do UI.lesson(true,kind) end
+for _,kind in ipairs({'gate','trap','ferry','rotor','sweeper','control','cannon','relay'}) do UI.lesson(kind,1) end
 for i=1,#Courses do UI.selector(i,{}) end
 UI.settings(4,false,false,false);UI.calibration();UI.failure(1,true);UI.result(60,1,55,false);UI.ending({[1]=true})
 assert(UI.moveSelection(3,'right',17)==6 and UI.moveSelection(6,'right',17)==9)
 print('PASS: two home entries, settings persistence, paused menus, selector return, all UI states and column-first navigation')
+""")
+
+# First-encounter guides are persistent, pause physics, and cover direct level selection.
+lua.execute("""
+Guide.seen={};local select=get('selectLevel');select(1)
+assert(get('lesson') and Guide.key()=='arrival')
+local xx,yy,tt=get('x'),get('y'),get('elapsed')
+for i=1,40 do frame() end
+assert(get('x')==xx and get('y')==yy and get('elapsed')==tt)
+frame({b=true});assert(Guide.time==0 and not Guide.seen.arrival)
+frame({a=true});assert(Guide.key()=='roll' and store.saved.guides.arrival)
+frame({a=true});assert(not get('lesson') and Guide.seen.roll)
+select(1);assert(not get('lesson'))
+select(5);assert(Guide.key()=='jump');frame({a=true});assert(not get('lesson') and store.saved.guides.jump)
+select(6);assert(not get('lesson'))
+select(8);assert(Guide.key()=='gate');frame({a=true});select(13)
+assert(Guide.key()=='ferry');frame({a=true});assert(not get('lesson'))
+select(15);assert(Guide.key()=='control');frame({a=true});select(16);assert(Guide.key()=='cannon');frame({a=true})
+select(17);assert(not get('lesson'),'mixed levels must not repeat known tutorials')
+local memory=store.saved.guides;Guide.seen=memory;select(16);assert(not get('lesson'))
+Guide.seen={};select(14)
+local keys={};while Guide.key() do keys[Guide.key()]=true;Guide.advance() end
+assert(keys.arrival and keys.roll and keys.jump and keys.rotor and keys.sweeper and keys.trap and keys.gate)
+for _,kind in ipairs({'arrival','roll','jump','control','cannon','gate','trap','ferry','rotor','sweeper'}) do
+ for _,t in ipairs({0,.5,1,1.6,2.4,3.4,4.5}) do UI.lesson(kind,t) end
+end
+print('PASS: first encounters, persisted acknowledgements, no repeated jump tutorial, replay, paused world, mixed-route queue and every animation phase')
 """)

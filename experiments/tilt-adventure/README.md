@@ -1,21 +1,21 @@
-# Sky Hamster Tilt — 0.1.0
+# Sky Hamster Tilt — 0.1.2
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and nine control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
 ## Play loop
 
-Title → continue or select one of 17 courses → hold still to calibrate → roll / jump / use machines → checkpoint or failure → retry → course result and saved best time → next course → final journey screen → title or replay. All courses remain selectable for playtesting. Progress, last course and best times use the separate `com.wangyibo.skyhamster.tilt` save namespace.
+Title → Start Game → first-encounter animated guides over the level → hold still to calibrate → roll / jump / use machines → checkpoint or failure → retry → course result and saved best time → next course → final journey screen → title or replay. All courses remain selectable for playtesting. Progress, last course and best times use the separate `com.wangyibo.skyhamster.tilt` save namespace.
 
 ## Controls
 
 - Tilt: screen-relative thrust. Greater tilt increases force, not a forced target speed; momentum and slope gravity remain.
 - Quick upward lift: jump on jump-enabled courses. A is the button alternative. Jump impulse is fixed, preserving horizontal velocity.
 - A: confirm; on a cannon, fire. On a bridge station, turning the crank directly moves the bridge.
-- B: leave a control station/cannon. Move more than 32 world units away before it can capture the ball again. In menus, return; at results, retry.
+- B: leave a control station/cannon. Move more than 32 world units away before it can capture the ball again. In menus, return; in guides, replay; at results, retry.
 - D-pad UP: route map and pause. A/B resumes.
 - D-pad DOWN: recalibrate at the current comfortable grip angle; play pauses during calibration.
 - Crank: rotate a manual bridge or aim a cannon while docked. It no longer accelerates the ball or charges a jump.
-- System menu: level select, map/pause, title/sound.
+- System menu: level select, map/pause, title/settings.
 
 Slow down below 35 world units/second and enter within 17 units of a station to dock automatically. Tilt movement is suspended while docked. Cannon aim is limited to ±60 degrees around its initial heading; dots preview the ballistic path.
 
@@ -25,7 +25,7 @@ Original 14 courses retained. 15 Crank Crossing introduces manual bridge rotatio
 
 ## Visuals and hardware
 
-New monochrome hamster/sky-track title artwork with low-amplitude floating animation and small local sparkles. Launcher card has a short highlighted animation, plus a list icon and launch image. Full-screen strobing is not used.
+Textured stone-road title artwork with separately floating islands/clouds and a waving finish flag. The original wooden menu boards lift when selected; labels remain inside their borders. Launcher includes a static card, list icon and launch image. Full-screen strobing is not used.
 
 Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable position tracker. Lift detection uses a filtered acceleration impulse, quiet re-arming and a 0.75 second cooldown. Real grip, sensitivity and false positives still need physical playtesting; A remains available. Prefer a comfortable moderately tilted grip rather than holding the screen perfectly vertical.
 
@@ -50,3 +50,18 @@ Home has only **Start Game** and **Settings**. Start Game continues the saved co
 The 400×240 title is a fixed one-bit scene, with separately cached islands, clouds and a four-frame flag. The HUD, selector, chart, tutorials, calibration and results share pixel icons and frames. Course previews show actual floor layouts, and selection remains column-first.
 
 `art/prepare-title.ps1` exports the source illustration into one-bit runtime and launcher assets. Build with `build.ps1`. Host regression checks: `tests/check_tilt.py` (Python + lupa). Simulator UI export harness: `tests/ui_review.lua`, used only in a separate review bundle, never the shipping game. Real-device performance still needs verification.
+
+
+## Materials and visual guides — 0.1.2
+
+Stone roads now use staggered masonry instead of outlined square cells. Moving decks have steel rails and rivets; barriers have warning stripes. A shared oversized barrel with a small wooden saddle replaces the thin, wheeled cannon. Collision and jump rules are unchanged.
+
+Body text uses the SDK's Asheville Sans 14 Bold. Home labels use the smaller font with extra spacing inside the original boards. The finish flag touches the road terminal around (393, 86).
+
+Guides pause the real level under an animated popup. The arrival story has three picture panels. Paired device/result animations introduce tilt, lift, docking, crank bridges, cannons, gates, disappearing floors, ferries, rotors and sweepers. A acknowledges; B replays. Seen topics persist only after acknowledgement. Direct selection of later courses queues missing prerequisites; mixed courses do not repeat known mechanics.
+
+Art masters, export scripts and prompts: `art/ASSETS.md`. Road texture, device poses and 17 cannon orientations are cached. Physical-device performance remains unverified.
+
+Visual QA: `tests/build-review.ps1` builds an isolated review bundle using `tests/ui_review.lua`; test-only drawing hooks are injected into the build-directory copy, never production. The bundle exports native 400x240 GIF stills into its own simulator datastore. Host checks cover first encounters, persisted acknowledgements, replay, paused physics and every animation phase, in addition to the original 17-course regression checks.
+
+Final title placement: the cannon and its solid saddle sit on the pale foreground paving to the hamster's right. The saddle exposes top/front/side faces, without decorative wheels or a circular platform. This gives the black barrel a clear contrasting background.

@@ -99,6 +99,17 @@ function M.draw(course,t,project)
      g.drawLine(poly[a]+(poly[b]-poly[a])*u,poly[a+1]+(poly[b+1]-poly[a+1])*u,
       top[a]+(top[b]-top[a])*u,top[a+1]+(top[b+1]-top[a+1])*u)
     end
+    -- Riveted panels and an inset warning stripe stay on the actual wall face.
+    local function fp(u,v) return poly[a]+(poly[b]-poly[a])*u+(top[a]-poly[a])*v,poly[a+1]+(poly[b+1]-poly[a+1])*u+(top[a+1]-poly[a+1])*v end
+    local x1,y1=fp(.01,.04);local x2,y2=fp(.99,.04);local x3,y3=fp(.99,.34);local x4,y4=fp(.01,.34)
+    g.fillPolygon(x1,y1,x2,y2,x3,y3,x4,y4)
+    for k=0,2 do
+     local u=.07+k*.3
+     local a1,b1=fp(u,.07);local a2,b2=fp(u+.12,.07);local a3,b3=fp(u+.23,.31);local a4,b4=fp(u+.11,.31)
+     g.setColor(g.kColorWhite);g.fillPolygon(a1,b1,a2,b2,a3,b3,a4,b4);g.setColor(g.kColorBlack)
+     local bx,by=fp(u+.07,.84);g.fillCircleAtPoint(bx,by,1.5)
+    end
+    local lx,ly=fp(.03,.7);local rx,ry=fp(.97,.7);g.drawLine(lx,ly,rx,ry)
    end
    g.setColor(g.kColorWhite);g.fillPolygon(table.unpack(top))
    g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(top))
@@ -107,7 +118,23 @@ function M.draw(course,t,project)
    g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(poly))
   end
   if not opened and not wall then
-   g.drawLine(poly[1],poly[2],poly[5],poly[6]);g.drawLine(poly[3],poly[4],poly[7],poly[8])
+   local function fp(u,v) return poly[1]+(poly[3]-poly[1])*u+(poly[7]-poly[1])*v,poly[2]+(poly[4]-poly[2])*u+(poly[8]-poly[2])*v end
+   local function seam(u,v,s,t) local a,b=fp(u,v);local c,d=fp(s,t);g.drawLine(a,b,c,d) end
+   seam(.04,.07,.96,.07);seam(.04,.93,.96,.93);seam(.04,.07,.04,.93);seam(.96,.07,.96,.93)
+   -- Dark steel edge rails make moving decks distinct from the stone road.
+   for _,v in ipairs({0,.9}) do
+    local a,b=fp(0,v);local c,d=fp(1,v);local e,f=fp(1,v+.1);local h,i=fp(0,v+.1);g.fillPolygon(a,b,c,d,e,f,h,i)
+   end
+   local count=math.min(8,math.max(3,math.floor(m.w/32)))
+   for k=1,count-1 do seam(k/count,.10,k/count,.90);seam(k/count-.025,.10,k/count-.025,.90) end
+   for _,u in ipairs({.09,.91}) do for _,v in ipairs({.17,.83}) do local a,b=fp(u,v);g.fillCircleAtPoint(a,b,1.5) end end
+   if m.kind=='trap' then
+    for k=0,4 do local u=.10+k*.16;seam(u,.09,u+.08,.25);seam(u,.75,u+.08,.91) end
+   elseif m.kind=='rotor' then
+    local a,b=fp(.5,.5);g.setColor(g.kColorWhite);g.fillCircleAtPoint(a,b,7);g.setColor(g.kColorBlack);g.fillCircleAtPoint(a,b,7);g.setColor(g.kColorWhite);g.drawCircleAtPoint(a,b,5);g.fillCircleAtPoint(a,b,2);g.setColor(g.kColorBlack)
+   else
+    seam(.20,.42,.38,.5);seam(.38,.5,.20,.58);seam(.62,.42,.80,.5);seam(.80,.5,.62,.58)
+   end
   end
   local cx,cy=M.pose(m,t);local sx,sy=project(cx,cy,h+(wall and not opened and (m.wallHeight or 80) or 0))
   local label=m.kind=='gate' and (opened and 'GO' or 'WAIT') or m.kind=='trap' and (opened and 'HOLE' or M.warning(m,t) and 'OPENING!' or 'CROSS') or m.kind=='rotor' and 'ROTATE' or m.kind=='ferry' and 'RIDE' or 'WATCH'

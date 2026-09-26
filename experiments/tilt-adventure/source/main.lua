@@ -12,6 +12,8 @@ import "audio"
 import "tilt"
 import "dock"
 import "tilt_ui"
+import "guide"
+import "guide_ui"
 if Build.classroom then Classroom.apply() end
 Audio.init(not Build.classroom)
 local pd,g=playdate,playdate.graphics
@@ -38,6 +40,7 @@ local gesture=true
 local selectorReturn
 local saved=pd.datastore and pd.datastore.read('tilt-progress') or {}
 saved=saved or {}
+Guide.seen=saved.guides or {}
 local options=saved.options or {}
 UI.motion=options.motion~=false
 gesture=options.gesture~=false
@@ -48,7 +51,7 @@ for k,v in pairs(saved.completed or {}) do if tonumber(k) then completed[tonumbe
 local best=saved.best or {}
 local ending=false
 local function saveProgress()
- if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
+ if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
 local jumpEnabled=false
@@ -74,7 +77,7 @@ local function beginFall(height,verticalSpeed)
  jumpZ=height;jumpV=verticalSpeed;airborne=false
  Audio.quiet();Audio.play('fall')
 end
-local function selectLevel(n) ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=(n==1 or n==5 or course.lesson~=nil);reset(true);if prepareTerrain then prepareTerrain() end end
+local function selectLevel(n) ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=Guide.enter(course);reset(true);if prepareTerrain then prepareTerrain() end end
 local function openSelector()
  if choosing or settings or title then return end
  selectorReturn={title=title,overview=overview,lesson=lesson}
@@ -107,7 +110,28 @@ local function drawTile(t)
  g.setColor(g.kColorBlack)
  g.fillPolygon(r,s,u,v,u,v+12,r,s+12);g.fillPolygon(w,z,u,v,u,v+12,w,z+12)
  g.setColor(g.kColorWhite);g.fillPolygon(p,q,r,s,u,v,w,z)
- g.setColor(g.kColorBlack);g.drawPolygon(p,q,r,s,u,v,w,z)
+ g.setColor(g.kColorBlack)
+ -- Only exposed edges get a heavy outline; internal tile borders are hidden.
+ if not course.lookup[t.x..','..(t.y-1)] then g.drawLine(p,q,r,s) end
+ if not course.lookup[(t.x+1)..','..t.y] then g.drawLine(r,s,u,v) end
+ if not course.lookup[t.x..','..(t.y+1)] then g.drawLine(u,v,w,z) end
+ if not course.lookup[(t.x-1)..','..t.y] then g.drawLine(w,z,p,q) end
+ local function surface(uu,vv) return p+(r-p)*uu+(w-p)*vv,q+(s-q)*uu+(z-q)*vv end
+ local function seam(a,b,c,d) local x1,y1=surface(a,b);local x2,y2=surface(c,d);g.drawLine(x1,y1,x2,y2) end
+ -- Staggered masonry joints break the old checkerboard grid.
+ seam(0,.06,1,.06)
+ local joint=t.y%2==0 and .5 or .03
+ seam(joint,.06,joint,.96)
+ if (t.x+t.y*3)%5==0 then seam(.63,.23,.76,.35);seam(.76,.35,.71,.48) end
+ local seed=(t.x*7+t.y*13)%7
+ for n=1,3 do local uu=.18+((seed+n*3)%7)*.09;local vv=.18+((seed+n*2)%7)*.09
+  local dx,dy=surface(uu,vv);g.fillRect(dx,dy,2,1)
+ end
+ g.setColor(g.kColorWhite)
+ g.drawLine(r+1,s+5,u,v+5);g.drawLine(w+1,z+8,u,v+8)
+ g.drawLine((r+u)/2,(s+v)/2+1,(r+u)/2,(s+v)/2+5)
+ g.drawLine((w+u)/2,(z+v)/2+8,(w+u)/2,(z+v)/2+11)
+ g.setColor(g.kColorBlack)
  local sx=c[11]
  local cx,cy=c[9]-camX,c[10]-camY
  if math.abs(sx)>0.01 then
@@ -173,6 +197,71 @@ local function marker(point,label,foreground)
  end
 end
 prepareTerrain()
+local function renderWorld()
+ -- Hold the camera at the edge while the ball falls away from the track.
+ if state~='fall' then camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65 end
+ g.clear(g.kColorWhite)
+ if terrainChunks then Terrain.draw(terrainChunks,camX,camY) else terrainImage:draw(terrainX-camX,terrainY-camY) end
+ if state~='fall' and support(x,y) then
+  local sx,sy=project(x,y,course:height(x,y))
+  g.setColor(g.kColorBlack);g.fillEllipseInRect(sx-8,sy-2,16,4)
+  if not airborne and controls.charge>0.05 then
+   for i=0,3 do local yy=sy-2-i*(2-controls.charge);g.drawLine(sx-4,yy,sx+4,yy-1) end
+  end
+ end
+ Mechanisms.draw(course,worldTime,project)
+ Dock.draw(course,project)
+ marker(course.start,'START');marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE');marker(course.goal,'GOAL')
+ -- Rolling shell and rotating hamster face follow distance travelled.
+ local ground=course:height(x,y)
+ local bx,shadowY=project(x,y,ground)
+ local _,by=project(x,y,(airborne or state=='fall') and jumpZ or ballHeight)
+ local squash=state=='play' and not airborne and controls.charge*4 or 0
+ by=by-12+squash
+ local radius=11
+ local screenX,screenY=bx,by
+ g.pushContext(ballImage);g.clear(g.kColorClear);bx,by=14,14
+ g.setColor(g.kColorWhite);g.fillCircleAtPoint(bx,by,radius)
+ g.setColor(g.kColorBlack);g.drawCircleAtPoint(bx,by,radius)
+ local function rot(a,b) return bx+a*math.cos(rollAngle)-b*math.sin(rollAngle),by+a*math.sin(rollAngle)+b*math.cos(rollAngle) end
+ if radius>7 then
+  local ex,ey=rot(-4,-4);g.fillCircleAtPoint(ex,ey,3)
+  ex,ey=rot(4,-4);g.fillCircleAtPoint(ex,ey,3)
+  g.setColor(g.kColorWhite);g.fillCircleAtPoint(bx,by+1,6)
+  g.setColor(g.kColorBlack);g.drawCircleAtPoint(bx,by+1,6)
+  ex,ey=rot(-3,-1);g.fillCircleAtPoint(ex,ey,1)
+  ex,ey=rot(3,-1);g.fillCircleAtPoint(ex,ey,1)
+  ex,ey=rot(0,3);g.fillCircleAtPoint(ex,ey,1)
+  ex,ey=rot(8,0);local fx,fy=rot(-8,0);g.drawLine(ex,ey,fx,fy)
+ end
+ g.popContext()
+ local left,top=screenX-14,screenY-14
+ local z=(airborne or state=='fall') and jumpZ or ballHeight
+ z=z-squash/0.65
+ local boxes=Spatial.occluders(course,worldTime,project,left,top,28,28,z)
+ if #boxes>0 then
+ -- Copy the native silhouette once instead of sampling 784 pixels across the SDK boundary.
+ local silhouette=ballImage:getMaskImage()
+ g.pushContext(ballMask);g.clear(g.kColorWhite)
+ if silhouette then silhouette:draw(0,0) end
+ g.setColor(g.kColorBlack)
+ for _,box in ipairs(boxes) do
+  local poly=Spatial.maskPolygon(box,x,y,project,left,top,maskPolygon)
+  if poly then g.fillPolygon(table.unpack(poly)) end
+ end
+ g.popContext();ballImage:setMaskImage(ballMask)
+ end
+ ballImage:draw(left,top)
+ marker(course.start,'START',true);marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE',true);marker(course.goal,'GOAL',true)
+ UI.hud(course,level,jumpEnabled,throttle,controls.charge,elapsed,falls,math.sqrt(vx*vx+vy*vy))
+ if controls.flash>0 then
+  UI.panel(99,48,202,22);g.drawTextAligned('Turn again for POWER',200,51,kTextAlignment.center)
+ elseif needsPower and state=='play' then
+  UI.powerHint:draw(87,48)
+ end if state=='win' then
+  UI.result(elapsed,falls,best[tostring(level)] or elapsed,level==#Courses)
+ end
+end
 local last=pd.getCurrentTimeMilliseconds()
 function pd.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
@@ -226,19 +315,20 @@ function pd.update()
   elseif pd.buttonJustPressed(pd.kButtonB) then Audio.play('menu');closeSelector() end
   pd.getCrankChange();UI.selector(selected,completed);return
  end
- if lesson then
-  Audio.quiet()
-  if pd.buttonJustPressed(pd.kButtonA) then lesson=false;started=true
-  else
-   if pd.buttonJustPressed(pd.kButtonB) then openSelector() end
-   pd.getCrankChange();UI.lesson(jumpEnabled,course.lesson);return
-  end
- end
  if overview then
   Audio.quiet()
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then overview=false end
   pd.getCrankChange();UI.map(course,x,y,worldTime);return
  end
+ if lesson then
+  Audio.quiet();Guide.time=Guide.time+dt
+  if pd.buttonJustPressed(pd.kButtonA) then lesson=Guide.advance();saveProgress();started=true;Tilt.jump=false;Tilt.cooldown=.75
+  elseif pd.buttonJustPressed(pd.kButtonB) then Guide.replay() end
+  pd.getCrankChange();renderWorld()
+  if lesson then UI.lesson(Guide.key(),Guide.time) end
+  return
+ end
+
  if Tilt.calibrating then Audio.quiet();pd.getCrankChange();UI.calibration();return end
  if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonDown) then Tilt.startCalibration();return end
  if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonUp) then overview=true;Audio.quiet();return end
@@ -323,69 +413,7 @@ function pd.update()
  end
  Audio.update(dt,state=='play' and not airborne,math.sqrt(vx*vx+vy*vy),controls.charge)
  if state=='dead' then UI.failure(falls,checkpoint);return end
- -- Hold the camera at the edge while the ball falls away from the track.
- if state~='fall' then camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65 end
- g.clear(g.kColorWhite)
- if terrainChunks then Terrain.draw(terrainChunks,camX,camY) else terrainImage:draw(terrainX-camX,terrainY-camY) end
- if state~='fall' and support(x,y) then
-  local sx,sy=project(x,y,course:height(x,y))
-  g.setColor(g.kColorBlack);g.fillEllipseInRect(sx-8,sy-2,16,4)
-  if not airborne and controls.charge>0.05 then
-   for i=0,3 do local yy=sy-2-i*(2-controls.charge);g.drawLine(sx-4,yy,sx+4,yy-1) end
-  end
- end
- Mechanisms.draw(course,worldTime,project)
- Dock.draw(course,project)
- marker(course.start,'START');marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE');marker(course.goal,'GOAL')
- -- Rolling shell and rotating hamster face follow distance travelled.
- local ground=course:height(x,y)
- local bx,shadowY=project(x,y,ground)
- local _,by=project(x,y,(airborne or state=='fall') and jumpZ or ballHeight)
- local squash=state=='play' and not airborne and controls.charge*4 or 0
- by=by-12+squash
- local radius=11
- local screenX,screenY=bx,by
- g.pushContext(ballImage);g.clear(g.kColorClear);bx,by=14,14
- g.setColor(g.kColorWhite);g.fillCircleAtPoint(bx,by,radius)
- g.setColor(g.kColorBlack);g.drawCircleAtPoint(bx,by,radius)
- local function rot(a,b) return bx+a*math.cos(rollAngle)-b*math.sin(rollAngle),by+a*math.sin(rollAngle)+b*math.cos(rollAngle) end
- if radius>7 then
-  local ex,ey=rot(-4,-4);g.fillCircleAtPoint(ex,ey,3)
-  ex,ey=rot(4,-4);g.fillCircleAtPoint(ex,ey,3)
-  g.setColor(g.kColorWhite);g.fillCircleAtPoint(bx,by+1,6)
-  g.setColor(g.kColorBlack);g.drawCircleAtPoint(bx,by+1,6)
-  ex,ey=rot(-3,-1);g.fillCircleAtPoint(ex,ey,1)
-  ex,ey=rot(3,-1);g.fillCircleAtPoint(ex,ey,1)
-  ex,ey=rot(0,3);g.fillCircleAtPoint(ex,ey,1)
-  ex,ey=rot(8,0);local fx,fy=rot(-8,0);g.drawLine(ex,ey,fx,fy)
- end
- g.popContext()
- local left,top=screenX-14,screenY-14
- local z=(airborne or state=='fall') and jumpZ or ballHeight
- z=z-squash/0.65
- local boxes=Spatial.occluders(course,worldTime,project,left,top,28,28,z)
- if #boxes>0 then
- -- Copy the native silhouette once instead of sampling 784 pixels across the SDK boundary.
- local silhouette=ballImage:getMaskImage()
- g.pushContext(ballMask);g.clear(g.kColorWhite)
- if silhouette then silhouette:draw(0,0) end
- g.setColor(g.kColorBlack)
- for _,box in ipairs(boxes) do
-  local poly=Spatial.maskPolygon(box,x,y,project,left,top,maskPolygon)
-  if poly then g.fillPolygon(table.unpack(poly)) end
- end
- g.popContext();ballImage:setMaskImage(ballMask)
- end
- ballImage:draw(left,top)
- marker(course.start,'START',true);marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE',true);marker(course.goal,'GOAL',true)
- UI.hud(course,level,jumpEnabled,throttle,controls.charge,elapsed,falls,math.sqrt(vx*vx+vy*vy))
- if controls.flash>0 then
-  UI.panel(99,48,202,22);g.drawTextAligned('Turn again for POWER',200,51,kTextAlignment.center)
- elseif needsPower and state=='play' then
-  UI.powerHint:draw(87,48)
- end if state=='win' then
-  UI.result(elapsed,falls,best[tostring(level)] or elapsed,level==#Courses)
- end
+ renderWorld()
 end
 pd.getSystemMenu():addMenuItem('Level select',openSelector)
 pd.getSystemMenu():addMenuItem('Map / pause',function() overview=not overview end)
