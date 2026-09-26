@@ -1,0 +1,7 @@
+name=Sky Hamster Tilt
+author=Wang Yibo
+description=Tilt to roll. Lift to leap. Crank the sky.
+bundleID=com.wangyibo.skyhamster.tilt
+version=0.1.0
+buildNumber=1
+imagePath=launcher
