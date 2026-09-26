@@ -1,4 +1,4 @@
-# Sky Hamster Tilt — 0.1.3
+# Sky Hamster Tilt — 0.1.4
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and nine control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
@@ -8,6 +8,7 @@ Title → Start Game → first-encounter animated guides over the level → hold
 
 ## Controls
 
+- Overhead compass: the arrow shows current screen-relative tilt thrust, not velocity. Its length grows with force; the central ring means neutral. Hidden while docked, falling, calibrating or viewing a tutorial.
 - Tilt: screen-relative thrust. Greater tilt increases force, not a forced target speed; momentum and slope gravity remain.
 - Quick upward lift: jump on jump-enabled courses. A is the button alternative. Jump impulse is fixed, preserving horizontal velocity.
 - A: confirm; on a cannon, fire. On a bridge station, turning the crank directly moves the bridge.

@@ -253,6 +253,9 @@ local function renderWorld()
  end
  ballImage:draw(left,top)
  marker(course.start,'START',true);marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE',true);marker(course.goal,'GOAL',true)
+ if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
+  UI.tiltPointer(screenX,screenY,Tilt.dx or 0,Tilt.dy or 0,Tilt.power or 0)
+ end
  UI.hud(course,level,jumpEnabled,throttle,controls.charge,elapsed,falls,math.sqrt(vx*vx+vy*vy))
  if controls.flash>0 then
   UI.panel(99,48,202,22);g.drawTextAligned('Turn again for POWER',200,51,kTextAlignment.center)

@@ -46,6 +46,27 @@ local function icon(name,x,y)
  end) end
  icons[name]:draw(x,y)
 end
+-- Screen-space thrust compass: independent of ball velocity and track orientation.
+function UI.tiltPointer(x,y,dx,dy,power)
+ local cy=y-29
+ local sx,sy=(dx-dy)*.9,(dx+dy)*.45
+ local length=math.sqrt(sx*sx+sy*sy)
+ ink();g.fillCircleAtPoint(x+1,cy+2,13)
+ g.setColor(g.kColorWhite);g.fillCircleAtPoint(x,cy,13)
+ ink();g.drawCircleAtPoint(x,cy,13)
+ g.drawLine(x,cy+14,x,y-13)
+ if power<=0 or length<.001 then
+  g.drawCircleAtPoint(x,cy,3);g.fillCircleAtPoint(x,cy,1)
+  return
+ end
+ sx,sy=sx/length,sy/length
+ local reach=6+4*math.min(1,power)
+ local tipX,tipY=x+sx*reach,cy+sy*reach
+ local tailX,tailY=x-sx*5,cy-sy*5
+ g.drawLine(tailX,tailY,tipX,tipY)
+ g.drawLine(tailX-sy,tailY+sx,tipX-sy,tipY+sx)
+ g.fillPolygon(tipX,tipY,tipX-sx*5-sy*4,tipY-sy*5+sx*4,tipX-sx*5+sy*4,tipY-sy*5-sx*4)
+end
 function UI.panel(x,y,w,h)
  ink();g.fillRect(x+3,y+3,w,h);g.setColor(g.kColorWhite);g.fillRect(x,y,w,h);ink();g.drawRect(x,y,w,h);g.drawRect(x+3,y+3,w-6,h-6)
  for _,dx in ipairs({6,w-8}) do for _,dy in ipairs({6,h-8}) do g.fillRect(x+dx,y+dy,2,2) end end

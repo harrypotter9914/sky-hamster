@@ -21,6 +21,8 @@ function playdate.update()
   export('v12-selector',function() UI.selector(3,{[1]=true}) end)
   export('v12-map',function() UI.map(Courses[14],784,176,0) end)
   local worlds={{1,48,48},{5,120,80},{8,180,80},{9,145,80},{10,140,80},{11,180,176},{12,195,112},{15,112,80},{16,112,80}}
+  export('v14-pointer',function() world(1,80,48);UI.tiltPointer(200,112,1,-1,.8) end)
+  export('v14-pointer-neutral',function() world(1,80,48);UI.tiltPointer(200,112,0,0,0) end)
   for _,v in ipairs(worlds) do export(string.format('v12-world-%02d',v[1]),function() world(table.unpack(v)) end) end
   for _,v in ipairs({{'arrival',1,0},{'roll',1,.5},{'roll-back',1,2.5},{'jump',5,1.6},{'control',15,1},{'cannon',16,2.5},{'gate',8,1},{'trap',9,2.7},{'ferry',10,1.4},{'rotor',11,1.4},{'sweeper',12,1.1}}) do
    export('v12-guide-'..v[1],function() world(v[2]);UI.lesson(v[1]=='roll-back' and 'roll' or v[1],v[3]) end)
