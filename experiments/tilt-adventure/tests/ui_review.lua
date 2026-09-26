@@ -51,6 +51,18 @@ function playdate.update()
   for _,v in ipairs({{'arrival',1,0},{'roll',1,.5},{'roll-back',1,2.5},{'jump',5,1.6},{'control',15,1},{'cannon',16,2.5},{'gate',8,1},{'trap',9,2.7},{'ferry',10,1.4},{'rotor',11,1.4},{'sweeper',12,1.1}}) do
    export('v12-guide-'..v[1],function() world(v[2]);UI.lesson(v[1]=='roll-back' and 'roll' or v[1],v[3]) end)
   end
+  for _,kind in ipairs({'lift','slider','fan','windcontrol','bumper'}) do
+   for i,t in ipairs({0,1.8,4.5}) do export('v20-'..kind..'-'..i,function() UI.lesson(kind,t) end) end
+  end
+  for _,n in ipairs({14,19,20,21,22,23,24,27,28,32,33}) do
+   export('v20-map-'..n,function() UI.map(Courses[n],Courses[n].start[1],Courses[n].start[2],0) end)
+  end
+  for _,v in ipairs({{14,224,112},{19,224,80},{22,184,80},{24,144,112},{27,560,144},{33,224,80}}) do
+   export('v20-world-'..v[1],function() world(table.unpack(v)) end)
+  end
+  export('v20-lift-top',function() world(19,224,80);Dock.update(Courses[19],224,80,0,0,false,384,false,false);Review.place(224,80);Review.render() end)
+  export('v20-slider-end',function() world(22,184,80);Dock.update(Courses[22],184,80,0,0,false,540,false,false);Review.place(488,80);Review.render() end)
+  print('PASS: v20 campaign and machinery visual exports complete')
   done=true
  end
  clock=clock+33;UI.title(1)

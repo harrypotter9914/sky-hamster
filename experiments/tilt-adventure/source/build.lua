@@ -1,1 +1,1 @@
-Build={classroom=false}
+Build={classroom=false,terrainMode='chunks'}

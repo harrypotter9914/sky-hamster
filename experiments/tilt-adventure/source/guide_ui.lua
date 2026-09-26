@@ -39,7 +39,17 @@ local info={
  trap={'WATCH THE FLOOR','Cross while solid. Wait when it disappears.'},
  ferry={'CATCH A RIDE','Board at the dock. Ride across. Roll off.'},
  rotor={'ROUND THE CORNER','Ride the rotating deck to the next road.'},
- sweeper={'MIND THE SWEEPER','Stay clear until the moving panel passes.'}}
+ sweeper={'MIND THE SWEEPER','Stay clear until the moving panel passes.'},
+ lift={'CRANK UP TO THE CLOUDS','Dock on the lift. Crank up; B releases.'},
+ slider={'YOUR OWN SKY FERRY','Dock on the deck. Crank across; B releases.'},
+ fan={'READ THE WIND','Counter-tilt. At a dial, crank to aim.'},
+ windcontrol={'TURN THE WIND','Dock at the dial. Crank to aim; B releases.'},
+ bumper={'GIVE SPRINGS SOME SPACE','Springs bounce you away. Steer around them.'}}
+local machineArt={}
+for _,name in ipairs({'lift','slider','fan','bumper'}) do
+ local source=g.image.new('machine-'..name)
+ machineArt[name]=image(86,64,function() source:drawScaled(0,0,name=='slider' and .59 or name=='lift' and .72 or 1) end)
+end
 local cannons={}
 local function smallCannon(x,y,n)
  if not cannons[n] then
@@ -50,6 +60,7 @@ local function smallCannon(x,y,n)
 end
 function UI.lesson(kind,time)
  kind=info[kind] and kind or 'roll';local data=info[kind];local t=(time or 0)%6
+ if kind=='windcontrol' then kind='fan' end
  UI.panel(8,8,384,224);center(data[1],200,20)
  ink();g.drawLine(23,43,377,43)
  center(data[2],200,49)
@@ -112,6 +123,28 @@ function UI.lesson(kind,time)
    if t>=1 and t<3 then for i=1,6 do ink();g.fillCircleAtPoint(274+i*12,118-24*math.sin(i/6*math.pi)+23*i/6,1) end end
    left=t<1 and 'DOCK SLOWLY' or t<3 and 'TURN TO AIM' or 'PRESS A TO FIRE'
    right=t<1 and 'ENTER THE CANNON' or t<3 and 'CHECK THE ARC' or 'FLY TO THE ROAD'
+  elseif kind=='lift' then
+   local u=ease((t-1)/2);local sy=148-u*37
+   slab(206,157,29,10);slab(335,115,38,10)
+   machineArt.lift:draw(246,sy-28);ball(287,sy-18)
+   arrow(347,154,0,-24)
+   left=t<1 and 'DOCK IN THE CENTER' or t<3 and 'CRANK TO RAISE' or 'B: RELEASE'
+   right=t<3 and 'MATCH THE ROAD' or 'ROLL ONTO THE ROAD'
+  elseif kind=='slider' then
+   slab(205,151,29,13);slab(342,151,30,13)
+   local px=221+ease((t-1)/2.5)*48
+   machineArt.slider:draw(px,117);ball(px+42,133)
+   left=t<1 and 'DOCK ON THE DECK' or t<3.5 and 'CRANK TO TRAVEL' or 'B: RELEASE'
+   right=t<3.5 and 'MOVE TO THE FAR BANK' or 'ROLL OFF AT THE DOCK'
+  elseif kind=='fan' then
+   slab(207,142,166,23);machineArt.fan:draw(210,88)
+   local angle=t<3 and math.pi/2 or 0
+   for i=1,3 do local d=22+(t*20+i*10)%38;arrow(239+d,122,14*math.cos(angle),10*math.sin(angle)) end
+   ball(327,130);left=t<3 and 'COUNTER THE GUST' or 'CRANK AT THE DIAL';right=t<3 and 'STAY ON THE ROAD' or 'AIM ALONG THE ROAD'
+  elseif kind=='bumper' then
+   slab(207,135,166,29);machineArt.bumper:draw(281,106)
+   local q=t%3;local bx=q<1.5 and 234+q*22 or 267-(q-1.5)*22
+   ball(bx,137);left='LEAVE SOME ROOM';right='CONTACT BOUNCES BACK'
   elseif kind=='ferry' then
    slab(205,151,35,13);slab(336,151,37,13)
    local travel=ease((t-1.2)/2.6);local px=240+travel*62
@@ -137,10 +170,10 @@ function UI.lesson(kind,time)
   if kind=='jump' then
    liftDevice:draw(48+lift*.31,85+lift*.95)
   else poses[dir][pose]:draw(48,85) end
-  if kind=='control' or kind=='cannon' then
+  if kind=='control' or kind=='cannon' or kind=='lift' or kind=='slider' or kind=='fan' then
    local a=t*2;ink();g.drawCircleAtPoint(151,135,10);g.drawLine(151,135,151+math.cos(a)*9,135+math.sin(a)*9)
   end
-  if left=='PRESS A TO FIRE' then UI.key('A',58,175,'Fire') else center(left,96,177) end
+  if left=='PRESS A TO FIRE' then UI.key('A',58,175,'Fire') elseif left=='B: RELEASE' then UI.key('B',49,175,'Release') else center(left,96,177) end
   if right=='B: RELEASE' then UI.key('B',233,175,'Release') else center(right,281,177) end
   -- Progress dots stay clear of device and game examples.
   for i=0,2 do ink();if math.floor(t/2)==i then g.fillCircleAtPoint(186+i*14,197,2) else g.drawCircleAtPoint(186+i*14,197,2) end end

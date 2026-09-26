@@ -197,7 +197,7 @@ local function route(course,x,y,w,h,px,py,t)
  if t then for _,m in ipairs(course.mechanisms or {}) do local poly={};for _,p in ipairs(Mechanisms.corners(m,t)) do poly[#poly+1]=ox+p[1]/32*s;poly[#poly+1]=oy+p[2]/32*s end;g.drawPolygon(table.unpack(poly)) end end
  if px then
   local function pin(p,name) if p then local a,b=ox+p[1]/32*s,oy+p[2]/32*s;g.setColor(g.kColorWhite);g.fillRect(a-7,b-9,15,18);if name=='flag' then icon(name,a-10,b-10) else text(name,a-5,b-8) end end end
-  pin(course.start,'S');pin(course.checkpoint,'C');pin(course.goal,'flag')
+  pin(course.start,'S');for _,point in ipairs(course.checkpoints or {}) do pin(point,'C') end;pin(course.goal,'flag')
   ball(ox+px/32*s,oy+py/32*s,5)
  end
 end
@@ -245,7 +245,7 @@ function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  if bottomKey~=bk then bottomKey=bk;bottom=bitmap(400,37,function()
   g.setColor(g.kColorWhite);g.fillRect(0,0,400,37);ink();g.drawLine(0,0,400,0);g.drawLine(2,2,398,2)
   if dock~='roll' then
-   controlHint('crank',dock=='cannon' and 'Aim' or 'Rotate',8,2)
+   controlHint('crank',({cannon='Aim',lift='Raise/lower',slider='Travel',fan='Aim wind'})[dock] or 'Rotate',8,2)
    if dock=='cannon' then controlHint('A','Fire',138,2) end;controlHint('B','Release',292,2)
   else
    controlHint('up','Map',8,2);controlHint('down','Recenter',138,2)
@@ -310,16 +310,20 @@ local machineNotes={
  rotor={'ROTATING DECK','Ride the deck as it turns.','Leave when it lines up with the road.'},
  sweeper={'MOVING PANEL','The panel can push you off the road.','Keep clear and cross behind it.'},
  control={'CRANK BRIDGE','Dock slowly, then crank to align it.','B releases; leave before docking again.'},
- cannon={'CANNON','Crank to aim; check the dotted arc.','A fires. B leaves without firing.'}}
+ cannon={'CANNON','Crank to aim; check the dotted arc.','A fires. B leaves without firing.'},
+ lift={'LIFT','Dock at the center; crank up or down.','B releases. Match the exit height.'},
+ slider={'CRANK FERRY','Dock on the deck; crank to travel.','B releases at the destination.'},
+ fan={'WIND','The gust pushes the ball sideways.','At a wind dial, crank to change aim.'},
+ bumper={'SPRING BUMPER','Contact rebounds the ball outward.','Steer around or jump over it.'}}
 local goalCache={}
 function UI.goalPages(course,level)
  if goalCache[level] then return goalCache[level] end
- local hint=notes[level] or {'Stay on the road.','Reach the finish flag.'}
+ local hint=course.note or notes[course.legacyIndex or level] or {'Stay on the road.','Reach the finish flag.'}
  local pages={{'REACH THE FINISH',hint[1],hint[2]},
   {'SAFE PROGRESS',course.checkpoint and 'Touch CHECK to save your retry point.' or 'Falls restart this route from START.',course.jump and 'Jump: lift screenward or press A.' or 'No jumping on this route.'}}
  local seen={}
  local function add(k) if machineNotes[k] and not seen[k] then pages[#pages+1]=machineNotes[k];seen[k]=true end end
- for _,m in ipairs(course.mechanisms or {}) do add(m.manual and 'control' or m.kind) end
+ for _,m in ipairs(course.mechanisms or {}) do add(m.lesson or (m.manual and 'control' or m.kind)) end
  for _,p in ipairs(course.pads or {}) do add(p.kind=='bridge' and 'control' or p.kind) end
  goalCache[level]=pages;return pages
 end

@@ -17,14 +17,16 @@ Title → Start Game → hold still to calibrate → first-encounter animated gu
 - D-pad LEFT / Help: replay this course's control and mechanism guides. A advances; B returns immediately to the current run. Finishing the sequence resumes play.
 - D-pad RIGHT / Goal: read this course's objective, checkpoint/jump rules and mechanism notes. A/right advances a page; left goes back a page; B resumes play.
 - D-pad DOWN: recalibrate at your current comfortable grip; keep still for 0.8 seconds. Each newly entered course also calibrates before its tutorial or play begins. Movement during the sampling window restarts calibration.
-- Crank: rotate a manual bridge or aim a cannon while docked. It no longer accelerates the ball or charges a jump.
+- Crank: rotate a bridge, raise/lower a lift, move a ferry, aim a fan or aim a cannon while docked. It no longer accelerates the ball or charges a jump.
 - System menu: level select, map/pause, title/settings.
 
 Slow down below 35 world units/second and enter within 17 units of a station to dock automatically. Tilt movement is suspended while docked. Cannon aim is limited to ±60 degrees around its initial heading; dots preview the ballistic path.
 
 ## Course content
 
-Original 14 courses retained. 15 Crank Crossing introduces manual bridge rotation. 16 Cannon Clouds introduces capture, aim, fire and landing. 17 Final Flight combines cannon, checkpoint, gap and timed gate. The first four courses do not allow jumping.
+Version 0.2.0 contains 33 courses: the previous 17 plus 16 new routes, reordered into a learning progression. Courses 1–4 teach rolling, 5–8 jumping, 9–16 hazards, 17–25 crank machinery and terrain, 26–28 cannons, and 29–33 combinations. New lift and ferry introductions also temporarily disable jumping to focus on the new interaction. Old numeric save data is migrated into the new order without losing completion or best times.
+
+The final Sky Odyssey course has five sequential checkpoints and all mechanism types. See [campaign design and route list](CAMPAIGN-v020.md). The original complete game remains in repository history at `tilt-v0.1.9`; the separate non-tilt game is unchanged.
 
 ## Visuals and hardware
 
@@ -36,7 +38,7 @@ Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable posit
 
 Run `./build.ps1` with the Playdate SDK installed; optional `PLAYDATE_SDK_PATH` overrides its location. Output: root `builds/sky-hamster-tilt.pdx`.
 
-Run `python tests/check_tilt.py` (requires lupa). Tests cover neutral drift, proportional tilt, lift re-arming, dock exit/re-entry, bridge rotation, actual cannon flight/landing, update paths for 17 courses, map return, retry, progress saving and final ending. Existing collision and physics checks are also run.
+Run `python tests/check_campaign.py` (requires lupa). This includes the existing controls/UI regressions and adds all 33 course anchors, saved-progress migration, lift stops and high-bank collision, moving ferry docking, adjustable wind, bumper clearance, actual new cannon flights and final checkpoints. Simulator exports are generated with `tests/build-review.ps1`. Hardware workload instructions and current limitations are in [VALIDATION-v020.md](VALIDATION-v020.md).
 
 SDK compilation passed after the SDK update. Simulator title, tutorial and gameplay HUD were visually checked. Hardware install initially blocked by another Simulator process holding COM4; see device-status.md for the latest outcome. Automated tests do not establish physical sensor feel or real-device frame rate.
 

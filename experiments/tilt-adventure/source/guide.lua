@@ -7,8 +7,8 @@ function G.enter(course,manual)
  local function add(key) if (G.manual or not G.seen[key]) and not added[key] then G.queue[#G.queue+1]=key;added[key]=true end end
  if not G.manual then add('arrival') end;add('roll')
  if course.jump then add('jump') end
- for _,m in ipairs(course.mechanisms or {}) do add(m.manual and 'control' or m.kind) end
- for _,p in ipairs(course.pads or {}) do add(p.kind=='bridge' and 'control' or p.kind) end
+ for _,m in ipairs(course.mechanisms or {}) do add(m.lesson or (m.manual and 'control' or m.kind)) end
+ for _,p in ipairs(course.pads or {}) do add(p.kind=='bridge' and 'control' or p.kind=='fan' and 'windcontrol' or p.kind) end
  return #G.queue>0
 end
 function G.key() return G.queue[G.index] end

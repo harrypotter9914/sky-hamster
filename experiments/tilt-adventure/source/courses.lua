@@ -80,3 +80,4 @@ c:rect(0,4,1,3);c:rect(9,16,0,5);c:rect(19,30,1,3)
 c.pads={{kind='cannon',x=112,y=80,initialAngle=0}};c.checkpoint={432,80}
 c.mechanisms={{kind='gate',x=784,y=80,w=16,h=96,period=7,phase=2}}
 c.shortName='Final flight';c.lesson='relay';c.jump=true
+Courses.create=create

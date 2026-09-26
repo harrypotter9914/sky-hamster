@@ -32,8 +32,8 @@ function S.sides(course,x,y,vx,vy,z,t)
   end
  end end
  for _,m in ipairs(course.mechanisms or empty) do
-  if m.kind=='ferry' or m.kind=='rotor' or (m.kind=='trap' and not Mechanisms.open(m,t)) then
-   local cx,cy,a=Mechanisms.pose(m,t);box(cx,cy,m.w,m.h,a,course:height(cx,cy))
+  if m.kind=='lift' or m.kind=='ferry' or m.kind=='rotor' or (m.kind=='trap' and not Mechanisms.open(m,t)) then
+   local cx,cy,a=Mechanisms.pose(m,t);box(cx,cy,m.w,m.h,a,m.kind=='lift' and m.elevation or course:height(cx,cy))
   end
  end
  return x,y,vx,vy,hit
@@ -77,10 +77,14 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
  end
  local needTerrain=not minZ or course.maxTerrainRoof>minZ
  if needTerrain and not course.occlusionCache then
-  course.occlusionCache={}
+  course.occlusionCache={};course.occlusionBuckets={}
   for _,tile in ipairs(course.tiles) do
    local x,y=tile.x*32+16,tile.y*32+16;local h,slope=course:height(x,y)
-   course.occlusionCache[#course.occlusionCache+1]=makeBox(x,y,32,32,0,h-S.thickness,h,slope)
+   local box=makeBox(x,y,32,32,0,h-S.thickness,h,slope)
+   course.occlusionCache[#course.occlusionCache+1]=box
+   for bx=math.floor(box.minX/128),math.floor(box.maxX/128) do for by=math.floor(box.minY/128),math.floor(box.maxY/128) do
+    local key=bx..','..by;local bucket=course.occlusionBuckets[key] or {};course.occlusionBuckets[key]=bucket;bucket[#bucket+1]=box
+   end end
   end
  end
  local out={};local ox,oy=project(0,0,0)
@@ -91,11 +95,16 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
   if b.maxX<left or b.minX>right or b.maxY<top or b.minY>bottom then return end
   out[#out+1]=b
  end
- if needTerrain then for _,b in ipairs(course.occlusionCache) do add(b) end end
+ if needTerrain then
+  course.occlusionStamp=(course.occlusionStamp or 0)+1;local stamp=course.occlusionStamp
+  for bx=math.floor(left/128),math.floor(right/128) do for by=math.floor(top/128),math.floor(bottom/128) do
+   for _,b in ipairs(course.occlusionBuckets[bx..','..by] or empty) do if b.stamp~=stamp then b.stamp=stamp;add(b) end end
+  end end
+ end
  for _,m in ipairs(course.mechanisms or empty) do
   local open=(m.kind=='gate' or m.kind=='trap') and Mechanisms.open(m,t)
-  if not open then
-   local x,y,a=Mechanisms.pose(m,t);local floor=course:height(x,y)
+  if not open and m.kind~='fan' and m.kind~='bumper' then
+   local x,y,a=Mechanisms.pose(m,t);local floor=m.kind=='lift' and (m.elevation or m.minHeight) or course:height(x,y)
    local wall=m.kind=='gate' or m.kind=='sweeper'
    local roof=wall and floor+(m.wallHeight or 80) or floor
    if not minZ or roof>minZ then

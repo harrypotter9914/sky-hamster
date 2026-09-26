@@ -4,6 +4,7 @@ import "courses"
 import "mechanisms"
 import "spatial"
 import "physics_tests"
+import "campaign"
 import "ui"
 import "build"
 import "classroom"
@@ -11,6 +12,7 @@ import "terrain"
 import "audio"
 import "tilt"
 import "dock"
+import "expansion"
 import "tilt_ui"
 import "guide"
 import "guide_ui"
@@ -41,7 +43,7 @@ local settingsChoice=1
 local gesture=true
 local selectorReturn
 local saved=pd.datastore and pd.datastore.read('tilt-progress') or {}
-saved=saved or {}
+saved=Courses.migrate(saved or {})
 Guide.seen=saved.guideRevision==3 and (saved.guides or {}) or {}
 if saved.jumpGuideRevision~=1 then Guide.seen.jump=nil end
 local options=saved.options or {}
@@ -54,7 +56,7 @@ for k,v in pairs(saved.completed or {}) do if tonumber(k) then completed[tonumbe
 local best=saved.best or {}
 local ending=false
 local function saveProgress()
- if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,guideRevision=3,jumpGuideRevision=1,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
+ if pd.datastore then pd.datastore.write({campaignRevision=2,completed=completed,best=best,level=level,guideRevision=3,jumpGuideRevision=1,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
 local jumpEnabled=false
@@ -71,7 +73,7 @@ local function reset(full)
  Audio.quiet();Dock.reset(course)
  if full then elapsed=0;falls=0;checkpoint=false end
  worldTime=0
- local point=checkpoint and course.checkpoint or course.start
+ local point=checkpoint and course.checkpoints[checkpoint] or course.start
  x,y=point[1],point[2];vx,vy,throttle=0,0,0
  state='play';fallTime=0;braking=false;ballHeight=course:height(x,y);controls=Physics.newControls();airborne=false;jumpZ=ballHeight;jumpV=0;rollAngle=0
 end
@@ -97,6 +99,7 @@ reset(true)
 local camX,camY=0,0
 local function project(a,b,h) return 200+(a-b)*0.9-camX,124+(a+b)*0.45-(h or 0)*0.65-camY end
 local function support(a,b) return Mechanisms.support(course,a,b,worldTime) end
+local function floorAt(a,b) return Mechanisms.floor(course,a,b,worldTime) end
 local function drawTile(t)
  local a,b=t.x*32,t.y*32
  if not t.renderCache then
@@ -147,7 +150,7 @@ end
 prepareTerrain=function()
  if terrainCourse==course then return end
  UI.markerOffset(course,course.start);UI.markerOffset(course,course.goal)
- if course.checkpoint then UI.markerOffset(course,course.checkpoint) end
+ for _,point in ipairs(course.checkpoints) do UI.markerOffset(course,point) end
  -- Allocate slope occlusion and HUD caches before the playable frame.
  Spatial.occluders(course,0,project,0,0,400,240,-1e9)
  UI.hud(course,level,jumpEnabled,0,0,0,0,0)
@@ -212,7 +215,7 @@ local function renderWorld()
  g.clear(g.kColorWhite)
  if terrainChunks then Terrain.draw(terrainChunks,camX,camY) else terrainImage:draw(terrainX-camX,terrainY-camY) end
  if state~='fall' and support(x,y) then
-  local sx,sy=project(x,y,course:height(x,y))
+  local sx,sy=project(x,y,floorAt(x,y))
   g.setColor(g.kColorBlack);g.fillEllipseInRect(sx-8,sy-2,16,4)
   if not airborne and controls.charge>0.05 then
    for i=0,3 do local yy=sy-2-i*(2-controls.charge);g.drawLine(sx-4,yy,sx+4,yy-1) end
@@ -220,9 +223,9 @@ local function renderWorld()
  end
  Mechanisms.draw(course,worldTime,project)
  Dock.draw(course,project)
- marker(course.start,'START');marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE');marker(course.goal,'GOAL')
+ marker(course.start,'START');for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE') end;marker(course.goal,'GOAL')
  -- Rolling shell and rotating hamster face follow distance travelled.
- local ground=course:height(x,y)
+ local ground=floorAt(x,y)
  local bx,shadowY=project(x,y,ground)
  local _,by=project(x,y,(airborne or state=='fall') and jumpZ or ballHeight)
  local squash=state=='play' and not airborne and controls.charge*4 or 0
@@ -261,7 +264,7 @@ local function renderWorld()
  g.popContext();ballImage:setMaskImage(ballMask)
  end
  ballImage:draw(left,top)
- marker(course.start,'START',true);marker(course.checkpoint,checkpoint and 'SAVED' or 'SAVE',true);marker(course.goal,'GOAL',true)
+ marker(course.start,'START',true);for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE',true) end;marker(course.goal,'GOAL',true)
  if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
   UI.tiltPointer(screenX,screenY,Tilt.dx or 0,Tilt.dy or 0,Tilt.power or 0)
  end
@@ -380,7 +383,7 @@ function pd.update()
   throttle=Tilt.power;controls.power=throttle;controls.charge=0
   local dock=Dock.update(course,x,y,vx,vy,airborne,crank,pd.buttonJustPressed(pd.kButtonA),pd.buttonJustPressed(pd.kButtonB))
   if dock then
-   x,y=dock.x,dock.y;vx,vy=0,0;throttle=0;ballHeight=course:height(x,y)
+   x,y=dock.x,dock.y;vx,vy=0,0;throttle=0;ballHeight=floorAt(x,y)
    if dock.launch then vx,vy=dock.vx,dock.vy;airborne=true;jumpZ=ballHeight;jumpV=150;Audio.play('jump') end
   end
   local locked=dock and dock.locked
@@ -391,6 +394,7 @@ function pd.update()
    local step=dt/steps
    local oldX,oldY=x,y
    local beforeTime=worldTime
+   vx,vy=Mechanisms.wind(course,x,y,vx,vy,(airborne and jumpZ or ballHeight)-floorAt(x,y),step)
    local _,riding=support(x,y)
    worldTime=worldTime+step
    if not airborne and riding and (riding.kind=="ferry" or riding.kind=="rotor") then
@@ -402,12 +406,12 @@ function pd.update()
     x,y=x+vx*step,y+vy*step
     local oldVX,oldVY=vx,vy
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,jumpZ-course:height(x,y),worldTime,step)
-    local floor=course:height(x,y)
+    local floor=floorAt(x,y)
     local topContact=support(x,y) and oldZ>=floor and jumpZ<=floor and jumpV<0
     -- A descending top crossing is a landing, even if this substep penetrated the slab.
     if not topContact then x,y,vx,vy=Spatial.sides(course,x,y,vx,vy,jumpZ,worldTime) end
     if vx~=oldVX or vy~=oldVY then Audio.impact(math.sqrt((vx-oldVX)^2+(vy-oldVY)^2)) end
-    floor=course:height(x,y)
+    floor=floorAt(x,y)
     if support(x,y) and jumpZ<=floor and oldZ>=floor and jumpV<0 then
      airborne=false;ballHeight=floor;jumpZ=floor;jumpV=0
      Audio.play('land',0.45)
@@ -420,12 +424,21 @@ function pd.update()
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,0,worldTime,step)
     if vx~=oldVX or vy~=oldVY then Audio.impact(math.sqrt((vx-oldVX)^2+(vy-oldVY)^2)) end
     if not support(x,y) then beginFall(ballHeight,0);break end
-    ballHeight=course:height(x,y);jumpZ=ballHeight
+    local targetHeight=floorAt(x,y)
+    if targetHeight>ballHeight+10 then
+     x,y,vx,vy=Spatial.sides(course,x,y,vx,vy,ballHeight,worldTime)
+     if floorAt(x,y)>ballHeight+10 then x,y=oldX,oldY;vx,vy=-vx*.15,-vy*.15 end
+    elseif targetHeight<ballHeight-10 then
+     airborne=true;jumpZ=ballHeight;jumpV=0
+    else ballHeight=targetHeight;jumpZ=ballHeight end
    end
    local travel=math.sqrt((x-oldX)^2+(y-oldY)^2)
    local sign=(vx-vy)<0 and -1 or 1
    rollAngle=(rollAngle+sign*travel/11)%(math.pi*2)
-  end  if course.checkpoint and not checkpoint and not airborne and state=='play' and math.abs(x-course.checkpoint[1])<14 and math.abs(y-course.checkpoint[2])<14 then checkpoint=true;Audio.play('checkpoint') end
+  end
+  if not airborne and state=='play' then for i,point in ipairs(course.checkpoints) do
+   if i>(checkpoint or 0) and math.abs(x-point[1])<14 and math.abs(y-point[2])<14 then checkpoint=i;Audio.play('checkpoint') end
+  end end
   if state=='play' and not airborne and math.abs(x-course.goal[1])<17 and math.abs(y-course.goal[2])<22 then state='win';completed[level]=true;local key=tostring(level);best[key]=math.min(best[key] or math.huge,elapsed);saveProgress();Audio.play('win') end
  elseif state=='fall' and not overview then
   fallTime=fallTime+dt

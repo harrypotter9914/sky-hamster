@@ -8,7 +8,7 @@ Copy-Item "$root/source/*" $qa -Recurse -Force
 Copy-Item "$root/source/main.lua" "$qa/game.lua"
 @"
 Review={select=selectLevel,render=renderWorld,place=function(a,b)
- x=a;y=b;ballHeight=course:height(x,y);jumpZ=ballHeight
+ x=a;y=b;ballHeight=floorAt(x,y);jumpZ=ballHeight
  Dock.update(course,x,y,0,0,false,0,false,false)
 end}
 "@ | Add-Content "$qa/game.lua"

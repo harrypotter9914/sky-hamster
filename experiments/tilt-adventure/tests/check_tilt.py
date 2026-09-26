@@ -68,31 +68,31 @@ accel={0,0,1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
 Tilt.update(1/30);assert(not Tilt.consumeJump())
 accel={0,0,1};for i=1,40 do frame() end
 assert(Tilt.power==0)
-local c=Courses[15];Dock.reset(c)
+local c=Courses.legacy[15];Dock.reset(c)
 local d=Dock.update(c,112,80,0,0,false,0,false,false);assert(d.locked)
 Dock.update(c,112,80,0,0,false,-90,false,false);assert(math.abs(c.mechanisms[1].angle)<.001)
 d=Dock.update(c,112,80,0,0,false,0,false,true);assert(d.exit and not Dock.active)
 assert(not Dock.update(c,112,80,0,0,false,0,false,false))
 Dock.update(c,48,80,0,0,false,0,false,false)
 assert(Dock.update(c,112,80,0,0,false,0,false,false).locked)
-Dock.reset(Courses[16]);Dock.update(Courses[16],112,80,0,0,false,0,false,false)
-d=Dock.update(Courses[16],112,80,0,0,false,0,true,false);assert(d.launch and d.vx==210)
+Dock.reset(Courses.legacy[16]);Dock.update(Courses.legacy[16],112,80,0,0,false,0,false,false)
+d=Dock.update(Courses.legacy[16],112,80,0,0,false,0,true,false);assert(d.launch and d.vx==210)
 -- Drive the actual game update through all courses and menus.
 local select=selectReady
 for n=1,#Courses do select(n);put('lesson',false);for i=1,3 do frame() end end
-select(16);put('lesson',false);put('x',112);put('y',80);frame();assert(Dock.active)
+select(Courses.legacyIndex[16]);put('lesson',false);put('x',112);put('y',80);frame();assert(Dock.active)
 frame({a=true});assert(get('airborne') and not Dock.active)
 for i=1,33 do frame() end
 assert(get('state')=='play' and not get('airborne'),'cannon must land on receiving platform')
-select(5);put('lesson',false);frame({a=true});assert(get('airborne'))
-select(1);put('lesson',false);frame({a=true});assert(not get('airborne'))
-select(1);put('lesson',false);frame({up=true});assert(get('overview'));frame({b=true});assert(not get('overview'))
+select(Courses.legacyIndex[5]);put('lesson',false);frame({a=true});assert(get('airborne'))
+select(Courses.legacyIndex[1]);put('lesson',false);frame({a=true});assert(not get('airborne'))
+select(Courses.legacyIndex[1]);put('lesson',false);frame({up=true});assert(get('overview'));frame({b=true});assert(not get('overview'))
 frame({down=true});assert(Tilt.calibrating);for i=1,40 do frame() end;assert(Tilt.ready)
 select(#Courses);put('lesson',false);put('x',Courses[#Courses].goal[1]);put('y',Courses[#Courses].goal[2]);frame()
 assert(get('state')=='win' and store.saved.completed[#Courses])
 frame({a=true});assert(get('ending'));frame({a=true});assert(get('title') and not get('ending'))
-select(1);put('lesson',false);put('state','dead');frame({a=true});assert(get('state')=='play')
-print('PASS: calibration, neutral drift, proportional tilt, jump debounce, dock re-entry, bridge, cannon landing, 17 courses, map, retry, save and campaign ending')
+select(Courses.legacyIndex[1]);put('lesson',false);put('state','dead');frame({a=true});assert(get('state')=='play')
+print('PASS: calibration, neutral drift, proportional tilt, jump debounce, dock re-entry, bridge, cannon landing, 33 courses, map, retry, save and campaign ending')
 """)
 
 # Menu transitions and options must never advance the live course.
@@ -122,7 +122,7 @@ print('PASS: two home entries, settings persistence, paused menus, selector retu
 
 # First-encounter guides are persistent, pause physics, and cover direct level selection.
 lua.execute("""
-Guide.seen={};local select=selectReady;select(1)
+Guide.seen={};local select=selectReady;select(Courses.legacyIndex[1])
 assert(get('lesson') and Guide.key()=='arrival')
 local xx,yy,tt=get('x'),get('y'),get('elapsed')
 for i=1,40 do frame() end
@@ -130,15 +130,15 @@ assert(get('x')==xx and get('y')==yy and get('elapsed')==tt)
 frame({b=true});assert(Guide.time==0 and not Guide.seen.arrival)
 frame({a=true});assert(Guide.key()=='roll' and store.saved.guides.arrival)
 frame({a=true});assert(not get('lesson') and Guide.seen.roll)
-select(1);assert(not get('lesson'))
-select(5);assert(Guide.key()=='jump');frame({a=true});assert(not get('lesson') and store.saved.guides.jump)
-select(6);assert(not get('lesson'))
-select(8);assert(Guide.key()=='gate');frame({a=true});select(13)
+select(Courses.legacyIndex[1]);assert(not get('lesson'))
+select(Courses.legacyIndex[5]);assert(Guide.key()=='jump');frame({a=true});assert(not get('lesson') and store.saved.guides.jump)
+select(Courses.legacyIndex[6]);assert(not get('lesson'))
+select(Courses.legacyIndex[8]);assert(Guide.key()=='gate');frame({a=true});select(Courses.legacyIndex[13])
 assert(Guide.key()=='ferry');frame({a=true});assert(not get('lesson'))
-select(15);assert(Guide.key()=='control');frame({a=true});select(16);assert(Guide.key()=='cannon');frame({a=true})
-select(17);assert(not get('lesson'),'mixed levels must not repeat known tutorials')
-local memory=store.saved.guides;Guide.seen=memory;select(16);assert(not get('lesson'))
-Guide.seen={};select(14)
+select(Courses.legacyIndex[15]);assert(Guide.key()=='control');frame({a=true});select(Courses.legacyIndex[16]);assert(Guide.key()=='cannon');frame({a=true})
+select(Courses.legacyIndex[17]);assert(not get('lesson'),'mixed levels must not repeat known tutorials')
+local memory=store.saved.guides;Guide.seen=memory;select(Courses.legacyIndex[16]);assert(not get('lesson'))
+Guide.seen={};select(Courses.legacyIndex[14])
 local keys={};while Guide.key() do keys[Guide.key()]=true;Guide.advance() end
 assert(keys.arrival and keys.roll and keys.jump and keys.rotor and keys.sweeper and keys.trap and keys.gate)
 for _,kind in ipairs({'arrival','roll','jump','control','cannon','gate','trap','ferry','rotor','sweeper'}) do
@@ -167,7 +167,7 @@ Tilt.startCalibration()
 for i=1,120 do settle({i%2==0 and .2 or -.2,0,.98},1) end
 assert(Tilt.calibrating and not Tilt.ready,'moving input cannot calibrate')
 settle({0,0,1});assert(Tilt.ready)
-local select=get('selectLevel');select(2);assert(Tilt.calibrating and not Tilt.ready)
+local select=get('selectLevel');select(Courses.legacyIndex[2]);assert(Tilt.calibrating and not Tilt.ready)
 settle({0,.6,.8});assert(Tilt.ready and Tilt.power==0)
 local vx,vy=100,0
 vx,vy=Physics.step(vx,vy,-1,0,1,0,0,1/30);assert(vx>0 and vx<100)
@@ -189,7 +189,7 @@ print('PASS: screen-normal pulse, single trigger, upright support and lateral sh
 
 # Manual help and route notes pause the current run, including a docked cannon.
 lua.execute("""
-local select=selectReady;select(14);put('lesson',false);Tilt.calibrating=false;accel={0,0,1}
+local select=selectReady;select(Courses.legacyIndex[14]);put('lesson',false);Tilt.calibrating=false;accel={0,0,1}
 local xx,yy,tt,wt=get('x'),get('y'),get('elapsed'),get('worldTime')
 frame({left=true});assert(get('lesson') and Guide.manual and Guide.key()=='roll')
 local keys={};for _,k in ipairs(Guide.queue) do keys[k]=true end
@@ -197,7 +197,7 @@ assert(keys.jump and keys.rotor and keys.trap and keys.sweeper and keys.gate and
 for i=1,10 do frame() end
 assert(get('x')==xx and get('y')==yy and get('elapsed')==tt and get('worldTime')==wt)
 frame({b=true});assert(not get('lesson') and not get('airborne'))
-frame({right=true});assert(get('briefing'));assert(#UI.goalPages(Courses[14],14)==6)
+frame({right=true});assert(get('briefing'));assert(#UI.goalPages(Courses.legacy[14],Courses.legacyIndex[14])==6)
 for i=1,10 do frame() end
 assert(get('x')==xx and get('elapsed')==tt and get('worldTime')==wt)
 frame({a=true});assert(get('infoPage')==2 and not get('airborne'))
@@ -205,12 +205,12 @@ frame({left=true});assert(get('infoPage')==1)
 frame({b=true});assert(not get('briefing') and get('x')==xx)
 frame({left=true});while get('lesson') do frame({a=true}) end
 assert(get('x')==xx and get('elapsed')==tt)
-select(16);put('lesson',false);put('x',112);put('y',80);frame();assert(Dock.active)
+select(Courses.legacyIndex[16]);put('lesson',false);put('x',112);put('y',80);frame();assert(Dock.active)
 local dock=Dock.active;local angle=dock.angle
 frame({right=true});frame(nil,nil,90);frame({b=true});assert(Dock.active==dock and dock.angle==angle)
 frame({left=true});frame({b=true});assert(Dock.active==dock)
 for n,c in ipairs(Courses) do for i=1,#UI.goalPages(c,n) do UI.goal(c,n,i) end end
-print('PASS: Help replay, B return, full replay resume, Goal paging, frozen physics/time, no accidental jump or cannon release, all 17 route notes')
+print('PASS: Help replay, B return, full replay resume, Goal paging, frozen physics/time, no accidental jump or cannon release, all 33 route notes')
 """)
 
 
@@ -241,7 +241,7 @@ accel={.5,0,.866};for i=1,60 do Tilt.update(1/30) end
 local power,dx,dy=Tilt.power,Tilt.dx,Tilt.dy
 accel={.5,0,1.766};Tilt.update(1/30);assert(Tilt.consumeJump())
 assert(math.abs(Tilt.power-power)<.00001 and Tilt.dx==dx and Tilt.dy==dy,'lift pulse must not contaminate steering')
-local c=Courses[16];Dock.reset(c);assert(Dock.status()==nil)
+local c=Courses.legacy[16];Dock.reset(c);assert(Dock.status()==nil)
 Dock.update(c,112,80,0,0,false,0,false,false);assert(Dock.status()=='LOCKED')
 Dock.update(c,112,80,0,0,false,0,false,true);assert(Dock.status()=='UNLOCKED')
 assert(not Dock.update(c,115,80,0,0,false,0,false,false));assert(Dock.status()=='UNLOCKED')
