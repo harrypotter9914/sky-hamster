@@ -201,6 +201,24 @@ function UI.map(course,x,y,t)
  icon('ball',24,178);text('YOU',49,179);icon('flag',135,178);text('FINISH',160,179);text('S start / C save',252,179)
  footer('resume','resume')
 end
+-- Fixed-size keycaps and fixed label origins keep both rows aligned.
+local function controlHint(button,label,x,y)
+ ink();g.fillRoundRect(x,y,16,15,3);g.setColor(g.kColorWhite)
+ if button=='up' or button=='down' or button=='left' or button=='right' then
+  local points={0,-5,5,0,2,0,2,5,-2,5,-2,0,-5,0};local p={}
+  for i=1,#points,2 do
+   local a,b=points[i],points[i+1]
+   if button=='down' then a,b=-a,-b elseif button=='left' then a,b=b,-a elseif button=='right' then a,b=-b,a end
+   p[#p+1]=x+7+a;p[#p+1]=y+7+b
+  end
+  g.fillPolygon(table.unpack(p))
+ elseif button=='crank' then
+  g.drawCircleAtPoint(x+5,y+10,3);g.drawLine(x+5,y+10,x+11,y+4);g.fillRect(x+10,y+2,3,5)
+ else
+  g.setImageDrawMode(g.kDrawModeFillWhite);g.drawTextAligned(button,x+8,y-1,kTextAlignment.center);g.setImageDrawMode(g.kDrawModeCopy)
+ end
+ text(label,x+24,y-1)
+end
 local hudBase,hudKey,readout,readoutKey,bottom,bottomKey
 function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  local id=tostring(level)..tostring(jump)
@@ -223,13 +241,13 @@ function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  if bottomKey~=bk then bottomKey=bk;bottom=bitmap(400,37,function()
   g.setColor(g.kColorWhite);g.fillRect(0,0,400,37);ink();g.drawLine(0,0,400,0);g.drawLine(2,2,398,2)
   if dock~='roll' then
-   text(dock=='cannon' and 'Crank: aim' or 'Crank: rotate',8,3)
-   if dock=='cannon' then text('A Fire',167,3) end;text('B Release',290,3)
+   controlHint('crank',dock=='cannon' and 'Aim' or 'Rotate',8,3)
+   if dock=='cannon' then controlHint('A','Fire',138,3) end;controlHint('B','Release',292,3)
   else
-   text('UP Map',8,3);text('DOWN Recenter',123,3)
-   if jump then text('A Jump',313,3) end
+   controlHint('up','Map',8,3);controlHint('down','Recenter',138,3)
+   if jump then controlHint('A','Jump',292,3) end
   end
-  text('LEFT Help',8,20);text('RIGHT Goal',193,20)
+  controlHint('left','Help',8,20);controlHint('right','Goal',138,20)
  end) end
  bottom:draw(0,203)
 end

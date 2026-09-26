@@ -1,4 +1,4 @@
-Latest — 2026-09-26, tilt 0.1.7: Build and regression checks passed for grip-relative calibration, projected world-axis steering, per-course calibration and calibrated-axis lift impulses. Four perspective tutorial directions were reviewed at native Simulator resolution. pdutil install reported "No Playdate device detected." 0.1.7 installation is not confirmed; the last confirmed hardware install is 0.1.6. Physical grip feel and frame rate remain unverified.
+Latest — 2026-09-26, tilt 0.1.8: Playdate detected on COM4. pdutil install replaced sky-hamster-tilt.pdx, copied all files and successfully ejected F:. Run command sent successfully. This includes 0.1.7 grip calibration/world-axis controls and the new aligned arrow keycaps. SDK build and native-resolution rolling/docked UI review passed. Physical grip feel and frame rate remain unverified.
 
 Previous attempts (superseded):
 2026-09-26: SDK build and host checks passed. Title/tutorial/HUD visually checked in updated Simulator.
