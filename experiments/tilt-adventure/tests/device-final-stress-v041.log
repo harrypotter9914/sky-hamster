@@ -45,4 +45,3 @@ BENCH BEGIN	44
 BENCH route=44 frames=179 fps=26.71 frame95=49.00 frameMax=60.00 cpu95=46.00 cpuMax=58.00 cacheMiss=16 chunks=40 luaKB=2009
 STATS	table: 0x90449f10
 BENCH COMPLETE
-
