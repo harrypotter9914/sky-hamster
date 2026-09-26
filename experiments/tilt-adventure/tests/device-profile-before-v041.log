@@ -1,0 +1,22 @@
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+
+BENCH BEGIN	44
+
+BENCH route=44 frames=179 fps=25.17 frame95=52.00 frameMax=113.00 cpu95=49.00 cpuMax=110.00 cacheMiss=8 chunks=26 luaKB=1323
+STATS	table: 0x902e6270
+PROFILE	support	3.772222
+PROFILE	tilt	0.9944444
+PROFILE	hud	1.8
+PROFILE	collide	1.083333
+PROFILE	machines	10.30556
+PROFILE	wind	1.15
+PROFILE	stations	1.777778
+PROFILE	mask	0.03888889
+PROFILE	occluders	5.811111
+PROFILE	terrain	5.188889
+
+BENCH COMPLETE
+

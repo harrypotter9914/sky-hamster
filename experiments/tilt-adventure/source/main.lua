@@ -19,6 +19,8 @@ import "expansion"
 import "workshop"
 import "machine_art"
 import "physics_index"
+import "render_index"
+import "pose"
 import "tilt_ui"
 import "guide"
 import "guide_ui"
@@ -255,7 +257,8 @@ local function renderWorld()
    for i=0,3 do local yy=sy-2-i*(2-controls.charge);g.drawLine(sx-4,yy,sx+4,yy-1) end
   end
  end
- Mechanisms.draw(course,worldTime,project)
+ Pose.begin(worldTime)
+ Mechanisms.draw(RenderIndex.view(course,project),worldTime,project)
  Dock.draw(course,project)
  marker(course.start,'START');for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE') end;marker(course.goal,'GOAL')
  -- Rolling shell and rotating hamster face follow distance travelled.
@@ -298,6 +301,7 @@ local function renderWorld()
  g.popContext();ballImage:setMaskImage(ballMask)
  end
  ballImage:draw(left,top)
+ Pose.finish()
  marker(course.start,'START',true);for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE',true) end;marker(course.goal,'GOAL',true)
  if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
   UI.tiltPointer(screenX,screenY,Tilt.dx or 0,Tilt.dy or 0,Tilt.power or 0)

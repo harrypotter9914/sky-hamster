@@ -21,18 +21,26 @@ function P.near(c,x,y)
  local key=ix..','..iy
  view=c.physicsCells[key]
  if view then c.physicsView=view;return view end
- view=setmetatable({physicsOwner=c,mechanisms={}},{__index=c});c.physicsView=view;c.physicsCells[key]=view
+ view=setmetatable({physicsOwner=c,mechanisms={},lifts={}},{__index=c});c.physicsView=view;c.physicsCells[key]=view
  view.ix,view.iy=ix,iy
  local list=view.mechanisms;for i=#list,1,-1 do list[i]=nil end
  local x0,x1,y0,y1=ix*128,(ix+1)*128,iy*128,(iy+1)*128
  for _,m in ipairs(c.mechanisms or {}) do
   local b=m.physicsBounds;if not b then b=bounds(m);m.physicsBounds=b end
-  if b[1]<=x1 and b[2]>=x0 and b[3]<=y1 and b[4]>=y0 then list[#list+1]=m end
+  if b[1]<=x1 and b[2]>=x0 and b[3]<=y1 and b[4]>=y0 then
+   list[#list+1]=m
+   if m.kind=='lift' then view.lifts[#view.lifts+1]=m end
+  end
  end
  return view
 end
 local M,S=Mechanisms,Spatial
-P.reference={support=M.support,collide=M.collide,wind=M.wind,sides=S.sides}
+P.reference={support=M.support,collide=M.collide,wind=M.wind,sides=S.sides,floor=M.floor}
+function M.floor(c,x,y,t)
+ -- Only lifts can override course height. Other support types need no query here.
+ for _,m in ipairs(P.near(c,x,y).lifts) do if M.contains(m,x,y,t) then return m.elevation or m.minHeight end end
+ return c:height(x,y)
+end
 local epoch=0
 local reset,update=Dock.reset,Dock.update
 function Dock.reset(...) epoch=epoch+1;return reset(...) end

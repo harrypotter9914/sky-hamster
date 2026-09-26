@@ -25,7 +25,7 @@ local function ensure(c,x,y)
  local bucket=c.buckets[key];if not bucket then return nil end
  local image=playdate.graphics.image.new(size,size,playdate.graphics.kColorClear)
  c.render(image,bucket.tiles,x*size,y*size)
- entry={image=image,used=c.tick};c.images[key]=entry;c.count=c.count+1;return entry
+ entry={image=image,used=c.tick,x=x*size,y=y*size};c.images[key]=entry;c.count=c.count+1;return entry
 end
 function T.warm(c,x,y)
  for i=math.floor(x/size)-1,math.floor((x+400)/size)+1 do
@@ -36,19 +36,29 @@ function T.draw(c,x,y)
  c.tick=c.tick+1
  local x0,x1=math.floor(x/size),math.floor((x+400)/size)
  local y0,y1=math.floor((y+44)/size),math.floor((y+204)/size)
- for i=x0,x1 do for j=y0,y1 do
-  local key=i..','..j
-  if c.buckets[key] and not c.images[key] then c.misses=c.misses+1 end
-  local entry=ensure(c,i,j)
-  if entry then entry.image:draw(i*size-x,j*size-y) end
- end end
- -- Build at most one extra block each frame, one block outside the viewport.
- local built=false
- for i=x0-1,x1+1 do for j=y0-1,y1+1 do
-  local key=i..','..j;local entry=c.images[key]
-  if entry then entry.used=c.tick
-  elseif not built and c.buckets[key] then ensure(c,i,j);built=true end
- end end
+ local window=c.window
+ if not window or window.x0~=x0 or window.x1~=x1 or window.y0~=y0 or window.y1~=y1 then
+  window={x0=x0,x1=x1,y0=y0,y1=y1,visible={},retained={},pending={},next=1};c.window=window
+  for i=x0,x1 do for j=y0,y1 do
+   local key=i..','..j
+   if c.buckets[key] and not c.images[key] then c.misses=c.misses+1 end
+   local entry=ensure(c,i,j)
+   if entry then window.visible[#window.visible+1]=entry end
+  end end
+  for i=x0-1,x1+1 do for j=y0-1,y1+1 do
+   local key=i..','..j;local entry=c.images[key]
+   if entry then window.retained[#window.retained+1]=entry
+   elseif c.buckets[key] then window.pending[#window.pending+1]=c.buckets[key] end
+  end end
+ end
+ -- Camera movement within the same chunk window needs no string keys or lookups.
+ for _,entry in ipairs(window.visible) do entry.image:draw(entry.x-x,entry.y-y) end
+ for _,entry in ipairs(window.retained) do entry.used=c.tick end
+ local pending=window.pending[window.next]
+ if pending then
+  local entry=ensure(c,pending.x,pending.y)
+  window.retained[#window.retained+1]=entry;window.next=window.next+1
+ end
  -- Bound retained image memory, retaining the visible area and its margin.
  if c.count>40 then
   for key,entry in pairs(c.images) do

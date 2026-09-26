@@ -101,7 +101,8 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
    for _,b in ipairs(course.occlusionBuckets[bx..','..by] or empty) do if b.stamp~=stamp then b.stamp=stamp;add(b) end end
   end end
  end
- for _,m in ipairs(course.mechanisms or empty) do
+ local scene=RenderIndex and RenderIndex.view(course,project) or course
+ for _,m in ipairs(scene.mechanisms or empty) do
   local open=(m.kind=='gate' or m.kind=='trap') and Mechanisms.open(m,t)
   if not open and m.kind~='fan' and m.kind~='bumper' and m.kind~='conveyor' and m.kind~='jet' and m.kind~='magnet' then
    local x,y,a=Mechanisms.pose(m,t);local floor=m.kind=='lift' and (m.elevation or m.minHeight) or course:height(x,y)
