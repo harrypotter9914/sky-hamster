@@ -5,9 +5,9 @@ $repo=Resolve-Path (Join-Path $root '../..')
 $qa=Join-Path $repo 'builds/tilt-ui-qa-source'
 New-Item -ItemType Directory -Force $qa | Out-Null
 Copy-Item "$root/source/*" $qa -Recurse -Force
-Copy-Item "$root/source/main.lua" "$qa/game.lua"
+Copy-Item "$root/source/engine.lua" "$qa/game.lua"
 @"
-Review={select=selectLevel,render=renderWorld,animate=function(t,crank)
+Review={select=function(n) selectLevel(n);while Loading.busy do Loading.step(1/30) end end,render=renderWorld,animate=function(t,crank)
  worldTime=t;MachineArt.time=t
  if crank then Dock.update(course,x,y,0,0,false,crank,false,false);ballHeight=floorAt(x,y) end
  for _,m in ipairs(course.mechanisms or {}) do if m.kind=='bumper' then m.hitAt=0 end end

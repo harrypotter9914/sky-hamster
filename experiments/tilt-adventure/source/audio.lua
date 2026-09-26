@@ -1,15 +1,23 @@
 Audio={enabled=false,effects=true,musicEnabled=true,cooldown=0,chargeStep=0}
 local A=Audio
 function A.init(enabled)
- A.enabled=enabled
+ A.enabled=false
  if not enabled then return end
  A.players={}
- for _,name in ipairs({'jump','fall','wall','land','menu','checkpoint','win','charge','roll','music'}) do
+ for i,name in ipairs({'jump','fall','wall','land','menu','checkpoint','win','charge','roll','music'}) do
   local player,err=playdate.sound.sampleplayer.new('audio/'..name)
   assert(player,'Audio '..name..': '..tostring(err));A.players[name]=player
+  if Loading then Loading.checkpoint(.15+i/10*.18,'PREPARING SOUND') end
  end
- A.players.music:setVolume(0.16);A.players.music:play(0)
+ A.players.music:setVolume(0.16)
+ if A.musicEnabled then A.players.music:play(0) end
+ for i,name in ipairs({'move','confirm','back','toggle','unlock','ready'}) do
+  A.players['ui_'..name]=assert(playdate.sound.sampleplayer.new('audio/machines/ui_'..name))
+  if Loading then Loading.checkpoint(.33+i/6*.1,'PREPARING SOUND') end
+ end
+ A.enabled=true
 end
+function A.ui(name) A.play('ui_'..name,.32) end
 function A.play(name,volume)
  if not A.enabled or Build.classroom or not A.effects then return end
  local player=A.players[name];player:stop();player:setVolume(volume or 0.6);player:play(1)
@@ -17,13 +25,17 @@ end
 function A.quiet()
  if not A.enabled then return end
  A.players.roll:stop()
+ if MechanismAudio then MechanismAudio.quiet() end
 end
 function A.toggleEffects()
  A.effects=not A.effects
+ if not A.enabled then return end
  if not A.effects then for name,p in pairs(A.players) do if name~='music' then p:stop() end end end
+ if not A.effects and MechanismAudio then MechanismAudio.quiet() end
 end
 function A.toggleMusic()
  A.musicEnabled=not A.musicEnabled
+ if not A.enabled then return end
  if A.musicEnabled then A.players.music:play(0) else A.players.music:stop() end
 end
 function A.update(dt,rolling,speed,charge)
@@ -43,6 +55,7 @@ function A.impact(speed)
 end
 function A.pause()
  if not A.enabled then return end
+ if MechanismAudio then MechanismAudio.quiet() end
  A.musicWasPlaying=A.players.music:isPlaying()
  for name,p in pairs(A.players) do if name=='music' then p:setPaused(true) else p:stop() end end
 end

@@ -1,4 +1,6 @@
-# Sky Hamster — 0.10.3
+# Sky Hamster — 0.10.4
+
+0.10.4 adds distinct machinery/UI sound families and an illustrated frame-animation loader with real progress. Startup resources and course preparation run cooperatively across display frames. See [audio and loading](AUDIO-LOADING-v0.10.4.md) and [validation](VALIDATION-v0.10.4.md). Run `python tests/check_audio_loading.py` for the complete regression suite.
 
 0.10.3 adds a dedicated launcher cover, list icon and loading image. Use `./install.ps1` to build and overwrite the one existing device installation. See [validation and cleanup](VALIDATION-v0.10.3.md) and [artwork](art/LAUNCHER-v0.10.3.md).
 

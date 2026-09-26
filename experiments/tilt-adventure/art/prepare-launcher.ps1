@@ -35,4 +35,7 @@ try {
  $graphics.DrawImageUnscaled($card,25,43)
  $splash.Save((Join-Path $launcher 'launchImage.png'),[Drawing.Imaging.ImageFormat]::Png)
 } finally {$card.Dispose();$graphics.Dispose();$splash.Dispose()}
+if(Test-Path -LiteralPath (Join-Path $PSScriptRoot 'loading-splash.png')){
+ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'loading-splash.png') -Destination (Join-Path $launcher 'launchImage.png') -Force
+}
 Write-Output 'Exported launcher card 350x155, icon 32x32 and loading image 400x240.'

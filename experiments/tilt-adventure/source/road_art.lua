@@ -19,7 +19,7 @@ local function prepare(t,slope)
 end
 function RoadArt.warm(c)
  if not playdate.geometry then return end
- for _,t in ipairs(c.tiles) do local _,s=c:height(t.x*32+16,t.y*32+16);prepare(t,s) end
+ for i,t in ipairs(c.tiles) do local _,s=c:height(t.x*32+16,t.y*32+16);prepare(t,s);if Loading and i%32==0 then Loading.checkpoint(.12+.17*i/#c.tiles,"GATHERING THE STONES") end end
 end
 function RoadArt.draw(t,slope,cx,cy)
  if not playdate.geometry then return end

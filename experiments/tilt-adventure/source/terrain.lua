@@ -4,7 +4,7 @@ local size=128
 function T.new(course,render)
  local cache={buckets={},images={},render=render,tick=0,misses=0,count=0}
  -- Index static geometry once; images are created only around the camera.
- for _,tile in ipairs(course.tiles) do
+ for index,tile in ipairs(course.tiles) do
   local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
   for dx=0,1 do for dy=0,1 do
    local x,y=(tile.x+dx)*32,(tile.y+dy)*32
@@ -16,6 +16,7 @@ function T.new(course,render)
    if not bucket then bucket={x=x,y=y,tiles={}};cache.buckets[key]=bucket end
    bucket.tiles[#bucket.tiles+1]=tile
   end end
+  if Loading and index%32==0 then Loading.checkpoint(.76+.09*index/#course.tiles,"FINDING THE WAY") end
  end
  return cache
 end
@@ -29,7 +30,7 @@ local function ensure(c,x,y)
 end
 function T.warm(c,x,y)
  for i=math.floor(x/size)-1,math.floor((x+400)/size)+1 do
-  for j=math.floor((y+44)/size)-1,math.floor((y+204)/size)+1 do ensure(c,i,j) end
+  for j=math.floor((y+44)/size)-1,math.floor((y+204)/size)+1 do ensure(c,i,j);if Loading then Loading.checkpoint(.9,"ALMOST THERE") end end
  end
 end
 function T.draw(c,x,y)

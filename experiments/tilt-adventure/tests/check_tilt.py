@@ -33,8 +33,11 @@ playdate={graphics=gfx,display={setRefreshRate=noop},kButtonA='a',kButtonB='b',k
  buttonIsPressed=function(k) return held[k] end,
  getCrankChange=function() local c=crank;crank=0;return c end,
  getSystemMenu=function() return {addMenuItem=function(self,k,f) menu[k]=f end,removeAllMenuItems=function() menu={} end} end}
+function drainLoading()
+ while Loading and Loading.busy do clock=clock+1000/30;Loading.step(1/30) end
+end
 function frame(keys,down,angle)
- clock=clock+1000/30;pressed=keys or {};held=down or {};crank=angle or 0;playdate.update();pressed={}
+ clock=clock+1000/30;pressed=keys or {};held=down or {};crank=angle or 0;playdate.update();drainLoading();pressed={}
 end
 ''')
 
@@ -44,7 +47,7 @@ playdate.startAccelerometer=function() end
 playdate.readAccelerometer=function() return table.unpack(accel) end
 playdate.datastore={read=function() return store.saved end,write=function(v) store.saved=v end}
 """)
-load('main')
+load('engine')
 lua.execute("""
 function get(name)
  for i=1,100 do local n,v=debug.getupvalue(playdate.update,i);if n==name then return v end end
@@ -55,7 +58,7 @@ function put(name,value)
  error('missing '..name)
 end
 function selectReady(n)
- get('selectLevel')(n);accel={0,0,1};for i=1,60 do Tilt.update(1/30) end
+ get('selectLevel')(n);drainLoading();accel={0,0,1};for i=1,60 do Tilt.update(1/30) end
 end
 for i=1,40 do frame() end
 assert(Tilt.ready and Tilt.power==0)
@@ -167,7 +170,7 @@ Tilt.startCalibration()
 for i=1,120 do settle({i%2==0 and .2 or -.2,0,.98},1) end
 assert(Tilt.calibrating and not Tilt.ready,'moving input cannot calibrate')
 settle({0,0,1});assert(Tilt.ready)
-local select=get('selectLevel');select(Courses.legacyIndex[2]);assert(Tilt.calibrating and not Tilt.ready)
+local select=get('selectLevel');select(Courses.legacyIndex[2]);drainLoading();assert(Tilt.calibrating and not Tilt.ready)
 settle({0,.6,.8});assert(Tilt.ready and Tilt.power==0)
 local vx,vy=100,0
 vx,vy=Physics.step(vx,vy,-1,0,1,0,0,1/30);assert(vx>0 and vx<100)
