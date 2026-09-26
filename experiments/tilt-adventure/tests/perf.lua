@@ -9,7 +9,11 @@ playdate.buttonIsPressed=function() return false end
 playdate.getCrankChange=function() return 0 end
 import 'game'
 local update=playdate.update
-local stages={34,36,38,40,42,44}
+local stages={14,19,24,30,34,36,40,44}
+local smooth=Bench.smooth
+if smooth then stages={30,44,44,44,44,44,44,44} end
+local anchors={{96,112},{48,80},{480,80},{1264,80},{1752,112},{2128,112},{4800,112},{5600,240}}
+results.mode=smooth and '90-units-per-second camera samples' or 'full-route camera/cache stress'
 local stage,frame=0,0
 local samples,costs={},{}
 local now=playdate.getCurrentTimeMilliseconds
@@ -35,7 +39,7 @@ function playdate.update()
  local c=Courses[stages[stage]]
  -- Traverse the sorted road tiles in batches; this deliberately stresses camera/cache misses.
  local tile=c.tiles[math.min(#c.tiles,1+math.floor(frame/180*(#c.tiles-1)))]
- Bench.place(tile.x*32+16,tile.y*32+16)
+ if smooth then Bench.place(anchors[stage][1]+frame*3,anchors[stage][2]) else Bench.place(tile.x*32+16,tile.y*32+16) end
  local t=now();if last then samples[#samples+1]=t-last end;last=t
  update();costs[#costs+1]=now()-t;frame=frame+1
 end

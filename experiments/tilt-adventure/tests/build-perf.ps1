@@ -1,4 +1,5 @@
 # Same installation folder as the release; restore the release after measuring.
+param([switch]$Smooth)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $repo=Resolve-Path (Join-Path $root '../..')
@@ -13,6 +14,7 @@ end,place=function(a,b)
  x=a;y=b;ballHeight=floorAt(x,y);jumpZ=ballHeight;airborne=false;state='play';vx=90;vy=0;Dock.active=nil;Dock.blocked=nil
 end,cache=function() return terrainChunks and terrainChunks.misses or 0,terrainChunks and terrainChunks.count or 0 end}
 '@ | Add-Content "$qa/game.lua"
+if($Smooth){'Bench.smooth=true' | Add-Content "$qa/game.lua"}
 Copy-Item "$PSScriptRoot/perf.lua" "$qa/main.lua"
 $out=Join-Path $repo 'builds/tilt-perf/sky-hamster-tilt.pdx'
 New-Item -ItemType Directory -Force (Split-Path $out -Parent) | Out-Null

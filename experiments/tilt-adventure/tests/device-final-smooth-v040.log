@@ -1,0 +1,44 @@
+run /Games/sky-hamster-tilt.pdx
+
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+
+BENCH BEGIN	30
+
+BENCH route=30 frames=179 fps=29.98 frame95=36.00 frameMax=52.00 cpu95=19.00 cpuMax=50.00 cacheMiss=0 chunks=11 luaKB=990
+STATS	table: 0x900b00c0
+
+BENCH BEGIN	44
+
+BENCH route=44 frames=179 fps=29.47 frame95=39.00 frameMax=42.00 cpu95=36.00 cpuMax=38.00 cacheMiss=0 chunks=18 luaKB=1332
+STATS	table: 0x900814a0
+BENCH BEGIN	44
+
+BENCH route=44 frames=179 fps=28.52 frame95=39.00 frameMax=45.00 cpu95=37.00 cpuMax=42.00 cacheMiss=0 chunks=28 luaKB=1364
+STATS	table: 0x902b54d0
+BENCH BEGIN	44
+
+BENCH route=44 frames=179 fps=29.06 frame95=37.00 frameMax=39.00 cpu95=34.00 cpuMax=37.00 cacheMiss=1 chunks=40 luaKB=1385
+STATS	table: 0x902b6020
+BENCH BEGIN	44
+
+BENCH route=44 frames=179 fps=27.65 frame95=49.00 frameMax=53.00 cpu95=45.00 cpuMax=50.00 cacheMiss=1 chunks=21 luaKB=1389
+STATS	table: 0x900ded20
+
+BENCH BEGIN	44
+
+BENCH route=44 frames=179 fps=26.34 frame95=49.00 frameMax=60.00 cpu95=43.00 cpuMax=58.00 cacheMiss=1 chunks=25 luaKB=1547
+STATS	table: 0x9033e910
+
+BENCH BEGIN	44
+
+BENCH route=44 frames=179 fps=29.68 frame95=39.00 frameMax=47.00 cpu95=27.00 cpuMax=44.00 cacheMiss=1 chunks=25 luaKB=1331
+STATS	table: 0x90128820
+BENCH BEGIN	44
+
+BENCH route=44 frames=179 fps=29.81 frame95=39.00 frameMax=41.00 cpu95=27.00 cpuMax=39.00 cacheMiss=1 chunks=25 luaKB=1335
+STATS	table: 0x90080aa0
+BENCH COMPLETE
+

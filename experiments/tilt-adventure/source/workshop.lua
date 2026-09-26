@@ -55,9 +55,7 @@ function M.draw(c,t,project)
    for _,p in ipairs(pts) do local px,py=project(p[1],p[2],c:height(p[1],p[2]));poly[#poly+1]=px;poly[#poly+1]=py end
    g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(poly))
    if m.kind=='magnet' then
-    g.fillEllipseInRect(sx-19,sy-6,38,13);g.setColor(g.kColorWhite);g.fillEllipseInRect(sx-17,sy-9,34,10);g.setColor(g.kColorBlack);g.drawEllipseInRect(sx-17,sy-9,34,10)
-    g.setLineWidth(9);g.drawArc(sx,sy-20,12,90,270);g.setLineWidth(1)
-    g.setColor(g.kColorWhite);g.fillRect(sx-16,sy-24,8,6);g.fillRect(sx+8,sy-24,8,6);g.setColor(g.kColorBlack);g.drawRect(sx-16,sy-24,8,6);g.drawRect(sx+8,sy-24,8,6)
+    MachineArt.sprite('magnet',sx,sy+4)
     for i=1,2 do local r=18+(t*12+i*14)%30;g.drawArc(sx,sy-10,r,220,320) end
    else
     local active=m.kind=='conveyor' or (t+(m.phase or 0))%m.period<m.period*.4
@@ -70,20 +68,21 @@ function M.draw(c,t,project)
       local ax,ay,bx,by
       if horizontal then ax,ay=project(m.x+at,m.y-m.h/2+5,c:height(m.x+at,m.y));bx,by=project(m.x+at,m.y+m.h/2-5,c:height(m.x+at,m.y))
       else ax,ay=project(m.x-m.w/2+5,m.y+at,c:height(m.x,m.y));bx,by=project(m.x+m.w/2-5,m.y+at,c:height(m.x,m.y)) end
-      g.drawLine(ax,ay,bx,by)
+     g.drawLine(ax,ay,bx,by)
      end
+     local mx,my=project(m.x-m.w/2+16,m.y,c:height(m.x,m.y));MachineArt.sprite('roller',mx,my+5);MachineArt.gear(mx-8,my-12,t*120)
     end
     for i=-2,2 do
      local x=m.x+i*m.w/6;local px,py=project(x,m.y,c:height(x,m.y))
      if m.kind=='jet' then
-      g.setColor(g.kColorBlack);g.fillEllipseInRect(px-10,py-4,20,9);g.setColor(g.kColorWhite);g.fillEllipseInRect(px-8,py-5,16,7);g.setColor(g.kColorBlack)
-      for slot=-1,1 do g.drawLine(px-5,py-3+slot*2,px+5,py-3+slot*2) end
+      MachineArt.sprite('nozzle',px,py+3);g.setColor(g.kColorBlack)
      else g.fillEllipseInRect(px-4,py-2,8,4) end
      if active then
       local d=m.kind=='jet' and 13+(t*20)%8 or 8+(t*18)%12
       local dx,dy=math.cos(m.angle or 0),math.sin(m.angle or 0)
       local ux,uy=(dx-dy)*.9,(dx+dy)*.45
       g.drawLine(px,py,px+ux*d,py+uy*d);g.fillCircleAtPoint(px+ux*d,py+uy*d,2)
+      if m.kind=='jet' then for k=1,3 do local dist=16+((t*48+k*13)%42);g.drawArc(px+ux*dist,py+uy*dist-17-k*2,3+k,210,345) end end
      end
     end
    end

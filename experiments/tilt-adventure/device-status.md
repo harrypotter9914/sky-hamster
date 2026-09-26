@@ -1,4 +1,8 @@
-Latest — tilt 0.3.0: 44-course build and regressions passed. Installation returned No Playdate device detected. This release is not confirmed installed; device performance is unverified.
+Latest — 2026-09-26, tilt 0.4.0 (build 13): installed successfully on the physical Playdate through COM4 / F: and launched at /Games/sky-hamster-tilt.pdx. Production startup checks passed with no captured error. The normal release replaced the temporary performance workload in the same installation folder. Device remains running the release.
+
+Hardware profiling completed in both full-route camera/cache stress mode and normal-speed scene samples. Final stress route 44 improved from 11.53 to 24.70 FPS; normal-speed samples span 26.34–29.98 FPS. Brief frame-time spikes remain (up to 62 ms in final stress and 60 ms in normal-speed samples); this is not a claim of perfect 30 FPS or a complete human playthrough. See VALIDATION-v040.md and tests/device-release-v040.log.
+
+Previous — tilt 0.3.0: 44-course build and regressions passed. Installation returned No Playdate device detected. This release was not confirmed installed at that time; superseded by the successful 0.4.0 installation above.
 
 Latest — 2026-09-26, tilt 0.2.0: 33-course release built and host/native Simulator checks passed. 0.1.9 was installed and launched on COM4 earlier in this session. Later attempts to install both the 0.2.0 hardware workload and release returned "No Playdate device detected." Last confirmed hardware version: 0.1.9. 0.2.0 is not confirmed installed; physical gesture feel, full route playthrough and hardware frame rate remain unverified. See VALIDATION-v020.md.
 

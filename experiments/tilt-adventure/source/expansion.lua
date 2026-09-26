@@ -53,7 +53,7 @@ function M.collide(c,x,y,vx,vy,z,t,dt)
   if d<r then
    local nx,ny=d>.001 and dx/d or 1,d>.001 and dy/d or 0
    x,y=m.x+nx*r,m.y+ny*r;local dot=vx*nx+vy*ny
-   if dot<0 then vx,vy=vx-1.65*dot*nx,vy-1.65*dot*ny end
+   if dot<0 then vx,vy=vx-1.65*dot*nx,vy-1.65*dot*ny;m.hitAt=t end
    hit=true
   end
  end end
@@ -81,7 +81,11 @@ function M.draw(c,t,project)
  end
  oldDraw(c.legacyView,t,project)
  local g=playdate.graphics;local a=art()
- for _,m in ipairs(c.mechanisms or {}) do
+ if not c.artMechanisms then
+  c.artMechanisms={}
+  for _,m in ipairs(c.mechanisms or {}) do if m.kind=='lift' or m.kind=='fan' or m.kind=='bumper' or (m.kind=='ferry' and m.manual) then c.artMechanisms[#c.artMechanisms+1]=m end end
+ end
+ for _,m in ipairs(c.artMechanisms) do
   local cx,cy=M.pose(m,t);local h=m.kind=='lift' and (m.elevation or m.minHeight) or c:height(cx,cy)
   local sx,sy=project(cx,cy,h)
   if sx>-140 and sx<540 and sy>-100 and sy<330 then
@@ -90,12 +94,10 @@ function M.draw(c,t,project)
     g.setColor(g.kColorBlack);g.fillRect(sx-7,sy,14,math.max(4,base-sy));g.setColor(g.kColorWhite);g.fillRect(sx-3,sy,4,math.max(4,base-sy))
     a.lift:draw(sx-58,sy-40)
    elseif m.kind=='ferry' and m.manual then a.slider:draw(sx-72,sy-50)
-   elseif m.kind=='bumper' then a.bumper:draw(sx-22,sy-36)
+   elseif m.kind=='bumper' then MachineArt.bumper(m,t,sx,sy)
    elseif m.kind=='fan' then
     a.fan:draw(sx-26,sy-43)
-    local dx,dy=math.cos(m.angle or 0),math.sin(m.angle or 0);local ux,uy=(dx-dy)*.9,(dx+dy)*.45
-    g.setColor(g.kColorBlack)
-    for i=1,3 do local d=18+((t*28+i*13)%55);g.drawLine(sx+ux*d,sy+uy*d-8,sx+ux*(d+10),sy+uy*(d+10)-8) end
+    MachineArt.fan(m,t,sx,sy)
    end
   end
  end

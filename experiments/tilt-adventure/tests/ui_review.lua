@@ -67,6 +67,11 @@ function playdate.update()
   for _,v in ipairs({{34,304,112},{36,304,112},{38,144,112},{40,240,112},{42,272,112},{44,4800,240}}) do export('v30-world-'..v[1],function() world(table.unpack(v)) end) end
   export('v30-extended',function() world(38,144,112);Dock.update(Courses[38],144,112,0,0,false,400,false,false);Review.render() end)
   export('v30-map',function() UI.map(Courses[44],48,80,0) end)
+  for _,v in ipairs({{14,208,112},{19,224,80},{24,144,112},{34,304,112},{36,304,112},{38,144,112},{40,240,112},{42,272,112}}) do
+   for i,t in ipairs({0,.12,.3,.65}) do export('v40-'..v[1]..'-'..i,function() world(table.unpack(v));Review.animate(t,i*50);Review.render() end) end
+  end
+  export('v40-road',function() world(1,176,48) end)
+  print('PASS: v40 native animation exports complete')
   done=true
  end
  clock=clock+33;UI.title(1)

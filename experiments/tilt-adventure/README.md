@@ -1,6 +1,6 @@
-# Sky Hamster Tilt — 0.3.0
+# Sky Hamster Tilt — 0.4.0
 
-Current release adds five mechanism types and eleven routes, for 44 courses. See [0.3.0 workshop expansion](WORKSHOP-v030.md). Run `python tests/check_workshop.py` for the complete current regression suite. Hardware installation and profiling remain pending device reconnection.
+Current release gives the five workshop mechanisms dedicated artwork, adds synchronized machinery animation and irregular stone roads, and optimizes collision and rendering after real-device profiling. The campaign still has 44 courses. See [visuals and validation](VALIDATION-v040.md), [art and prompts](art/VISUALS-v040.md), and the [0.3.0 workshop expansion](WORKSHOP-v030.md). Run `python tests/check_physics_index.py` for the current complete regression suite.
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and other control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
@@ -40,7 +40,7 @@ Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable posit
 
 Run `./build.ps1` with the Playdate SDK installed; optional `PLAYDATE_SDK_PATH` overrides its location. Output: root `builds/sky-hamster-tilt.pdx`.
 
-Run `python tests/check_campaign.py` (requires lupa). This includes the existing controls/UI regressions and adds all 33 course anchors, saved-progress migration, lift stops and high-bank collision, moving ferry docking, adjustable wind, bumper clearance, actual new cannon flights and final checkpoints. Simulator exports are generated with `tests/build-review.ps1`. Hardware workload instructions and current limitations are in [VALIDATION-v020.md](VALIDATION-v020.md).
+Run `python tests/check_physics_index.py` (requires lupa). This includes controls/UI regressions, 44 course anchors, saved-progress migration, lift stops and high-bank collision, moving ferry docking, adjustable wind, bumper clearance, cannon flights, checkpoints, animation state checks and indexed-versus-full collision comparisons. Simulator exports are generated with `tests/build-review.ps1`. Current hardware results are in [VALIDATION-v040.md](VALIDATION-v040.md).
 
 SDK compilation passed after the SDK update. Simulator title, tutorial and gameplay HUD were visually checked. Hardware install initially blocked by another Simulator process holding COM4; see device-status.md for the latest outcome. Automated tests do not establish physical sensor feel or real-device frame rate.
 

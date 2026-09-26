@@ -106,7 +106,7 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
   if not open and m.kind~='fan' and m.kind~='bumper' and m.kind~='conveyor' and m.kind~='jet' and m.kind~='magnet' then
    local x,y,a=Mechanisms.pose(m,t);local floor=m.kind=='lift' and (m.elevation or m.minHeight) or course:height(x,y)
    local wall=m.kind=='gate' or m.kind=='sweeper'
-   local roof=wall and floor+(m.wallHeight or 80) or floor
+   local roof=wall and floor+(Mechanisms.wallHeight and Mechanisms.wallHeight(m,t) or m.wallHeight or 80) or floor
    if not minZ or roof>minZ then
     -- Reject distant mechanisms before building their eight-corner volume.
     -- Bounds cover every rotation under the isometric projection.

@@ -131,26 +131,30 @@ function UI.lesson(kind,time)
   elseif kind=='extend' then
    slab(207,151,38,13);slab(336,151,37,13)
    slab(245,151,math.max(5,ease((t-1)/2)*91),13);ball(227,138)
+   MachineArt.sprite('winch',268,133);MachineArt.handle(266,110,math.min(2,math.max(0,t-1))*180)
    left=t<3 and 'CRANK TO EXTEND' or 'B: RELEASE';right=t<3 and 'BUILD THE CROSSING' or 'ROLL ACROSS'
   elseif kind=='switch' then
    slab(207,112,166,14);slab(207,150,166,14)
-   local y=t<3 and 150 or 112;ink();g.fillRect(294,y-25,10,25)
+   local swap=ease((t-2.7)/.5);ink();g.fillRect(294,125+25*swap,10,25*(1-swap));g.fillRect(294,112-25*swap,10,25*swap)
+   MachineArt.sprite('switch',351,137);MachineArt.handle(350,107,t*60)
    ball(239,t<3 and 99 or 137);left='TURN THE DIAL';right=t<3 and 'UPPER LANE OPEN' or 'LOWER LANE OPEN'
   elseif kind=='conveyor' then
    slab(207,138,166,24)
    for i=0,4 do arrow(218+(i*29+t*12)%135,151,10,0) end
+   MachineArt.sprite('roller',235,134);MachineArt.gear(228,114,t*120)
    ball(230+ease(t/5)*108,126);left='COUNTER-TILT';right='BELT CARRIES THE BALL'
   elseif kind=='jet' then
    slab(207,142,166,22);local on=t<2.4
-   for i=0,4 do ink();g.fillCircleAtPoint(221+i*32,152,3);if on then arrow(221+i*32,148,0,-22) end end
+   for i=0,3 do local px=225+i*43;MachineArt.sprite('nozzle',px,155);if on then ink();for j=1,2 do local d=(t*35+j*13)%28;g.drawArc(px+6,121-d,3+j,220,340) end end end
    ball(on and 228 or 228+ease((t-2.4)/2.8)*120,129);left=on and 'WAIT FOR QUIET' or 'TILT TO CROSS';right=on and 'STEAM IS ACTIVE' or 'NOZZLES ARE QUIET'
   elseif kind=='magnet' then
-   slab(207,142,166,24);ink();g.setLineWidth(5);g.drawArc(331,110,12,90,270);g.setLineWidth(1)
+   slab(207,142,166,24);MachineArt.sprite('magnet',342,145);ink();for i=1,2 do g.drawArc(341,122,18+(t*12+i*14)%24,220,320) end
    ball(250+math.sin(t)*12,130);arrow(278,125,25,-8);left='COUNTER THE PULL';right='KEEP YOUR DISTANCE'
   elseif kind=='lift' then
    local u=ease((t-1)/2);local sy=148-u*37
    slab(206,157,29,10);slab(335,115,38,10)
    machineArt.lift:draw(246,sy-28);ball(287,sy-18)
+   MachineArt.gear(266,sy-6,u*360);MachineArt.handle(266,sy-6,u*360)
    arrow(347,154,0,-24)
    left=t<1 and 'DOCK IN THE CENTER' or t<3 and 'CRANK TO RAISE' or 'B: RELEASE'
    right=t<3 and 'MATCH THE ROAD' or 'ROLL ONTO THE ROAD'
@@ -158,15 +162,16 @@ function UI.lesson(kind,time)
    slab(205,151,29,13);slab(342,151,30,13)
    local px=221+ease((t-1)/2.5)*48
    machineArt.slider:draw(px,117);ball(px+42,133)
+   MachineArt.gear(px+64,144,ease((t-1)/2.5)*540)
    left=t<1 and 'DOCK ON THE DECK' or t<3.5 and 'CRANK TO TRAVEL' or 'B: RELEASE'
    right=t<3.5 and 'MOVE TO THE FAR BANK' or 'ROLL OFF AT THE DOCK'
   elseif kind=='fan' then
    slab(207,142,166,23);machineArt.fan:draw(210,88)
    local angle=t<3 and math.pi/2 or 0
-   for i=1,3 do local d=22+(t*20+i*10)%38;arrow(239+d,122,14*math.cos(angle),10*math.sin(angle)) end
+   MachineArt.fan({angle=angle},t,236,131)
    ball(327,130);left=t<3 and 'COUNTER THE GUST' or 'CRANK AT THE DIAL';right=t<3 and 'STAY ON THE ROAD' or 'AIM ALONG THE ROAD'
   elseif kind=='bumper' then
-   slab(207,135,166,29);machineArt.bumper:draw(281,106)
+   slab(207,135,166,29);MachineArt.bumper({hitAt=t-t%3+1.5},t,303,142)
    local q=t%3;local bx=q<1.5 and 234+q*22 or 267-(q-1.5)*22
    ball(bx,137);left='LEAVE SOME ROOM';right='CONTACT BOUNCES BACK'
   elseif kind=='ferry' then

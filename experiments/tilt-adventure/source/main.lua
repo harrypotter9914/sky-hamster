@@ -10,11 +10,15 @@ import "ui"
 import "build"
 import "classroom"
 import "terrain"
+import "road_art"
 import "audio"
 import "tilt"
 import "dock"
+import "mechanism_cache"
 import "expansion"
 import "workshop"
+import "machine_art"
+import "physics_index"
 import "tilt_ui"
 import "guide"
 import "guide_ui"
@@ -102,7 +106,7 @@ local camX,camY=0,0
 local function project(a,b,h) return 200+(a-b)*0.9-camX,124+(a+b)*0.45-(h or 0)*0.65-camY end
 local function support(a,b) return Mechanisms.support(course,a,b,worldTime) end
 local function floorAt(a,b) return Mechanisms.floor(course,a,b,worldTime) end
-local function drawTile(t)
+local function tileGeometry(t)
  local a,b=t.x*32,t.y*32
  if not t.renderCache then
   local function fixed(x,y) return 200+(x-y)*0.9,124+(x+y)*0.45-course:height(x,y)*0.65 end
@@ -111,12 +115,19 @@ local function drawTile(t)
   local sign=slope<0 and 1 or -1;local tx,ty=fixed(a+16+sign*8,b+16)
   t.renderCache={p,q,r,s,u,v,w,z,cx,cy,slope,sign,tx,ty}
  end
+ return t.renderCache
+end
+local function paintTile(t)
+ local _=tileGeometry(t)
  local c=t.renderCache
  local p,q,r,s=c[1]-camX,c[2]-camY,c[3]-camX,c[4]-camY
  local u,v,w,z=c[5]-camX,c[6]-camY,c[7]-camX,c[8]-camY
  if not cachingTerrain and (math.max(p,r,u,w)<0 or math.min(p,r,u,w)>400 or math.max(q,s,v,z)<42 or math.min(q,s,v,z)>212) then return end
  g.setColor(g.kColorBlack)
- g.fillPolygon(r,s,u,v,u,v+12,r,s+12);g.fillPolygon(w,z,u,v,u,v+12,w,z+12)
+ local edgeX=not course.lookup[(t.x+1)..','..t.y]
+ local edgeY=not course.lookup[t.x..','..(t.y+1)]
+ if edgeX then g.fillPolygon(r,s,u,v,u,v+12,r,s+12) end
+ if edgeY then g.fillPolygon(w,z,u,v,u,v+12,w,z+12) end
  g.setColor(g.kColorWhite);g.fillPolygon(p,q,r,s,u,v,w,z)
  g.setColor(g.kColorBlack)
  -- Only exposed edges get a heavy outline; internal tile borders are hidden.
@@ -124,33 +135,54 @@ local function drawTile(t)
  if not course.lookup[(t.x+1)..','..t.y] then g.drawLine(r,s,u,v) end
  if not course.lookup[t.x..','..(t.y+1)] then g.drawLine(u,v,w,z) end
  if not course.lookup[(t.x-1)..','..t.y] then g.drawLine(w,z,p,q) end
- local function surface(uu,vv) return p+(r-p)*uu+(w-p)*vv,q+(s-q)*uu+(z-q)*vv end
- local function seam(a,b,c,d) local x1,y1=surface(a,b);local x2,y2=surface(c,d);g.drawLine(x1,y1,x2,y2) end
- -- Staggered masonry joints break the old checkerboard grid.
- seam(0,.06,1,.06)
- local joint=t.y%2==0 and .5 or .03
- seam(joint,.06,joint,.96)
- if (t.x+t.y*3)%5==0 then seam(.63,.23,.76,.35);seam(.76,.35,.71,.48) end
- local seed=(t.x*7+t.y*13)%7
- for n=1,3 do local uu=.18+((seed+n*3)%7)*.09;local vv=.18+((seed+n*2)%7)*.09
-  local dx,dy=surface(uu,vv);g.fillRect(dx,dy,2,1)
- end
+ RoadArt.draw(t,c[11],c[9]-camX,c[10]-camY)
  g.setColor(g.kColorWhite)
- g.drawLine(r+1,s+5,u,v+5);g.drawLine(w+1,z+8,u,v+8)
- g.drawLine((r+u)/2,(s+v)/2+1,(r+u)/2,(s+v)/2+5)
- g.drawLine((w+u)/2,(z+v)/2+8,(w+u)/2,(z+v)/2+11)
+ if edgeX then g.drawLine(r+1,s+4,u,v+4);g.drawLine((r+u)/2,(s+v)/2+5,(r+u)/2,(s+v)/2+10) end
+ if edgeY then g.drawLine(w+1,z+3,u,v+3);g.drawLine((w+u)/2,(z+v)/2+4,(w+u)/2,(z+v)/2+10) end
  g.setColor(g.kColorBlack)
  local sx=c[11]
  local cx,cy=c[9]-camX,c[10]-camY
- if math.abs(sx)>0.01 then
+ if math.abs(sx)>0.01 and (t.x+t.y)%4==0 then
   -- Arrow points DOWN the slope, independent of the travel direction.
   local sign=c[12]
   local tipX,tipY=c[13]-camX,c[14]-camY
   g.drawLine(cx,cy,tipX,tipY);g.drawLine(tipX,tipY,tipX-sign*5,tipY-3);g.drawLine(tipX,tipY,tipX-sign*5,tipY+2)
- else g.fillCircleAtPoint(cx,cy,1) end
+ end
+end
+local function warmTileSprites()
+ if not pd.geometry then return end
+ if terrainCourse and terrainCourse~=course then for _,t in ipairs(terrainCourse.tiles) do t.surface=nil end end
+ local cache={};local oldX,oldY=camX,camY
+ cachingTerrain=true
+ for _,t in ipairs(course.tiles) do
+  local c=tileGeometry(t)
+  local left=math.floor(math.min(c[1],c[3],c[5],c[7]))-1
+  local top=math.floor(math.min(c[2],c[4],c[6],c[8]))-1
+  local w=math.ceil(math.max(c[1],c[3],c[5],c[7])-left)+2
+  local h=math.ceil(math.max(c[2],c[4],c[6],c[8])-top)+14
+  local edges=0
+  if not course.lookup[(t.x+1)..','..t.y] then edges=edges+1 end
+  if not course.lookup[(t.x-1)..','..t.y] then edges=edges+2 end
+  if not course.lookup[t.x..','..(t.y+1)] then edges=edges+4 end
+  if not course.lookup[t.x..','..(t.y-1)] then edges=edges+8 end
+  local key=string.format('%d/%d/%d/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f',t.x%4+t.y%4*4,edges,(t.x+t.y)%4,c[1]-left,c[2]-top,c[3]-left,c[4]-top,c[5]-left,c[6]-top,c[7]-left,c[8]-top)
+  local im=cache[key]
+  if not im then
+   im=g.image.new(w,h,g.kColorClear);camX,camY=left,top
+   g.pushContext(im);paintTile(t);g.popContext();cache[key]=im
+  end
+  t.surface={image=im,x=left,y=top}
+ end
+ camX,camY=oldX,oldY;cachingTerrain=false
+end
+local function drawTile(t)
+ local s=t.surface
+ if s then s.image:draw(s.x-camX,s.y-camY) else paintTile(t) end
 end
 prepareTerrain=function()
  if terrainCourse==course then return end
+ RoadArt.warm(course)
+ warmTileSprites()
  UI.markerOffset(course,course.start);UI.markerOffset(course,course.goal)
  for _,point in ipairs(course.checkpoints) do UI.markerOffset(course,point) end
  -- Allocate slope occlusion and HUD caches before the playable frame.
@@ -283,6 +315,7 @@ end
 local last=pd.getCurrentTimeMilliseconds()
 function pd.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
+ MachineArt.time=worldTime
  Tilt.update(dt)
  if ending then
   Audio.quiet();pd.getCrankChange()

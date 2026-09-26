@@ -20,7 +20,7 @@ lua.execute('''
 clock=0; pressed={}; held={}; crank=0; menu={}
 kTextAlignment={center=0}
 local noop=function() end
-local gfx=setmetatable({font={new=function() return {getHeight=function() return 14 end} end},image={new=function() return {setMaskImage=noop,getMaskImage=function() return {draw=noop} end,draw=noop,drawRotated=noop,drawScaled=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
+local gfx=setmetatable({font={new=function() return {getHeight=function() return 14 end} end},image={new=function() return {getSize=function() return 48,48 end,setMaskImage=noop,getMaskImage=function() return {draw=noop} end,draw=noop,drawRotated=noop,drawScaled=noop,sample=function() return 0 end} end},getTextSize=function(s) return #s*8,16 end}, {__index=function() return noop end})
 local function player()
  return {plays=0,playing=false,setVolume=noop,setRate=noop,setPaused=noop,
  play=function(self) self.plays=self.plays+1;self.playing=true end,

@@ -23,7 +23,9 @@ function M.warning(m,t)
 end
 function M.localPoint(m,x,y,t)
  local cx,cy,a=M.pose(m,t);local dx,dy=x-cx,y-cy
- return dx*math.cos(a)+dy*math.sin(a),-dx*math.sin(a)+dy*math.cos(a)
+ if a==0 then return dx,dy end
+ local c,s=math.cos(a),math.sin(a)
+ return dx*c+dy*s,-dx*s+dy*c
 end
 function M.contains(m,x,y,t)
  local a,b=M.localPoint(m,x,y,t)
@@ -43,7 +45,7 @@ end
 function M.collide(course,x,y,vx,vy,z,t,dt)
  local hit=false
  for _,m in ipairs(course.mechanisms or empty) do
-  if (m.kind=='sweeper' or (m.kind=='gate' and not M.open(m,t))) and z<(m.wallHeight or 80) then
+  if (m.kind=='sweeper' or (m.kind=='gate' and not M.open(m,t))) and z<(M.wallHeight and M.wallHeight(m,t) or m.wallHeight or 80) then
    local cx,cy=M.pose(m,t);local px,py=M.pose(m,t-dt)
    local nx,ny=x-clamp(x,cx-m.w/2,cx+m.w/2),y-clamp(y,cy-m.h/2,cy+m.h/2)
    local d=math.sqrt(nx*nx+ny*ny)
@@ -82,13 +84,14 @@ function M.draw(course,t,project)
   if sx+extent>=-32 and sx-extent<=432 and sy+extent>=12 and sy-extent-rise<=236 then
   local points=M.corners(m,t);local poly={};local wall=m.kind=='gate' or m.kind=='sweeper'
   local opened=(m.kind=='gate' or m.kind=='trap') and M.open(m,t)
+  local wallHeight=M.wallHeight and M.wallHeight(m,t) or m.wallHeight or 80
   local h=course:height(m.x,m.y)
   for _,p in ipairs(points) do local sx,sy=project(p[1],p[2],h);poly[#poly+1]=sx;poly[#poly+1]=sy end
   if wall and not opened then
    -- One closed prism: both long faces, both end caps, and the top.
    -- Project the same world height used by collision rather than a fake lip.
    local top={}
-   for _,p in ipairs(points) do local sx,sy=project(p[1],p[2],h+(m.wallHeight or 80));top[#top+1]=sx;top[#top+1]=sy end
+   for _,p in ipairs(points) do local sx,sy=project(p[1],p[2],h+wallHeight);top[#top+1]=sx;top[#top+1]=sy end
    for _,i in ipairs({1,4,2,3}) do
     local j=i%4+1;local a,b=2*i-1,2*j-1
     local face={poly[a],poly[a+1],poly[b],poly[b+1],top[b],top[b+1],top[a],top[a+1]}
@@ -136,7 +139,7 @@ function M.draw(course,t,project)
     seam(.20,.42,.38,.5);seam(.38,.5,.20,.58);seam(.62,.42,.80,.5);seam(.80,.5,.62,.58)
    end
   end
-  local cx,cy=M.pose(m,t);local sx,sy=project(cx,cy,h+(wall and not opened and (m.wallHeight or 80) or 0))
+  local cx,cy=M.pose(m,t);local sx,sy=project(cx,cy,h+(wall and not opened and wallHeight or 0))
   local label=m.kind=='gate' and (opened and 'GO' or 'WAIT') or m.kind=='trap' and (opened and 'HOLE' or M.warning(m,t) and 'OPENING!' or 'CROSS') or m.retract and 'EXTEND' or m.kind=='rotor' and 'ROTATE' or m.kind=='ferry' and 'RIDE' or 'WATCH'
   if not m.retract and not m.hideLabel then
   local width=g.getTextSize(label)

@@ -1,0 +1,114 @@
+run /Games/sky-hamster-tilt.pdx
+
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+
+BENCH BEGIN	14
+
+BENCH route=14 frames=179 fps=29.87 frame95=36.00 frameMax=55.00 cpu95=24.00 cpuMax=53.00 cacheMiss=0 chunks=14 luaKB=939
+STATS	table: 0x900b3c30
+PROFILE	table: 0x90063000.collide	0.7888889
+PROFILE	table: 0x90088f50.occluders	0.8944445
+PROFILE	table: 0x90132d90.draw	5.061111
+PROFILE	table: 0x90063000.draw	1.788889
+PROFILE	table: 0x90063000.support	3.916667
+PROFILE	table: 0x90063000.wind	0.6666667
+PROFILE	table: 0x901340f0.draw	0.1333333
+PROFILE	table: 0x9012aac0.hud	1.738889
+
+BENCH BEGIN	19
+
+BENCH route=19 frames=179 fps=29.98 frame95=36.00 frameMax=39.00 cpu95=28.00 cpuMax=37.00 cacheMiss=0 chunks=9 luaKB=965
+STATS	table: 0x90065160
+PROFILE	table: 0x90063000.collide	0.4888889
+PROFILE	table: 0x90088f50.occluders	0.8166667
+PROFILE	table: 0x90063000.support	5.455555
+PROFILE	table: 0x901340f0.draw	1.1
+PROFILE	table: 0x9012aac0.hud	1.5
+PROFILE	table: 0x90088f50.maskPolygon	0.05
+PROFILE	table: 0x90063000.wind	0.4833333
+PROFILE	table: 0x90063000.draw	1.438889
+PROFILE	table: 0x90132d90.draw	4.505556
+
+BENCH BEGIN	24
+
+BENCH route=24 frames=179 fps=29.80 frame95=36.00 frameMax=54.00 cpu95=26.00 cpuMax=52.00 cacheMiss=0 chunks=17 luaKB=1016
+STATS	table: 0x900d15b0
+PROFILE	table: 0x90063000.collide	0.5944445
+PROFILE	table: 0x90088f50.occluders	0.9055555
+PROFILE	table: 0x90132d90.draw	5.25
+PROFILE	table: 0x90063000.draw	1.522222
+PROFILE	table: 0x90063000.support	3.188889
+PROFILE	table: 0x90063000.wind	0.6722222
+PROFILE	table: 0x901340f0.draw	1.344444
+PROFILE	table: 0x9012aac0.hud	1.794444
+
+BENCH BEGIN	30
+
+BENCH route=30 frames=179 fps=21.25 frame95=57.00 frameMax=68.00 cpu95=54.00 cpuMax=66.00 cacheMiss=1 chunks=30 luaKB=1676
+STATS	table: 0x903497c0
+PROFILE	table: 0x90063000.collide	3.033333
+PROFILE	table: 0x90088f50.occluders	2.383333
+PROFILE	table: 0x90063000.support	10.63333
+PROFILE	table: 0x901340f0.draw	0.2555556
+PROFILE	table: 0x9012aac0.hud	1.888889
+PROFILE	table: 0x90088f50.maskPolygon	0.8444445
+PROFILE	table: 0x90063000.wind	0.7722222
+PROFILE	table: 0x90063000.draw	11.93333
+PROFILE	table: 0x90132d90.draw	5.194445
+
+BENCH BEGIN	34
+
+BENCH route=34 frames=179 fps=29.12 frame95=40.00 frameMax=160.00 cpu95=27.00 cpuMax=155.00 cacheMiss=0 chunks=14 luaKB=1142
+STATS	table: 0x900645c0
+PROFILE	table: 0x90063000.collide	0.5722222
+PROFILE	table: 0x90088f50.occluders	0.9833333
+PROFILE	table: 0x90132d90.draw	4.983333
+PROFILE	table: 0x90063000.draw	5.538889
+PROFILE	table: 0x90063000.support	2.988889
+PROFILE	table: 0x90063000.wind	1.505556
+PROFILE	table: 0x901340f0.draw	0.07777778
+PROFILE	table: 0x9012aac0.hud	1.661111
+
+BENCH BEGIN	36
+
+BENCH route=36 frames=179 fps=29.62 frame95=41.00 frameMax=56.00 cpu95=27.00 cpuMax=54.00 cacheMiss=0 chunks=17 luaKB=1203
+STATS	table: 0x90284bb0
+PROFILE	table: 0x90063000.collide	0.5388889
+PROFILE	table: 0x90088f50.occluders	0.9555556
+PROFILE	table: 0x90132d90.draw	5.35
+PROFILE	table: 0x90063000.draw	4.083333
+PROFILE	table: 0x90063000.support	3.038889
+PROFILE	table: 0x90063000.wind	1.5
+PROFILE	table: 0x901340f0.draw	0.08333334
+PROFILE	table: 0x9012aac0.hud	1.677778
+
+BENCH BEGIN	40
+
+BENCH route=40 frames=179 fps=27.52 frame95=40.00 frameMax=63.00 cpu95=38.00 cpuMax=61.00 cacheMiss=0 chunks=18 luaKB=1338
+STATS	table: 0x900b3b70
+PROFILE	table: 0x90063000.collide	1.75
+PROFILE	table: 0x90088f50.occluders	1.322222
+PROFILE	table: 0x90063000.support	4.372222
+PROFILE	table: 0x901340f0.draw	1.527778
+PROFILE	table: 0x9012aac0.hud	1.655556
+PROFILE	table: 0x90088f50.maskPolygon	0.1888889
+PROFILE	table: 0x90063000.wind	0.5666667
+PROFILE	table: 0x90063000.draw	9.65
+PROFILE	table: 0x90132d90.draw	5.322222
+
+BENCH route=44 frames=179 fps=11.18 frame95=119.00 frameMax=151.00 cpu95=115.00 cpuMax=148.00 cacheMiss=15 chunks=40 luaKB=2140
+STATS	table: 0x9041e310
+PROFILE	table: 0x90063000.collide	5.483333
+PROFILE	table: 0x90088f50.occluders	5.733333
+PROFILE	table: 0x90063000.support	37.81111
+PROFILE	table: 0x901340f0.draw	15.35556
+PROFILE	table: 0x9012aac0.hud	1.783333
+PROFILE	table: 0x90088f50.maskPolygon	0.4222222
+PROFILE	table: 0x90063000.wind	3.05
+PROFILE	table: 0x90063000.draw	12.95556
+PROFILE	table: 0x90132d90.draw	10.10556
+BENCH COMPLETE
+
