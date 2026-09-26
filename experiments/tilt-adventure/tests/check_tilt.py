@@ -54,10 +54,13 @@ function put(name,value)
  for i=1,100 do local n=debug.getupvalue(playdate.update,i);if n==name then debug.setupvalue(playdate.update,i,value);return end end
  error('missing '..name)
 end
+function selectReady(n)
+ get('selectLevel')(n);accel={0,0,1};for i=1,60 do Tilt.update(1/30) end
+end
 for i=1,40 do frame() end
 assert(Tilt.ready and Tilt.power==0)
 accel={.25,0,.968};for i=1,20 do frame() end
-assert(Tilt.power>.3 and Tilt.dx>0 and Tilt.dy<0 and not Tilt.jump)
+assert(Tilt.power>.3 and Tilt.dx>0 and math.abs(Tilt.dy)<.0001 and not Tilt.jump)
 accel={.42,0,.907};for i=1,20 do frame() end
 assert(Tilt.power>.8)
 accel={0,0,1};for i=1,40 do frame() end
@@ -75,7 +78,7 @@ assert(Dock.update(c,112,80,0,0,false,0,false,false).locked)
 Dock.reset(Courses[16]);Dock.update(Courses[16],112,80,0,0,false,0,false,false)
 d=Dock.update(Courses[16],112,80,0,0,false,0,true,false);assert(d.launch and d.vx==210)
 -- Drive the actual game update through all courses and menus.
-local select=get('selectLevel')
+local select=selectReady
 for n=1,#Courses do select(n);put('lesson',false);for i=1,3 do frame() end end
 select(16);put('lesson',false);put('x',112);put('y',80);frame();assert(Dock.active)
 frame({a=true});assert(get('airborne') and not Dock.active)
@@ -119,7 +122,7 @@ print('PASS: two home entries, settings persistence, paused menus, selector retu
 
 # First-encounter guides are persistent, pause physics, and cover direct level selection.
 lua.execute("""
-Guide.seen={};local select=get('selectLevel');select(1)
+Guide.seen={};local select=selectReady;select(1)
 assert(get('lesson') and Guide.key()=='arrival')
 local xx,yy,tt=get('x'),get('y'),get('elapsed')
 for i=1,40 do frame() end
@@ -144,32 +147,31 @@ end
 print('PASS: first encounters, persisted acknowledgements, no repeated jump tutorial, replay, paused world, mixed-route queue and every animation phase')
 """)
 
-# The SDK defines flat screen-up as (0,0,1), upright as (0,1,0).
+# Every stable grip establishes a two-axis tangent frame; world axes project diagonally.
 lua.execute("""
 local function settle(a,n) accel=a;for i=1,n or 90 do Tilt.update(1/30) end end
-for _,bad in ipairs({{0,1,0},{1,0,0},{0,0,-1},{.3,.2,.93}}) do
- Tilt.startCalibration();settle(bad);assert(Tilt.calibrating and not Tilt.ready and Tilt.time==0)
- assert(Tilt.power==0 and Tilt.nx==0 and Tilt.ny==0 and Tilt.nz==1)
+for _,pose in ipairs({{0,0,1},{0,1,0},{1,0,0},{0,0,-1},{.3,.4,.866}}) do
+ Tilt.startCalibration();settle(pose);assert(Tilt.ready and not Tilt.calibrating and Tilt.power==0)
+ local nx,ny,nz=Tilt.nx,Tilt.ny,Tilt.nz
+ local rx,ry,rz=Tilt.rx,Tilt.ry,Tilt.rz;local ux,uy,uz=Tilt.ux,Tilt.uy,Tilt.uz
+ assert(math.abs(nx*rx+ny*ry+nz*rz)<.00001 and math.abs(nx*ux+ny*uy+nz*uz)<.00001)
+ for _,d in ipairs({{1,0},{-1,0},{0,1},{0,-1}}) do
+  settle({nx*.954+.3*(d[1]*rx+d[2]*ux),ny*.954+.3*(d[1]*ry+d[2]*uy),nz*.954+.3*(d[1]*rz+d[2]*uz)})
+  assert(Tilt.power>.5 and math.abs(Tilt.dx-d[1])<.001 and math.abs(Tilt.dy-d[2])<.001)
+  local px,py=(Tilt.dx-Tilt.dy)*.9,(Tilt.dx+Tilt.dy)*.45
+  assert(px*(d[1]-d[2])>0 and py*(d[1]+d[2])>0)
+ end
+ settle(pose);assert(Tilt.power==0)
 end
-settle({0,0,1});assert(Tilt.ready and not Tilt.calibrating and Tilt.power==0)
-local directions={{{.3,0,.954},1,0},{{-.3,0,.954},-1,0},{{0,-.3,.954},0,-1},{{0,.3,.954},0,1}}
-for _,case in ipairs(directions) do
- settle(case[1]);local px=(Tilt.dx-Tilt.dy)*.9;local py=(Tilt.dx+Tilt.dy)*.45
- assert(Tilt.power>.5)
- if case[2]~=0 then assert(px*case[2]>0 and math.abs(py)<.0001) else assert(py*case[3]>0 and math.abs(px)<.0001) end
-end
-settle({0,1,0});assert(Tilt.power>.9,'upright must never be neutral')
-settle({0,0,1});assert(Tilt.power==0 and Tilt.dx==0 and Tilt.dy==0)
-settle({-.35,0,.937});local vx,vy=0,0
-for i=1,30 do vx,vy=Physics.step(vx,vy,Tilt.dx,Tilt.dy,Tilt.power,0,0,1/30) end
-local before=(vx-vy)*.9;assert(before<0)
-settle({.35,0,.937});vx,vy=Physics.step(vx,vy,Tilt.dx,Tilt.dy,Tilt.power,0,0,1/30)
-assert((vx-vy)*.9>before and (vx-vy)*.9<0,'opposite tilt brakes through force, without snapping velocity')
-for i=1,90 do vx,vy=Physics.step(vx,vy,Tilt.dx,Tilt.dy,Tilt.power,0,0,1/30) end
-assert((vx-vy)*.9>0,'sustained counter-tilt eventually reverses travel')
-Tilt.startCalibration();settle({.06,-.06,.996});assert(Tilt.ready and math.abs(Tilt.nx)<=.025 and math.abs(Tilt.ny)<=.025)
-settle({0,0,1});assert(Tilt.power==0,'limited trim must leave exact flat inside the deadzone')
-print('PASS: upright/sideways/inverted calibration rejected, flat zero, four screen directions, bounded trim and inertial counter-steering')
+Tilt.startCalibration()
+for i=1,120 do settle({i%2==0 and .2 or -.2,0,.98},1) end
+assert(Tilt.calibrating and not Tilt.ready,'moving input cannot calibrate')
+settle({0,0,1});assert(Tilt.ready)
+local select=get('selectLevel');select(2);assert(Tilt.calibrating and not Tilt.ready)
+settle({0,.6,.8});assert(Tilt.ready and Tilt.power==0)
+local vx,vy=100,0
+vx,vy=Physics.step(vx,vy,-1,0,1,0,0,1/30);assert(vx>0 and vx<100)
+print('PASS: arbitrary steady grips, stable tangent basis, four world directions and diagonal arrows, motion rejection, per-course calibration and inertial reversal')
 """)
 
 # Upward translation is accepted; upright and lateral shakes are rejected.
@@ -181,13 +183,13 @@ for i=1,5 do Tilt.update(1/30);assert(not Tilt.consumeJump()) end
 settle({0,1,0});accel={0,1,1};Tilt.update(1/30);assert(not Tilt.consumeJump())
 settle({0,0,1});accel={1,0,1.9};Tilt.update(1/30);assert(not Tilt.consumeJump())
 settle({0,0,1});accel={0,0,1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
-assert(store.saved.guideRevision==2)
+assert(store.saved.guideRevision==3)
 print('PASS: level upward pulse, single trigger, upright/lateral shake rejection, rearming and tutorial revision')
 """)
 
 # Manual help and route notes pause the current run, including a docked cannon.
 lua.execute("""
-local select=get('selectLevel');select(14);put('lesson',false);Tilt.calibrating=false;accel={0,0,1}
+local select=selectReady;select(14);put('lesson',false);Tilt.calibrating=false;accel={0,0,1}
 local xx,yy,tt,wt=get('x'),get('y'),get('elapsed'),get('worldTime')
 frame({left=true});assert(get('lesson') and Guide.manual and Guide.key()=='roll')
 local keys={};for _,k in ipairs(Guide.queue) do keys[k]=true end
@@ -209,4 +211,15 @@ frame({right=true});frame(nil,nil,90);frame({b=true});assert(Dock.active==dock a
 frame({left=true});frame({b=true});assert(Dock.active==dock)
 for n,c in ipairs(Courses) do for i=1,#UI.goalPages(c,n) do UI.goal(c,n,i) end end
 print('PASS: Help replay, B return, full replay resume, Goal paging, frozen physics/time, no accidental jump or cannon release, all 17 route notes')
+""")
+
+
+lua.execute("""
+for _,n in ipairs({{0,.6,.8},{0,1,0},{1,0,0}}) do
+ Tilt.startCalibration();accel=n;for i=1,60 do Tilt.update(1/30) end
+ assert(Tilt.ready and Tilt.power==0)
+ accel={n[1]*1.9,n[2]*1.9,n[3]*1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
+ Tilt.update(1/30);assert(not Tilt.consumeJump())
+end
+print('PASS: lift impulse follows the calibrated gravity axis in angled, upright and side-on grips')
 """)

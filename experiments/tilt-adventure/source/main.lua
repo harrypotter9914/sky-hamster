@@ -42,7 +42,7 @@ local gesture=true
 local selectorReturn
 local saved=pd.datastore and pd.datastore.read('tilt-progress') or {}
 saved=saved or {}
-Guide.seen=saved.guideRevision==2 and (saved.guides or {}) or {}
+Guide.seen=saved.guideRevision==3 and (saved.guides or {}) or {}
 local options=saved.options or {}
 UI.motion=options.motion~=false
 gesture=options.gesture~=false
@@ -53,7 +53,7 @@ for k,v in pairs(saved.completed or {}) do if tonumber(k) then completed[tonumbe
 local best=saved.best or {}
 local ending=false
 local function saveProgress()
- if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,guideRevision=2,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
+ if pd.datastore then pd.datastore.write({completed=completed,best=best,level=level,guideRevision=3,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
 local jumpEnabled=false
@@ -79,7 +79,7 @@ local function beginFall(height,verticalSpeed)
  jumpZ=height;jumpV=verticalSpeed;airborne=false
  Audio.quiet();Audio.play('fall')
 end
-local function selectLevel(n) briefing=false;ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=Guide.enter(course);reset(true);if prepareTerrain then prepareTerrain() end end
+local function selectLevel(n) briefing=false;ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump;overview=false;choosing=false;lesson=Guide.enter(course);reset(true);Tilt.startCalibration();if prepareTerrain then prepareTerrain() end end
 local function openSelector()
  if choosing or settings or title or briefing or (lesson and Guide.manual) then return end
  selectorReturn={title=title,overview=overview,lesson=lesson}
@@ -339,6 +339,7 @@ function pd.update()
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then overview=false end
   pd.getCrankChange();UI.map(course,x,y,worldTime);return
  end
+ if Tilt.calibrating then Audio.quiet();pd.getCrankChange();UI.calibration();return end
  if lesson then
   Audio.quiet();Guide.time=Guide.time+dt
   if pd.buttonJustPressed(pd.kButtonA) then lesson=Guide.advance();saveProgress();started=true;Tilt.jump=false;Tilt.cooldown=.75
@@ -350,7 +351,6 @@ function pd.update()
   return
  end
 
- if Tilt.calibrating then Audio.quiet();pd.getCrankChange();UI.calibration();return end
  if state=='play' and pd.buttonJustPressed(pd.kButtonLeft) then lesson=Guide.enter(course,true);Audio.quiet();pd.getCrankChange();UI.lesson(Guide.key(),0);return end
  if state=='play' and pd.buttonJustPressed(pd.kButtonRight) then briefing=true;infoPage=1;Audio.quiet();pd.getCrankChange();UI.goal(course,level,infoPage);return end
  if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonDown) then Tilt.startCalibration();return end

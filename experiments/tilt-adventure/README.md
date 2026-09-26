@@ -1,22 +1,22 @@
-# Sky Hamster Tilt — 0.1.6
+# Sky Hamster Tilt — 0.1.7
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and nine control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
 ## Play loop
 
-Title → Start Game → first-encounter animated guides over the level → hold still to calibrate → roll / jump / use machines → checkpoint or failure → retry → course result and saved best time → next course → final journey screen → title or replay. All courses remain selectable for playtesting. Progress, last course and best times use the separate `com.wangyibo.skyhamster.tilt` save namespace.
+Title → Start Game → hold still to calibrate → first-encounter animated guides → roll / jump / use machines → checkpoint or failure → retry → course result and saved best time → next course and fresh calibration → final journey screen → title or replay. All courses remain selectable for playtesting. Progress, last course and best times use the separate `com.wangyibo.skyhamster.tilt` save namespace.
 
 ## Controls
 
-- Overhead compass: the arrow shows current screen-relative tilt thrust, not velocity. Its length grows with force; the central ring means neutral. Hidden while docked, falling, calibrating or viewing a tutorial.
-- Tilt: screen-relative thrust. Greater tilt increases force, not a forced target speed; momentum and slope gravity remain.
-- Quick upward lift: keep the device close to level and move the whole device upward quickly to jump on jump-enabled courses. Upright and large lateral shakes are rejected. A is the button alternative. Jump impulse is fixed, preserving horizontal velocity.
+- Overhead compass: the arrow shows world thrust projected onto the isometric screen, not velocity. Right input points down-right; left points up-left; forward points up-right; back points down-left. Length grows with force; the central ring means neutral. Hidden while docked, falling, calibrating or viewing a tutorial.
+- Tilt: thrust relative to a steady neutral grip, along the world's axes. Greater tilt increases force, not a forced target speed; momentum and slope gravity remain.
+- Quick upward lift: keep close to the calibrated grip angle and lift the whole device quickly to jump on jump-enabled courses. Large transverse shakes are rejected. A is the button alternative. Jump impulse is fixed, preserving horizontal velocity.
 - A: confirm; on a cannon, fire. On a bridge station, turning the crank directly moves the bridge.
 - B: leave a control station/cannon. Move more than 32 world units away before it can capture the ball again. In menus, return; in guides, replay; at results, retry.
 - D-pad UP: route map and pause. A/B resumes.
 - D-pad LEFT / Help: replay this course's control and mechanism guides. A advances; B returns immediately to the current run. Finishing the sequence resumes play.
 - D-pad RIGHT / Goal: read this course's objective, checkpoint/jump rules and mechanism notes. A/right advances a page; left goes back a page; B resumes play.
-- D-pad DOWN: recalibrate with the device lying flat, screen facing up; play pauses during calibration. Keep it still for 0.8 seconds. Upright and tilted poses are not accepted as neutral.
+- D-pad DOWN: recalibrate at your current comfortable grip; keep still for 0.8 seconds. Each newly entered course also calibrates before its tutorial or play begins. Movement during the sampling window restarts calibration.
 - Crank: rotate a manual bridge or aim a cannon while docked. It no longer accelerates the ball or charges a jump.
 - System menu: level select, map/pause, title/settings.
 
@@ -30,7 +30,7 @@ Original 14 courses retained. 15 Crank Crossing introduces manual bridge rotatio
 
 Textured stone-road title artwork with separately floating islands/clouds and a waving finish flag. The original wooden menu boards lift when selected; labels remain inside their borders. Launcher includes a static card, list icon and launch image. Full-screen strobing is not used.
 
-Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable position tracker. Lift detection uses a filtered acceleration impulse, quiet re-arming and a 0.75 second cooldown. Real grip, sensitivity and false positives still need physical playtesting; A remains available. Screen-up flat is the neutral pose. Lowering the right/left/top/bottom edge pushes the ball right/left/up/down on screen. Opposite tilt applies ordinary counter-force; it does not instantly reverse velocity.
+Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable position tracker. Lift detection uses a filtered impulse along calibrated gravity, quiet re-arming and a 0.75 second cooldown. Real grip, sensitivity and false positives still need physical playtesting; A remains available. A tangent basis around the neutral gravity vector supports angled and side-on grips without dividing by a vanishing screen-normal component. Rotation around gravity itself is unobservable with this sensor. Opposite tilt applies ordinary counter-force; it does not instantly reverse velocity.
 
 ## Build and verification
 
@@ -86,3 +86,9 @@ Asset prompts, built-in generation mode and source names: `art/UI-ASSETS-v015.md
 ## Help and route goals — 0.1.6
 
 The bottom control strip now uses two rows. LEFT Help and RIGHT Goal stay visible both while rolling and while docked. The upper row retains map/recenter/jump or crank/fire/release controls. Help and Goal freeze physics, mechanisms and the timer without resetting position, velocity or docking. Input used to close them cannot also jump, fire or leave a cannon. Manual guide replay does not change first-encounter acknowledgements. All 17 courses have tilt-specific notes, replacing obsolete crank-power instructions in this new view.
+
+## Grip-relative world controls — 0.1.7
+
+This replaces the flat-only, screen-relative behavior of 0.1.3–0.1.6. Every course entry now requires a steady 0.8-second grip sample; the current pose becomes neutral. Calibration rejects movement and abnormal acceleration magnitudes. Input is projected onto a stable tangent frame, then applied directly to world X/Y. HUD and overhead arrows apply the same isometric projection as the road.
+
+The four-direction tutorial uses 28 prebuilt perspective pitch/yaw images of the existing illustrated handheld, generated by `art/prepare-turns.ps1` from `source/ui-device.png`. These are actual plane-perspective transforms, not in-plane roll rotations. The example road and arrow use the gameplay projection. Updated tutorial revision 3 replays once; existing progress remains. Automatic checks cover angled/upright/side-on/inverted steady grips, four projected directions, motion rejection, new-course calibration and lift pulses aligned with each calibrated gravity axis.

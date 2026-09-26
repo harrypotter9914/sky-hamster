@@ -9,7 +9,7 @@ UI.bodyFont=regular;UI.titleFont=titleFont
 UI.motion=true
 local portrait=g.image.new('ui-mascot')
 local trophy=g.image.new('ui-trophy')
-local flatDevice=g.image.new('ui-device-flat')
+local gripDevice=g.image.new('ui-device')
 local function bitmap(w,h,draw)
  local im=g.image.new(w,h,g.kColorClear);g.pushContext(im);g.setImageDrawMode(g.kDrawModeCopy);draw();g.popContext();return im
 end
@@ -160,10 +160,9 @@ function UI.settings(choice,effects,music,gesture)
  footer('change','back')
 end
 function UI.calibration()
- page('LAY FLAT TO CALIBRATE','tilt','Screen facing up. Keep the device still.')
- flatDevice:draw(162,99);ink();g.drawLine(144,151,256,151)
- g.drawLine(144,152,148,156);g.drawLine(256,152,252,156)
- meter(72,171,256,math.min(1,(Tilt.time or 0)/.8));center(Tilt.flatReady and 'Hold still...' or 'Place flat on the table first',200,184)
+ page('HOLD STILL TO CENTER','tilt','Hold comfortably. This grip becomes neutral.')
+ gripDevice:draw(162,86)
+ meter(72,171,256,math.min(1,(Tilt.time or 0)/.8));center(Tilt.stillReady and 'Keep this grip...' or 'Hold steady for a moment',200,184)
 end
 local previews={}
 local function route(course,x,y,w,h,px,py,t)
@@ -295,7 +294,7 @@ function UI.goalPages(course,level)
  if goalCache[level] then return goalCache[level] end
  local hint=notes[level] or {'Stay on the road.','Reach the finish flag.'}
  local pages={{'REACH THE FINISH',hint[1],hint[2]},
-  {'SAFE PROGRESS',course.checkpoint and 'Touch CHECK to save your retry point.' or 'Falls restart this route from START.',course.jump and 'Jump: lift level or press A.' or 'No jumping on this route.'}}
+  {'SAFE PROGRESS',course.checkpoint and 'Touch CHECK to save your retry point.' or 'Falls restart this route from START.',course.jump and 'Jump: lift steadily or press A.' or 'No jumping on this route.'}}
  local seen={}
  local function add(k) if machineNotes[k] and not seen[k] then pages[#pages+1]=machineNotes[k];seen[k]=true end end
  for _,m in ipairs(course.mechanisms or {}) do add(m.manual and 'control' or m.kind) end

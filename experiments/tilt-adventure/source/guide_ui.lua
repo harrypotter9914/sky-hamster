@@ -6,11 +6,12 @@ local function center(s,x,y) ink();g.drawTextAligned(s,x,y,kTextAlignment.center
 local function image(w,h,draw)
  local im=g.image.new(w,h,g.kColorClear);g.pushContext(im);draw();g.popContext();return im
 end
-local device=g.image.new('ui-device')
 local flatDevice=g.image.new('ui-device-flat')
 local marble=g.image.new('ui-mascot-small')
 local poses={}
-for i=-2,2 do poses[i]=image(100,90,function() device:drawRotated(50,45,i*7) end) end
+for _,dir in ipairs({'right','left','up','down'}) do
+ poses[dir]={};for i=0,6 do poses[dir][i]=g.image.new('tutorial-turns/'..dir..'-'..i) end
+end
 local function ball(x,y) marble:draw(math.floor(x-13),math.floor(y-13)) end
 local function slab(x,y,w,h)
  white();g.fillRect(x,y,w,h);ink();g.drawRect(x,y,w,h);g.fillRect(x,y+h,w,4)
@@ -29,8 +30,8 @@ end
 local function ease(v) v=math.max(0,math.min(1,v));return v*v*(3-2*v) end
 local info={
  arrival={'FOLLOW THE SKY ROAD','Roll along the road to reach the flag.'},
- roll={'TILT TO ROLL','Lower an edge. The ball rolls that way.'},
- jump={'LIFT AND LEAP','Keep it level. Lift the whole device quickly.'},
+ roll={'TIP TO ROLL','Tip from your grip. Follow the road arrow.'},
+ jump={'LIFT AND LEAP','Keep your grip angle. Lift the whole device.'},
  control={'CRANK THE BRIDGE','Dock first. Turn the crank. B releases.'},
  cannon={'READY, AIM, ROLL!','Dock. Aim with the crank. A fires; B exits.'},
  gate={'WAIT FOR THE OPENING','Wait behind the barrier, then cross.'},
@@ -65,25 +66,30 @@ function UI.lesson(kind,time)
  else
   ink();g.drawLine(179,79,179,190)
   local phase=t/6
-  local pose,lift=0,0
+  local pose,lift,dir=0,0,'right'
   if kind=='roll' then
    local direction=math.floor(t/1.5);local q=t%1.5
    local lean=math.sin(math.min(1,q/.9)*math.pi/2)
-   pose=direction==0 and math.floor(lean*2+.5) or direction==1 and -math.floor(lean*2+.5) or 0
+   dir=({'right','left','up','down'})[direction+1];pose=math.floor(lean*6+.5)
    left=({'RIGHT EDGE DOWN','LEFT EDGE DOWN','TOP EDGE DOWN','BOTTOM EDGE DOWN'})[direction+1]
-   slab(214,100,144,62)
-   local v=ease(q/1.1);local bx,by=257,147
-   if direction==0 then bx=257+v*58 elseif direction==1 then bx=315-v*58 elseif direction==2 then by=147-v*31 else by=116+v*31 end
+   white();g.fillPolygon(211,129,286,93,366,129,286,169)
+   ink();g.drawPolygon(211,129,286,93,366,129,286,169)
+   g.drawLine(211,129,211,133);g.drawLine(211,133,286,173);g.drawLine(286,173,366,133);g.drawLine(366,133,366,129)
+   g.drawLine(248,111,326,150);g.drawLine(249,149,326,111)
+   local v=ease(q/1.1);local wx,wy=-15,15
+   if direction==0 then wx=-15+v*30 elseif direction==1 then wx=15-v*30 elseif direction==2 then wy=15-v*30 else wy=-15+v*30 end
+   local bx,by=286+(wx-wy)*.9,129+(wx+wy)*.45
    ball(bx,by)
-   if direction==2 then arrow(148,137,0,-27) elseif direction==3 then arrow(148,110,0,27) end
-   right='TILT = PUSH'
+   local dx,dy=({1,-1,0,0})[direction+1],({0,0,-1,1})[direction+1]
+   arrow(346,89,(dx-dy)*15,(dx+dy)*7.5)
+   right=({'RIGHT / DOWN','LEFT / UP','RIGHT / UP','LEFT / DOWN'})[direction+1]
   elseif kind=='jump' then
    local f=ease((t-1.6)/1.4)
    if t>=1.6 and t<1.85 then lift=-18*ease((t-1.6)/.25) elseif t>=1.85 and t<3 then lift=-18 elseif t>=3 then lift=-18*(1-ease((t-3)/1.2)) end
    slab(207,151,53,13);slab(315,151,57,13)
    ball(235+105*f,138-42*math.sin(f*math.pi))
    arrow(146,137,0,-34)
-   left=t<1.6 and 'HOLD LEVEL' or t<3 and 'LIFT STRAIGHT UP' or 'LOWER GENTLY'
+   left=t<1.6 and 'KEEP YOUR GRIP' or t<3 and 'LIFT STRAIGHT UP' or 'LOWER GENTLY'
    right=t<1.6 and 'READY AT THE GAP' or t<3 and 'CLEAR THE GAP' or 'LAND SAFELY'
   elseif kind=='control' or kind=='rotor' then
    slab(209,147,31,14);slab(337,147,34,14)
@@ -130,7 +136,7 @@ function UI.lesson(kind,time)
   if kind=='jump' then
    flatDevice:draw(60,112+lift)
    ink();g.drawLine(56,160,142,160)
-  else poses[pose]:draw(48,85) end
+  else poses[dir][pose]:draw(48,85) end
   if kind=='control' or kind=='cannon' then
    local a=t*2;ink();g.drawCircleAtPoint(151,135,10);g.drawLine(151,135,151+math.cos(a)*9,135+math.sin(a)*9)
   end

@@ -1,9 +1,22 @@
--- Screen-up flat is the only neutral pose. Never learn an upright grip as zero.
+-- Neutral follows a steady grip. Thrust axes belong to the world, not the screen projection.
 Tilt={ready=false,cooldown=0,armed=false,quiet=0,fx=0,fy=0,fz=1,nx=0,ny=0,nz=1,power=0,jump=false,seeded=false}
 local T=Tilt
+local function norm(x,y,z) local m=math.sqrt(x*x+y*y+z*z);return x/m,y/m,z/m end
+local function basis()
+ -- Project screen-right onto the gravity tangent plane. Near side-on use screen-down.
+ local a,b,c=1-T.nx*T.nx,-T.nx*T.ny,-T.nx*T.nz
+ if a*a+b*b+c*c>.09 then
+  T.rx,T.ry,T.rz=norm(a,b,c)
+  T.ux,T.uy,T.uz=T.ny*T.rz-T.nz*T.ry,T.nz*T.rx-T.nx*T.rz,T.nx*T.ry-T.ny*T.rx
+ else
+  T.ux,T.uy,T.uz=norm(-T.ny*T.nx,1-T.ny*T.ny,-T.ny*T.nz)
+  T.rx,T.ry,T.rz=T.uy*T.nz-T.uz*T.ny,T.uz*T.nx-T.ux*T.nz,T.ux*T.ny-T.uy*T.nx
+ end
+end
+local function clearWindow() T.samples=0;T.time=0;T.sx=0;T.sy=0;T.sz=0;T.ax=nil end
 function T.startCalibration()
- T.calibrating=true;T.samples=0;T.time=0;T.sx=0;T.sy=0;T.sz=0;T.jump=false;T.ready=false
- T.nx,T.ny,T.nz=0,0,1;T.power=0;T.dx,T.dy=0,0;T.seeded=false;T.flatReady=false
+ T.calibrating=true;clearWindow();T.jump=false;T.ready=false
+ T.power=0;T.dx,T.dy=0,0;T.seeded=false;T.stillReady=false
 end
 function T.init()
  if playdate.startAccelerometer then playdate.startAccelerometer() end
@@ -13,41 +26,35 @@ function T.update(dt)
  local x,y,z=0,0,1
  if playdate.readAccelerometer then x,y,z=playdate.readAccelerometer() end
  if not x or not y or not z then T.jump=false;return end
- T.rawX,T.rawY,T.rawZ=x,y,z
- T.cooldown=math.max(0,T.cooldown-dt);T.jump=false
+ T.rawX,T.rawY,T.rawZ=x,y,z;T.cooldown=math.max(0,T.cooldown-dt);T.jump=false
  if not T.seeded then T.fx,T.fy,T.fz=x,y,z;T.seeded=true end
+ local ix,iy,iz=x-T.fx,y-T.fy,z-T.fz
  local alpha=1-math.exp(-dt*9)
- local impulse=z-T.fz
- T.fx=T.fx+(x-T.fx)*alpha;T.fy=T.fy+(y-T.fy)*alpha;T.fz=T.fz+(z-T.fz)*alpha
+ T.fx=T.fx+ix*alpha;T.fy=T.fy+iy*alpha;T.fz=T.fz+iz*alpha
  if T.calibrating then
   local mag=math.sqrt(x*x+y*y+z*z)
-  T.flatReady=math.abs(x)<.075 and math.abs(y)<.075 and z>.94 and mag<1.08
-  if not T.flatReady or math.abs(impulse)>.12 then T.samples=0;T.time=0;T.sx=0;T.sy=0;T.sz=0;return end
-  T.time=T.time+dt;T.samples=T.samples+1;T.sx=T.sx+x;T.sy=T.sy+y
+  local drift=T.ax and ((x-T.ax)^2+(y-T.ay)^2+(z-T.az)^2) or 0
+  T.stillReady=mag>.85 and mag<1.15 and drift<.0016 and ix*ix+iy*iy+iz*iz<.0036
+  if not T.stillReady then clearWindow();return end
+  if not T.ax then T.ax,T.ay,T.az=x,y,z end
+  T.time=T.time+dt;T.samples=T.samples+1;T.sx=T.sx+x;T.sy=T.sy+y;T.sz=T.sz+z
   if T.time>=.8 then
-   -- Tiny sensor trim only. The maximum combined trim stays inside the deadzone.
-   local function trim(v) return math.max(-.025,math.min(.025,v)) end
-   T.nx,T.ny,T.nz=trim(T.sx/T.samples),trim(T.sy/T.samples),1
+   T.nx,T.ny,T.nz=norm(T.sx,T.sy,T.sz);basis()
    T.calibrating=false;T.ready=true;T.cooldown=.5;T.armed=false;T.quiet=0
   end
   return
  end
+ local impulse=ix*T.nx+iy*T.ny+iz*T.nz
  if math.abs(impulse)<.18 then T.quiet=T.quiet+dt;if T.quiet>.18 then T.armed=true end else T.quiet=0 end
- -- A level, whole-device upward lift produces a positive screen-normal pulse.
- -- Reject upright shaking and large sideways impulses rather than treating them as jumps.
- local level=T.fz>.82 and T.fx*T.fx+T.fy*T.fy<.12
- local lateral=(x-T.fx)^2+(y-T.fy)^2
- if T.ready and T.armed and level and lateral<.16 and impulse>.65 and T.cooldown==0 then T.jump=true;T.armed=false;T.cooldown=.75 end
- local mag=math.sqrt(T.fx*T.fx+T.fy*T.fy+T.fz*T.fz)
- local sx,sy=T.fx/math.max(mag,.01)-T.nx,T.fy/math.max(mag,.01)-T.ny
+ local mag=math.max(.01,math.sqrt(T.fx*T.fx+T.fy*T.fy+T.fz*T.fz))
+ local alignment=(T.fx*T.nx+T.fy*T.ny+T.fz*T.nz)/mag
+ local lateral=math.max(0,ix*ix+iy*iy+iz*iz-impulse*impulse)
+ if T.ready and T.armed and alignment>.82 and lateral<.16 and impulse>.65 and T.cooldown==0 then T.jump=true;T.armed=false;T.cooldown=.75 end
+ local sx=(T.fx*T.rx+T.fy*T.ry+T.fz*T.rz)/mag
+ local sy=(T.fx*T.ux+T.fy*T.uy+T.fz*T.uz)/mag
  local n=math.sqrt(sx*sx+sy*sy)
  T.power=math.min(1,math.max(0,(n-.045)/.40))
- if n>.045 then
-  -- SDK +X is screen-right, +Y is screen-down, +Z is through the screen.
-  -- Undo only the track's isometric projection; keep sensor directions intact.
-  local dx,dy=sx/1.8+sy/.9,-sx/1.8+sy/.9
-  local len=math.sqrt(dx*dx+dy*dy);T.dx,T.dy=dx/len,dy/len
- else T.dx,T.dy=0,0 end
+ if n>.045 then T.dx,T.dy=sx/n,sy/n else T.dx,T.dy=0,0 end
 end
 function T.consumeJump() local j=T.jump;T.jump=false;return j end
 Tilt.init()
