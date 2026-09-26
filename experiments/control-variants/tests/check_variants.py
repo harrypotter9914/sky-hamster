@@ -4,7 +4,7 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[1]
 # Reuse the existing device-I/O mock, not the full-edition test expectations.
 bootstrap = (root / 'tests/run_checks.py').read_text().split("load('main')", 1)[0]
-for rule in ('speed', 'throttle', 'brake', 'steering', 'latch'):
+for rule in ('speed', 'throttle', 'brake', 'latch'):
     env = {'__file__': str(root / 'tests/run_checks.py')}
     exec(bootstrap, env)
     lua, load = env['lua'], env['load']
@@ -54,14 +54,6 @@ for rule in ('speed', 'throttle', 'brake', 'steering', 'latch'):
         local v=Physics.step(30,0,1,0,c.power,0,0,0.1)
         assert(v<15 and v>=0,'active brake slows without reversing')
         Physics.controls(c,0,1,0,0.1);assert(c.brake==0,'brake stops on release')
-        ''')
-    elif rule == 'steering':
-        lua.execute('''
-        c=Physics.newControls();held={a=true}
-        local x,y=Physics.controls(c,90,-1,0,0.1)
-        assert(math.abs(x)<0.001 and y>0.99 and c.power==1,'crank sets heading; D-pad ignored')
-        held={};Physics.controls(c,0,1,0,0.1);assert(c.power==0,'release A removes thrust')
-        assert(Physics.step(100,0,x,y,0,0,0,0.1)>90,'coasting preserves momentum')
         ''')
     else:
         lua.execute('''

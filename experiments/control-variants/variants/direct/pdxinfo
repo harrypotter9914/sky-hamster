@@ -1,0 +1,6 @@
+name=Variation 4
+author=Wang Yibo
+description=Instant velocity steering - hold A to accelerate
+bundleID=com.wangyibo.skyhamster.variant.direct
+version=experiment-1.1.0
+buildNumber=3

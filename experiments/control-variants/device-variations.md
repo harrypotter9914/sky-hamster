@@ -1,4 +1,15 @@
-# Variation 1–9：编号与真机安装记录
+# 当前八版与历史安装记录
+
+## 2026-09-22：替换转向方案与吸附控制台
+
+- 旧 Variation 4（steering）和 9（absolute）从当前合集与设备 Games 目录移除，Mac 留有可恢复备份；其他游戏和存档目录未改。
+- 新 Variation 4（direct）使用摇柄绝对屏幕方向，立即重定向已有速度；A 加速，松手滑行。独立 bundleID，experiment-1.1.0 / build 3。
+- Variation 7（track）进入控制点自动吸附、停止；按住 A 才能转机关；B 释放；离开外圈后可重新吸附。沿用 track bundleID，experiment-1.1.0 / build 3。
+- 八版重新编译、ZIP 校验通过；三组 Python/Lua 回归脚本通过。真实 update 测试覆盖即时转向、滑行、吸附/释放/再次进入以及过桥完成。
+- 八个游戏均已复制到所连接 Playdate 的 Games 目录，并核对 main.pdz 和 pdxinfo 与本次构建一致。旧 4/9 不再位于 Games 中。新 4 和 7 已分别通过串口启动，返回三组启动 PASS。
+- 模拟器已显示两个新版本；真机新 4 已进入游戏并通过 A 加速。7 通过串口按键与摇柄输入实际进入吸附，屏幕显示 HOLD A / DOCKED；按住 A 转桥、松开 A 继续停住，B 释放后显示 FREE / Leave CONTROL, then return to dock。已读取设备 framebuffer 核对这些画面；重新吸附和完整过桥由真实 update 自动测试覆盖。启动与这些交互检查不代表完整人工手感测试。
+
+## 以下为 2026-09-19 的历史记录（旧九版，不是当前合集）
 
 日期：2026-09-19。实验版本 experiment-1.0.1，buildNumber 2。
 
