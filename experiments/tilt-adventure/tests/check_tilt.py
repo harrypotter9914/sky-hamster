@@ -143,3 +143,31 @@ for _,kind in ipairs({'arrival','roll','jump','control','cannon','gate','trap','
 end
 print('PASS: first encounters, persisted acknowledgements, no repeated jump tutorial, replay, paused world, mixed-route queue and every animation phase')
 """)
+
+# The SDK defines flat screen-up as (0,0,1), upright as (0,1,0).
+lua.execute("""
+local function settle(a,n) accel=a;for i=1,n or 90 do Tilt.update(1/30) end end
+for _,bad in ipairs({{0,1,0},{1,0,0},{0,0,-1},{.3,.2,.93}}) do
+ Tilt.startCalibration();settle(bad);assert(Tilt.calibrating and not Tilt.ready and Tilt.time==0)
+ assert(Tilt.power==0 and Tilt.nx==0 and Tilt.ny==0 and Tilt.nz==1)
+end
+settle({0,0,1});assert(Tilt.ready and not Tilt.calibrating and Tilt.power==0)
+local directions={{{.3,0,.954},1,0},{{-.3,0,.954},-1,0},{{0,-.3,.954},0,-1},{{0,.3,.954},0,1}}
+for _,case in ipairs(directions) do
+ settle(case[1]);local px=(Tilt.dx-Tilt.dy)*.9;local py=(Tilt.dx+Tilt.dy)*.45
+ assert(Tilt.power>.5)
+ if case[2]~=0 then assert(px*case[2]>0 and math.abs(py)<.0001) else assert(py*case[3]>0 and math.abs(px)<.0001) end
+end
+settle({0,1,0});assert(Tilt.power>.9,'upright must never be neutral')
+settle({0,0,1});assert(Tilt.power==0 and Tilt.dx==0 and Tilt.dy==0)
+settle({-.35,0,.937});local vx,vy=0,0
+for i=1,30 do vx,vy=Physics.step(vx,vy,Tilt.dx,Tilt.dy,Tilt.power,0,0,1/30) end
+local before=(vx-vy)*.9;assert(before<0)
+settle({.35,0,.937});vx,vy=Physics.step(vx,vy,Tilt.dx,Tilt.dy,Tilt.power,0,0,1/30)
+assert((vx-vy)*.9>before and (vx-vy)*.9<0,'opposite tilt brakes through force, without snapping velocity')
+for i=1,90 do vx,vy=Physics.step(vx,vy,Tilt.dx,Tilt.dy,Tilt.power,0,0,1/30) end
+assert((vx-vy)*.9>0,'sustained counter-tilt eventually reverses travel')
+Tilt.startCalibration();settle({.06,-.06,.996});assert(Tilt.ready and math.abs(Tilt.nx)<=.025 and math.abs(Tilt.ny)<=.025)
+settle({0,0,1});assert(Tilt.power==0,'limited trim must leave exact flat inside the deadzone')
+print('PASS: upright/sideways/inverted calibration rejected, flat zero, four screen directions, bounded trim and inertial counter-steering')
+""")

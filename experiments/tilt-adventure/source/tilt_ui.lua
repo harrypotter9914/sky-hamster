@@ -136,10 +136,10 @@ function UI.settings(choice,effects,music,gesture)
  footer('change','back')
 end
 function UI.calibration()
- page('FIND YOUR BALANCE','tilt','Hold at your comfortable playing angle.')
+ page('LAY FLAT TO CALIBRATE','tilt','Screen facing up. Keep the device still.')
  UI.panel(165,82,70,74);g.drawRoundRect(176,91,48,36,3);ball(200,109,10)
  g.fillRect(179,137,14,4);g.fillRect(184,132,4,14);g.drawCircleAtPoint(216,137,4)
- meter(72,171,256,math.min(1,(Tilt.time or 0)/.8));center('Keep still for a moment',200,184)
+ meter(72,171,256,math.min(1,(Tilt.time or 0)/.8));center(Tilt.flatReady and 'Hold still...' or 'Place flat on the table first',200,184)
 end
 local previews={}
 local function route(course,x,y,w,h,px,py,t)

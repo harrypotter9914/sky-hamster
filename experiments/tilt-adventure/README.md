@@ -1,4 +1,4 @@
-# Sky Hamster Tilt — 0.1.2
+# Sky Hamster Tilt — 0.1.3
 
 Independent tilt-control edition based on the full Sky Hamster 0.6.7 source at commit 9d2d7d9. The original root source and nine control experiments are unchanged. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 
@@ -13,7 +13,7 @@ Title → Start Game → first-encounter animated guides over the level → hold
 - A: confirm; on a cannon, fire. On a bridge station, turning the crank directly moves the bridge.
 - B: leave a control station/cannon. Move more than 32 world units away before it can capture the ball again. In menus, return; in guides, replay; at results, retry.
 - D-pad UP: route map and pause. A/B resumes.
-- D-pad DOWN: recalibrate at the current comfortable grip angle; play pauses during calibration.
+- D-pad DOWN: recalibrate with the device lying flat, screen facing up; play pauses during calibration. Keep it still for 0.8 seconds. Upright and tilted poses are not accepted as neutral.
 - Crank: rotate a manual bridge or aim a cannon while docked. It no longer accelerates the ball or charges a jump.
 - System menu: level select, map/pause, title/settings.
 
@@ -27,7 +27,7 @@ Original 14 courses retained. 15 Crank Crossing introduces manual bridge rotatio
 
 Textured stone-road title artwork with separately floating islands/clouds and a waving finish flag. The original wooden menu boards lift when selected; labels remain inside their borders. Launcher includes a static card, list icon and launch image. Full-screen strobing is not used.
 
-Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable position tracker. Lift detection uses a filtered acceleration impulse, quiet re-arming and a 0.75 second cooldown. Real grip, sensitivity and false positives still need physical playtesting; A remains available. Prefer a comfortable moderately tilted grip rather than holding the screen perfectly vertical.
+Playdate exposes a three-axis accelerometer, not a gyroscope or a reliable position tracker. Lift detection uses a filtered acceleration impulse, quiet re-arming and a 0.75 second cooldown. Real grip, sensitivity and false positives still need physical playtesting; A remains available. Screen-up flat is the neutral pose. Lowering the right/left/top/bottom edge pushes the ball right/left/up/down on screen. Opposite tilt applies ordinary counter-force; it does not instantly reverse velocity.
 
 ## Build and verification
 
@@ -65,3 +65,7 @@ Art masters, export scripts and prompts: `art/ASSETS.md`. Road texture, device p
 Visual QA: `tests/build-review.ps1` builds an isolated review bundle using `tests/ui_review.lua`; test-only drawing hooks are injected into the build-directory copy, never production. The bundle exports native 400x240 GIF stills into its own simulator datastore. Host checks cover first encounters, persisted acknowledgements, replay, paused physics and every animation phase, in addition to the original 17-course regression checks.
 
 Final title placement: the cannon and its solid saddle sit on the pale foreground paving to the hamster's right. The saddle exposes top/front/side faces, without decorative wheels or a circular platform. This gives the black barrel a clear contrasting background.
+
+## Flat neutral — 0.1.3
+
+Calibration now accepts only screen-up flat, held still for 0.8 seconds, with bounded sensor trim inside the motion deadzone. The former arbitrary-grip calibration could learn upright as neutral. Tests cover rejected poses, flat zero input, all four screen directions and inertial counter-steering. SDK build and host regressions passed. Installation over COM4 completed, followed by a run command echoed in the device log. Physical handling and frame rate still require hands-on verification.

@@ -1,7 +1,9 @@
-Tilt={ready=false,cooldown=0,armed=false,quiet=0,fx=0,fy=0,fz=1,nx=0,ny=0,nz=1,power=0,jump=false}
+-- Screen-up flat is the only neutral pose. Never learn an upright grip as zero.
+Tilt={ready=false,cooldown=0,armed=false,quiet=0,fx=0,fy=0,fz=1,nx=0,ny=0,nz=1,power=0,jump=false,seeded=false}
 local T=Tilt
 function T.startCalibration()
  T.calibrating=true;T.samples=0;T.time=0;T.sx=0;T.sy=0;T.sz=0;T.jump=false;T.ready=false
+ T.nx,T.ny,T.nz=0,0,1;T.power=0;T.dx,T.dy=0,0;T.seeded=false;T.flatReady=false
 end
 function T.init()
  if playdate.startAccelerometer then playdate.startAccelerometer() end
@@ -11,17 +13,22 @@ function T.update(dt)
  local x,y,z=0,0,1
  if playdate.readAccelerometer then x,y,z=playdate.readAccelerometer() end
  if not x or not y or not z then T.jump=false;return end
+ T.rawX,T.rawY,T.rawZ=x,y,z
  T.cooldown=math.max(0,T.cooldown-dt);T.jump=false
+ if not T.seeded then T.fx,T.fy,T.fz=x,y,z;T.seeded=true end
  local alpha=1-math.exp(-dt*9)
- local impulse=(x-T.fx)*T.nx+(y-T.fy)*T.ny+(z-T.fz)*T.nz
+ local impulse=z-T.fz
  T.fx=T.fx+(x-T.fx)*alpha;T.fy=T.fy+(y-T.fy)*alpha;T.fz=T.fz+(z-T.fz)*alpha
  if T.calibrating then
   local mag=math.sqrt(x*x+y*y+z*z)
-  if mag<.8 or mag>1.2 or math.abs(impulse)>.25 then T.samples=0;T.time=0;T.sx=0;T.sy=0;T.sz=0;return end
-  T.time=T.time+dt;T.samples=T.samples+1;T.sx=T.sx+x;T.sy=T.sy+y;T.sz=T.sz+z
+  T.flatReady=math.abs(x)<.075 and math.abs(y)<.075 and z>.94 and mag<1.08
+  if not T.flatReady or math.abs(impulse)>.12 then T.samples=0;T.time=0;T.sx=0;T.sy=0;T.sz=0;return end
+  T.time=T.time+dt;T.samples=T.samples+1;T.sx=T.sx+x;T.sy=T.sy+y
   if T.time>=.8 then
-   local n=math.sqrt(T.sx*T.sx+T.sy*T.sy+T.sz*T.sz)
-   T.nx,T.ny,T.nz=T.sx/n,T.sy/n,T.sz/n;T.calibrating=false;T.ready=true;T.cooldown=.5;T.armed=false;T.quiet=0
+   -- Tiny sensor trim only. The maximum combined trim stays inside the deadzone.
+   local function trim(v) return math.max(-.025,math.min(.025,v)) end
+   T.nx,T.ny,T.nz=trim(T.sx/T.samples),trim(T.sy/T.samples),1
+   T.calibrating=false;T.ready=true;T.cooldown=.5;T.armed=false;T.quiet=0
   end
   return
  end
@@ -32,7 +39,8 @@ function T.update(dt)
  local n=math.sqrt(sx*sx+sy*sy)
  T.power=math.min(1,math.max(0,(n-.045)/.40))
  if n>.045 then
-  -- Screen-relative tilt, inverse of the isometric track projection.
+  -- SDK +X is screen-right, +Y is screen-down, +Z is through the screen.
+  -- Undo only the track's isometric projection; keep sensor directions intact.
   local dx,dy=sx/1.8+sy/.9,-sx/1.8+sy/.9
   local len=math.sqrt(dx*dx+dy*dy);T.dx,T.dy=dx/len,dy/len
  else T.dx,T.dy=0,0 end
