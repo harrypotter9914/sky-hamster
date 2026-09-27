@@ -50,11 +50,20 @@ function D.trajectory(course,p,t)
  local mx,my,mz=D.muzzle(course,p);local a=p.angle or 0
  return mx+210*math.cos(a)*t,my+210*math.sin(a)*t,mz+CannonModel.vertical*t-150*t*t
 end
-function D.drawCannon(angle,x,y,recoil)
+function D.drawCannon(angle,x,y,recoil,p,floor)
  buildCannons()
  cannonBase:draw(x-64,y-78)
  local ux,uy=D.projectedDirection(angle)
- cannonArt[D.cannonFrame(angle)]:draw(x-64-(recoil or 0)*ux,y-78-(recoil or 0)*uy)
+ local frame=D.cannonFrame(angle)
+ local im=cannonArt[frame]
+ local sx,sy=x-64-(recoil or 0)*ux,y-78-(recoil or 0)*uy
+ im:draw(sx,sy)
+ if p then
+  PropOcclusion.add(cannonBase,x-64,y-78,p.x,p.y,50,50,0,floor,floor+12,true)
+  local a=-math.pi/3+(frame-1)*math.pi/90
+  local along=(CannonModel.forward-10)/2-(recoil or 0)
+  PropOcclusion.add(im,sx,sy,p.x+math.cos(a)*along,p.y+math.sin(a)*along,CannonModel.forward+32,34,a,floor,floor+65,true)
+ end
 end
 function D.draw(course,project,drawTile)
  local g=playdate.graphics
@@ -67,7 +76,7 @@ function D.draw(course,project,drawTile)
    if p.kind=='cannon' then
     local age=p.fireAt and MachineArt.time-p.fireAt or 10
     local recoil=age>=0 and age<.24 and math.sin(age/.24*math.pi)*5 or 0
-    D.drawCannon(p.angle or 0,x,y,recoil)
+    D.drawCannon(p.angle or 0,x,y,recoil,p,course:height(p.x,p.y))
     if D.active==p then
      local px,py=project(D.trajectory(course,p,0))
      g.setColor(g.kColorBlack)
@@ -81,14 +90,24 @@ function D.draw(course,project,drawTile)
    elseif p.kind=='bridge' or p.kind=='fan' or p.kind=='extend' or p.kind=='switch' then
     Structures.dial(x,y,p.spin or math.deg(p.angle or 0))
    end
-   if UI and UI.worldSign then
+  end
+  end
+ end
+end
+-- Station labels, like checkpoint labels, are foreground UI rather than solids.
+function D.drawLabels(course,project)
+ local g=playdate.graphics
+ for _,p in ipairs(course.pads or {}) do
+  local rx,ry=project(p.x,p.y,course:height(p.x,p.y))
+  if rx>-80 and rx<480 and ry>-140 and ry<410 then
+   local x,y=project(p.x,p.y,Mechanisms.floor(course,p.x,p.y,0))
+   if x>-50 and x<450 and y>35 and y<225 and UI and UI.worldSign then
     local tx=math.max(4,math.min(319,x>275 and x-114 or x+48));local ty=math.max(48,math.min(176,y-29))
     -- The wind dial is beside a tall fan; keep its road sign above the housing.
     if p.kind=='fan' then ty=math.max(48,ty-47) end
     g.setColor(g.kColorBlack);g.drawLine(x+18,y-12,tx,ty+11)
     UI.worldSign(({cannon='CANNON',lift='LIFT',slider='FERRY',fan='WIND',extend='EXTEND',switch='ROUTE'})[p.kind] or 'CRANK',tx,ty)
    end
-  end
   end
  end
 end

@@ -51,9 +51,19 @@ function M.collide(c,x,y,vx,vy,z,t,dt)
  for _,m in ipairs(c.mechanisms or {}) do if m.kind=='bumper' and z<28 then
   local dx,dy=x-m.x,y-m.y;local r=(m.radius or 18)+9;local d=math.sqrt(dx*dx+dy*dy)
   if d<r then
-   local nx,ny=d>.001 and dx/d or 1,d>.001 and dy/d or 0
-   x,y=m.x+nx*r,m.y+ny*r;local dot=vx*nx+vy*ny
-   if dot<0 then vx,vy=vx-1.65*dot*nx,vy-1.65*dot*ny;m.hitAt=t end
+   local speed=math.sqrt(vx*vx+vy*vy)
+   local nx,ny
+   if d>.001 then nx,ny=dx/d,dy/d
+   elseif speed>.001 then nx,ny=-vx/speed,-vy/speed
+   else nx,ny=1,0 end
+   x,y=m.x+nx*(r+.05),m.y+ny*(r+.05)
+   local dot=vx*nx+vy*ny
+   -- An active round spring ejects radially, including slow and grazing hits.
+   -- Separating contacts only depenetrate; they must not fire a second impulse.
+   if dot<=0 then
+    local rebound=math.max(90,math.min(240,speed*.85))
+    vx,vy=nx*rebound,ny*rebound;m.hitAt=t
+   end
    hit=true
   end
  end end

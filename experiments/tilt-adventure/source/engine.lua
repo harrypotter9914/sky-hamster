@@ -5,6 +5,7 @@ import "physics"
 import "courses"
 import "mechanisms"
 import "spatial"
+import "prop_occlusion"
 import "physics_tests"
 import "campaign"
 import "workshop_courses"
@@ -304,6 +305,10 @@ local function renderWorld()
  -- Opaque HUD panels replace these rows; do not rasterize the world behind them.
  g.setClipRect(0,43,400,160)
  Pose.begin(worldTime)
+ local maskZ=(airborne or state=='fall') and jumpZ or ballHeight
+ if state=='play' and not airborne then maskZ=maskZ-controls.charge*4/.65 end
+ local maskX,maskY=project(x,y,maskZ)
+ PropOcclusion.begin(x,y,maskZ,maskX-14,maskY-26)
  local scene=RenderIndex.view(course,project)
  Structures.drawUnder(scene,worldTime,project)
  if terrainChunks then Terrain.draw(terrainChunks,camX,camY) else terrainImage:draw(terrainX-camX,terrainY-camY) end
@@ -345,7 +350,7 @@ local function renderWorld()
  local z=(airborne or state=='fall') and jumpZ or ballHeight
  z=z-squash/0.65
  local boxes=Spatial.occluders(course,worldTime,project,left,top,28,28,z)
- if #boxes>0 then
+ if #boxes>0 or PropOcclusion.pending() then
  -- Copy the native silhouette once instead of sampling 784 pixels across the SDK boundary.
  local silhouette=ballImage:getMaskImage()
  g.pushContext(ballMask);g.clear(g.kColorWhite)
@@ -355,11 +360,14 @@ local function renderWorld()
   local poly=Spatial.maskPolygon(box,x,y,project,left,top,maskPolygon)
   if poly then g.fillPolygon(table.unpack(poly)) end
  end
+ PropOcclusion.apply(project)
  g.popContext();ballImage:setMaskImage(ballMask)
  end
  ballImage:draw(left,top)
  end
+ PropOcclusion.finish()
  Pose.finish()
+ Dock.drawLabels(course,project)
  marker(course.start,'START',true);for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE',true) end;marker(course.goal,'GOAL',true)
  if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
   UI.tiltPointer(screenX,screenY,Tilt.dx or 0,Tilt.dy or 0,Tilt.power or 0)

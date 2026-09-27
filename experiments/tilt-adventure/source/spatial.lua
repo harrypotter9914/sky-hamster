@@ -108,7 +108,7 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
  local scene=RenderIndex and RenderIndex.view(course,project) or course
  for _,m in ipairs(scene.mechanisms or empty) do
   local open=(m.kind=='gate' or m.kind=='trap') and Mechanisms.open(m,t)
-  if not open and m.kind~='fan' and m.kind~='bumper' and m.kind~='conveyor' and m.kind~='jet' and m.kind~='magnet' then
+  if not open and m.kind~='fan' and m.kind~='bumper' then
    local x,y,a=Mechanisms.pose(m,t);local floor=m.kind=='lift' and (m.elevation or m.minHeight) or course:height(x,y)
    local wall=m.kind=='gate' or m.kind=='sweeper'
    local roof=wall and floor+(Mechanisms.wallHeight and Mechanisms.wallHeight(m,t) or m.wallHeight or 80) or floor
@@ -117,10 +117,11 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
     -- Bounds cover every rotation under the isometric projection.
     local cx,cy=(x-y)*0.9,(x+y)*0.45-floor*0.65
     local ex,ey=(m.w+m.h)*0.64,(m.w+m.h)*0.32
-    if cx+ex>=left and cx-ex<=right and cy+ey+0.65>=top and cy-ey-(roof-floor)*0.65<=bottom then
+    local skirt=wall and 0.65 or S.thickness*0.65
+    if cx+ex>=left and cx-ex<=right and cy+ey+skirt>=top and cy-ey-(roof-floor)*0.65<=bottom then
      local cached=m.occluder
      if not cached or cached.x~=x or cached.y~=y or cached.w~=m.w or cached.h~=m.h or cached.angle~=a or cached.floor~=floor or cached.top~=roof then
-      cached=makeBox(x,y,m.w,m.h,a,wall and floor or floor-1,roof,0)
+      cached=makeBox(x,y,m.w,m.h,a,wall and floor or floor-S.thickness,roof,0)
       cached.angle=a;cached.floor=floor;m.occluder=cached
      end
      add(cached)

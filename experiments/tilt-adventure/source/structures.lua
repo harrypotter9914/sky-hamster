@@ -288,10 +288,10 @@ function M.draw(c,t,project)
     wall(c,m,t,project,cx,cy)
    elseif kind=='fan' and A.layer~='under' then
     base('small',x,y)
-    MachineArt.fan(m,t,x,y)
+    MachineArt.fan(m,t,x,y,h)
    elseif kind=='bumper' and A.layer~='under' then
     base('small',x,y)
-    MachineArt.bumper(m,t,x,y)
+    MachineArt.bumper(m,t,x,y,h)
    elseif kind~='gate' and kind~='sweeper' and kind~='fan' and kind~='bumper' then
     if A.layer~='top' then
     under(c,m,t,project,cx,cy,x,y)
@@ -318,13 +318,13 @@ function M.draw(c,t,project)
     elseif kind=='conveyor' then
      MachineArt.sprite('roller',x,y+18)
     elseif kind=='magnet' then
-     MachineArt.sprite('magnet',x,y+4);g.setColor(g.kColorBlack)
+     MachineArt.solidSprite('magnet',x,y+4,cx,cy,h,24,24,60);g.setColor(g.kColorBlack)
      for i=1,2 do local r=18+(t*12+i*14)%30;g.drawArc(x,y-10,r,220,320) end
     elseif kind=='jet' then
      local active=(t+(m.phase or 0))%m.period<m.period*.4
      for i=-1,1 do
       local wx=cx+i*m.w/4;local px,py=project(wx,cy,h)
-      MachineArt.sprite('nozzle',px,py+3)
+      MachineArt.solidSprite('nozzle',px,py+3,wx,cy,h,14,14,32)
       if active then
        local dx,dy=math.cos(m.angle or 0),math.sin(m.angle or 0);g.setColor(g.kColorBlack)
        for k=1,3 do local d=16+(t*48+k*13)%42;g.drawArc(px+(dx-dy)*.9*d,py+(dx+dy)*.45*d-17-k*2,3+k,210,345) end

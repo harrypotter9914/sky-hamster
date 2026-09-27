@@ -15,19 +15,27 @@ function A.prepare()
  for i=0,7 do local sy=1-i*.045;local im=g.image.new(44,44,g.kColorClear);g.pushContext(im);spring:drawScaled(0,44-44*sy,1,sy);g.popContext();springs[i]=im end
 end
 function A.sprite(name,x,y) local im=images[name];local w,h=im:getSize();im:draw(math.floor(x-w/2),math.floor(y-h)) end
+function A.solidSprite(name,x,y,wx,wy,floor,w,h,roof)
+ local im=images[name];local iw,ih=im:getSize()
+ local sx,sy=math.floor(x-iw/2),math.floor(y-ih)
+ im:draw(sx,sy)
+ PropOcclusion.add(im,sx,sy,wx,wy,w,h,0,floor-4,floor+roof)
+end
 function A.gear(x,y,angle) gears[math.floor((angle or 0)/22.5)%16]:draw(x-13,y-13) end
 function A.handle(x,y,angle)
  local a=math.rad(angle or 0);local px,py=x+math.cos(a)*10,y+math.sin(a)*5
  g.setColor(g.kColorBlack);g.setLineWidth(3);g.drawLine(x,y,px,py);g.setLineWidth(1)
  g.setColor(g.kColorWhite);g.fillCircleAtPoint(px,py,3);g.setColor(g.kColorBlack);g.drawCircleAtPoint(px,py,3)
 end
-function A.bumper(m,t,x,y)
+function A.bumper(m,t,x,y,floor)
  local age=m.hitAt and t-m.hitAt or 10
  local squash=age>=0 and age<.5 and math.max(0,math.sin(age/.5*math.pi*3)*math.exp(-age*4)) or 0
- springs[math.floor(squash*7+.5)]:draw(x-22,y-36)
+ local im=springs[math.floor(squash*7+.5)]
+ im:draw(x-22,y-36)
+ if floor then PropOcclusion.add(im,x-22,y-36,m.x,m.y,36,36,0,floor-12,floor+55,true) end
 end
 local fanHousings={}
-function A.fan(m,t,x,y)
+function A.fan(m,t,x,y,floor)
  local frame=math.floor(math.deg(m.angle or 0)/5+.5)%72
  local angle=math.rad(frame*5);local dx,dy=math.cos(angle),math.sin(angle)
  local ux,uy=(dx-dy)*.9,(dx+dy)*.45
@@ -57,6 +65,7 @@ function A.fan(m,t,x,y)
   g.fillPolygon(table.unpack(hole));g.popContext();fanHousings[frame]=im
  end
  im:draw(x-64,y-78)
+ if floor then PropOcclusion.add(im,x-64,y-78,m.x,m.y,18,38,angle,floor,floor+55,true) end
  -- Spin within the fan's own vertical plane. A side view compresses the blades too.
  local near=(dx+dy)>=0 and 9 or -9
  local px,py=point(0,36,near);px,py=x+px-64,y+py-78
@@ -162,8 +171,8 @@ function D.draw(c,project,drawTile)
   if roughX>-80 and roughX<480 and roughY>-140 and roughY<410 then
   local x,y=project(p.x,p.y,M.floor(c,p.x,p.y,t))
   if x>-70 and x<470 and y>25 and y<255 then
-   if p.kind=='extend' then A.sprite('winch',x-22,y-3);A.gear(x-25,y-27,p.spin);A.handle(x-25,y-27,p.spin)
-   elseif p.kind=='switch' then A.sprite('switch',x-22,y-3);A.handle(x-24,y-33,p.spin)
+   if p.kind=='extend' then A.solidSprite('winch',x-22,y-3,p.x-22/1.8,p.y+22/1.8,M.floor(c,p.x,p.y,t),24,24,65);A.gear(x-25,y-27,p.spin);A.handle(x-25,y-27,p.spin)
+   elseif p.kind=='switch' then A.solidSprite('switch',x-22,y-3,p.x-22/1.8,p.y+22/1.8,M.floor(c,p.x,p.y,t),24,24,65);A.handle(x-24,y-33,p.spin)
    end
    local age=p.fireAt and t-p.fireAt or 10
    if p.kind=='cannon' and age>=0 and age<.35 then
