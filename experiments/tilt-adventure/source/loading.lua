@@ -54,6 +54,7 @@ function L.draw()
  g.setColor(g.kColorBlack)
 end
 function L.step(dt)
+ if Awake then Awake.update() end
  if not L.busy then return false end
  L.time=L.time+(dt or 1/30)
  -- Let the first loading frame reach the display before starting expensive work.

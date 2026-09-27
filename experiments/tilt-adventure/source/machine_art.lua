@@ -79,6 +79,18 @@ function A.fan(m,t,x,y)
  end
 end
 
+function A.warmFanViews()
+ if A.fansReady then return end
+ local scratch=g.image.new(128,112,g.kColorClear)
+ for i=0,71 do
+  g.pushContext(scratch);g.clear(g.kColorClear)
+  A.fan({angle=math.rad(i*5)},0,64,78)
+  g.popContext()
+  if Loading and i%4==0 then Loading.checkpoint(.66,'TURNING THE FAN HEADS') end
+ end
+ A.fansReady=true
+end
+
 local M,D=Mechanisms,Dock
 local previousOpen=M.open
 local function ease(v) v=math.max(0,math.min(1,v));return v*v*(3-2*v) end

@@ -2,7 +2,9 @@ from pathlib import Path
 from check_physics_index import lua
 
 lua.execute('NewTerrain=Terrain')
-lua.execute((Path(__file__).parent / 'fixtures/terrain-v040.lua').read_text())
+# Keep the historical draw/prefetch algorithm, with the new chunk dimension.
+# Native screenshot comparisons separately verify retiling preserves pixels.
+lua.execute((Path(__file__).parent / 'fixtures/terrain-v040.lua').read_text().replace('local size=128','local size=256'))
 lua.execute('OldTerrain=Terrain;Terrain=NewTerrain')
 lua.execute('''
 local image=playdate.graphics.image

@@ -1,6 +1,6 @@
 Terrain={}
 local T=Terrain
-local size=128
+local size=256
 function T.new(course,render)
  local cache={buckets={},images={},render=render,tick=0,misses=0,count=0}
  -- Index static geometry once; images are created only around the camera.
@@ -36,6 +36,19 @@ function T.warm(c,x,y)
   for j=math.floor((y+44)/size)-1,math.floor((y+204)/size)+1 do ensure(c,i,j);if Loading then Loading.checkpoint(.9,"ALMOST THERE") end end
  end
 end
+function T.prepare(c,x,y)
+ -- Larger chunks reduce native bitmap calls. Prepare up to 1 MB of sparse
+ -- monochrome image/mask data during loading, not on a moving frame.
+ -- Drawing still touches only the viewport; larger future maps retain streaming.
+ local count=0;for _ in pairs(c.buckets) do count=count+1 end
+ if count>64 then T.warm(c,x,y);return end
+ c.keepAll=true
+ local ready=0
+ for _,bucket in pairs(c.buckets) do
+  ensure(c,bucket.x,bucket.y);ready=ready+1
+  if Loading then Loading.checkpoint(.9+.09*ready/math.max(1,count),'PACKING THE ROAD') end
+ end
+end
 function T.draw(c,x,y)
  c.tick=c.tick+1
  local x0,x1=math.floor(x/size),math.floor((x+400)/size)
@@ -57,6 +70,7 @@ function T.draw(c,x,y)
  end
  -- Camera movement within the same chunk window needs no string keys or lookups.
  for _,entry in ipairs(window.visible) do entry.image:draw(entry.x-x,entry.y-y) end
+ if c.keepAll then return end -- Prepared maps have no eviction/prefetch bookkeeping.
  for _,entry in ipairs(window.retained) do entry.used=c.tick end
  local pending=window.pending[window.next]
  if pending then
@@ -64,7 +78,7 @@ function T.draw(c,x,y)
   window.retained[#window.retained+1]=entry;window.next=window.next+1
  end
  -- Bound retained image memory, retaining the visible area and its margin.
- if c.count>40 then
+ if not c.keepAll and c.count>40 then
   for key,entry in pairs(c.images) do
    if entry.used<c.tick-30 then c.images[key]=nil;c.count=c.count-1 end
   end

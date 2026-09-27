@@ -1,4 +1,6 @@
-# Sky Hamster — 0.10.8
+# Sky Hamster — 0.10.9
+
+0.10.9 adds USB-powered wakefulness across title, loading and gameplay, plus indexed height/support queries, prepared terrain chunks, cached lift supports/fan views and control hints. Leaving a course releases its derived caches. Battery-only use restores automatic locking. For the same policy outside this game, use the device's **Settings → Auto Lock → Off while charging** preference. See [all-course hardware validation](VALIDATION-v0.10.9.md). Run `python tests/check_perf_detail.py` and `python tests/check_awake.py`.
 
 0.10.8 fixes foreground road compositing, replaces the lift wall with an open landing, and projects solid cannon/fan geometry. Cannon art, guide and projectile share one muzzle; landing ranges remain compatible. See [validation](VALIDATION-v0.10.8.md) and [art notes](art/PERSPECTIVE-v0.10.8.md). Run `python tests/check_depth.py` for the complete regression suite.
 
@@ -83,7 +85,7 @@ Body text uses the SDK's Asheville Sans 14 Bold. Home labels use the smaller fon
 
 Guides pause the real level under an animated popup. The arrival story has three picture panels. Paired device/result animations introduce tilt, lift, docking, crank bridges, cannons, gates, disappearing floors, ferries, rotors and sweepers. A acknowledges; B replays. Seen topics persist only after acknowledgement. Direct selection of later courses queues missing prerequisites; mixed courses do not repeat known mechanics.
 
-Art masters, export scripts and prompts: `art/ASSETS.md`. Road texture, device poses and 17 cannon orientations are cached. Physical-device performance remains unverified.
+Art masters, export scripts and prompts: `art/ASSETS.md`. This section describes the initial presentation pass; later cannon geometry and hardware measurements are documented in the current [validation record](VALIDATION-v0.10.9.md).
 
 Visual QA: `tests/build-review.ps1` builds an isolated review bundle using `tests/ui_review.lua`; test-only drawing hooks are injected into the build-directory copy, never production. The bundle exports native 400x240 GIF stills into its own simulator datastore. Host checks cover first encounters, persisted acknowledgements, replay, paused physics and every animation phase, in addition to the original 17-course regression checks.
 

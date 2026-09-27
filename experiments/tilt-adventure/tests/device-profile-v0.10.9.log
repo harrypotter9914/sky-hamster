@@ -1,0 +1,1137 @@
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH PLAN courses=44 scenes=64
+BENCH BEGIN	15
+SCENE	1	road	0	traverse
+BENCH route=15 frames=179 fps=29.26 frame95=38.00 frameMax=39.00 cpu95=35.00 cpuMax=37.00 cacheMiss=0 chunks=24 luaKB=1139
+STATS	GC=16.4 audio=2.0 game=76.2 idle=4.6 kernel=0.8
+PROFILE	stations	0.1555556
+PROFILE	mask	1.25
+PROFILE	collide	1.0
+PROFILE	occluders	1.255556
+PROFILE	structureTop	5.544445
+PROFILE	hud	1.761111
+PROFILE	terrain	4.9
+PROFILE	tilt	0.4111111
+PROFILE	machines	2.227778
+PROFILE	roadCover	2.222222
+PROFILE	machineAudio	1.983333
+PROFILE	structureUnder	0.1111111
+PROFILE	ballAudio	0.2277778
+PROFILE	wind	0.3833333
+PROFILE	support	1.661111
+BENCH BEGIN	15
+SCENE	2	normal	0	traverse
+BENCH route=15 frames=119 fps=30.07 frame95=36.00 frameMax=39.00 cpu95=23.00 cpuMax=26.00 cacheMiss=0 chunks=24 luaKB=1135
+STATS	GC=24.6 audio=2.6 game=67.2 idle=5.2 kernel=0.4
+PROFILE	stations	0.1416667
+PROFILE	collide	0.25
+PROFILE	occluders	0.425
+PROFILE	structureTop	3.108333
+PROFILE	hud	1.65
+PROFILE	terrain	3.458333
+PROFILE	tilt	0.45
+PROFILE	machines	1.15
+PROFILE	roadCover	1.208333
+PROFILE	machineAudio	1.55
+PROFILE	structureUnder	0.05
+PROFILE	ballAudio	0.225
+PROFILE	wind	0.4166667
+PROFILE	support	1.7
+BENCH BEGIN	15
+SCENE	3	normal	0	traverse
+BENCH route=15 frames=119 fps=29.96 frame95=35.00 frameMax=38.00 cpu95=31.00 cpuMax=32.00 cacheMiss=0 chunks=24 luaKB=1139
+STATS	GC=9.0 audio=2.4 game=84.4 idle=4.0 kernel=0.2
+PROFILE	stations	0.1083333
+PROFILE	collide	1.208333
+PROFILE	occluders	1.325
+PROFILE	structureTop	7.341667
+PROFILE	hud	1.691667
+PROFILE	terrain	4.158333
+PROFILE	tilt	0.5083333
+PROFILE	machines	3.016667
+PROFILE	roadCover	3.141667
+PROFILE	machineAudio	2.4
+PROFILE	structureUnder	0.08333334
+PROFILE	ballAudio	0.2916667
+PROFILE	wind	0.5
+PROFILE	support	1.341667
+BENCH BEGIN	15
+SCENE	4	normal	0	traverse
+BENCH route=15 frames=119 fps=30.04 frame95=35.00 frameMax=37.00 cpu95=26.00 cpuMax=28.00 cacheMiss=0 chunks=24 luaKB=1134
+STATS	GC=22.2 audio=2.4 game=69.8 idle=5.2 kernel=0.4
+PROFILE	stations	0.1333333
+PROFILE	collide	0.925
+PROFILE	occluders	0.8916667
+PROFILE	structureTop	4.433333
+PROFILE	hud	1.558333
+PROFILE	terrain	3.15
+PROFILE	tilt	0.4333333
+PROFILE	machines	1.808333
+PROFILE	roadCover	1.625
+PROFILE	machineAudio	1.725
+PROFILE	structureUnder	0.1083333
+PROFILE	ballAudio	0.175
+PROFILE	wind	0.3083333
+PROFILE	support	1.808333
+BENCH BEGIN	15
+SCENE	5	mechanism	1	bumper
+BENCH route=15 frames=119 fps=26.55 frame95=40.00 frameMax=41.00 cpu95=37.00 cpuMax=39.00 cacheMiss=0 chunks=24 luaKB=1187
+STATS	GC=2.6 audio=1.8 game=91.6 idle=3.8 kernel=0.2
+PROFILE	stations	0.125
+PROFILE	occluders	1.475
+PROFILE	collide	1.45
+PROFILE	mask	7.525
+PROFILE	structureTop	6.091667
+PROFILE	hud	1.6
+PROFILE	terrain	3.666667
+PROFILE	tilt	0.4333333
+PROFILE	machines	2.558333
+PROFILE	roadCover	2.508333
+PROFILE	machineAudio	2.058333
+PROFILE	structureUnder	0.06666667
+PROFILE	ballAudio	0.2
+PROFILE	wind	0.2666667
+PROFILE	support	1.533333
+BENCH BEGIN	15
+SCENE	6	mechanism	2	bumper
+BENCH route=15 frames=119 fps=29.79 frame95=36.00 frameMax=40.00 cpu95=32.00 cpuMax=33.00 cacheMiss=0 chunks=24 luaKB=1180
+STATS	GC=3.6 audio=1.8 game=89.0 idle=5.2 kernel=0.4
+PROFILE	stations	0.15
+PROFILE	occluders	1.483333
+PROFILE	collide	1.366667
+PROFILE	mask	0.6333333
+PROFILE	structureTop	7.291667
+PROFILE	hud	1.566667
+PROFILE	terrain	4.866667
+PROFILE	tilt	0.4416667
+PROFILE	machines	2.816667
+PROFILE	roadCover	3.3
+PROFILE	machineAudio	2.333333
+PROFILE	structureUnder	0.09166667
+PROFILE	ballAudio	0.225
+PROFILE	wind	0.275
+PROFILE	support	1.45
+BENCH BEGIN	15
+SCENE	7	mechanism	3	bumper
+BENCH route=15 frames=119 fps=29.98 frame95=35.00 frameMax=38.00 cpu95=30.00 cpuMax=31.00 cacheMiss=0 chunks=24 luaKB=1143
+STATS	GC=10.0 audio=1.4 game=83.0 idle=5.0 kernel=0.6
+PROFILE	stations	0.1333333
+PROFILE	collide	1.091667
+PROFILE	occluders	1.283333
+PROFILE	structureTop	7.4
+PROFILE	hud	1.541667
+PROFILE	terrain	3.958333
+PROFILE	tilt	0.4583333
+PROFILE	machines	2.808333
+PROFILE	roadCover	3.341667
+PROFILE	machineAudio	2.033333
+PROFILE	structureUnder	0.05833333
+PROFILE	ballAudio	0.2833333
+PROFILE	wind	0.6583334
+PROFILE	support	1.366667
+BENCH BEGIN	15
+SCENE	8	mechanism	4	bumper
+BENCH route=15 frames=119 fps=29.98 frame95=35.00 frameMax=39.00 cpu95=29.00 cpuMax=30.00 cacheMiss=0 chunks=24 luaKB=1134
+STATS	GC=11.8 audio=1.6 game=82.6 idle=3.8 kernel=0.2
+PROFILE	stations	0.1833333
+PROFILE	collide	1.325
+PROFILE	occluders	1.208333
+PROFILE	structureTop	6.733333
+PROFILE	hud	1.616667
+PROFILE	terrain	3.85
+PROFILE	tilt	0.5
+PROFILE	machines	2.7
+PROFILE	roadCover	2.75
+PROFILE	machineAudio	2.016667
+PROFILE	structureUnder	0.06666667
+PROFILE	ballAudio	0.2416667
+PROFILE	wind	0.4583333
+PROFILE	support	1.208333
+BENCH BEGIN	15
+SCENE	9	mechanism	5	bumper
+BENCH route=15 frames=119 fps=30.03 frame95=35.00 frameMax=39.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=24 luaKB=1138
+STATS	GC=19.0 audio=1.2 game=73.4 idle=5.4 kernel=1.0
+PROFILE	stations	0.1666667
+PROFILE	collide	1.475
+PROFILE	occluders	1.0
+PROFILE	structureTop	4.841667
+PROFILE	hud	1.65
+PROFILE	terrain	3.016667
+PROFILE	tilt	0.4916667
+PROFILE	machines	2.033333
+PROFILE	roadCover	1.675
+PROFILE	machineAudio	1.933333
+PROFILE	structureUnder	0.1416667
+PROFILE	ballAudio	0.125
+PROFILE	wind	0.4083333
+PROFILE	support	1.258333
+BENCH BEGIN	20
+SCENE	10	road	0	traverse
+BENCH route=20 frames=179 fps=29.84 frame95=35.00 frameMax=38.00 cpu95=32.00 cpuMax=33.00 cacheMiss=0 chunks=20 luaKB=1116
+STATS	GC=18.0 audio=2.4 game=75.0 idle=4.4 kernel=0.2
+PROFILE	stations	1.466667
+PROFILE	mask	0.9055555
+PROFILE	collide	0.4444444
+PROFILE	occluders	1.005556
+PROFILE	structureTop	1.911111
+PROFILE	hud	1.7
+PROFILE	terrain	4.177778
+PROFILE	tilt	0.4666667
+PROFILE	machines	1.005556
+PROFILE	roadCover	0.5444444
+PROFILE	machineAudio	1.516667
+PROFILE	structureUnder	1.538889
+PROFILE	ballAudio	0.1888889
+PROFILE	wind	0.3444445
+PROFILE	support	1.688889
+BENCH BEGIN	20
+SCENE	11	normal	0	traverse
+BENCH route=20 frames=119 fps=29.99 frame95=35.00 frameMax=38.00 cpu95=28.00 cpuMax=29.00 cacheMiss=0 chunks=20 luaKB=1119
+STATS	GC=12.8 audio=2.6 game=79.4 idle=4.6 kernel=0.6
+PROFILE	stations	1.475
+PROFILE	collide	0.3
+PROFILE	occluders	1.1
+PROFILE	structureTop	2.208333
+PROFILE	hud	1.55
+PROFILE	terrain	3.441667
+PROFILE	tilt	0.525
+PROFILE	machines	1.025
+PROFILE	roadCover	0.6333333
+PROFILE	machineAudio	1.483333
+PROFILE	structureUnder	1.741667
+PROFILE	ballAudio	0.2
+PROFILE	wind	0.3416667
+PROFILE	support	1.616667
+BENCH BEGIN	20
+SCENE	12	normal	0	traverse
+BENCH route=20 frames=119 fps=30.01 frame95=36.00 frameMax=39.00 cpu95=28.00 cpuMax=29.00 cacheMiss=0 chunks=20 luaKB=1113
+STATS	GC=16.0 audio=2.4 game=77.6 idle=3.4 kernel=0.6
+PROFILE	stations	1.391667
+PROFILE	collide	0.275
+PROFILE	occluders	0.4916667
+PROFILE	structureTop	2.016667
+PROFILE	hud	1.675
+PROFILE	terrain	3.608333
+PROFILE	tilt	0.6416667
+PROFILE	machines	1.066667
+PROFILE	roadCover	0.5166667
+PROFILE	machineAudio	1.575
+PROFILE	structureUnder	1.833333
+PROFILE	ballAudio	0.175
+PROFILE	wind	0.2833333
+PROFILE	support	2.116667
+BENCH BEGIN	20
+SCENE	13	normal	0	traverse
+BENCH route=20 frames=119 fps=29.94 frame95=36.00 frameMax=42.00 cpu95=29.00 cpuMax=30.00 cacheMiss=0 chunks=20 luaKB=1126
+STATS	GC=18.8 audio=2.8 game=73.4 idle=4.6 kernel=0.4
+PROFILE	stations	0.4833333
+PROFILE	occluders	1.241667
+PROFILE	collide	0.375
+PROFILE	mask	2.033333
+PROFILE	structureTop	0.7583333
+PROFILE	hud	1.725
+PROFILE	terrain	3.266667
+PROFILE	tilt	0.4666667
+PROFILE	machines	0.3166667
+PROFILE	roadCover	0.1083333
+PROFILE	machineAudio	0.8833333
+PROFILE	structureUnder	0.3833333
+PROFILE	ballAudio	0.2333333
+PROFILE	wind	0.275
+PROFILE	support	1.683333
+BENCH BEGIN	20
+SCENE	14	mechanism	1	lift
+BENCH route=20 frames=119 fps=30.01 frame95=35.00 frameMax=39.00 cpu95=28.00 cpuMax=29.00 cacheMiss=0 chunks=20 luaKB=1121
+STATS	GC=17.2 audio=2.8 game=74.2 idle=5.4 kernel=0.4
+PROFILE	stations	1.625
+PROFILE	mask	0.3
+PROFILE	structureTop	3.725
+PROFILE	hud	1.716667
+PROFILE	terrain	4.808333
+PROFILE	tilt	0.5583333
+PROFILE	machines	1.158333
+PROFILE	occluders	1.541667
+PROFILE	machineAudio	1.775
+PROFILE	roadCover	1.95
+PROFILE	ballAudio	0.1083333
+PROFILE	structureUnder	2.275
+PROFILE	support	0.4583333
+BENCH BEGIN	20
+SCENE	15	mechanism	2	lift
+BENCH route=20 frames=119 fps=30.06 frame95=35.00 frameMax=41.00 cpu95=27.00 cpuMax=29.00 cacheMiss=0 chunks=20 luaKB=1129
+STATS	GC=20.0 audio=3.4 game=70.2 idle=5.8 kernel=0.6
+PROFILE	stations	1.508333
+PROFILE	mask	0.3833333
+PROFILE	structureTop	3.791667
+PROFILE	hud	1.666667
+PROFILE	terrain	3.983333
+PROFILE	tilt	0.5416667
+PROFILE	machines	1.233333
+PROFILE	occluders	0.9833333
+PROFILE	machineAudio	1.683333
+PROFILE	roadCover	2.041667
+PROFILE	ballAudio	0.075
+PROFILE	structureUnder	2.35
+PROFILE	support	0.5083333
+BENCH BEGIN	20
+SCENE	16	pad	1	lift
+BENCH route=20 frames=119 fps=30.08 frame95=35.00 frameMax=39.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=20 luaKB=1125
+STATS	GC=18.0 audio=2.8 game=73.8 idle=5.2 kernel=0.2
+PROFILE	stations	1.625
+PROFILE	structureTop	3.433333
+PROFILE	hud	1.65
+PROFILE	terrain	4.758333
+PROFILE	tilt	0.5
+PROFILE	machines	1.408333
+PROFILE	occluders	1.691667
+PROFILE	machineAudio	1.758333
+PROFILE	roadCover	1.625
+PROFILE	ballAudio	0.1583333
+PROFILE	structureUnder	2.125
+PROFILE	support	0.5833333
+BENCH BEGIN	20
+SCENE	17	pad	2	lift
+BENCH route=20 frames=119 fps=30.07 frame95=37.00 frameMax=40.00 cpu95=24.00 cpuMax=26.00 cacheMiss=0 chunks=20 luaKB=1124
+STATS	GC=22.6 audio=2.8 game=68.4 idle=5.8 kernel=0.4
+PROFILE	stations	1.591667
+PROFILE	structureTop	3.458333
+PROFILE	hud	1.725
+PROFILE	terrain	3.866667
+PROFILE	tilt	0.475
+PROFILE	machines	1.258333
+PROFILE	occluders	0.8833333
+PROFILE	machineAudio	1.691667
+PROFILE	roadCover	1.7
+PROFILE	ballAudio	0.1666667
+PROFILE	structureUnder	2.208333
+PROFILE	support	0.45
+BENCH BEGIN	33
+SCENE	18	road	0	traverse
+BENCH route=33 frames=179 fps=26.39 frame95=49.00 frameMax=57.00 cpu95=45.00 cpuMax=53.00 cacheMiss=0 chunks=75 luaKB=1535
+STATS	GC=5.4 audio=2.8 game=87.2 idle=4.0 kernel=0.6
+PROFILE	stations	1.561111
+PROFILE	mask	0.6277778
+PROFILE	collide	0.7333333
+PROFILE	occluders	1.494444
+PROFILE	structureTop	5.661111
+PROFILE	hud	1.694444
+PROFILE	terrain	5.238889
+PROFILE	tilt	0.3833333
+PROFILE	machines	2.394444
+PROFILE	roadCover	2.544445
+PROFILE	machineAudio	2.144444
+PROFILE	structureUnder	1.25
+PROFILE	ballAudio	0.2277778
+PROFILE	wind	0.4388889
+PROFILE	support	1.966667
+BENCH BEGIN	33
+SCENE	19	normal	0	traverse
+BENCH route=33 frames=119 fps=29.91 frame95=35.00 frameMax=42.00 cpu95=28.00 cpuMax=30.00 cacheMiss=0 chunks=75 luaKB=1453
+STATS	GC=17.8 audio=2.6 game=74.4 idle=4.8 kernel=0.4
+PROFILE	stations	4.366667
+PROFILE	collide	0.3916667
+PROFILE	occluders	0.4666667
+PROFILE	structureTop	1.633333
+PROFILE	hud	1.775
+PROFILE	terrain	4.0
+PROFILE	tilt	0.4333333
+PROFILE	machines	0.6166667
+PROFILE	roadCover	1.375
+PROFILE	machineAudio	1.283333
+PROFILE	structureUnder	0.8833333
+PROFILE	ballAudio	0.2666667
+PROFILE	wind	0.3916667
+PROFILE	support	1.683333
+BENCH BEGIN	33
+SCENE	20	normal	0	traverse
+BENCH route=33 frames=119 fps=25.65 frame95=46.00 frameMax=50.00 cpu95=43.00 cpuMax=46.00 cacheMiss=0 chunks=75 luaKB=1620
+STATS	GC=2.4 audio=2.6 game=90.6 idle=4.0 kernel=0.4
+PROFILE	stations	1.141667
+PROFILE	collide	0.3583333
+PROFILE	occluders	1.925
+PROFILE	structureTop	13.6
+PROFILE	hud	2.266667
+PROFILE	terrain	4.558333
+PROFILE	tilt	0.4916667
+PROFILE	machines	8.133333
+PROFILE	roadCover	3.925
+PROFILE	machineAudio	0.925
+PROFILE	structureUnder	1.458333
+PROFILE	ballAudio	0.1666667
+PROFILE	wind	0.325
+PROFILE	support	1.116667
+BENCH BEGIN	33
+SCENE	21	normal	0	traverse
+BENCH route=33 frames=119 fps=29.40 frame95=37.00 frameMax=40.00 cpu95=33.00 cpuMax=36.00 cacheMiss=0 chunks=75 luaKB=1520
+STATS	GC=6.8 audio=3.4 game=83.8 idle=4.4 kernel=1.6
+PROFILE	stations	0.825
+PROFILE	mask	0.2083333
+PROFILE	collide	2.25
+PROFILE	occluders	1.708333
+PROFILE	structureTop	4.183333
+PROFILE	hud	1.683333
+PROFILE	terrain	3.758333
+PROFILE	tilt	0.4083333
+PROFILE	machines	1.266667
+PROFILE	roadCover	2.283333
+PROFILE	machineAudio	2.025
+PROFILE	structureUnder	0.5583333
+PROFILE	ballAudio	0.2666667
+PROFILE	wind	0.4166667
+PROFILE	support	1.391667
+BENCH BEGIN	33
+SCENE	22	mechanism	1	lift
+BENCH route=33 frames=119 fps=29.94 frame95=36.00 frameMax=40.00 cpu95=28.00 cpuMax=30.00 cacheMiss=0 chunks=75 luaKB=1466
+STATS	GC=14.0 audio=3.4 game=75.8 idle=6.2 kernel=0.6
+PROFILE	stations	2.416667
+PROFILE	mask	0.3
+PROFILE	structureTop	2.833333
+PROFILE	hud	1.633333
+PROFILE	terrain	4.7
+PROFILE	tilt	0.5666667
+PROFILE	machines	0.8083333
+PROFILE	occluders	1.675
+PROFILE	machineAudio	1.925
+PROFILE	roadCover	1.725
+PROFILE	ballAudio	0.1083333
+PROFILE	structureUnder	1.875
+PROFILE	support	0.4833333
+BENCH BEGIN	33
+SCENE	23	mechanism	2	rotor
+BENCH route=33 frames=119 fps=29.00 frame95=36.00 frameMax=37.00 cpu95=33.00 cpuMax=35.00 cacheMiss=0 chunks=75 luaKB=1588
+STATS	GC=3.0 audio=2.4 game=91.2 idle=3.4
+PROFILE	stations	2.125
+PROFILE	collide	0.3583333
+PROFILE	occluders	1.025
+PROFILE	structureTop	4.891667
+PROFILE	hud	1.55
+PROFILE	terrain	3.308333
+PROFILE	tilt	0.6583334
+PROFILE	machines	1.741667
+PROFILE	roadCover	2.658333
+PROFILE	machineAudio	1.883333
+PROFILE	structureUnder	1.416667
+PROFILE	ballAudio	0.2
+PROFILE	wind	0.3083333
+PROFILE	support	2.691667
+BENCH BEGIN	33
+SCENE	24	mechanism	3	ferry
+BENCH route=33 frames=119 fps=27.04 frame95=42.00 frameMax=48.00 cpu95=38.00 cpuMax=39.00 cacheMiss=0 chunks=75 luaKB=1616
+STATS	GC=3.2 audio=4.0 game=87.8 idle=4.6 kernel=0.4
+PROFILE	stations	2.708333
+PROFILE	structureTop	11.93333
+PROFILE	hud	1.641667
+PROFILE	terrain	2.883333
+PROFILE	tilt	0.4916667
+PROFILE	machines	6.683333
+PROFILE	occluders	1.433333
+PROFILE	machineAudio	2.166667
+PROFILE	roadCover	4.025
+PROFILE	ballAudio	0.1833333
+PROFILE	structureUnder	2.191667
+PROFILE	support	0.4416667
+BENCH BEGIN	33
+SCENE	25	mechanism	4	fan
+BENCH route=33 frames=119 fps=23.26 frame95=45.00 frameMax=46.00 cpu95=42.00 cpuMax=44.00 cacheMiss=0 chunks=75 luaKB=1809
+STATS	GC=2.2 audio=2.6 game=91.4 idle=3.6 kernel=0.2
+PROFILE	stations	2.283333
+PROFILE	collide	1.075
+PROFILE	occluders	1.708333
+PROFILE	structureTop	11.33333
+PROFILE	hud	1.625
+PROFILE	terrain	3.525
+PROFILE	tilt	0.4333333
+PROFILE	machines	6.975
+PROFILE	roadCover	3.183333
+PROFILE	machineAudio	2.716667
+PROFILE	structureUnder	2.025
+PROFILE	ballAudio	0.1166667
+PROFILE	wind	0.775
+PROFILE	support	2.341667
+BENCH BEGIN	33
+SCENE	26	mechanism	5	bumper
+BENCH route=33 frames=119 fps=23.09 frame95=46.00 frameMax=46.00 cpu95=43.00 cpuMax=44.00 cacheMiss=0 chunks=75 luaKB=1984
+STATS	GC=2.2 audio=2.6 game=90.2 idle=4.6 kernel=0.4
+PROFILE	stations	1.208333
+PROFILE	collide	0.925
+PROFILE	occluders	1.683333
+PROFILE	structureTop	12.10833
+PROFILE	hud	1.608333
+PROFILE	terrain	3.741667
+PROFILE	tilt	0.4
+PROFILE	machines	7.425
+PROFILE	roadCover	3.416667
+PROFILE	machineAudio	3.091667
+PROFILE	structureUnder	1.475
+PROFILE	ballAudio	0.1916667
+PROFILE	wind	0.8083333
+PROFILE	support	2.641667
+BENCH BEGIN	33
+SCENE	27	mechanism	6	trap
+BENCH route=33 frames=119 fps=27.47 frame95=39.00 frameMax=41.00 cpu95=35.00 cpuMax=37.00 cacheMiss=0 chunks=75 luaKB=2039
+STATS	GC=5.2 audio=2.8 game=87.4 idle=3.4 kernel=1.2
+PROFILE	stations	1.208333
+PROFILE	collide	0.2833333
+PROFILE	occluders	1.525
+PROFILE	structureTop	12.775
+PROFILE	hud	2.525
+PROFILE	terrain	3.9
+PROFILE	tilt	0.2916667
+PROFILE	machines	7.816667
+PROFILE	roadCover	3.583333
+PROFILE	machineAudio	0.6833333
+PROFILE	structureUnder	1.65
+PROFILE	ballAudio	0.1083333
+PROFILE	wind	0.2916667
+PROFILE	support	0.775
+BENCH BEGIN	33
+SCENE	28	mechanism	7	gate
+BENCH route=33 frames=119 fps=20.63 frame95=53.00 frameMax=54.00 cpu95=48.00 cpuMax=50.00 cacheMiss=0 chunks=75 luaKB=1724
+STATS	GC=4.2 audio=1.6 game=89.0 idle=4.2 kernel=1.0
+PROFILE	stations	0.7666667
+PROFILE	mask	1.083333
+PROFILE	collide	2.191667
+PROFILE	occluders	2.333333
+PROFILE	structureTop	13.78333
+PROFILE	hud	1.825
+PROFILE	terrain	3.925
+PROFILE	tilt	0.425
+PROFILE	machines	7.141667
+PROFILE	roadCover	5.166667
+PROFILE	machineAudio	2.583333
+PROFILE	structureUnder	1.891667
+PROFILE	ballAudio	0.1583333
+PROFILE	wind	0.3083333
+PROFILE	support	2.716667
+BENCH BEGIN	33
+SCENE	29	mechanism	8	ferry
+BENCH route=33 frames=119 fps=26.39 frame95=40.00 frameMax=42.00 cpu95=38.00 cpuMax=40.00 cacheMiss=0 chunks=75 luaKB=1785
+STATS	GC=1.8 audio=2.4 game=91.4 idle=4.2 kernel=0.2
+PROFILE	stations	0.775
+PROFILE	collide	1.841667
+PROFILE	occluders	1.683333
+PROFILE	structureTop	8.283334
+PROFILE	hud	1.575
+PROFILE	terrain	2.675
+PROFILE	tilt	0.6166667
+PROFILE	machines	3.591667
+PROFILE	roadCover	3.541667
+PROFILE	machineAudio	2.366667
+PROFILE	structureUnder	2.008333
+PROFILE	ballAudio	0.08333334
+PROFILE	wind	0.3166667
+PROFILE	support	2.558333
+BENCH BEGIN	33
+SCENE	30	mechanism	9	rotor
+BENCH route=33 frames=119 fps=28.80 frame95=37.00 frameMax=39.00 cpu95=34.00 cpuMax=37.00 cacheMiss=0 chunks=75 luaKB=1925
+STATS	GC=2.6 audio=2.2 game=90.2 idle=4.6 kernel=0.4
+PROFILE	stations	0.8333333
+PROFILE	collide	0.475
+PROFILE	occluders	0.975
+PROFILE	structureTop	5.691667
+PROFILE	hud	1.625
+PROFILE	terrain	3.65
+PROFILE	tilt	0.5333334
+PROFILE	machines	1.775
+PROFILE	roadCover	3.366667
+PROFILE	machineAudio	2.058333
+PROFILE	structureUnder	1.516667
+PROFILE	ballAudio	0.125
+PROFILE	wind	0.3083333
+PROFILE	support	3.175
+BENCH BEGIN	33
+SCENE	31	mechanism	10	sweeper
+BENCH route=33 frames=119 fps=29.39 frame95=37.00 frameMax=42.00 cpu95=33.00 cpuMax=35.00 cacheMiss=0 chunks=75 luaKB=1518
+STATS	GC=2.8 audio=2.8 game=89.0 idle=4.0 kernel=1.4
+PROFILE	stations	0.8166667
+PROFILE	mask	0.45
+PROFILE	collide	1.025
+PROFILE	occluders	1.475
+PROFILE	structureTop	5.675
+PROFILE	hud	2.191667
+PROFILE	terrain	3.741667
+PROFILE	tilt	0.4
+PROFILE	machines	1.691667
+PROFILE	roadCover	3.416667
+PROFILE	machineAudio	0.925
+PROFILE	structureUnder	1.141667
+PROFILE	ballAudio	0.1416667
+PROFILE	wind	0.1416667
+PROFILE	support	0.7583333
+BENCH BEGIN	33
+SCENE	32	pad	1	lift
+BENCH route=33 frames=119 fps=29.99 frame95=35.00 frameMax=41.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=75 luaKB=1497
+STATS	GC=17.2 audio=3.0 game=74.0 idle=5.6 kernel=0.2
+PROFILE	stations	2.308333
+PROFILE	structureTop	2.5
+PROFILE	hud	1.691667
+PROFILE	terrain	4.883333
+PROFILE	tilt	0.6083333
+PROFILE	machines	0.8
+PROFILE	occluders	1.65
+PROFILE	machineAudio	1.958333
+PROFILE	roadCover	1.4
+PROFILE	ballAudio	0.09166667
+PROFILE	structureUnder	1.65
+PROFILE	support	0.4416667
+BENCH BEGIN	33
+SCENE	33	pad	2	cannon
+BENCH route=33 frames=119 fps=29.97 frame95=35.00 frameMax=38.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=75 luaKB=1478
+STATS	GC=19.4 audio=2.8 game=72.4 idle=4.6 kernel=0.8
+PROFILE	stations	8.158334
+PROFILE	structureTop	1.591667
+PROFILE	hud	1.616667
+PROFILE	terrain	4.566667
+PROFILE	tilt	0.475
+PROFILE	machines	0.85
+PROFILE	machineAudio	1.475
+PROFILE	roadCover	1.075
+PROFILE	ballAudio	0.1916667
+PROFILE	structureUnder	1.091667
+PROFILE	support	0.35
+BENCH BEGIN	33
+SCENE	34	pad	3	bridge
+BENCH route=33 frames=119 fps=29.95 frame95=36.00 frameMax=42.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=75 luaKB=1484
+STATS	GC=21.2 audio=2.4 game=72.0 idle=3.8 kernel=0.6
+PROFILE	stations	2.383333
+PROFILE	structureTop	4.283333
+PROFILE	hud	1.683333
+PROFILE	terrain	3.1
+PROFILE	tilt	0.4666667
+PROFILE	machines	1.508333
+PROFILE	occluders	1.175
+PROFILE	machineAudio	2.2
+PROFILE	roadCover	2.266667
+PROFILE	ballAudio	0.1583333
+PROFILE	structureUnder	1.241667
+PROFILE	support	0.5583333
+BENCH BEGIN	33
+SCENE	35	pad	4	slider
+BENCH route=33 frames=119 fps=29.59 frame95=36.00 frameMax=39.00 cpu95=32.00 cpuMax=33.00 cacheMiss=0 chunks=75 luaKB=1590
+STATS	GC=5.8 audio=2.0 game=86.2 idle=4.0 kernel=2.0
+PROFILE	stations	1.883333
+PROFILE	structureTop	10.31667
+PROFILE	hud	1.791667
+PROFILE	terrain	2.958333
+PROFILE	tilt	0.35
+PROFILE	machines	6.141667
+PROFILE	occluders	1.283333
+PROFILE	machineAudio	2.008333
+PROFILE	roadCover	3.033333
+PROFILE	ballAudio	0.08333334
+PROFILE	structureUnder	2.191667
+PROFILE	support	0.4333333
+BENCH BEGIN	33
+SCENE	36	pad	5	fan
+BENCH route=33 frames=119 fps=26.04 frame95=41.00 frameMax=45.00 cpu95=38.00 cpuMax=39.00 cacheMiss=0 chunks=75 luaKB=1733
+STATS	GC=2.6 audio=3.6 game=88.8 idle=4.8 kernel=0.2
+PROFILE	stations	2.775
+PROFILE	structureTop	12.23333
+PROFILE	hud	1.808333
+PROFILE	terrain	3.108333
+PROFILE	tilt	0.4083333
+PROFILE	machines	7.891667
+PROFILE	occluders	1.7
+PROFILE	machineAudio	3.125
+PROFILE	roadCover	2.983333
+PROFILE	ballAudio	0.1666667
+PROFILE	structureUnder	2.416667
+PROFILE	support	0.575
+BENCH BEGIN	44
+SCENE	37	road	0	traverse
+BENCH route=44 frames=179 fps=24.73 frame95=57.00 frameMax=65.00 cpu95=51.00 cpuMax=61.00 cacheMiss=0 chunks=94 luaKB=1887
+STATS	GC=2.4 audio=3.6 game=89.0 idle=4.8 kernel=0.2
+PROFILE	stations	1.955556
+PROFILE	mask	0.4833333
+PROFILE	collide	0.7888889
+PROFILE	occluders	1.761111
+PROFILE	structureTop	6.966667
+PROFILE	hud	1.827778
+PROFILE	terrain	5.111111
+PROFILE	tilt	0.5055556
+PROFILE	machines	3.161111
+PROFILE	roadCover	2.827778
+PROFILE	machineAudio	2.694444
+PROFILE	structureUnder	1.088889
+PROFILE	ballAudio	0.1722222
+PROFILE	wind	0.7166666
+PROFILE	support	2.116667
+BENCH BEGIN	44
+SCENE	38	normal	0	traverse
+BENCH route=44 frames=119 fps=28.77 frame95=38.00 frameMax=51.00 cpu95=33.00 cpuMax=36.00 cacheMiss=0 chunks=94 luaKB=1704
+STATS	GC=2.8 audio=3.0 game=89.4 idle=4.4 kernel=0.4
+PROFILE	stations	1.358333
+PROFILE	occluders	1.566667
+PROFILE	collide	0.4833333
+PROFILE	mask	5.491667
+PROFILE	structureTop	0.8666667
+PROFILE	hud	1.908333
+PROFILE	terrain	4.15
+PROFILE	tilt	0.5166667
+PROFILE	machines	0.425
+PROFILE	roadCover	0.15
+PROFILE	machineAudio	1.7
+PROFILE	structureUnder	0.5916666
+PROFILE	ballAudio	0.25
+PROFILE	wind	0.3333333
+PROFILE	support	1.133333
+BENCH BEGIN	44
+SCENE	39	normal	0	traverse
+BENCH route=44 frames=119 fps=28.63 frame95=37.00 frameMax=42.00 cpu95=35.00 cpuMax=40.00 cacheMiss=0 chunks=94 luaKB=1793
+STATS	GC=3.6 audio=2.4 game=89.6 idle=4.0 kernel=0.4
+PROFILE	stations	1.133333
+PROFILE	collide	0.375
+PROFILE	occluders	1.583333
+PROFILE	structureTop	4.55
+PROFILE	hud	1.658333
+PROFILE	terrain	3.908333
+PROFILE	tilt	0.6666667
+PROFILE	machines	1.466667
+PROFILE	roadCover	2.341667
+PROFILE	machineAudio	2.35
+PROFILE	structureUnder	1.391667
+PROFILE	ballAudio	0.1833333
+PROFILE	wind	0.275
+PROFILE	support	3.441667
+BENCH BEGIN	44
+SCENE	40	normal	0	traverse
+BENCH route=44 frames=119 fps=28.70 frame95=38.00 frameMax=39.00 cpu95=35.00 cpuMax=36.00 cacheMiss=0 chunks=94 luaKB=1841
+STATS	GC=2.8 audio=3.4 game=89.4 idle=4.2 kernel=0.2
+PROFILE	stations	1.075
+PROFILE	collide	0.275
+PROFILE	occluders	1.691667
+PROFILE	structureTop	7.191667
+PROFILE	hud	1.675
+PROFILE	terrain	4.058333
+PROFILE	tilt	0.6083333
+PROFILE	machines	3.725
+PROFILE	roadCover	2.383333
+PROFILE	machineAudio	2.525
+PROFILE	structureUnder	0.35
+PROFILE	ballAudio	0.125
+PROFILE	wind	1.041667
+PROFILE	support	1.6
+BENCH BEGIN	44
+SCENE	41	mechanism	1	lift
+BENCH route=44 frames=119 fps=29.82 frame95=36.00 frameMax=42.00 cpu95=29.00 cpuMax=30.00 cacheMiss=0 chunks=94 luaKB=1682
+STATS	GC=14.8 audio=2.8 game=78.0 idle=4.4
+PROFILE	stations	2.625
+PROFILE	mask	0.2833333
+PROFILE	structureTop	2.875
+PROFILE	hud	1.708333
+PROFILE	terrain	4.55
+PROFILE	tilt	0.4583333
+PROFILE	machines	0.75
+PROFILE	occluders	1.525
+PROFILE	machineAudio	2.025
+PROFILE	roadCover	1.816667
+PROFILE	ballAudio	0.1666667
+PROFILE	structureUnder	1.966667
+PROFILE	support	0.5
+BENCH BEGIN	44
+SCENE	42	mechanism	2	rotor
+BENCH route=44 frames=119 fps=28.17 frame95=37.00 frameMax=39.00 cpu95=34.00 cpuMax=36.00 cacheMiss=0 chunks=94 luaKB=1805
+STATS	GC=2.8 audio=2.0 game=89.8 idle=5.0 kernel=0.4
+PROFILE	stations	2.433333
+PROFILE	collide	0.4666667
+PROFILE	occluders	0.9666666
+PROFILE	structureTop	4.933333
+PROFILE	hud	1.608333
+PROFILE	terrain	3.308333
+PROFILE	tilt	0.5416667
+PROFILE	machines	1.633333
+PROFILE	roadCover	2.775
+PROFILE	machineAudio	2.241667
+PROFILE	structureUnder	1.4
+PROFILE	ballAudio	0.09166667
+PROFILE	wind	0.4083333
+PROFILE	support	2.925
+BENCH BEGIN	44
+SCENE	43	mechanism	3	ferry
+BENCH route=44 frames=119 fps=26.93 frame95=42.00 frameMax=43.00 cpu95=38.00 cpuMax=40.00 cacheMiss=0 chunks=94 luaKB=2044
+STATS	GC=5.4 audio=2.6 game=86.6 idle=4.2 kernel=1.2
+PROFILE	stations	2.866667
+PROFILE	structureTop	11.96667
+PROFILE	hud	1.741667
+PROFILE	terrain	2.85
+PROFILE	tilt	0.5833333
+PROFILE	machines	6.691667
+PROFILE	occluders	1.383333
+PROFILE	machineAudio	2.358333
+PROFILE	roadCover	3.941667
+PROFILE	ballAudio	0.1333333
+PROFILE	structureUnder	2.35
+PROFILE	support	0.5
+BENCH BEGIN	44
+SCENE	44	mechanism	4	fan
+BENCH route=44 frames=119 fps=22.16 frame95=47.00 frameMax=51.00 cpu95=43.00 cpuMax=47.00 cacheMiss=0 chunks=94 luaKB=1872
+STATS	GC=2.2 audio=2.2 game=91.2 idle=4.2 kernel=0.2
+PROFILE	stations	2.55
+PROFILE	collide	1.025
+PROFILE	occluders	1.75
+PROFILE	structureTop	11.36667
+PROFILE	hud	1.625
+PROFILE	terrain	3.383333
+PROFILE	tilt	0.5
+PROFILE	machines	6.925
+PROFILE	roadCover	3.141667
+PROFILE	machineAudio	2.916667
+PROFILE	structureUnder	2.041667
+PROFILE	ballAudio	0.2
+PROFILE	wind	0.8916667
+PROFILE	support	2.583333
+BENCH BEGIN	44
+SCENE	45	mechanism	5	bumper
+BENCH route=44 frames=119 fps=22.81 frame95=46.00 frameMax=48.00 cpu95=43.00 cpuMax=46.00 cacheMiss=0 chunks=94 luaKB=2052
+STATS	GC=2.2 audio=2.4 game=91.2 idle=4.0 kernel=0.2
+PROFILE	stations	1.391667
+PROFILE	collide	0.9833333
+PROFILE	occluders	1.616667
+PROFILE	structureTop	12.10833
+PROFILE	hud	1.658333
+PROFILE	terrain	3.658333
+PROFILE	tilt	0.575
+PROFILE	machines	7.25
+PROFILE	roadCover	3.525
+PROFILE	machineAudio	3.233333
+PROFILE	structureUnder	1.533333
+PROFILE	ballAudio	0.2083333
+PROFILE	wind	0.975
+PROFILE	support	2.808333
+BENCH BEGIN	44
+SCENE	46	mechanism	6	trap
+BENCH route=44 frames=119 fps=25.49 frame95=47.00 frameMax=49.00 cpu95=44.00 cpuMax=47.00 cacheMiss=0 chunks=94 luaKB=2234
+STATS	GC=2.4 audio=2.2 game=90.6 idle=4.2 kernel=0.6
+PROFILE	stations	1.366667
+PROFILE	collide	1.158333
+PROFILE	occluders	1.65
+PROFILE	structureTop	12.93333
+PROFILE	hud	2.208333
+PROFILE	terrain	4.033333
+PROFILE	tilt	0.3166667
+PROFILE	machines	7.466667
+PROFILE	roadCover	4.058333
+PROFILE	machineAudio	1.45
+PROFILE	structureUnder	1.2
+PROFILE	ballAudio	0.1083333
+PROFILE	wind	0.5916666
+PROFILE	support	1.283333
+BENCH BEGIN	44
+SCENE	47	mechanism	7	gate
+BENCH route=44 frames=119 fps=20.95 frame95=53.00 frameMax=59.00 cpu95=49.00 cpuMax=52.00 cacheMiss=0 chunks=94 luaKB=2369
+STATS	GC=3.8 audio=2.2 game=88.2 idle=4.4 kernel=1.4
+PROFILE	stations	0.875
+PROFILE	mask	1.058333
+PROFILE	collide	2.175
+PROFILE	occluders	2.416667
+PROFILE	structureTop	13.875
+PROFILE	hud	1.725
+PROFILE	terrain	3.958333
+PROFILE	tilt	0.3416667
+PROFILE	machines	7.383333
+PROFILE	roadCover	5.066667
+PROFILE	machineAudio	2.866667
+PROFILE	structureUnder	1.95
+PROFILE	ballAudio	0.175
+PROFILE	wind	0.3166667
+PROFILE	support	2.85
+BENCH BEGIN	44
+SCENE	48	mechanism	8	ferry
+BENCH route=44 frames=119 fps=25.50 frame95=42.00 frameMax=43.00 cpu95=37.00 cpuMax=38.00 cacheMiss=0 chunks=94 luaKB=1973
+STATS	GC=5.8 audio=2.0 game=85.8 idle=4.2 kernel=2.2
+PROFILE	stations	1.0
+PROFILE	collide	0.5083333
+PROFILE	occluders	1.366667
+PROFILE	structureTop	8.258333
+PROFILE	hud	1.608333
+PROFILE	terrain	2.341667
+PROFILE	tilt	0.3416667
+PROFILE	machines	2.75
+PROFILE	roadCover	4.483333
+PROFILE	machineAudio	2.225
+PROFILE	structureUnder	2.241667
+PROFILE	ballAudio	0.15
+PROFILE	wind	0.3583333
+PROFILE	support	2.341667
+BENCH BEGIN	44
+SCENE	49	mechanism	9	rotor
+BENCH route=44 frames=119 fps=28.76 frame95=39.00 frameMax=40.00 cpu95=33.00 cpuMax=34.00 cacheMiss=0 chunks=94 luaKB=1923
+STATS	GC=3.0 audio=2.4 game=90.8 idle=3.4 kernel=0.4
+PROFILE	stations	1.058333
+PROFILE	collide	0.55
+PROFILE	occluders	0.9666666
+PROFILE	structureTop	4.85
+PROFILE	hud	1.566667
+PROFILE	terrain	3.55
+PROFILE	tilt	0.4583333
+PROFILE	machines	1.625
+PROFILE	roadCover	2.708333
+PROFILE	machineAudio	2.091667
+PROFILE	structureUnder	1.5
+PROFILE	ballAudio	0.125
+PROFILE	wind	0.375
+PROFILE	support	2.716667
+BENCH BEGIN	44
+SCENE	50	mechanism	10	sweeper
+BENCH route=44 frames=119 fps=26.58 frame95=45.00 frameMax=47.00 cpu95=41.00 cpuMax=44.00 cacheMiss=0 chunks=94 luaKB=2111
+STATS	GC=2.6 audio=2.0 game=91.4 idle=3.6 kernel=0.4
+PROFILE	stations	2.808333
+PROFILE	occluders	2.741667
+PROFILE	collide	0.5583333
+PROFILE	mask	1.933333
+PROFILE	structureTop	9.325
+PROFILE	hud	2.383333
+PROFILE	terrain	3.766667
+PROFILE	tilt	0.6166667
+PROFILE	machines	4.475
+PROFILE	roadCover	3.366667
+PROFILE	machineAudio	0.55
+PROFILE	structureUnder	0.2583333
+PROFILE	ballAudio	0.125
+PROFILE	wind	0.05833333
+PROFILE	support	0.9666666
+BENCH BEGIN	44
+SCENE	51	mechanism	11	extend
+BENCH route=44 frames=119 fps=23.42 frame95=45.00 frameMax=48.00 cpu95=42.00 cpuMax=46.00 cacheMiss=0 chunks=94 luaKB=2180
+STATS	GC=2.2 audio=1.8 game=91.4 idle=4.6
+PROFILE	stations	3.566667
+PROFILE	collide	0.4166667
+PROFILE	occluders	1.65
+PROFILE	structureTop	12.70833
+PROFILE	hud	1.733333
+PROFILE	terrain	2.975
+PROFILE	tilt	0.675
+PROFILE	machines	6.933333
+PROFILE	roadCover	4.1
+PROFILE	machineAudio	3.291667
+PROFILE	structureUnder	0.6666667
+PROFILE	ballAudio	0.2333333
+PROFILE	wind	0.1916667
+PROFILE	support	2.025
+BENCH BEGIN	44
+SCENE	52	mechanism	12	conveyor
+BENCH route=44 frames=119 fps=18.31 frame95=58.00 frameMax=64.00 cpu95=52.00 cpuMax=54.00 cacheMiss=0 chunks=94 luaKB=1840
+STATS	GC=2.6 audio=2.2 game=90.4 idle=3.6 kernel=1.2
+PROFILE	stations	4.85
+PROFILE	occluders	2.091667
+PROFILE	collide	3.45
+PROFILE	mask	1.541667
+PROFILE	structureTop	13.675
+PROFILE	hud	1.541667
+PROFILE	terrain	3.558333
+PROFILE	tilt	0.3333333
+PROFILE	machines	6.925
+PROFILE	roadCover	5.141667
+PROFILE	machineAudio	3.308333
+PROFILE	structureUnder	0.6416667
+PROFILE	ballAudio	0.15
+PROFILE	wind	1.683333
+PROFILE	support	1.591667
+BENCH BEGIN	44
+SCENE	53	mechanism	13	jet
+BENCH route=44 frames=119 fps=26.58 frame95=41.00 frameMax=42.00 cpu95=38.00 cpuMax=39.00 cacheMiss=0 chunks=94 luaKB=1828
+STATS	GC=2.2 audio=2.8 game=90.0 idle=4.6 kernel=0.4
+PROFILE	stations	1.091667
+PROFILE	collide	0.45
+PROFILE	occluders	1.575
+PROFILE	structureTop	8.591666
+PROFILE	hud	1.858333
+PROFILE	terrain	4.033333
+PROFILE	tilt	0.5833333
+PROFILE	machines	4.941667
+PROFILE	roadCover	2.383333
+PROFILE	machineAudio	2.591667
+PROFILE	structureUnder	0.6166667
+PROFILE	ballAudio	0.1833333
+PROFILE	wind	1.508333
+PROFILE	support	1.533333
+BENCH BEGIN	44
+SCENE	54	mechanism	14	magnet
+BENCH route=44 frames=119 fps=29.46 frame95=37.00 frameMax=45.00 cpu95=31.00 cpuMax=32.00 cacheMiss=0 chunks=94 luaKB=1708
+STATS	GC=4.6 audio=2.6 game=86.4 idle=4.4 kernel=2.0
+PROFILE	stations	1.166667
+PROFILE	collide	0.275
+PROFILE	occluders	1.316667
+PROFILE	structureTop	6.341667
+PROFILE	hud	1.716667
+PROFILE	terrain	3.3
+PROFILE	tilt	0.5583333
+PROFILE	machines	3.216667
+PROFILE	roadCover	2.3
+PROFILE	machineAudio	2.583333
+PROFILE	structureUnder	0.4166667
+PROFILE	ballAudio	0.1416667
+PROFILE	wind	1.166667
+PROFILE	support	1.233333
+BENCH BEGIN	44
+SCENE	55	mechanism	15	gate
+BENCH route=44 frames=119 fps=18.78 frame95=56.00 frameMax=63.00 cpu95=53.00 cpuMax=57.00 cacheMiss=0 chunks=94 luaKB=1812
+STATS	GC=2.0 audio=2.4 game=90.6 idle=4.8 kernel=0.2
+PROFILE	stations	4.875
+PROFILE	occluders	1.925
+PROFILE	collide	3.391667
+PROFILE	mask	1.883333
+PROFILE	structureTop	13.68333
+PROFILE	hud	1.683333
+PROFILE	terrain	3.475
+PROFILE	tilt	0.7166666
+PROFILE	machines	7.0
+PROFILE	roadCover	5.05
+PROFILE	machineAudio	3.341667
+PROFILE	structureUnder	0.6666667
+PROFILE	ballAudio	0.1833333
+PROFILE	wind	1.416667
+PROFILE	support	1.791667
+BENCH BEGIN	44
+SCENE	56	mechanism	16	gate
+BENCH route=44 frames=119 fps=18.88 frame95=56.00 frameMax=58.00 cpu95=53.00 cpuMax=54.00 cacheMiss=0 chunks=94 luaKB=1936
+STATS	GC=2.0 audio=2.4 game=91.6 idle=3.8 kernel=0.2
+PROFILE	stations	4.75
+PROFILE	occluders	1.966667
+PROFILE	collide	3.333333
+PROFILE	mask	2.225
+PROFILE	structureTop	13.61667
+PROFILE	hud	1.591667
+PROFILE	terrain	3.291667
+PROFILE	tilt	0.6416667
+PROFILE	machines	7.025
+PROFILE	roadCover	5.0
+PROFILE	machineAudio	3.366667
+PROFILE	structureUnder	0.65
+PROFILE	ballAudio	0.2166667
+PROFILE	wind	1.366667
+PROFILE	support	1.841667
+BENCH BEGIN	44
+SCENE	57	mechanism	17	gate
+BENCH route=44 frames=119 fps=18.90 frame95=55.00 frameMax=57.00 cpu95=52.00 cpuMax=54.00 cacheMiss=0 chunks=94 luaKB=2065
+STATS	GC=2.0 audio=2.2 game=90.8 idle=4.8 kernel=0.2
+PROFILE	stations	4.808333
+PROFILE	occluders	2.183333
+PROFILE	collide	3.358333
+PROFILE	mask	1.591667
+PROFILE	structureTop	13.725
+PROFILE	hud	1.675
+PROFILE	terrain	3.55
+PROFILE	tilt	0.5916666
+PROFILE	machines	7.058333
+PROFILE	roadCover	4.958333
+PROFILE	machineAudio	3.2
+PROFILE	structureUnder	0.7
+PROFILE	ballAudio	0.2166667
+PROFILE	wind	1.466667
+PROFILE	support	1.833333
+BENCH BEGIN	44
+SCENE	58	pad	1	lift
+BENCH route=44 frames=119 fps=29.74 frame95=38.00 frameMax=43.00 cpu95=27.00 cpuMax=28.00 cacheMiss=0 chunks=94 luaKB=1699
+STATS	GC=16.2 audio=2.0 game=75.6 idle=5.6 kernel=0.6
+PROFILE	stations	2.658333
+PROFILE	structureTop	2.525
+PROFILE	hud	1.633333
+PROFILE	terrain	4.808333
+PROFILE	tilt	0.475
+PROFILE	machines	0.7666667
+PROFILE	occluders	1.55
+PROFILE	machineAudio	2.125
+PROFILE	roadCover	1.4
+PROFILE	ballAudio	0.1833333
+PROFILE	structureUnder	1.591667
+PROFILE	support	0.4083333
+BENCH BEGIN	44
+SCENE	59	pad	2	cannon
+BENCH route=44 frames=119 fps=29.97 frame95=35.00 frameMax=40.00 cpu95=27.00 cpuMax=29.00 cacheMiss=0 chunks=94 luaKB=1676
+STATS	GC=17.2 audio=3.0 game=75.2 idle=4.2 kernel=0.4
+PROFILE	stations	8.016666
+PROFILE	structureTop	1.766667
+PROFILE	hud	1.666667
+PROFILE	terrain	4.65
+PROFILE	tilt	0.6083333
+PROFILE	machines	0.8
+PROFILE	machineAudio	1.925
+PROFILE	roadCover	1.175
+PROFILE	ballAudio	0.1
+PROFILE	structureUnder	0.9166667
+PROFILE	support	0.4583333
+BENCH BEGIN	44
+SCENE	60	pad	3	bridge
+BENCH route=44 frames=119 fps=29.98 frame95=35.00 frameMax=40.00 cpu95=27.00 cpuMax=27.00 cacheMiss=0 chunks=94 luaKB=1695
+STATS	GC=16.8 audio=3.0 game=74.8 idle=5.0 kernel=0.4
+PROFILE	stations	2.525
+PROFILE	structureTop	4.283333
+PROFILE	hud	1.591667
+PROFILE	terrain	3.333333
+PROFILE	tilt	0.625
+PROFILE	machines	1.525
+PROFILE	occluders	1.175
+PROFILE	machineAudio	2.35
+PROFILE	roadCover	2.308333
+PROFILE	ballAudio	0.2166667
+PROFILE	structureUnder	1.183333
+PROFILE	support	0.6583334
+BENCH BEGIN	44
+SCENE	61	pad	4	slider
+BENCH route=44 frames=119 fps=29.41 frame95=37.00 frameMax=52.00 cpu95=32.00 cpuMax=35.00 cacheMiss=0 chunks=94 luaKB=1753
+STATS	GC=3.6 audio=2.0 game=89.6 idle=4.2 kernel=0.6
+PROFILE	stations	2.116667
+PROFILE	structureTop	10.06667
+PROFILE	hud	1.7
+PROFILE	terrain	2.95
+PROFILE	tilt	0.6166667
+PROFILE	machines	6.0
+PROFILE	occluders	1.283333
+PROFILE	machineAudio	2.191667
+PROFILE	roadCover	2.991667
+PROFILE	ballAudio	0.1833333
+PROFILE	structureUnder	2.158333
+PROFILE	support	0.4666667
+BENCH BEGIN	44
+SCENE	62	pad	5	fan
+BENCH route=44 frames=119 fps=25.83 frame95=41.00 frameMax=43.00 cpu95=38.00 cpuMax=41.00 cacheMiss=0 chunks=94 luaKB=1965
+STATS	GC=2.4 audio=3.2 game=88.4 idle=5.8 kernel=0.2
+PROFILE	stations	2.891667
+PROFILE	structureTop	12.16667
+PROFILE	hud	1.716667
+PROFILE	terrain	3.091667
+PROFILE	tilt	0.6333333
+PROFILE	machines	7.583333
+PROFILE	occluders	1.741667
+PROFILE	machineAudio	3.341667
+PROFILE	roadCover	3.216667
+PROFILE	ballAudio	0.1666667
+PROFILE	structureUnder	2.308333
+PROFILE	support	0.5416667
+BENCH BEGIN	44
+SCENE	63	pad	6	extend
+BENCH route=44 frames=119 fps=22.08 frame95=50.00 frameMax=52.00 cpu95=47.00 cpuMax=49.00 cacheMiss=0 chunks=94 luaKB=2182
+STATS	GC=2.2 audio=3.4 game=90.2 idle=4.0 kernel=0.2
+PROFILE	stations	4.816667
+PROFILE	structureTop	19.44167
+PROFILE	hud	1.741667
+PROFILE	terrain	3.191667
+PROFILE	tilt	0.4666667
+PROFILE	machines	12.66667
+PROFILE	occluders	1.658333
+PROFILE	machineAudio	3.458333
+PROFILE	roadCover	4.908333
+PROFILE	ballAudio	0.175
+PROFILE	structureUnder	0.6666667
+PROFILE	support	0.675
+BENCH BEGIN	44
+SCENE	64	pad	7	switch
+BENCH route=44 frames=119 fps=24.48 frame95=43.00 frameMax=48.00 cpu95=41.00 cpuMax=45.00 cacheMiss=0 chunks=94 luaKB=2333
+STATS	GC=2.2 audio=2.0 game=92.4 idle=3.2 kernel=0.2
+PROFILE	stations	4.791667
+PROFILE	structureTop	14.16667
+PROFILE	hud	1.583333
+PROFILE	terrain	3.516667
+PROFILE	tilt	0.4
+PROFILE	machines	6.633333
+PROFILE	occluders	2.008333
+PROFILE	machineAudio	3.75
+PROFILE	roadCover	5.758333
+PROFILE	ballAudio	0.1833333
+PROFILE	structureUnder	0.55
+PROFILE	support	0.35
+BENCH COMPLETE

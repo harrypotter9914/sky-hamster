@@ -1,0 +1,1223 @@
+run /Games/sky-hamster-tilt.pdx
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH PLAN courses=44 scenes=303
+BENCH BEGIN	1
+SCENE	1	road	0	traverse
+BENCH route=1 frames=179 fps=30.13 frame95=36.00 frameMax=37.00 cpu95=22.00 cpuMax=25.00 cacheMiss=0 chunks=13 luaKB=1045
+STATS	table: 0x900fbd50
+BENCH BEGIN	1
+SCENE	2	normal	0	traverse
+BENCH route=1 frames=119 fps=30.19 frame95=36.00 frameMax=37.00 cpu95=18.00 cpuMax=20.00 cacheMiss=0 chunks=13 luaKB=1041
+STATS	table: 0x9001eec0
+BENCH BEGIN	1
+SCENE	3	normal	0	traverse
+BENCH route=1 frames=119 fps=30.24 frame95=36.00 frameMax=37.00 cpu95=18.00 cpuMax=20.00 cacheMiss=0 chunks=13 luaKB=1044
+STATS	table: 0x90327660
+BENCH BEGIN	1
+SCENE	4	normal	0	traverse
+BENCH route=1 frames=119 fps=30.12 frame95=36.00 frameMax=39.00 cpu95=20.00 cpuMax=20.00 cacheMiss=0 chunks=13 luaKB=1042
+STATS	table: 0x90039aa0
+BENCH BEGIN	2
+SCENE	5	road	0	traverse
+BENCH route=2 frames=179 fps=30.04 frame95=36.00 frameMax=38.00 cpu95=26.00 cpuMax=30.00 cacheMiss=0 chunks=12 luaKB=1084
+STATS	table: 0x9030fa70
+BENCH BEGIN	2
+SCENE	6	normal	0	traverse
+BENCH route=2 frames=119 fps=30.07 frame95=36.00 frameMax=43.00 cpu95=25.00 cpuMax=27.00 cacheMiss=0 chunks=12 luaKB=1084
+STATS	table: 0x90077500
+BENCH BEGIN	2
+SCENE	7	normal	0	traverse
+BENCH route=2 frames=119 fps=30.03 frame95=37.00 frameMax=40.00 cpu95=27.00 cpuMax=28.00 cacheMiss=0 chunks=12 luaKB=1081
+STATS	table: 0x90048b30
+BENCH BEGIN	2
+SCENE	8	normal	0	traverse
+BENCH route=2 frames=119 fps=30.16 frame95=36.00 frameMax=38.00 cpu95=19.00 cpuMax=20.00 cacheMiss=0 chunks=12 luaKB=1080
+STATS	table: 0x9016cf70
+BENCH BEGIN	3
+SCENE	9	road	0	traverse
+BENCH route=3 frames=179 fps=30.03 frame95=36.00 frameMax=39.00 cpu95=26.00 cpuMax=32.00 cacheMiss=0 chunks=12 luaKB=1128
+STATS	table: 0x900faee0
+BENCH BEGIN	3
+SCENE	10	normal	0	traverse
+BENCH route=3 frames=119 fps=30.12 frame95=36.00 frameMax=38.00 cpu95=28.00 cpuMax=28.00 cacheMiss=0 chunks=12 luaKB=1134
+STATS	table: 0x90317800
+BENCH BEGIN	3
+SCENE	11	normal	0	traverse
+BENCH route=3 frames=119 fps=30.02 frame95=36.00 frameMax=40.00 cpu95=26.00 cpuMax=28.00 cacheMiss=0 chunks=12 luaKB=1121
+STATS	table: 0x90336a10
+BENCH BEGIN	3
+SCENE	12	normal	0	traverse
+BENCH route=3 frames=119 fps=30.19 frame95=36.00 frameMax=40.00 cpu95=18.00 cpuMax=18.00 cacheMiss=0 chunks=12 luaKB=1123
+STATS	table: 0x9010bc00
+BENCH BEGIN	4
+SCENE	13	road	0	traverse
+BENCH route=4 frames=179 fps=30.07 frame95=35.00 frameMax=39.00 cpu95=26.00 cpuMax=31.00 cacheMiss=0 chunks=14 luaKB=1160
+STATS	table: 0x9034bad0
+BENCH BEGIN	4
+SCENE	14	normal	0	traverse
+BENCH route=4 frames=119 fps=30.16 frame95=36.00 frameMax=37.00 cpu95=26.00 cpuMax=28.00 cacheMiss=0 chunks=14 luaKB=1162
+STATS	table: 0x90311800
+BENCH BEGIN	4
+SCENE	15	normal	0	traverse
+BENCH route=4 frames=119 fps=30.15 frame95=37.00 frameMax=37.00 cpu95=20.00 cpuMax=21.00 cacheMiss=0 chunks=14 luaKB=1156
+STATS	table: 0x903353f0
+BENCH BEGIN	4
+SCENE	16	normal	0	traverse
+BENCH route=4 frames=119 fps=30.15 frame95=35.00 frameMax=37.00 cpu95=19.00 cpuMax=20.00 cacheMiss=0 chunks=14 luaKB=1159
+STATS	table: 0x90028ef0
+BENCH BEGIN	5
+SCENE	17	road	0	traverse
+BENCH route=5 frames=179 fps=30.12 frame95=35.00 frameMax=37.00 cpu95=20.00 cpuMax=28.00 cacheMiss=0 chunks=8 luaKB=1178
+STATS	table: 0x90079de0
+BENCH BEGIN	5
+SCENE	18	normal	0	traverse
+BENCH route=5 frames=119 fps=30.26 frame95=36.00 frameMax=38.00 cpu95=18.00 cpuMax=20.00 cacheMiss=0 chunks=8 luaKB=1181
+STATS	table: 0x90046210
+BENCH BEGIN	5
+SCENE	19	normal	0	traverse
+BENCH route=5 frames=119 fps=30.10 frame95=36.00 frameMax=40.00 cpu95=19.00 cpuMax=20.00 cacheMiss=0 chunks=8 luaKB=1177
+STATS	table: 0x9013c110
+BENCH BEGIN	5
+SCENE	20	normal	0	traverse
+BENCH route=5 frames=119 fps=30.10 frame95=36.00 frameMax=39.00 cpu95=22.00 cpuMax=23.00 cacheMiss=0 chunks=8 luaKB=1177
+STATS	table: 0x9017ffb0
+BENCH BEGIN	6
+SCENE	21	road	0	traverse
+BENCH route=6 frames=179 fps=30.12 frame95=36.00 frameMax=37.00 cpu95=20.00 cpuMax=26.00 cacheMiss=0 chunks=9 luaKB=1207
+STATS	table: 0x9034bad0
+BENCH BEGIN	6
+SCENE	22	normal	0	traverse
+BENCH route=6 frames=119 fps=30.15 frame95=36.00 frameMax=39.00 cpu95=18.00 cpuMax=20.00 cacheMiss=0 chunks=9 luaKB=1202
+STATS	table: 0x9032ecb0
+BENCH BEGIN	6
+SCENE	23	normal	0	traverse
+BENCH route=6 frames=119 fps=30.17 frame95=36.00 frameMax=37.00 cpu95=19.00 cpuMax=20.00 cacheMiss=0 chunks=9 luaKB=1202
+STATS	table: 0x9004beb0
+BENCH BEGIN	6
+SCENE	24	normal	0	traverse
+BENCH route=6 frames=119 fps=30.10 frame95=36.00 frameMax=40.00 cpu95=18.00 cpuMax=20.00 cacheMiss=0 chunks=9 luaKB=1205
+STATS	table: 0x90035e40
+BENCH BEGIN	7
+SCENE	25	road	0	traverse
+BENCH route=7 frames=179 fps=30.06 frame95=36.00 frameMax=38.00 cpu95=21.00 cpuMax=32.00 cacheMiss=0 chunks=15 luaKB=1258
+STATS	table: 0x90346ef0
+BENCH BEGIN	7
+SCENE	26	normal	0	traverse
+BENCH route=7 frames=119 fps=30.16 frame95=36.00 frameMax=36.00 cpu95=19.00 cpuMax=21.00 cacheMiss=0 chunks=15 luaKB=1253
+STATS	table: 0x90348800
+BENCH BEGIN	7
+SCENE	27	normal	0	traverse
+BENCH route=7 frames=119 fps=30.11 frame95=36.00 frameMax=38.00 cpu95=19.00 cpuMax=20.00 cacheMiss=0 chunks=15 luaKB=1256
+STATS	table: 0x9008a7f0
+BENCH BEGIN	7
+SCENE	28	normal	0	traverse
+BENCH route=7 frames=119 fps=30.24 frame95=36.00 frameMax=38.00 cpu95=18.00 cpuMax=19.00 cacheMiss=0 chunks=15 luaKB=1256
+STATS	table: 0x90026ba0
+BENCH BEGIN	8
+SCENE	29	road	0	traverse
+BENCH route=8 frames=179 fps=30.06 frame95=36.00 frameMax=39.00 cpu95=21.00 cpuMax=37.00 cacheMiss=0 chunks=18 luaKB=1314
+STATS	table: 0x900cd170
+BENCH BEGIN	8
+SCENE	30	normal	0	traverse
+BENCH route=8 frames=119 fps=30.08 frame95=36.00 frameMax=39.00 cpu95=19.00 cpuMax=19.00 cacheMiss=0 chunks=18 luaKB=1313
+STATS	table: 0x90371350
+BENCH BEGIN	8
+SCENE	31	normal	0	traverse
+BENCH route=8 frames=119 fps=30.25 frame95=35.00 frameMax=37.00 cpu95=19.00 cpuMax=20.00 cacheMiss=0 chunks=18 luaKB=1311
+STATS	table: 0x9037e090
+BENCH BEGIN	8
+SCENE	32	normal	0	traverse
+BENCH route=8 frames=119 fps=30.21 frame95=35.00 frameMax=38.00 cpu95=18.00 cpuMax=19.00 cacheMiss=0 chunks=18 luaKB=1312
+STATS	table: 0x903528a0
+BENCH BEGIN	9
+SCENE	33	road	0	traverse
+BENCH route=9 frames=179 fps=29.96 frame95=35.00 frameMax=47.00 cpu95=27.00 cpuMax=45.00 cacheMiss=0 chunks=12 luaKB=1364
+STATS	table: 0x9032ee80
+BENCH BEGIN	9
+SCENE	34	normal	0	traverse
+BENCH route=9 frames=119 fps=30.16 frame95=36.00 frameMax=39.00 cpu95=21.00 cpuMax=21.00 cacheMiss=0 chunks=12 luaKB=1358
+STATS	table: 0x9011f8f0
+BENCH BEGIN	9
+SCENE	35	normal	0	traverse
+BENCH route=9 frames=119 fps=30.10 frame95=36.00 frameMax=43.00 cpu95=24.00 cpuMax=25.00 cacheMiss=0 chunks=12 luaKB=1359
+STATS	table: 0x90337730
+BENCH BEGIN	9
+SCENE	36	normal	0	traverse
+BENCH route=9 frames=119 fps=30.13 frame95=36.00 frameMax=40.00 cpu95=20.00 cpuMax=21.00 cacheMiss=0 chunks=12 luaKB=1356
+STATS	table: 0x903451d0
+BENCH BEGIN	9
+SCENE	37	mechanism	1	gate
+BENCH route=9 frames=119 fps=30.13 frame95=36.00 frameMax=37.00 cpu95=27.00 cpuMax=28.00 cacheMiss=0 chunks=12 luaKB=1372
+STATS	table: 0x9010e300
+BENCH BEGIN	10
+SCENE	38	road	0	traverse
+BENCH route=10 frames=179 fps=29.98 frame95=35.00 frameMax=41.00 cpu95=27.00 cpuMax=30.00 cacheMiss=0 chunks=12 luaKB=1395
+STATS	table: 0x900373f0
+BENCH BEGIN	10
+SCENE	39	normal	0	traverse
+BENCH route=10 frames=119 fps=29.97 frame95=36.00 frameMax=42.00 cpu95=24.00 cpuMax=25.00 cacheMiss=0 chunks=12 luaKB=1394
+STATS	table: 0x900635c0
+BENCH BEGIN	10
+SCENE	40	normal	0	traverse
+BENCH route=10 frames=119 fps=30.03 frame95=35.00 frameMax=40.00 cpu95=27.00 cpuMax=28.00 cacheMiss=0 chunks=12 luaKB=1391
+STATS	table: 0x90055e50
+BENCH BEGIN	10
+SCENE	41	normal	0	traverse
+BENCH route=10 frames=119 fps=30.08 frame95=36.00 frameMax=38.00 cpu95=22.00 cpuMax=24.00 cacheMiss=0 chunks=12 luaKB=1392
+STATS	table: 0x90350900
+BENCH BEGIN	10
+SCENE	42	mechanism	1	trap
+BENCH route=10 frames=119 fps=30.09 frame95=36.00 frameMax=37.00 cpu95=19.00 cpuMax=19.00 cacheMiss=0 chunks=12 luaKB=1392
+STATS	table: 0x90090020
+BENCH BEGIN	10
+SCENE	43	mechanism	2	trap
+BENCH route=10 frames=119 fps=30.04 frame95=35.00 frameMax=38.00 cpu95=26.00 cpuMax=26.00 cacheMiss=0 chunks=12 luaKB=1395
+STATS	table: 0x90351a70
+BENCH BEGIN	11
+SCENE	44	road	0	traverse
+BENCH route=11 frames=179 fps=30.01 frame95=35.00 frameMax=40.00 cpu95=27.00 cpuMax=30.00 cacheMiss=2 chunks=9 luaKB=1433
+STATS	table: 0x901d03f0
+BENCH BEGIN	11
+SCENE	45	normal	0	traverse
+BENCH route=11 frames=119 fps=30.05 frame95=36.00 frameMax=40.00 cpu95=23.00 cpuMax=26.00 cacheMiss=2 chunks=9 luaKB=1414
+STATS	table: 0x90337970
+BENCH BEGIN	11
+SCENE	46	normal	0	traverse
+BENCH route=11 frames=119 fps=30.04 frame95=36.00 frameMax=40.00 cpu95=25.00 cpuMax=26.00 cacheMiss=2 chunks=9 luaKB=1408
+STATS	table: 0x903c9e60
+BENCH BEGIN	11
+SCENE	47	normal	0	traverse
+BENCH route=11 frames=119 fps=30.09 frame95=35.00 frameMax=37.00 cpu95=26.00 cpuMax=27.00 cacheMiss=2 chunks=9 luaKB=1414
+STATS	table: 0x9035ed90
+BENCH BEGIN	11
+SCENE	48	mechanism	1	ferry
+BENCH route=11 frames=119 fps=29.97 frame95=35.00 frameMax=44.00 cpu95=25.00 cpuMax=27.00 cacheMiss=2 chunks=9 luaKB=1411
+STATS	table: 0x903ca9d0
+BENCH BEGIN	12
+SCENE	49	road	0	traverse
+BENCH route=12 frames=179 fps=29.95 frame95=36.00 frameMax=42.00 cpu95=27.00 cpuMax=39.00 cacheMiss=0 chunks=11 luaKB=1461
+STATS	table: 0x903c8230
+BENCH BEGIN	12
+SCENE	50	normal	0	traverse
+BENCH route=12 frames=119 fps=29.98 frame95=35.00 frameMax=42.00 cpu95=25.00 cpuMax=28.00 cacheMiss=0 chunks=11 luaKB=1449
+STATS	table: 0x903e17f0
+BENCH BEGIN	12
+SCENE	51	normal	0	traverse
+BENCH route=12 frames=119 fps=30.01 frame95=35.00 frameMax=38.00 cpu95=27.00 cpuMax=29.00 cacheMiss=0 chunks=11 luaKB=1468
+STATS	table: 0x90085940
+BENCH BEGIN	12
+SCENE	52	normal	0	traverse
+BENCH route=12 frames=119 fps=30.07 frame95=36.00 frameMax=37.00 cpu95=20.00 cpuMax=21.00 cacheMiss=0 chunks=11 luaKB=1446
+STATS	table: 0x90055e50
+BENCH BEGIN	12
+SCENE	53	mechanism	1	rotor
+BENCH route=12 frames=119 fps=30.06 frame95=35.00 frameMax=39.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=11 luaKB=1454
+STATS	table: 0x903c9f70
+run /Games/sky-hamster-tilt.pdx
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH PLAN courses=44 scenes=250
+BENCH BEGIN	13
+SCENE	1	road	0	traverse
+BENCH route=13 frames=179 fps=29.24 frame95=38.00 frameMax=42.00 cpu95=35.00 cpuMax=39.00 cacheMiss=0 chunks=16 luaKB=1155
+STATS	table: 0x9012a900
+BENCH BEGIN	13
+SCENE	2	normal	0	traverse
+BENCH route=13 frames=119 fps=29.57 frame95=36.00 frameMax=47.00 cpu95=33.00 cpuMax=40.00 cacheMiss=0 chunks=16 luaKB=1198
+STATS	table: 0x9035ba60
+BENCH BEGIN	13
+SCENE	3	normal	0	traverse
+BENCH route=13 frames=119 fps=29.45 frame95=36.00 frameMax=38.00 cpu95=33.00 cpuMax=34.00 cacheMiss=0 chunks=16 luaKB=1180
+STATS	table: 0x90118480
+BENCH BEGIN	13
+SCENE	4	normal	0	traverse
+BENCH route=13 frames=119 fps=30.12 frame95=36.00 frameMax=40.00 cpu95=24.00 cpuMax=25.00 cacheMiss=0 chunks=16 luaKB=1126
+STATS	table: 0x903879a0
+BENCH BEGIN	13
+SCENE	5	mechanism	1	sweeper
+BENCH route=13 frames=119 fps=29.70 frame95=37.00 frameMax=38.00 cpu95=32.00 cpuMax=34.00 cacheMiss=0 chunks=16 luaKB=1141
+STATS	table: 0x90328fa0
+BENCH BEGIN	13
+SCENE	6	mechanism	2	sweeper
+BENCH route=13 frames=119 fps=29.21 frame95=36.00 frameMax=38.00 cpu95=34.00 cpuMax=36.00 cacheMiss=0 chunks=16 luaKB=1379
+STATS	table: 0x903b7470
+BENCH BEGIN	14
+SCENE	7	road	0	traverse
+BENCH route=14 frames=179 fps=29.77 frame95=35.00 frameMax=90.00 cpu95=27.00 cpuMax=88.00 cacheMiss=0 chunks=14 luaKB=1198
+STATS	table: 0x9015e7a0
+BENCH BEGIN	14
+SCENE	8	normal	0	traverse
+BENCH route=14 frames=119 fps=30.11 frame95=36.00 frameMax=38.00 cpu95=24.00 cpuMax=24.00 cacheMiss=0 chunks=14 luaKB=1187
+STATS	table: 0x90180490
+BENCH BEGIN	14
+SCENE	9	normal	0	traverse
+BENCH route=14 frames=119 fps=30.00 frame95=35.00 frameMax=39.00 cpu95=25.00 cpuMax=27.00 cacheMiss=0 chunks=14 luaKB=1187
+STATS	table: 0x90095650
+BENCH BEGIN	14
+SCENE	10	normal	0	traverse
+BENCH route=14 frames=119 fps=30.03 frame95=35.00 frameMax=43.00 cpu95=28.00 cpuMax=30.00 cacheMiss=0 chunks=14 luaKB=1186
+STATS	table: 0x90097db0
+BENCH BEGIN	14
+SCENE	11	mechanism	1	bumper
+BENCH route=14 frames=119 fps=30.07 frame95=35.00 frameMax=41.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=14 luaKB=1189
+STATS	table: 0x90097bf0
+BENCH BEGIN	14
+SCENE	12	mechanism	2	bumper
+BENCH route=14 frames=119 fps=30.05 frame95=35.00 frameMax=38.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=14 luaKB=1190
+STATS	table: 0x90095210
+BENCH BEGIN	14
+SCENE	13	mechanism	3	bumper
+BENCH route=14 frames=119 fps=30.00 frame95=36.00 frameMax=39.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=14 luaKB=1190
+STATS	table: 0x90180540
+BENCH BEGIN	15
+SCENE	14	road	0	traverse
+BENCH route=15 frames=179 fps=29.29 frame95=38.00 frameMax=60.00 cpu95=35.00 cpuMax=58.00 cacheMiss=0 chunks=24 luaKB=1314
+STATS	table: 0x900ecd60
+BENCH BEGIN	15
+SCENE	15	normal	0	traverse
+BENCH route=15 frames=119 fps=30.09 frame95=35.00 frameMax=39.00 cpu95=23.00 cpuMax=24.00 cacheMiss=0 chunks=24 luaKB=1306
+STATS	table: 0x90095650
+BENCH BEGIN	15
+SCENE	16	normal	0	traverse
+BENCH route=15 frames=119 fps=30.00 frame95=35.00 frameMax=38.00 cpu95=30.00 cpuMax=31.00 cacheMiss=0 chunks=24 luaKB=1316
+STATS	table: 0x903be430
+BENCH BEGIN	15
+SCENE	17	normal	0	traverse
+BENCH route=15 frames=119 fps=30.10 frame95=35.00 frameMax=38.00 cpu95=24.00 cpuMax=26.00 cacheMiss=0 chunks=24 luaKB=1303
+STATS	table: 0x903efc00
+BENCH BEGIN	15
+SCENE	18	mechanism	1	bumper
+BENCH route=15 frames=119 fps=27.09 frame95=39.00 frameMax=40.00 cpu95=36.00 cpuMax=38.00 cacheMiss=0 chunks=24 luaKB=1358
+STATS	table: 0x9033c490
+BENCH BEGIN	15
+SCENE	19	mechanism	2	bumper
+BENCH route=15 frames=119 fps=29.85 frame95=35.00 frameMax=42.00 cpu95=31.00 cpuMax=32.00 cacheMiss=0 chunks=24 luaKB=1337
+STATS	table: 0x903bb3e0
+BENCH BEGIN	15
+SCENE	20	mechanism	3	bumper
+BENCH route=15 frames=119 fps=30.00 frame95=35.00 frameMax=37.00 cpu95=29.00 cpuMax=30.00 cacheMiss=0 chunks=24 luaKB=1316
+STATS	table: 0x90078090
+BENCH BEGIN	15
+SCENE	21	mechanism	4	bumper
+BENCH route=15 frames=119 fps=29.97 frame95=35.00 frameMax=40.00 cpu95=29.00 cpuMax=30.00 cacheMiss=0 chunks=24 luaKB=1311
+STATS	table: 0x90098190
+BENCH BEGIN	15
+SCENE	22	mechanism	5	bumper
+BENCH route=15 frames=119 fps=30.02 frame95=35.00 frameMax=42.00 cpu95=25.00 cpuMax=27.00 cacheMiss=0 chunks=24 luaKB=1308
+STATS	table: 0x900d41f0
+BENCH BEGIN	16
+SCENE	23	road	0	traverse
+BENCH route=16 frames=179 fps=29.85 frame95=37.00 frameMax=55.00 cpu95=26.00 cpuMax=53.00 cacheMiss=0 chunks=15 luaKB=1371
+STATS	table: 0x903f0590
+BENCH BEGIN	16
+SCENE	24	normal	0	traverse
+BENCH route=16 frames=119 fps=29.62 frame95=37.00 frameMax=64.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=15 luaKB=1372
+STATS	table: 0x903ef0f0
+BENCH BEGIN	16
+SCENE	25	normal	0	traverse
+BENCH route=16 frames=119 fps=29.89 frame95=36.00 frameMax=46.00 cpu95=25.00 cpuMax=27.00 cacheMiss=0 chunks=15 luaKB=1386
+STATS	table: 0x9035c940
+BENCH BEGIN	16
+SCENE	26	normal	0	traverse
+BENCH route=16 frames=119 fps=29.88 frame95=37.00 frameMax=63.00 cpu95=23.00 cpuMax=25.00 cacheMiss=0 chunks=15 luaKB=1352
+STATS	table: 0x900d4bd0
+BENCH BEGIN	16
+SCENE	27	mechanism	1	fan
+BENCH route=16 frames=119 fps=29.65 frame95=36.00 frameMax=57.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=15 luaKB=1379
+STATS	table: 0x90358900
+BENCH BEGIN	17
+SCENE	28	road	0	traverse
+BENCH route=17 frames=179 fps=29.63 frame95=36.00 frameMax=109.00 cpu95=25.00 cpuMax=107.00 cacheMiss=0 chunks=9 luaKB=1373
+STATS	table: 0x900d6bf0
+BENCH BEGIN	17
+SCENE	29	normal	0	traverse
+BENCH route=17 frames=119 fps=30.09 frame95=35.00 frameMax=40.00 cpu95=24.00 cpuMax=25.00 cacheMiss=0 chunks=9 luaKB=1374
+STATS	table: 0x900d97a0
+BENCH BEGIN	17
+SCENE	30	normal	0	traverse
+BENCH route=17 frames=119 fps=30.07 frame95=35.00 frameMax=40.00 cpu95=24.00 cpuMax=25.00 cacheMiss=0 chunks=9 luaKB=1371
+STATS	table: 0x90379d30
+BENCH BEGIN	17
+SCENE	31	normal	0	traverse
+BENCH route=17 frames=119 fps=30.20 frame95=35.00 frameMax=39.00 cpu95=21.00 cpuMax=22.00 cacheMiss=0 chunks=9 luaKB=1374
+STATS	table: 0x903fc860
+BENCH BEGIN	17
+SCENE	32	mechanism	1	rotor
+BENCH route=17 frames=119 fps=30.07 frame95=35.00 frameMax=38.00 cpu95=27.00 cpuMax=28.00 cacheMiss=0 chunks=9 luaKB=1407
+STATS	table: 0x90362190
+BENCH BEGIN	17
+SCENE	33	pad	1	bridge
+BENCH route=17 frames=119 fps=30.07 frame95=37.00 frameMax=41.00 cpu95=21.00 cpuMax=27.00 cacheMiss=0 chunks=9 luaKB=1389
+STATS	table: 0x90375110
+BENCH BEGIN	18
+SCENE	34	road	0	traverse
+BENCH route=18 frames=179 fps=29.93 frame95=35.00 frameMax=54.00 cpu95=28.00 cpuMax=51.00 cacheMiss=1 chunks=18 luaKB=1453
+STATS	table: 0x900da5c0
+BENCH BEGIN	18
+SCENE	35	normal	0	traverse
+BENCH route=18 frames=119 fps=30.08 frame95=35.00 frameMax=41.00 cpu95=26.00 cpuMax=27.00 cacheMiss=1 chunks=18 luaKB=1461
+STATS	table: 0x900d4690
+BENCH BEGIN	18
+SCENE	36	normal	0	traverse
+BENCH route=18 frames=119 fps=30.02 frame95=35.00 frameMax=43.00 cpu95=25.00 cpuMax=26.00 cacheMiss=1 chunks=18 luaKB=1451
+STATS	table: 0x900d4f90
+BENCH BEGIN	18
+SCENE	37	normal	0	traverse
+BENCH route=18 frames=119 fps=30.06 frame95=35.00 frameMax=40.00 cpu95=25.00 cpuMax=26.00 cacheMiss=1 chunks=18 luaKB=1455
+STATS	table: 0x900d9430
+BENCH BEGIN	18
+SCENE	38	mechanism	1	rotor
+BENCH route=18 frames=119 fps=29.94 frame95=35.00 frameMax=37.00 cpu95=29.00 cpuMax=30.00 cacheMiss=1 chunks=18 luaKB=1490
+STATS	table: 0x90063570
+BENCH BEGIN	18
+SCENE	39	mechanism	2	rotor
+BENCH route=18 frames=119 fps=29.97 frame95=36.00 frameMax=39.00 cpu95=28.00 cpuMax=30.00 cacheMiss=1 chunks=18 luaKB=1494
+STATS	table: 0x90328fa0
+BENCH BEGIN	18
+SCENE	40	pad	1	bridge
+BENCH route=18 frames=119 fps=30.04 frame95=36.00 frameMax=39.00 cpu95=22.00 cpuMax=30.00 cacheMiss=1 chunks=18 luaKB=1461
+STATS	table: 0x9034f890
+BENCH BEGIN	18
+SCENE	41	pad	2	bridge
+BENCH route=18 frames=119 fps=30.07 frame95=36.00 frameMax=39.00 cpu95=23.00 cpuMax=24.00 cacheMiss=1 chunks=18 luaKB=1470
+STATS	table: 0x9035a410
+BENCH BEGIN	19
+SCENE	42	road	0	traverse
+BENCH route=19 frames=179 fps=29.69 frame95=37.00 frameMax=41.00 cpu95=31.00 cpuMax=35.00 cacheMiss=0 chunks=9 luaKB=1506
+STATS	table: 0x9002ba50
+BENCH BEGIN	19
+SCENE	43	normal	0	traverse
+BENCH route=19 frames=119 fps=29.75 frame95=36.00 frameMax=54.00 cpu95=30.00 cpuMax=31.00 cacheMiss=0 chunks=9 luaKB=1536
+STATS	table: 0x90578030
+BENCH BEGIN	19
+SCENE	44	normal	0	traverse
+BENCH route=19 frames=119 fps=29.74 frame95=36.00 frameMax=39.00 cpu95=29.00 cpuMax=30.00 cacheMiss=0 chunks=9 luaKB=1495
+STATS	table: 0x903c6490
+BENCH BEGIN	19
+SCENE	45	normal	0	traverse
+BENCH route=19 frames=119 fps=29.90 frame95=37.00 frameMax=51.00 cpu95=26.00 cpuMax=28.00 cacheMiss=0 chunks=9 luaKB=1483
+STATS	table: 0x900da020
+BENCH BEGIN	19
+SCENE	46	mechanism	1	lift
+BENCH route=19 frames=119 fps=29.74 frame95=36.00 frameMax=39.00 cpu95=29.00 cpuMax=37.00 cacheMiss=0 chunks=9 luaKB=1507
+STATS	table: 0x90576330
+BENCH BEGIN	19
+SCENE	47	pad	1	lift
+BENCH route=19 frames=119 fps=29.88 frame95=35.00 frameMax=47.00 cpu95=28.00 cpuMax=28.00 cacheMiss=0 chunks=9 luaKB=1506
+STATS	table: 0x9034d4a0
+BENCH BEGIN	20
+SCENE	48	road	0	traverse
+BENCH route=20 frames=179 fps=27.71 frame95=41.00 frameMax=46.00 cpu95=39.00 cpuMax=44.00 cacheMiss=0 chunks=20 luaKB=1615
+STATS	table: 0x90313ce0
+BENCH BEGIN	20
+SCENE	49	normal	0	traverse
+BENCH route=20 frames=119 fps=29.48 frame95=37.00 frameMax=38.00 cpu95=34.00 cpuMax=35.00 cacheMiss=0 chunks=20 luaKB=1714
+STATS	table: 0x9041b0f0
+BENCH BEGIN	20
+SCENE	50	normal	0	traverse
+BENCH route=20 frames=119 fps=28.59 frame95=37.00 frameMax=38.00 cpu95=33.00 cpuMax=34.00 cacheMiss=0 chunks=20 luaKB=1663
+STATS	table: 0x90579780
+BENCH BEGIN	20
+SCENE	51	normal	0	traverse
+BENCH route=20 frames=119 fps=29.68 frame95=36.00 frameMax=58.00 cpu95=30.00 cpuMax=31.00 cacheMiss=0 chunks=20 luaKB=1548
+STATS	table: 0x903bac10
+BENCH BEGIN	20
+SCENE	52	mechanism	1	lift
+BENCH route=20 frames=119 fps=29.32 frame95=36.00 frameMax=43.00 cpu95=33.00 cpuMax=40.00 cacheMiss=0 chunks=20 luaKB=1919
+STATS	table: 0x9045f450
+BENCH BEGIN	20
+SCENE	53	mechanism	2	lift
+BENCH route=20 frames=119 fps=28.72 frame95=38.00 frameMax=40.00 cpu95=32.00 cpuMax=33.00 cacheMiss=0 chunks=20 luaKB=1850
+STATS	table: 0x903b2420
+BENCH BEGIN	20
+SCENE	54	pad	1	lift
+BENCH route=20 frames=119 fps=29.54 frame95=36.00 frameMax=37.00 cpu95=31.00 cpuMax=33.00 cacheMiss=0 chunks=20 luaKB=1985
+STATS	table: 0x9044dc70
+BENCH BEGIN	20
+SCENE	55	pad	2	lift
+BENCH route=20 frames=119 fps=29.59 frame95=37.00 frameMax=38.00 cpu95=30.00 cpuMax=31.00 cacheMiss=0 chunks=20 luaKB=1944
+STATS	table: 0x90385140
+BENCH BEGIN	21
+SCENE	56	road	0	traverse
+BENCH route=21 frames=179 fps=29.82 frame95=36.00 frameMax=59.00 cpu95=30.00 cpuMax=56.00 cacheMiss=0 chunks=25 luaKB=1659
+STATS	table: 0x90331d60
+BENCH BEGIN	21
+SCENE	57	normal	0	traverse
+BENCH route=21 frames=119 fps=29.96 frame95=36.00 frameMax=39.00 cpu95=29.00 cpuMax=31.00 cacheMiss=0 chunks=25 luaKB=1658
+STATS	table: 0x9036ce40
+BENCH BEGIN	21
+SCENE	58	normal	0	traverse
+BENCH route=21 frames=119 fps=30.00 frame95=35.00 frameMax=39.00 cpu95=29.00 cpuMax=31.00 cacheMiss=0 chunks=25 luaKB=1648
+STATS	table: 0x903dc560
+BENCH BEGIN	21
+SCENE	59	normal	0	traverse
+BENCH route=21 frames=119 fps=30.05 frame95=36.00 frameMax=37.00 cpu95=26.00 cpuMax=28.00 cacheMiss=0 chunks=25 luaKB=1650
+STATS	table: 0x9048e740
+BENCH BEGIN	22
+SCENE	60	road	0	traverse
+BENCH route=22 frames=179 fps=30.00 frame95=35.00 frameMax=49.00 cpu95=26.00 cpuMax=47.00 cacheMiss=3 chunks=10 luaKB=1650
+STATS	table: 0x900ac350
+BENCH BEGIN	22
+SCENE	61	normal	0	traverse
+BENCH route=22 frames=119 fps=30.08 frame95=35.00 frameMax=40.00 cpu95=23.00 cpuMax=26.00 cacheMiss=3 chunks=10 luaKB=1647
+STATS	table: 0x90021880
+BENCH BEGIN	22
+SCENE	62	normal	0	traverse
+BENCH route=22 frames=119 fps=30.12 frame95=35.00 frameMax=39.00 cpu95=24.00 cpuMax=25.00 cacheMiss=3 chunks=10 luaKB=1651
+STATS	table: 0x904508c0
+BENCH BEGIN	22
+SCENE	63	normal	0	traverse
+BENCH route=22 frames=119 fps=30.09 frame95=35.00 frameMax=39.00 cpu95=20.00 cpuMax=21.00 cacheMiss=3 chunks=10 luaKB=1652
+STATS	table: 0x9037e870
+BENCH BEGIN	22
+SCENE	64	mechanism	1	ferry
+BENCH route=22 frames=119 fps=30.06 frame95=37.00 frameMax=39.00 cpu95=22.00 cpuMax=27.00 cacheMiss=3 chunks=10 luaKB=1660
+STATS	table: 0x9000ab20
+BENCH BEGIN	22
+SCENE	65	pad	1	slider
+BENCH route=22 frames=119 fps=30.17 frame95=36.00 frameMax=41.00 cpu95=20.00 cpuMax=23.00 cacheMiss=3 chunks=10 luaKB=1651
+STATS	table: 0x900d9d00
+BENCH BEGIN	23
+SCENE	66	road	0	traverse
+BENCH route=23 frames=179 fps=29.94 frame95=35.00 frameMax=50.00 cpu95=28.00 cpuMax=48.00 cacheMiss=1 chunks=17 luaKB=1725
+STATS	table: 0x9030de90
+BENCH BEGIN	23
+SCENE	67	normal	0	traverse
+BENCH route=23 frames=119 fps=30.04 frame95=35.00 frameMax=39.00 cpu95=25.00 cpuMax=28.00 cacheMiss=1 chunks=17 luaKB=1722
+STATS	table: 0x900af1f0
+BENCH BEGIN	23
+SCENE	68	normal	0	traverse
+BENCH route=23 frames=119 fps=29.98 frame95=35.00 frameMax=44.00 cpu95=27.00 cpuMax=28.00 cacheMiss=1 chunks=17 luaKB=1721
+STATS	table: 0x900ab8e0
+BENCH BEGIN	23
+SCENE	69	normal	0	traverse
+BENCH route=23 frames=119 fps=29.99 frame95=35.00 frameMax=40.00 cpu95=29.00 cpuMax=31.00 cacheMiss=1 chunks=17 luaKB=1717
+STATS	table: 0x900ade10
+BENCH BEGIN	23
+SCENE	70	mechanism	1	ferry
+BENCH route=23 frames=119 fps=30.02 frame95=35.00 frameMax=42.00 cpu95=24.00 cpuMax=29.00 cacheMiss=1 chunks=17 luaKB=1719
+STATS	table: 0x903dc560
+BENCH BEGIN	23
+SCENE	71	mechanism	2	ferry
+BENCH route=23 frames=119 fps=30.10 frame95=35.00 frameMax=39.00 cpu95=23.00 cpuMax=24.00 cacheMiss=1 chunks=17 luaKB=1722
+STATS	table: 0x9048d340
+BENCH BEGIN	23
+SCENE	72	pad	1	slider
+BENCH route=23 frames=119 fps=30.08 frame95=36.00 frameMax=41.00 cpu95=21.00 cpuMax=22.00 cacheMiss=1 chunks=17 luaKB=1730
+STATS	table: 0x90369920
+BENCH BEGIN	23
+SCENE	73	pad	2	slider
+BENCH route=23 frames=119 fps=30.12 frame95=37.00 frameMax=39.00 cpu95=23.00 cpuMax=24.00 cacheMiss=1 chunks=17 luaKB=1721
+STATS	table: 0x900acef0
+BENCH BEGIN	24
+SCENE	74	road	0	traverse
+BENCH route=24 frames=179 fps=29.77 frame95=36.00 frameMax=60.00 cpu95=28.00 cpuMax=57.00 cacheMiss=0 chunks=17 luaKB=1797
+STATS	table: 0x900acef0
+BENCH BEGIN	24
+SCENE	75	normal	0	traverse
+BENCH route=24 frames=119 fps=29.81 frame95=35.00 frameMax=59.00 cpu95=26.00 cpuMax=28.00 cacheMiss=0 chunks=17 luaKB=1843
+STATS	table: 0x9010e730
+BENCH BEGIN	24
+SCENE	76	normal	0	traverse
+BENCH route=24 frames=119 fps=29.74 frame95=36.00 frameMax=65.00 cpu95=26.00 cpuMax=26.00 cacheMiss=0 chunks=17 luaKB=1815
+STATS	table: 0x90037be0
+BENCH BEGIN	24
+SCENE	77	normal	0	traverse
+BENCH route=24 frames=119 fps=30.10 frame95=36.00 frameMax=41.00 cpu95=20.00 cpuMax=21.00 cacheMiss=0 chunks=17 luaKB=1789
+STATS	table: 0x90020250
+BENCH BEGIN	24
+SCENE	78	mechanism	1	fan
+BENCH route=24 frames=119 fps=29.65 frame95=37.00 frameMax=67.00 cpu95=27.00 cpuMax=29.00 cacheMiss=0 chunks=17 luaKB=1809
+STATS	table: 0x904944a0
+BENCH BEGIN	24
+SCENE	79	pad	1	fan
+BENCH route=24 frames=119 fps=29.74 frame95=36.00 frameMax=50.00 cpu95=30.00 cpuMax=40.00 cacheMiss=0 chunks=17 luaKB=1834
+STATS	table: 0x900b4060
+BENCH BEGIN	25
+SCENE	80	road	0	traverse
+BENCH route=25 frames=179 fps=28.79 frame95=39.00 frameMax=86.00 cpu95=36.00 cpuMax=84.00 cacheMiss=0 chunks=27 luaKB=1987
+STATS	table: 0x900d6cb0
+BENCH BEGIN	25
+SCENE	81	normal	0	traverse
+BENCH route=25 frames=119 fps=29.69 frame95=37.00 frameMax=49.00 cpu95=29.00 cpuMax=30.00 cacheMiss=0 chunks=27 luaKB=1969
+STATS	table: 0x900b6550
+BENCH BEGIN	25
+SCENE	82	normal	0	traverse
+BENCH route=25 frames=119 fps=29.88 frame95=36.00 frameMax=39.00 cpu95=30.00 cpuMax=32.00 cacheMiss=0 chunks=27 luaKB=2109
+STATS	table: 0x9046b710
+BENCH BEGIN	25
+SCENE	83	normal	0	traverse
+BENCH route=25 frames=119 fps=29.88 frame95=38.00 frameMax=46.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=27 luaKB=1940
+STATS	table: 0x900abf50
+BENCH BEGIN	25
+SCENE	84	mechanism	1	fan
+BENCH route=25 frames=119 fps=29.86 frame95=36.00 frameMax=43.00 cpu95=30.00 cpuMax=30.00 cacheMiss=0 chunks=27 luaKB=2028
+STATS	table: 0x904788b0
+BENCH BEGIN	25
+SCENE	85	mechanism	2	fan
+BENCH route=25 frames=119 fps=29.59 frame95=36.00 frameMax=51.00 cpu95=31.00 cpuMax=32.00 cacheMiss=0 chunks=27 luaKB=2022
+STATS	table: 0x904e5e20
+BENCH BEGIN	25
+SCENE	86	mechanism	3	bumper
+BENCH route=25 frames=119 fps=29.48 frame95=35.00 frameMax=38.00 cpu95=33.00 cpuMax=35.00 cacheMiss=0 chunks=27 luaKB=2340
+STATS	table: 0x905321e0
+BENCH BEGIN	25
+SCENE	87	mechanism	4	bumper
+BENCH route=25 frames=119 fps=29.48 frame95=36.00 frameMax=55.00 cpu95=28.00 cpuMax=29.00 cacheMiss=0 chunks=27 luaKB=2053
+STATS	table: 0x904e8090
+BENCH BEGIN	25
+SCENE	88	pad	1	fan
+BENCH route=25 frames=119 fps=29.58 frame95=39.00 frameMax=61.00 cpu95=26.00 cpuMax=33.00 cacheMiss=0 chunks=27 luaKB=1951
+STATS	table: 0x900acd70
+BENCH BEGIN	25
+SCENE	89	pad	2	fan
+BENCH route=25 frames=119 fps=29.85 frame95=36.00 frameMax=39.00 cpu95=27.00 cpuMax=29.00 cacheMiss=0 chunks=27 luaKB=1966
+STATS	table: 0x903b7bc0
+BENCH BEGIN	26
+SCENE	90	road	0	traverse
+BENCH route=26 frames=179 fps=30.05 frame95=35.00 frameMax=39.00 cpu95=22.00 cpuMax=28.00 cacheMiss=0 chunks=11 luaKB=1943
+STATS	table: 0x900b3cb0
+BENCH BEGIN	26
+SCENE	91	normal	0	traverse
+BENCH route=26 frames=119 fps=30.02 frame95=36.00 frameMax=42.00 cpu95=20.00 cpuMax=22.00 cacheMiss=0 chunks=11 luaKB=1945
+STATS	table: 0x900b5b70
+BENCH BEGIN	26
+SCENE	92	normal	0	traverse
+BENCH route=26 frames=119 fps=30.17 frame95=35.00 frameMax=38.00 cpu95=18.00 cpuMax=20.00 cacheMiss=0 chunks=11 luaKB=1944
+STATS	table: 0x904d8990
+BENCH BEGIN	26
+SCENE	93	normal	0	traverse
+BENCH route=26 frames=119 fps=30.11 frame95=36.00 frameMax=39.00 cpu95=20.00 cpuMax=21.00 cacheMiss=0 chunks=11 luaKB=1943
+STATS	table: 0x900b8a70
+BENCH BEGIN	26
+SCENE	94	pad	1	cannon
+BENCH route=26 frames=119 fps=29.97 frame95=35.00 frameMax=41.00 cpu95=22.00 cpuMax=31.00 cacheMiss=0 chunks=11 luaKB=1947
+STATS	table: 0x900b9f80
+BENCH BEGIN	27
+SCENE	95	road	0	traverse
+BENCH route=27 frames=179 fps=29.90 frame95=35.00 frameMax=60.00 cpu95=25.00 cpuMax=54.00 cacheMiss=1 chunks=25 luaKB=2060
+STATS	table: 0x900ba0a0
+BENCH BEGIN	27
+SCENE	96	normal	0	traverse
+BENCH route=27 frames=119 fps=30.12 frame95=37.00 frameMax=38.00 cpu95=22.00 cpuMax=23.00 cacheMiss=1 chunks=25 luaKB=2057
+STATS	table: 0x900b8770
+BENCH BEGIN	27
+SCENE	97	normal	0	traverse
+BENCH route=27 frames=119 fps=30.09 frame95=35.00 frameMax=41.00 cpu95=23.00 cpuMax=24.00 cacheMiss=1 chunks=25 luaKB=2060
+STATS	table: 0x9036ee40
+BENCH BEGIN	27
+SCENE	98	normal	0	traverse
+BENCH route=27 frames=119 fps=30.07 frame95=36.00 frameMax=39.00 cpu95=18.00 cpuMax=20.00 cacheMiss=1 chunks=25 luaKB=2053
+STATS	table: 0x900bb740
+BENCH BEGIN	27
+SCENE	99	pad	1	cannon
+BENCH route=27 frames=119 fps=30.04 frame95=35.00 frameMax=41.00 cpu95=22.00 cpuMax=31.00 cacheMiss=1 chunks=25 luaKB=2052
+STATS	table: 0x900a2880
+BENCH BEGIN	27
+SCENE	100	pad	2	cannon
+BENCH route=27 frames=119 fps=29.98 frame95=35.00 frameMax=47.00 cpu95=24.00 cpuMax=25.00 cacheMiss=1 chunks=25 luaKB=2050
+STATS	table: 0x90024d40
+BENCH BEGIN	28
+SCENE	101	road	0	traverse
+BENCH route=28 frames=179 fps=29.39 frame95=37.00 frameMax=68.00 cpu95=34.00 cpuMax=66.00 cacheMiss=1 chunks=27 luaKB=2174
+STATS	table: 0x900a2ae0
+BENCH BEGIN	28
+SCENE	102	normal	0	traverse
+BENCH route=28 frames=119 fps=29.18 frame95=37.00 frameMax=42.00 cpu95=35.00 cpuMax=39.00 cacheMiss=1 chunks=27 luaKB=2284
+STATS	table: 0x90373080
+BENCH BEGIN	28
+SCENE	103	normal	0	traverse
+BENCH route=28 frames=119 fps=29.72 frame95=36.00 frameMax=38.00 cpu95=30.00 cpuMax=31.00 cacheMiss=1 chunks=27 luaKB=2160
+STATS	table: 0x900bded0
+BENCH BEGIN	28
+SCENE	104	normal	0	traverse
+BENCH route=28 frames=119 fps=30.01 frame95=35.00 frameMax=46.00 cpu95=26.00 cpuMax=27.00 cacheMiss=1 chunks=27 luaKB=2154
+STATS	table: 0x9037e870
+BENCH BEGIN	28
+SCENE	105	mechanism	1	lift
+BENCH route=28 frames=119 fps=29.67 frame95=36.00 frameMax=41.00 cpu95=33.00 cpuMax=39.00 cacheMiss=1 chunks=27 luaKB=2429
+STATS	table: 0x90540350
+BENCH BEGIN	28
+SCENE	106	pad	1	lift
+BENCH route=28 frames=119 fps=29.56 frame95=37.00 frameMax=39.00 cpu95=31.00 cpuMax=33.00 cacheMiss=1 chunks=27 luaKB=2287
+STATS	table: 0x90428850
+BENCH BEGIN	28
+SCENE	107	pad	2	cannon
+BENCH route=28 frames=119 fps=29.92 frame95=35.00 frameMax=44.00 cpu95=31.00 cpuMax=41.00 cacheMiss=1 chunks=27 luaKB=2524
+STATS	table: 0x905381c0
+BENCH BEGIN	29
+SCENE	108	road	0	traverse
+BENCH route=29 frames=179 fps=29.83 frame95=36.00 frameMax=39.00 cpu95=32.00 cpuMax=35.00 cacheMiss=2 chunks=22 luaKB=2270
+STATS	table: 0x905904a0
+BENCH BEGIN	29
+SCENE	109	normal	0	traverse
+BENCH route=29 frames=119 fps=29.85 frame95=36.00 frameMax=37.00 cpu95=32.00 cpuMax=34.00 cacheMiss=2 chunks=22 luaKB=2276
+STATS	table: 0x904a7d40
+BENCH BEGIN	29
+SCENE	110	normal	0	traverse
+BENCH route=29 frames=119 fps=29.95 frame95=36.00 frameMax=43.00 cpu95=28.00 cpuMax=30.00 cacheMiss=2 chunks=22 luaKB=2216
+STATS	table: 0x90492220
+BENCH BEGIN	29
+SCENE	111	normal	0	traverse
+BENCH route=29 frames=119 fps=30.04 frame95=37.00 frameMax=43.00 cpu95=27.00 cpuMax=28.00 cacheMiss=2 chunks=22 luaKB=2216
+STATS	table: 0x900bdfd0
+BENCH BEGIN	29
+SCENE	112	mechanism	1	gate
+BENCH route=29 frames=119 fps=29.90 frame95=35.00 frameMax=48.00 cpu95=30.00 cpuMax=32.00 cacheMiss=2 chunks=22 luaKB=2257
+STATS	table: 0x9046cf50
+BENCH BEGIN	29
+SCENE	113	mechanism	2	ferry
+BENCH route=29 frames=119 fps=29.99 frame95=35.00 frameMax=40.00 cpu95=27.00 cpuMax=29.00 cacheMiss=2 chunks=22 luaKB=2235
+STATS	table: 0x90464ed0
+BENCH BEGIN	30
+SCENE	114	road	0	traverse
+BENCH route=30 frames=179 fps=29.17 frame95=38.00 frameMax=83.00 cpu95=35.00 cpuMax=81.00 cacheMiss=1 chunks=30 luaKB=2345
+STATS	table: 0x9009cc70
+BENCH BEGIN	30
+SCENE	115	normal	0	traverse
+BENCH route=30 frames=119 fps=29.91 frame95=35.00 frameMax=46.00 cpu95=29.00 cpuMax=31.00 cacheMiss=1 chunks=30 luaKB=2334
+STATS	table: 0x90524fb0
+BENCH BEGIN	30
+SCENE	116	normal	0	traverse
+BENCH route=30 frames=119 fps=29.07 frame95=37.00 frameMax=38.00 cpu95=35.00 cpuMax=36.00 cacheMiss=1 chunks=30 luaKB=2549
+STATS	table: 0x905dec50
+BENCH BEGIN	30
+SCENE	117	normal	0	traverse
+BENCH route=30 frames=119 fps=29.81 frame95=36.00 frameMax=39.00 cpu95=32.00 cpuMax=32.00 cacheMiss=1 chunks=30 luaKB=2338
+STATS	table: 0x900bdfd0
+BENCH BEGIN	30
+SCENE	118	mechanism	1	rotor
+BENCH route=30 frames=119 fps=29.94 frame95=35.00 frameMax=37.00 cpu95=29.00 cpuMax=30.00 cacheMiss=1 chunks=30 luaKB=2349
+STATS	table: 0x900c77d0
+BENCH BEGIN	30
+SCENE	119	mechanism	2	sweeper
+BENCH route=30 frames=119 fps=29.56 frame95=37.00 frameMax=38.00 cpu95=34.00 cpuMax=35.00 cacheMiss=1 chunks=30 luaKB=2445
+STATS	table: 0x9058ef20
+BENCH BEGIN	30
+SCENE	120	mechanism	3	trap
+BENCH route=30 frames=119 fps=29.99 frame95=36.00 frameMax=43.00 cpu95=25.00 cpuMax=27.00 cacheMiss=1 chunks=30 luaKB=2335
+STATS	table: 0x904d5250
+BENCH BEGIN	30
+SCENE	121	mechanism	4	gate
+BENCH route=30 frames=119 fps=29.85 frame95=36.00 frameMax=40.00 cpu95=32.00 cpuMax=32.00 cacheMiss=1 chunks=30 luaKB=2345
+STATS	table: 0x905263e0
+BENCH BEGIN	31
+SCENE	122	road	0	traverse
+BENCH route=31 frames=179 fps=29.99 frame95=35.00 frameMax=40.00 cpu95=28.00 cpuMax=32.00 cacheMiss=1 chunks=20 luaKB=2395
+STATS	table: 0x900bb740
+BENCH BEGIN	31
+SCENE	123	normal	0	traverse
+BENCH route=31 frames=119 fps=30.04 frame95=36.00 frameMax=40.00 cpu95=22.00 cpuMax=24.00 cacheMiss=1 chunks=20 luaKB=2378
+STATS	table: 0x9049fee0
+BENCH BEGIN	31
+SCENE	124	normal	0	traverse
+BENCH route=31 frames=119 fps=30.07 frame95=35.00 frameMax=42.00 cpu95=22.00 cpuMax=23.00 cacheMiss=1 chunks=20 luaKB=2371
+STATS	table: 0x90099fb0
+BENCH BEGIN	31
+SCENE	125	normal	0	traverse
+BENCH route=31 frames=119 fps=30.04 frame95=35.00 frameMax=42.00 cpu95=24.00 cpuMax=27.00 cacheMiss=1 chunks=20 luaKB=2369
+STATS	table: 0x900c20a0
+BENCH BEGIN	31
+SCENE	126	mechanism	1	gate
+BENCH route=31 frames=119 fps=30.00 frame95=35.00 frameMax=38.00 cpu95=29.00 cpuMax=30.00 cacheMiss=1 chunks=20 luaKB=2374
+STATS	table: 0x9046dcd0
+BENCH BEGIN	31
+SCENE	127	pad	1	cannon
+BENCH route=31 frames=119 fps=29.97 frame95=35.00 frameMax=42.00 cpu95=23.00 cpuMax=30.00 cacheMiss=1 chunks=20 luaKB=2373
+STATS	table: 0x900a6ae0
+BENCH BEGIN	32
+SCENE	128	road	0	traverse
+BENCH route=32 frames=179 fps=27.35 frame95=43.00 frameMax=49.00 cpu95=41.00 cpuMax=46.00 cacheMiss=1 chunks=35 luaKB=2569
+STATS	table: 0x9051ef90
+BENCH BEGIN	32
+SCENE	129	normal	0	traverse
+BENCH route=32 frames=119 fps=30.13 frame95=35.00 frameMax=43.00 cpu95=21.00 cpuMax=22.00 cacheMiss=1 chunks=35 luaKB=2543
+STATS	table: 0x9047c1d0
+BENCH BEGIN	32
+SCENE	130	normal	0	traverse
+BENCH route=32 frames=119 fps=29.01 frame95=37.00 frameMax=38.00 cpu95=35.00 cpuMax=36.00 cacheMiss=1 chunks=35 luaKB=2752
+STATS	table: 0x906077c0
+BENCH BEGIN	32
+SCENE	131	normal	0	traverse
+BENCH route=32 frames=119 fps=29.97 frame95=37.00 frameMax=39.00 cpu95=25.00 cpuMax=26.00 cacheMiss=1 chunks=35 luaKB=2547
+STATS	table: 0x9009a010
+BENCH BEGIN	32
+SCENE	132	mechanism	1	bumper
+BENCH route=32 frames=119 fps=27.22 frame95=39.00 frameMax=40.00 cpu95=37.00 cpuMax=38.00 cacheMiss=1 chunks=35 luaKB=2762
+STATS	table: 0x905918a0
+BENCH BEGIN	32
+SCENE	133	mechanism	2	fan
+BENCH route=32 frames=119 fps=29.51 frame95=36.00 frameMax=37.00 cpu95=33.00 cpuMax=35.00 cacheMiss=1 chunks=35 luaKB=2972
+STATS	table: 0x90675ac0
+BENCH BEGIN	32
+SCENE	134	mechanism	3	gate
+BENCH route=32 frames=119 fps=27.74 frame95=41.00 frameMax=42.00 cpu95=38.00 cpuMax=39.00 cacheMiss=1 chunks=35 luaKB=3185
+STATS	table: 0x906c51b0
+BENCH BEGIN	32
+SCENE	135	mechanism	4	ferry
+BENCH route=32 frames=119 fps=28.50 frame95=37.00 frameMax=45.00 cpu95=32.00 cpuMax=34.00 cacheMiss=1 chunks=35 luaKB=2799
+STATS	table: 0x905ee770
+BENCH BEGIN	32
+SCENE	136	mechanism	5	trap
+BENCH route=32 frames=119 fps=29.74 frame95=37.00 frameMax=42.00 cpu95=26.00 cpuMax=29.00 cacheMiss=1 chunks=35 luaKB=2548
+STATS	table: 0x90116d90
+BENCH BEGIN	33
+SCENE	137	road	0	traverse
+BENCH route=33 frames=179 fps=26.56 frame95=47.00 frameMax=63.00 cpu95=44.00 cpuMax=60.00 cacheMiss=14 chunks=25 luaKB=3143
+STATS	table: 0x908f6d90
+BENCH BEGIN	33
+SCENE	138	normal	0	traverse
+BENCH route=33 frames=119 fps=29.15 frame95=38.00 frameMax=69.00 cpu95=31.00 cpuMax=51.00 cacheMiss=23 chunks=17 luaKB=3019
+STATS	table: 0x905e6600
+BENCH BEGIN	33
+SCENE	139	normal	0	traverse
+BENCH route=33 frames=119 fps=26.78 frame95=43.00 frameMax=67.00 cpu95=40.00 cpuMax=65.00 cacheMiss=35 chunks=32 luaKB=3225
+STATS	table: 0x906b09a0
+BENCH BEGIN	33
+SCENE	140	normal	0	traverse
+BENCH route=33 frames=119 fps=29.12 frame95=37.00 frameMax=63.00 cpu95=31.00 cpuMax=61.00 cacheMiss=45 chunks=31 luaKB=2960
+STATS	table: 0x903e8b10
+BENCH BEGIN	33
+SCENE	141	mechanism	1	lift
+BENCH route=33 frames=119 fps=29.76 frame95=35.00 frameMax=60.00 cpu95=32.00 cpuMax=58.00 cacheMiss=54 chunks=26 luaKB=3226
+STATS	table: 0x90484ff0
+BENCH BEGIN	33
+SCENE	142	mechanism	2	rotor
+BENCH route=33 frames=119 fps=29.53 frame95=36.00 frameMax=58.00 cpu95=33.00 cpuMax=56.00 cacheMiss=60 chunks=39 luaKB=3377
+STATS	table: 0x90603730
+BENCH BEGIN	33
+SCENE	143	mechanism	3	ferry
+BENCH route=33 frames=119 fps=27.18 frame95=41.00 frameMax=44.00 cpu95=35.00 cpuMax=40.00 cacheMiss=61 chunks=21 luaKB=3096
+STATS	table: 0x900dc2b0
+BENCH BEGIN	33
+SCENE	144	mechanism	4	fan
+BENCH route=33 frames=119 fps=24.39 frame95=43.00 frameMax=53.00 cpu95=40.00 cpuMax=51.00 cacheMiss=61 chunks=25 luaKB=3317
+STATS	table: 0x9032b790
+BENCH BEGIN	33
+SCENE	145	mechanism	5	bumper
+BENCH route=33 frames=119 fps=24.03 frame95=43.00 frameMax=46.00 cpu95=41.00 cpuMax=43.00 cacheMiss=61 chunks=25 luaKB=3518
+STATS	table: 0x90661960
+BENCH BEGIN	33
+SCENE	146	mechanism	6	trap
+BENCH route=33 frames=119 fps=29.01 frame95=36.00 frameMax=37.00 cpu95=33.00 cpuMax=35.00 cacheMiss=61 chunks=25 luaKB=3723
+STATS	table: 0x90989720
+BENCH BEGIN	33
+SCENE	147	mechanism	7	gate
+BENCH route=33 frames=119 fps=22.44 frame95=49.00 frameMax=50.00 cpu95=46.00 cpuMax=48.00 cacheMiss=63 chunks=28 luaKB=3975
+STATS	table: 0x909e7bb0
+BENCH BEGIN	33
+SCENE	148	mechanism	8	ferry
+BENCH route=33 frames=119 fps=27.91 frame95=38.00 frameMax=42.00 cpu95=36.00 cpuMax=39.00 cacheMiss=64 chunks=33 luaKB=4070
+STATS	table: 0x90a07280
+BENCH BEGIN	33
+SCENE	149	mechanism	9	rotor
+BENCH route=33 frames=119 fps=28.15 frame95=38.00 frameMax=48.00 cpu95=34.00 cpuMax=45.00 cacheMiss=69 chunks=25 luaKB=3615
+STATS	table: 0x909ca8d0
+BENCH BEGIN	33
+SCENE	150	mechanism	10	sweeper
+BENCH route=33 frames=119 fps=29.36 frame95=37.00 frameMax=56.00 cpu95=30.00 cpuMax=51.00 cacheMiss=76 chunks=36 luaKB=3178
+STATS	table: 0x90621020
+BENCH BEGIN	33
+SCENE	151	pad	1	lift
+BENCH route=33 frames=119 fps=29.40 frame95=36.00 frameMax=61.00 cpu95=30.00 cpuMax=59.00 cacheMiss=85 chunks=24 luaKB=3108
+STATS	table: 0x909031d0
+BENCH BEGIN	33
+SCENE	152	pad	2	cannon
+BENCH route=33 frames=119 fps=29.19 frame95=38.00 frameMax=48.00 cpu95=31.00 cpuMax=46.00 cacheMiss=87 chunks=30 luaKB=2988
+STATS	table: 0x900ac290
+BENCH BEGIN	33
+SCENE	153	pad	3	bridge
+BENCH route=33 frames=119 fps=29.71 frame95=38.00 frameMax=50.00 cpu95=25.00 cpuMax=47.00 cacheMiss=93 chunks=29 luaKB=2905
+STATS	table: 0x900dcc40
+BENCH BEGIN	33
+SCENE	154	pad	4	slider
+BENCH route=33 frames=119 fps=29.48 frame95=38.00 frameMax=55.00 cpu95=31.00 cpuMax=47.00 cacheMiss=97 chunks=37 luaKB=2955
+STATS	table: 0x9061f2e0
+BENCH BEGIN	33
+SCENE	155	pad	5	fan
+BENCH route=33 frames=119 fps=27.14 frame95=39.00 frameMax=51.00 cpu95=36.00 cpuMax=45.00 cacheMiss=97 chunks=18 luaKB=3180
+STATS	table: 0x908f5850
+BENCH BEGIN	34
+SCENE	156	road	0	traverse
+BENCH route=34 frames=179 fps=29.91 frame95=35.00 frameMax=44.00 cpu95=27.00 cpuMax=40.00 cacheMiss=0 chunks=14 luaKB=2874
+STATS	table: 0x9009c810
+BENCH BEGIN	34
+SCENE	157	normal	0	traverse
+BENCH route=34 frames=119 fps=30.05 frame95=35.00 frameMax=41.00 cpu95=23.00 cpuMax=24.00 cacheMiss=0 chunks=14 luaKB=2863
+STATS	table: 0x9009f5a0
+BENCH BEGIN	34
+SCENE	158	normal	0	traverse
+BENCH route=34 frames=119 fps=30.03 frame95=35.00 frameMax=41.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=14 luaKB=2857
+STATS	table: 0x9056aef0
+BENCH BEGIN	34
+SCENE	159	normal	0	traverse
+BENCH route=34 frames=119 fps=30.01 frame95=35.00 frameMax=41.00 cpu95=27.00 cpuMax=28.00 cacheMiss=0 chunks=14 luaKB=2861
+STATS	table: 0x9051a230
+BENCH BEGIN	34
+SCENE	160	mechanism	1	conveyor
+BENCH route=34 frames=119 fps=30.05 frame95=35.00 frameMax=40.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=14 luaKB=2856
+STATS	table: 0x903b8660
+BENCH BEGIN	35
+SCENE	161	road	0	traverse
+BENCH route=35 frames=179 fps=29.90 frame95=35.00 frameMax=40.00 cpu95=29.00 cpuMax=37.00 cacheMiss=0 chunks=24 luaKB=2988
+STATS	table: 0x900f4cd0
+BENCH BEGIN	35
+SCENE	162	normal	0	traverse
+BENCH route=35 frames=119 fps=30.00 frame95=35.00 frameMax=39.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=24 luaKB=2984
+STATS	table: 0x900ede40
+BENCH BEGIN	35
+SCENE	163	normal	0	traverse
+BENCH route=35 frames=119 fps=29.99 frame95=35.00 frameMax=37.00 cpu95=27.00 cpuMax=29.00 cacheMiss=0 chunks=24 luaKB=2982
+STATS	table: 0x900e8b70
+BENCH BEGIN	35
+SCENE	164	normal	0	traverse
+BENCH route=35 frames=119 fps=29.98 frame95=36.00 frameMax=44.00 cpu95=24.00 cpuMax=25.00 cacheMiss=0 chunks=24 luaKB=2972
+STATS	table: 0x900ef9e0
+BENCH BEGIN	35
+SCENE	165	mechanism	1	conveyor
+BENCH route=35 frames=119 fps=30.03 frame95=35.00 frameMax=41.00 cpu95=26.00 cpuMax=29.00 cacheMiss=0 chunks=24 luaKB=2988
+STATS	table: 0x900caf80
+BENCH BEGIN	35
+SCENE	166	mechanism	2	conveyor
+BENCH route=35 frames=119 fps=30.01 frame95=35.00 frameMax=41.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=24 luaKB=2976
+STATS	table: 0x900ffb70
+BENCH BEGIN	36
+SCENE	167	road	0	traverse
+BENCH route=36 frames=179 fps=29.98 frame95=35.00 frameMax=39.00 cpu95=27.00 cpuMax=34.00 cacheMiss=0 chunks=17 luaKB=3045
+STATS	table: 0x900ff750
+BENCH BEGIN	36
+SCENE	168	normal	0	traverse
+BENCH route=36 frames=119 fps=30.00 frame95=36.00 frameMax=40.00 cpu95=23.00 cpuMax=26.00 cacheMiss=0 chunks=17 luaKB=3033
+STATS	table: 0x90103640
+BENCH BEGIN	36
+SCENE	169	normal	0	traverse
+BENCH route=36 frames=119 fps=30.06 frame95=35.00 frameMax=40.00 cpu95=25.00 cpuMax=26.00 cacheMiss=0 chunks=17 luaKB=3039
+STATS	table: 0x900dda80
+BENCH BEGIN	36
+SCENE	170	normal	0	traverse
+BENCH route=36 frames=119 fps=30.12 frame95=35.00 frameMax=39.00 cpu95=20.00 cpuMax=21.00 cacheMiss=0 chunks=17 luaKB=3031
+STATS	table: 0x903bb0c0
+BENCH BEGIN	36
+SCENE	171	mechanism	1	jet
+BENCH route=36 frames=119 fps=30.03 frame95=35.00 frameMax=37.00 cpu95=26.00 cpuMax=26.00 cacheMiss=0 chunks=17 luaKB=3032
+STATS	table: 0x900e9570
+BENCH BEGIN	37
+SCENE	172	road	0	traverse
+BENCH route=37 frames=179 fps=29.48 frame95=37.00 frameMax=83.00 cpu95=34.00 cpuMax=81.00 cacheMiss=0 chunks=30 luaKB=3214
+STATS	table: 0x900e3de0
+BENCH BEGIN	37
+SCENE	173	normal	0	traverse
+BENCH route=37 frames=119 fps=30.08 frame95=36.00 frameMax=40.00 cpu95=23.00 cpuMax=24.00 cacheMiss=0 chunks=30 luaKB=3187
+STATS	table: 0x90458cc0
+BENCH BEGIN	37
+SCENE	174	normal	0	traverse
+BENCH route=37 frames=119 fps=29.95 frame95=35.00 frameMax=39.00 cpu95=30.00 cpuMax=32.00 cacheMiss=0 chunks=30 luaKB=3197
+STATS	table: 0x90583940
+BENCH BEGIN	37
+SCENE	175	normal	0	traverse
+BENCH route=37 frames=119 fps=30.07 frame95=35.00 frameMax=42.00 cpu95=23.00 cpuMax=23.00 cacheMiss=0 chunks=30 luaKB=3183
+STATS	table: 0x900e7dd0
+BENCH BEGIN	37
+SCENE	176	mechanism	1	jet
+BENCH route=37 frames=119 fps=30.04 frame95=35.00 frameMax=38.00 cpu95=28.00 cpuMax=29.00 cacheMiss=0 chunks=30 luaKB=3197
+STATS	table: 0x900ee800
+BENCH BEGIN	37
+SCENE	177	mechanism	2	jet
+BENCH route=37 frames=119 fps=29.86 frame95=35.00 frameMax=38.00 cpu95=32.00 cpuMax=33.00 cacheMiss=0 chunks=30 luaKB=3193
+STATS	table: 0x90102f00
+BENCH BEGIN	37
+SCENE	178	mechanism	3	jet
+BENCH route=37 frames=119 fps=29.95 frame95=35.00 frameMax=41.00 cpu95=29.00 cpuMax=32.00 cacheMiss=0 chunks=30 luaKB=3186
+STATS	table: 0x900edf40
+BENCH BEGIN	38
+SCENE	179	road	0	traverse
+BENCH route=38 frames=179 fps=29.96 frame95=35.00 frameMax=41.00 cpu95=25.00 cpuMax=37.00 cacheMiss=0 chunks=13 luaKB=3223
+STATS	table: 0x90106ca0
+BENCH BEGIN	38
+SCENE	180	normal	0	traverse
+BENCH route=38 frames=119 fps=30.01 frame95=35.00 frameMax=43.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=13 luaKB=3207
+STATS	table: 0x900e02c0
+BENCH BEGIN	38
+SCENE	181	normal	0	traverse
+BENCH route=38 frames=119 fps=30.04 frame95=35.00 frameMax=39.00 cpu95=24.00 cpuMax=24.00 cacheMiss=0 chunks=13 luaKB=3214
+STATS	table: 0x904bfd20
+BENCH BEGIN	38
+SCENE	182	normal	0	traverse
+BENCH route=38 frames=119 fps=30.03 frame95=35.00 frameMax=43.00 cpu95=21.00 cpuMax=22.00 cacheMiss=0 chunks=13 luaKB=3216
+STATS	table: 0x90107ba0
+BENCH BEGIN	38
+SCENE	183	mechanism	1	extend
+BENCH route=38 frames=119 fps=30.07 frame95=35.00 frameMax=41.00 cpu95=26.00 cpuMax=26.00 cacheMiss=0 chunks=13 luaKB=3231
+STATS	table: 0x900f3850
+BENCH BEGIN	38
+SCENE	184	pad	1	extend
+BENCH route=38 frames=119 fps=29.88 frame95=36.00 frameMax=40.00 cpu95=30.00 cpuMax=35.00 cacheMiss=0 chunks=13 luaKB=3265
+STATS	table: 0x903925a0
+BENCH BEGIN	39
+SCENE	185	road	0	traverse
+BENCH route=39 frames=179 fps=29.96 frame95=35.00 frameMax=39.00 cpu95=31.00 cpuMax=35.00 cacheMiss=1 chunks=27 luaKB=3384
+STATS	table: 0x9048de20
+BENCH BEGIN	39
+SCENE	186	normal	0	traverse
+BENCH route=39 frames=119 fps=30.00 frame95=35.00 frameMax=43.00 cpu95=25.00 cpuMax=28.00 cacheMiss=1 chunks=27 luaKB=3343
+STATS	table: 0x90104d40
+BENCH BEGIN	39
+SCENE	187	normal	0	traverse
+BENCH route=39 frames=119 fps=29.99 frame95=35.00 frameMax=39.00 cpu95=28.00 cpuMax=29.00 cacheMiss=1 chunks=27 luaKB=3331
+STATS	table: 0x900f3b50
+BENCH BEGIN	39
+SCENE	188	normal	0	traverse
+BENCH route=39 frames=119 fps=29.98 frame95=35.00 frameMax=42.00 cpu95=26.00 cpuMax=29.00 cacheMiss=1 chunks=27 luaKB=3329
+STATS	table: 0x90108520
+BENCH BEGIN	39
+SCENE	189	mechanism	1	extend
+BENCH route=39 frames=119 fps=30.01 frame95=35.00 frameMax=40.00 cpu95=27.00 cpuMax=27.00 cacheMiss=1 chunks=27 luaKB=3333
+STATS	table: 0x900e4700
+BENCH BEGIN	39
+SCENE	190	mechanism	2	extend
+BENCH route=39 frames=119 fps=29.95 frame95=35.00 frameMax=42.00 cpu95=27.00 cpuMax=29.00 cacheMiss=1 chunks=27 luaKB=3355
+STATS	table: 0x9010adc0
+BENCH BEGIN	39
+SCENE	191	mechanism	3	conveyor
+BENCH route=39 frames=119 fps=29.93 frame95=36.00 frameMax=39.00 cpu95=28.00 cpuMax=30.00 cacheMiss=1 chunks=27 luaKB=3334
+STATS	table: 0x900e5600
+BENCH BEGIN	39
+SCENE	192	pad	1	extend
+BENCH route=39 frames=119 fps=29.86 frame95=36.00 frameMax=44.00 cpu95=31.00 cpuMax=38.00 cacheMiss=1 chunks=27 luaKB=3379
+STATS	table: 0x904f8240
+BENCH BEGIN	39
+SCENE	193	pad	2	extend
+BENCH route=39 frames=119 fps=29.28 frame95=37.00 frameMax=39.00 cpu95=33.00 cpuMax=33.00 cacheMiss=1 chunks=27 luaKB=3379
+STATS	table: 0x90102280
+BENCH BEGIN	40
+SCENE	194	road	0	traverse
+BENCH route=40 frames=179 fps=29.73 frame95=35.00 frameMax=84.00 cpu95=30.00 cpuMax=82.00 cacheMiss=0 chunks=18 luaKB=3415
+STATS	table: 0x905bf810
+BENCH BEGIN	40
+SCENE	195	normal	0	traverse
+BENCH route=40 frames=119 fps=30.10 frame95=35.00 frameMax=39.00 cpu95=25.00 cpuMax=27.00 cacheMiss=0 chunks=18 luaKB=3419
+STATS	table: 0x90103080
+BENCH BEGIN	40
+SCENE	196	normal	0	traverse
+BENCH route=40 frames=119 fps=29.92 frame95=35.00 frameMax=39.00 cpu95=30.00 cpuMax=30.00 cacheMiss=0 chunks=18 luaKB=3447
+STATS	table: 0x904f8460
+BENCH BEGIN	40
+SCENE	197	normal	0	traverse
+BENCH route=40 frames=119 fps=29.99 frame95=36.00 frameMax=41.00 cpu95=23.00 cpuMax=27.00 cacheMiss=0 chunks=18 luaKB=3401
+STATS	table: 0x9011bb70
+BENCH BEGIN	40
+SCENE	198	mechanism	1	gate
+BENCH route=40 frames=119 fps=30.01 frame95=35.00 frameMax=38.00 cpu95=28.00 cpuMax=29.00 cacheMiss=0 chunks=18 luaKB=3433
+STATS	table: 0x90118c30
+BENCH BEGIN	40
+SCENE	199	mechanism	2	gate
+BENCH route=40 frames=119 fps=29.85 frame95=35.00 frameMax=45.00 cpu95=30.00 cpuMax=32.00 cacheMiss=0 chunks=18 luaKB=3446
+STATS	table: 0x905d8f80
+BENCH BEGIN	40
+SCENE	200	pad	1	switch
+BENCH route=40 frames=119 fps=29.89 frame95=36.00 frameMax=42.00 cpu95=25.00 cpuMax=32.00 cacheMiss=0 chunks=18 luaKB=3419
+STATS	table: 0x90099250
+BENCH BEGIN	41
+SCENE	201	road	0	traverse
+BENCH route=41 frames=179 fps=28.78 frame95=40.00 frameMax=43.00 cpu95=38.00 cpuMax=40.00 cacheMiss=0 chunks=26 luaKB=3543
+STATS	table: 0x901114f0
+BENCH BEGIN	41
+SCENE	202	normal	0	traverse
+BENCH route=41 frames=119 fps=29.92 frame95=35.00 frameMax=38.00 cpu95=30.00 cpuMax=31.00 cacheMiss=0 chunks=26 luaKB=3542
+STATS	table: 0x9011a3b0
+BENCH BEGIN	41
+SCENE	203	normal	0	traverse
+BENCH route=41 frames=119 fps=28.95 frame95=37.00 frameMax=39.00 cpu95=34.00 cpuMax=37.00 cacheMiss=0 chunks=26 luaKB=3628
+STATS	table: 0x908fa750
+BENCH BEGIN	41
+SCENE	204	normal	0	traverse
+BENCH route=41 frames=119 fps=29.91 frame95=36.00 frameMax=43.00 cpu95=24.00 cpuMax=28.00 cacheMiss=0 chunks=26 luaKB=3532
+STATS	table: 0x901088e0
+BENCH BEGIN	41
+SCENE	205	mechanism	1	gate
+BENCH route=41 frames=119 fps=28.74 frame95=36.00 frameMax=38.00 cpu95=34.00 cpuMax=36.00 cacheMiss=0 chunks=26 luaKB=3635
+STATS	table: 0x90105900
+BENCH BEGIN	41
+SCENE	206	mechanism	2	gate
+BENCH route=41 frames=119 fps=27.18 frame95=38.00 frameMax=39.00 cpu95=36.00 cpuMax=36.00 cacheMiss=0 chunks=26 luaKB=3745
+STATS	table: 0x904edc40
+BENCH BEGIN	41
+SCENE	207	mechanism	3	conveyor
+BENCH route=41 frames=119 fps=29.14 frame95=38.00 frameMax=44.00 cpu95=33.00 cpuMax=34.00 cacheMiss=0 chunks=26 luaKB=3611
+STATS	table: 0x9045cf10
+BENCH BEGIN	41
+SCENE	208	mechanism	4	jet
+BENCH route=41 frames=119 fps=29.47 frame95=37.00 frameMax=41.00 cpu95=33.00 cpuMax=36.00 cacheMiss=0 chunks=26 luaKB=3637
+STATS	table: 0x904cb830
+BENCH BEGIN	41
+SCENE	209	pad	1	switch
+BENCH route=41 frames=119 fps=29.81 frame95=36.00 frameMax=43.00 cpu95=28.00 cpuMax=41.00 cacheMiss=0 chunks=26 luaKB=3561
+STATS	table: 0x9011a0b0
+BENCH BEGIN	42
+SCENE	210	road	0	traverse
+BENCH route=42 frames=179 fps=29.82 frame95=35.00 frameMax=74.00 cpu95=26.00 cpuMax=72.00 cacheMiss=0 chunks=18 luaKB=3594
+STATS	table: 0x900e6eb0
+BENCH BEGIN	42
+SCENE	211	normal	0	traverse
+BENCH route=42 frames=119 fps=30.04 frame95=35.00 frameMax=40.00 cpu95=23.00 cpuMax=25.00 cacheMiss=0 chunks=18 luaKB=3587
+STATS	table: 0x90122980
+BENCH BEGIN	42
+SCENE	212	normal	0	traverse
+BENCH route=42 frames=119 fps=30.08 frame95=35.00 frameMax=39.00 cpu95=23.00 cpuMax=24.00 cacheMiss=0 chunks=18 luaKB=3583
+STATS	table: 0x9012bb30
+BENCH BEGIN	42
+SCENE	213	normal	0	traverse
+BENCH route=42 frames=119 fps=30.06 frame95=35.00 frameMax=43.00 cpu95=25.00 cpuMax=27.00 cacheMiss=0 chunks=18 luaKB=3586
+STATS	table: 0x9012c130
+BENCH BEGIN	42
+SCENE	214	mechanism	1	magnet
+BENCH route=42 frames=119 fps=30.04 frame95=35.00 frameMax=43.00 cpu95=22.00 cpuMax=22.00 cacheMiss=0 chunks=18 luaKB=3584
+STATS	table: 0x9012ce70
+BENCH BEGIN	43
+SCENE	215	road	0	traverse
+BENCH route=43 frames=179 fps=29.27 frame95=38.00 frameMax=42.00 cpu95=35.00 cpuMax=40.00 cacheMiss=0 chunks=30 luaKB=3768
+STATS	table: 0x90124080
+BENCH BEGIN	43
+SCENE	216	normal	0	traverse
+BENCH route=43 frames=119 fps=30.10 frame95=35.00 frameMax=40.00 cpu95=21.00 cpuMax=22.00 cacheMiss=0 chunks=30 luaKB=3740
+STATS	table: 0x9040d600
+BENCH BEGIN	43
+SCENE	217	normal	0	traverse
+BENCH route=43 frames=119 fps=29.97 frame95=35.00 frameMax=35.00 cpu95=31.00 cpuMax=33.00 cacheMiss=0 chunks=30 luaKB=3827
+STATS	table: 0x90552c20
+BENCH BEGIN	43
+SCENE	218	normal	0	traverse
+BENCH route=43 frames=119 fps=30.04 frame95=35.00 frameMax=37.00 cpu95=23.00 cpuMax=26.00 cacheMiss=0 chunks=30 luaKB=3738
+STATS	table: 0x907b6980
+BENCH BEGIN	43
+SCENE	219	mechanism	1	magnet
+BENCH route=43 frames=119 fps=29.95 frame95=35.00 frameMax=44.00 cpu95=25.00 cpuMax=27.00 cacheMiss=0 chunks=30 luaKB=3738
+STATS	table: 0x901024c0
+BENCH BEGIN	43
+SCENE	220	mechanism	2	magnet
+BENCH route=43 frames=119 fps=30.04 frame95=35.00 frameMax=36.00 cpu95=30.00 cpuMax=31.00 cacheMiss=0 chunks=30 luaKB=3825
+STATS	table: 0x90467810
+BENCH BEGIN	43
+SCENE	221	mechanism	3	magnet
+BENCH route=43 frames=119 fps=29.91 frame95=35.00 frameMax=39.00 cpu95=28.00 cpuMax=30.00 cacheMiss=0 chunks=30 luaKB=3769
+STATS	table: 0x90633590
+BENCH BEGIN	43
+SCENE	222	mechanism	4	conveyor
+BENCH route=43 frames=119 fps=29.12 frame95=37.00 frameMax=45.00 cpu95=32.00 cpuMax=36.00 cacheMiss=0 chunks=30 luaKB=3751
+STATS	table: 0x9012d650
+BENCH BEGIN	44
+SCENE	223	road	0	traverse
+BENCH route=44 frames=179 fps=24.84 frame95=54.00 frameMax=66.00 cpu95=51.00 cpuMax=63.00 cacheMiss=18 chunks=39 luaKB=4427
+STATS	table: 0x9083a750
+BENCH BEGIN	44
+SCENE	224	normal	0	traverse
+BENCH route=44 frames=119 fps=29.69 frame95=35.00 frameMax=49.00 cpu95=33.00 cpuMax=47.00 cacheMiss=25 chunks=38 luaKB=4533
+STATS	table: 0x907a60f0
+BENCH BEGIN	44
+SCENE	225	normal	0	traverse
+BENCH route=44 frames=119 fps=28.66 frame95=38.00 frameMax=61.00 cpu95=34.00 cpuMax=58.00 cacheMiss=34 chunks=32 luaKB=4537
+STATS	table: 0x9089cbe0
+BENCH BEGIN	44
+SCENE	226	normal	0	traverse
+BENCH route=44 frames=119 fps=28.39 frame95=39.00 frameMax=75.00 cpu95=34.00 cpuMax=70.00 cacheMiss=44 chunks=28 luaKB=4307
+STATS	table: 0x9012ba70
+BENCH BEGIN	44
+SCENE	227	mechanism	1	lift
+BENCH route=44 frames=119 fps=29.63 frame95=35.00 frameMax=63.00 cpu95=32.00 cpuMax=61.00 cacheMiss=53 chunks=40 luaKB=4594
+STATS	table: 0x90854d80
+BENCH BEGIN	44
+SCENE	228	mechanism	2	rotor
+BENCH route=44 frames=119 fps=29.00 frame95=36.00 frameMax=61.00 cpu95=33.00 cpuMax=59.00 cacheMiss=59 chunks=25 luaKB=4765
+STATS	table: 0x907c0800
+BENCH BEGIN	44
+SCENE	229	mechanism	3	ferry
+BENCH route=44 frames=119 fps=28.03 frame95=40.00 frameMax=43.00 cpu95=37.00 cpuMax=40.00 cacheMiss=60 chunks=33 luaKB=5078
+STATS	table: 0x90b7c4c0
+BENCH BEGIN	44
+SCENE	230	mechanism	4	fan
+BENCH route=44 frames=119 fps=23.89 frame95=44.00 frameMax=56.00 cpu95=41.00 cpuMax=54.00 cacheMiss=60 chunks=37 luaKB=5318
+STATS	table: 0x90bd8680
+BENCH BEGIN	44
+SCENE	231	mechanism	5	bumper
+BENCH route=44 frames=119 fps=23.79 frame95=44.00 frameMax=46.00 cpu95=41.00 cpuMax=44.00 cacheMiss=60 chunks=37 luaKB=5539
+STATS	table: 0x90c29c90
+BENCH BEGIN	44
+SCENE	232	mechanism	6	trap
+BENCH route=44 frames=119 fps=24.79 frame95=45.00 frameMax=50.00 cpu95=42.00 cpuMax=43.00 cacheMiss=60 chunks=39 luaKB=5501
+STATS	table: 0x90bfd1c0
+BENCH BEGIN	44
+SCENE	233	mechanism	7	gate
+BENCH route=44 frames=119 fps=20.82 frame95=53.00 frameMax=54.00 cpu95=48.00 cpuMax=49.00 cacheMiss=60 chunks=40 luaKB=5074
+STATS	table: 0x907a6410
+BENCH BEGIN	44
+SCENE	234	mechanism	8	ferry
+BENCH route=44 frames=119 fps=26.44 frame95=41.00 frameMax=47.00 cpu95=36.00 cpuMax=43.00 cacheMiss=61 chunks=20 luaKB=4724
+STATS	table: 0x9040e300
+BENCH BEGIN	44
+SCENE	235	mechanism	9	rotor
+BENCH route=44 frames=119 fps=29.42 frame95=35.00 frameMax=52.00 cpu95=33.00 cpuMax=49.00 cacheMiss=64 chunks=27 luaKB=4854
+STATS	table: 0x9069b7a0
+BENCH BEGIN	44
+SCENE	236	mechanism	10	sweeper
+BENCH route=44 frames=119 fps=27.52 frame95=44.00 frameMax=65.00 cpu95=40.00 cpuMax=63.00 cacheMiss=71 chunks=39 luaKB=5087
+STATS	table: 0x909ca1a0
+BENCH BEGIN	44
+SCENE	237	mechanism	11	extend
+BENCH route=44 frames=119 fps=24.10 frame95=43.00 frameMax=50.00 cpu95=41.00 cpuMax=47.00 cacheMiss=74 chunks=20 luaKB=5199
+STATS	table: 0x90b61030
+BENCH BEGIN	44
+SCENE	238	mechanism	12	conveyor
+BENCH route=44 frames=119 fps=19.63 frame95=54.00 frameMax=57.00 cpu95=51.00 cpuMax=54.00 cacheMiss=74 chunks=20 luaKB=5369
+STATS	table: 0x90bbbd30
+BENCH BEGIN	44
+SCENE	239	mechanism	13	jet
+BENCH route=44 frames=119 fps=27.85 frame95=38.00 frameMax=53.00 cpu95=36.00 cpuMax=51.00 cacheMiss=78 chunks=28 luaKB=5462
+STATS	table: 0x90556250
+BENCH BEGIN	44
+SCENE	240	mechanism	14	magnet
+BENCH route=44 frames=119 fps=29.26 frame95=37.00 frameMax=51.00 cpu95=30.00 cpuMax=34.00 cacheMiss=79 chunks=31 luaKB=4706
+STATS	table: 0x9010b060
+BENCH BEGIN	44
+SCENE	241	mechanism	15	gate
+BENCH route=44 frames=119 fps=18.94 frame95=57.00 frameMax=59.00 cpu95=51.00 cpuMax=55.00 cacheMiss=79 chunks=31 luaKB=4435
+STATS	table: 0x905e00a0
+BENCH BEGIN	44
+SCENE	242	mechanism	16	gate
+BENCH route=44 frames=119 fps=19.48 frame95=55.00 frameMax=57.00 cpu95=51.00 cpuMax=55.00 cacheMiss=79 chunks=31 luaKB=4599
+STATS	table: 0x909bb050
+BENCH BEGIN	44
+SCENE	243	mechanism	17	gate
+BENCH route=44 frames=119 fps=19.57 frame95=54.00 frameMax=60.00 cpu95=51.00 cpuMax=56.00 cacheMiss=79 chunks=31 luaKB=4769
+STATS	table: 0x90489140
+BENCH BEGIN	44
+SCENE	244	pad	1	lift
+BENCH route=44 frames=119 fps=29.81 frame95=34.00 frameMax=58.00 cpu95=30.00 cpuMax=55.00 cacheMiss=88 chunks=24 luaKB=5048
+STATS	table: 0x90b33d50
+BENCH BEGIN	44
+SCENE	245	pad	2	cannon
+BENCH route=44 frames=119 fps=28.43 frame95=38.00 frameMax=55.00 cpu95=31.00 cpuMax=46.00 cacheMiss=90 chunks=30 luaKB=4556
+STATS	table: 0x903d10c0
+BENCH BEGIN	44
+SCENE	246	pad	3	bridge
+BENCH route=44 frames=119 fps=29.59 frame95=38.00 frameMax=54.00 cpu95=26.00 cpuMax=49.00 cacheMiss=96 chunks=29 luaKB=4244
+STATS	table: 0x90132b90
+BENCH BEGIN	44
+SCENE	247	pad	4	slider
+BENCH route=44 frames=119 fps=29.81 frame95=35.00 frameMax=51.00 cpu95=32.00 cpuMax=48.00 cacheMiss=100 chunks=37 luaKB=4524
+STATS	table: 0x90887500
+BENCH BEGIN	44
+SCENE	248	pad	5	fan
+BENCH route=44 frames=119 fps=26.75 frame95=40.00 frameMax=49.00 cpu95=37.00 cpuMax=47.00 cacheMiss=100 chunks=18 luaKB=4778
+STATS	table: 0x907b3740
+BENCH BEGIN	44
+SCENE	249	pad	6	extend
+BENCH route=44 frames=119 fps=22.72 frame95=49.00 frameMax=71.00 cpu95=46.00 cpuMax=69.00 cacheMiss=107 chunks=32 luaKB=5039
+STATS	table: 0x90bbd4a0
+BENCH BEGIN	44
+SCENE	250	pad	7	switch
+BENCH route=44 frames=119 fps=25.09 frame95=42.00 frameMax=54.00 cpu95=39.00 cpuMax=50.00 cacheMiss=107 chunks=34 luaKB=5233
+STATS	table: 0x90ba2320
+BENCH COMPLETE

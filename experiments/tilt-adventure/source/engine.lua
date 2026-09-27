@@ -1,4 +1,5 @@
 import "CoreLibs/graphics"
+import "awake"
 import "loading"
 import "physics"
 import "courses"
@@ -8,6 +9,7 @@ import "physics_tests"
 import "campaign"
 import "workshop_courses"
 import "joinery"
+import "height_index"
 import "ui"
 import "build"
 import "classroom"
@@ -187,7 +189,6 @@ local function paintTile(t)
 end
 local function warmTileSprites()
  if not pd.geometry then return end
- if terrainCourse and terrainCourse~=course then for _,t in ipairs(terrainCourse.tiles) do t.surface=nil end end
  local cache={};local oldX,oldY=camX,camY
  cachingTerrain=true
  for tileIndex,t in ipairs(course.tiles) do
@@ -220,6 +221,14 @@ local function drawTile(t)
 end
 prepareTerrain=function()
  if terrainCourse==course then return end
+ if terrainCourse then
+  -- Course definitions and progress survive; derived views are rebuilt in the
+  -- loader. Retaining all visited courses makes every later GC scan heavier.
+  terrainCourse.physicsCells=nil;terrainCourse.physicsView=nil;terrainCourse.supportMemo=nil;terrainCourse.floorMemo=nil
+  terrainCourse.renderIndex=nil;terrainCourse.structureUnder=nil;terrainCourse.structureOrder=nil;terrainCourse.structureSingle=nil
+  terrainCourse.occlusionCache=nil;terrainCourse.occlusionBuckets=nil
+  for _,tile in ipairs(terrainCourse.tiles) do tile.surface=nil;tile.renderCache=nil end
+ end
  Loading.checkpoint(.12,"GATHERING THE STONES")
  RoadArt.warm(course)
  Loading.checkpoint(.3,"BUILDING STONE ROAD")
@@ -230,7 +239,7 @@ prepareTerrain=function()
  for _,point in ipairs(course.checkpoints) do UI.markerOffset(course,point) end
  -- Allocate slope occlusion and HUD caches before the playable frame.
  Spatial.occluders(course,0,project,0,0,400,240,-1e9)
- UI.hud(course,level,jumpEnabled,0,0,0,0,0)
+ UI.prepareHud(course,level,jumpEnabled)
  Loading.checkpoint(.75,"LOOKING TO THE SKY")
  if Build.terrainMode=='chunks' then
   terrainImage=nil
@@ -239,7 +248,7 @@ prepareTerrain=function()
    g.pushContext(image);for _,tile in ipairs(tiles) do drawTile(tile) end;g.popContext()
    cachingTerrain=false;camX,camY=oldX,oldY
   end)
-  Terrain.warm(terrainChunks,(x-y)*0.9,(x+y)*0.45-ballHeight*0.65)
+  Terrain.prepare(terrainChunks,(x-y)*0.9,(x+y)*0.45-ballHeight*0.65)
   terrainCourse=course;collectgarbage('collect');return
  end
  terrainChunks=nil
@@ -292,6 +301,8 @@ local function renderWorld()
  -- Hold the camera at the edge while the ball falls away from the track.
  if state~='fall' then camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65 end
  g.clear(g.kColorWhite)
+ -- Opaque HUD panels replace these rows; do not rasterize the world behind them.
+ g.setClipRect(0,43,400,160)
  Pose.begin(worldTime)
  local scene=RenderIndex.view(course,project)
  Structures.drawUnder(scene,worldTime,project)
@@ -314,6 +325,7 @@ local function renderWorld()
  by=by-12+squash
  local radius=11
  local screenX,screenY=bx,by
+ if not (Dock.active and Dock.active.kind=='cannon') then
  g.pushContext(ballImage);g.clear(g.kColorClear);bx,by=14,14
  g.setColor(g.kColorWhite);g.fillCircleAtPoint(bx,by,radius)
  g.setColor(g.kColorBlack);g.drawCircleAtPoint(bx,by,radius)
@@ -345,12 +357,14 @@ local function renderWorld()
  end
  g.popContext();ballImage:setMaskImage(ballMask)
  end
- if not (Dock.active and Dock.active.kind=='cannon') then ballImage:draw(left,top) end
+ ballImage:draw(left,top)
+ end
  Pose.finish()
  marker(course.start,'START',true);for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE',true) end;marker(course.goal,'GOAL',true)
  if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
   UI.tiltPointer(screenX,screenY,Tilt.dx or 0,Tilt.dy or 0,Tilt.power or 0)
  end
+ g.clearClipRect()
  UI.hud(course,level,jumpEnabled,throttle,controls.charge,elapsed,falls,math.sqrt(vx*vx+vy*vy))
  if state=='play' and not lesson and not Tilt.calibrating then UI.dockStatus(Dock.status()) end
  if controls.flash>0 then
@@ -363,6 +377,7 @@ local function renderWorld()
 end
 local last=pd.getCurrentTimeMilliseconds()
 function pd.update()
+ Awake.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
  if Loading.busy then Loading.step(dt);pd.getCrankChange();return end
  MachineArt.time=worldTime
@@ -558,4 +573,4 @@ if not Build.classroom then
  pd.getSystemMenu():addMenuItem('Title / settings',function() if Loading.busy then return end;briefing=false;settings=false;ending=false;title=true;choosing=false;overview=false;titleChoice=1;Audio.quiet() end)
 end
 pd.gameWillPause=function() Audio.pause();saveProgress() end
-pd.gameWillResume=function() last=pd.getCurrentTimeMilliseconds();Tilt.cooldown=.75;Tilt.armed=false;Audio.resume() end
+pd.gameWillResume=function() Awake.update(true);last=pd.getCurrentTimeMilliseconds();Tilt.cooldown=.75;Tilt.armed=false;Audio.resume() end

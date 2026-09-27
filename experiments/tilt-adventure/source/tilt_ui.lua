@@ -78,7 +78,7 @@ local glyphs={
  A={'0011100','0110110','1100011','1100011','1111111','1100011','1100011','1100011','1100011'},
  B={'1111100','1100110','1100011','1100110','1111100','1100110','1100011','1100110','1111100'}}
 local upGlyph={'000010000','000111000','001111100','011111110','111111111','000111000','000111000','000111000','000111000'}
-function UI.keycap(button,x,y)
+local function drawKeycap(button,x,y)
  ink();g.fillRoundRect(x,y,17,17,3);g.setColor(g.kColorWhite)
  local glyph=glyphs[button]
  if glyph then
@@ -93,6 +93,12 @@ function UI.keycap(button,x,y)
   end end end
  end
  ink()
+end
+local keycaps={}
+function UI.keycap(button,x,y)
+ local cap=keycaps[button]
+ if not cap then cap=bitmap(17,17,function() drawKeycap(button,0,0) end);keycaps[button]=cap end
+ ink();cap:draw(x,y)
 end
 function UI.key(button,x,y,label)
  UI.keycap(button,x,y);if label then text(label,x+24,y) end
@@ -224,6 +230,7 @@ end
 -- Fixed-size keycaps and fixed label origins keep both rows aligned.
 local function controlHint(button,label,x,y) UI.key(button,x,y,label) end
 local hudBase,hudKey,readout,readoutKey,bottom,bottomKey
+local bottomCache={}
 function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  local id=tostring(level)..tostring(jump)
  if hudKey~=id then hudKey=id;hudBase=bitmap(400,43,function()
@@ -242,7 +249,8 @@ function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
  end
  readout:draw(270,0)
  local dock=Dock.active and Dock.active.kind or 'roll';local bk=dock..tostring(jump)
- if bottomKey~=bk then bottomKey=bk;bottom=bitmap(400,37,function()
+ if bottomKey~=bk then bottomKey=bk;bottom=bottomCache[bk]
+ if not bottom then bottom=bitmap(400,37,function()
   g.setColor(g.kColorWhite);g.fillRect(0,0,400,37);ink();g.drawLine(0,0,400,0);g.drawLine(2,2,398,2)
   if dock~='roll' then
    controlHint('crank',({cannon='Aim',lift='Raise/lower',slider='Travel',fan='Aim wind',extend='Extend',switch='Route'})[dock] or 'Rotate',8,2)
@@ -252,8 +260,20 @@ function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
    if jump then controlHint('A','Jump',292,2) end
   end
   controlHint('left','Help',8,20);controlHint('right','Goal',138,20)
- end) end
+ end);bottomCache[bk]=bottom end end
  bottom:draw(0,203)
+end
+function UI.prepareHud(course,level,jump)
+ local active=Dock.active
+ local scratch=g.image.new(400,240,g.kColorClear)
+ local modes={false};for _,pad in ipairs(course.pads or {}) do modes[#modes+1]=pad end
+ for _,pad in ipairs(modes) do
+  Dock.active=pad or nil
+  g.pushContext(scratch);UI.hud(course,level,jump,0,0,0,0,0)
+  UI.dockStatus('LOCKED');UI.dockStatus('UNLOCKED');g.popContext()
+  if Loading then Loading.checkpoint(.74,'PREPARING THE CONTROLS') end
+ end
+ Dock.active=active
 end
 function UI.failure(falls,checkpoint)
  page('BACK TO THE CLOUDS','ball')

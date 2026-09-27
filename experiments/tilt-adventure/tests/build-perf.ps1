@@ -1,5 +1,5 @@
 # Same installation folder as the release; restore the release after measuring.
-param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins)
+param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[int[]]$Routes=@())
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $repo=Resolve-Path (Join-Path $root '../..')
@@ -15,6 +15,39 @@ end,place=function(a,b)
 end,cache=function() return terrainChunks and terrainChunks.misses or 0,terrainChunks and terrainChunks.count or 0 end}
 '@ | Add-Content "$qa/game.lua"
 if($Smooth){'Bench.smooth=true' | Add-Content "$qa/game.lua"}
+if($Routes.Count){("Bench.routes={"+($Routes -join ',')+"}") | Add-Content "$qa/game.lua"}
+if($All){
+ @'
+Bench.all=true
+Bench.sample=function(spec,frame)
+ local c=Courses[spec.route]
+ local u=(1-math.cos(frame/120*math.pi*2))/2
+ Bench.crank=0
+ Dock.active=nil;Dock.blocked=nil
+ if spec.kind=='road' then
+  local tile=c.tiles[math.min(#c.tiles,1+math.floor(frame/180*(#c.tiles-1)))]
+  x,y=tile.x*32+16,tile.y*32+16;vx,vy=70,20
+ elseif spec.kind=='normal' then
+  local tile=c.tiles[math.max(1,math.floor(#c.tiles*spec.fraction))]
+  x,y=tile.x*32+16+frame*.6,tile.y*32+16;vx,vy=70,0
+ else
+  local m=spec.kind=='pad' and c.pads[spec.index] or c.mechanisms[spec.index]
+  if spec.kind=='pad' then
+   if m.kind=='cannon' then m.angle=-math.pi/3+u*math.pi*2/3 end
+   x,y=m.x,m.y;Dock.active=m
+   Bench.crank=6*math.cos(frame/120*math.pi*2)
+  else
+   if m.kind=='lift' then m.elevation=m.minHeight+u*(m.maxHeight-m.minHeight)
+   elseif m.manual and m.kind=='ferry' then m.progress=u
+   elseif m.manual and not m.retract then m.angle=u*math.pi end
+   x,y=Mechanisms.pose(m,worldTime)
+  end
+  vx,vy=0,0
+ end
+ ballHeight=floorAt(x,y);jumpZ=ballHeight;airborne=false;state='play'
+end
+'@ | Add-Content "$qa/game.lua"
+}
 if($Joins){
  @'
 Bench.joins=true

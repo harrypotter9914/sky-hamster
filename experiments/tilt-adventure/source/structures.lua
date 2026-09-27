@@ -231,6 +231,34 @@ function A.dial(x,y,angle)
  base('socket',x,y)
  MachineArt.handle(x,y-2,angle)
 end
+local function landingPosts(m,project)
+ local posts=m.landingPosts
+ if not posts or #posts==0 then return end
+ local ax,ay=project(m.x,m.y,m.minHeight)
+ local cached=m.postCache
+ if not cached then
+  local faces={};local left,top,right,bottom=math.huge,math.huge,-math.huge,-math.huge
+  local depth=math.max(8,(m.maxHeight-m.minHeight+20)*.65)
+  for _,v in ipairs(posts) do
+   local p={}
+   for _,q in ipairs({{-3,-3},{3,-3},{3,3},{-3,3}}) do
+    local a,b=project(v[1]+q[1],v[2]+q[2],m.maxHeight-Spatial.thickness);a=a-ax;b=b-ay
+    p[#p+1]=a;p[#p+1]=b
+    left=math.min(left,a);top=math.min(top,b);right=math.max(right,a);bottom=math.max(bottom,b+depth)
+   end
+   faces[#faces+1]=p
+  end
+  left=math.floor(left)-2;top=math.floor(top)-2
+  local im=g.image.new(math.ceil(right-left)+3,math.ceil(bottom-top)+3,g.kColorClear)
+  g.pushContext(im)
+  for _,p in ipairs(faces) do
+   for i=1,8,2 do p[i]=p[i]-left;p[i+1]=p[i+1]-top end
+   prism(p,depth,tex.rail,tex.beam)
+  end
+  g.popContext();cached={image=im,x=left,y=top};m.postCache=cached
+ end
+ cached.image:draw(ax+cached.x,ay+cached.y)
+end
 local function under(c,m,t,project,cx,cy,x,y,railsDone)
  local kind=m.kind
     if kind=='ferry' then
@@ -240,11 +268,7 @@ local function under(c,m,t,project,cx,cy,x,y,railsDone)
      if m.manual then gearFrame(((cx-m.x)+(cy-m.y))*3):draw(x+10,y+6) end
     elseif kind=='lift' then
      -- Two narrow stationary posts support the upper landing outside the moving deck.
-     for _,v in ipairs(m.landingPosts or {}) do
-      local p={}
-      for _,q in ipairs({{-3,-3},{3,-3},{3,3},{-3,3}}) do local a,b=project(v[1]+q[1],v[2]+q[2],m.maxHeight-Spatial.thickness);p[#p+1]=a;p[#p+1]=b end
-      prism(p,math.max(8,(m.maxHeight-m.minHeight+20)*.65),tex.rail,tex.beam)
-     end
+     landingPosts(m,project)
      local _,foot=project(cx,cy,m.minHeight-48)
      parts.pillar:drawScaled(x-24,y+5,1,math.max(24,foot-y)/72)
      gearFrame((m.elevation or 0)*4):draw(x+13,y+4)
@@ -343,8 +367,9 @@ end
 local preparedCourse
 function A.prepare(c)
  if DepthOrder then DepthOrder.prepare(c) end
+ for _,m in ipairs(c.mechanisms or {}) do if m.kind=='fan' then MachineArt.warmFanViews();break end end
  if preparedCourse and preparedCourse~=c then
-  for _,m in ipairs(preparedCourse.mechanisms or {}) do m.structureCache=nil;m.railCache=nil;m.surfaceFrames=nil end
+  for _,m in ipairs(preparedCourse.mechanisms or {}) do m.structureCache=nil;m.railCache=nil;m.surfaceFrames=nil;m.postCache=nil end
  end
  if preparedCourse~=c then wallSets={} end
  local keep={}
