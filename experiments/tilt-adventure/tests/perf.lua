@@ -30,7 +30,7 @@ local samples,costs={},{}
 local now=playdate.getCurrentTimeMilliseconds
 local profile={}
 if Bench.profile then
- for _,spec in ipairs({{MechanismAudio,'update','machineAudio'},{Audio,'update','ballAudio'},{Mechanisms,'support','support'},{Mechanisms,'collide','collide'},{Mechanisms,'wind','wind'},{Mechanisms,'draw','machines'},{Spatial,'occluders','occluders'},{Spatial,'maskPolygon','mask'},{Spatial,'sides','sides'},{Terrain,'draw','terrain'},{Dock,'draw','stations'},{UI,'hud','hud'},{Tilt,'update','tilt'}}) do
+ for _,spec in ipairs({{MechanismAudio,'update','machineAudio'},{Audio,'update','ballAudio'},{Mechanisms,'support','support'},{Mechanisms,'collide','collide'},{Mechanisms,'wind','wind'},{Mechanisms,'draw','machines'},{Spatial,'occluders','occluders'},{Spatial,'maskPolygon','mask'},{Spatial,'sides','sides'},{Terrain,'draw','terrain'},{Dock,'draw','stations'},{UI,'hud','hud'},{Tilt,'update','tilt'},{DepthOrder,'roads','roadCover'},{Structures,'drawTop','structureTop'},{Structures,'drawUnder','structureUnder'}}) do
   local owner,key,label=spec[1],spec[2],spec[3];local f=owner[key]
   owner[key]=function(...) local t=now();local a,b,c,d,e=f(...);profile[label]=(profile[label] or 0)+now()-t;return a,b,c,d,e end
  end

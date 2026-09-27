@@ -24,43 +24,39 @@ function D.update(course,x,y,vx,vy,airborne,crank,a,b)
  elseif p.target then p.target.angle=p.angle end
  if a and p.kind=='cannon' then
   D.active=nil;D.blocked=p
-  return {x=p.x,y=p.y,vx=210*math.cos(p.angle),vy=210*math.sin(p.angle),launch=true}
+  local mx,my=CannonModel.muzzle(p.angle)
+  return {x=p.x+mx,y=p.y+my,z=course:height(p.x,p.y)+CannonModel.bottom,vz=CannonModel.vertical,vx=210*math.cos(p.angle),vy=210*math.sin(p.angle),launch=true}
  end
  return {x=p.x,y=p.y,locked=true}
 end
--- The muzzle follows the projected launch tangent, including its elevation.
+-- Barrel art, trajectory and projectile spawn share one three-dimensional muzzle.
 local cannonArt={}
 local cannonBase
-local atan2=math.atan2 or function(y,x)return math.atan(y,x)end
-function D.projectedDirection(angle)
- local x,y=math.cos(angle),math.sin(angle)
- return (x-y)*.9,(x+y)*.45-(150/210)*.65
-end
+function D.projectedDirection(angle) return CannonModel.direction(angle) end
 function D.cannonFrame(angle)
  return math.max(1,math.min(61,math.floor((angle+math.pi/3)/(math.pi/90)+1.5)))
 end
 local function buildCannons()
  if cannonArt[1] then return end
- local g=playdate.graphics;local barrel=g.image.new('structures/barrel')
- cannonBase=g.image.new('structures/cradle')
- for n=1,61 do
-  local angle=-math.pi/3+(n-1)*math.pi/90
-  local ux,uy=D.projectedDirection(angle);local length=math.sqrt(ux*ux+uy*uy)
-  local bearing=math.deg(atan2(uy,ux))
-  local im=g.image.new(128,128,g.kColorClear);g.pushContext(im)
-  -- Back of the tube pivots in the saddle instead of spinning about its middle.
-  barrel:drawRotated(64+ux/length*13,64+uy/length*13,bearing)
-  g.popContext();cannonArt[n]=im
- end
+ cannonBase=CannonModel.base()
+ for n=1,61 do cannonArt[n]=CannonModel.raster(-math.pi/3+(n-1)*math.pi/90) end
 end
 D.prepareArt=buildCannons
-function D.drawCannon(angle,x,y,recoil)
- buildCannons();local n=D.cannonFrame(angle)
- local ux,uy=D.projectedDirection(angle);local length=math.sqrt(ux*ux+uy*uy)
- cannonBase:draw(x-35,y-56)
- cannonArt[n]:draw(x-64-(recoil or 0)*ux/length,y-100-(recoil or 0)*uy/length)
+function D.muzzle(course,p)
+ local mx,my,mz=CannonModel.muzzle(p.angle or 0)
+ return p.x+mx,p.y+my,course:height(p.x,p.y)+mz
 end
-function D.draw(course,project)
+function D.trajectory(course,p,t)
+ local mx,my,mz=D.muzzle(course,p);local a=p.angle or 0
+ return mx+210*math.cos(a)*t,my+210*math.sin(a)*t,mz+CannonModel.vertical*t-150*t*t
+end
+function D.drawCannon(angle,x,y,recoil)
+ buildCannons()
+ cannonBase:draw(x-64,y-78)
+ local ux,uy=D.projectedDirection(angle)
+ cannonArt[D.cannonFrame(angle)]:draw(x-64-(recoil or 0)*ux,y-78-(recoil or 0)*uy)
+end
+function D.draw(course,project,drawTile)
  local g=playdate.graphics
  for _,p in ipairs(course.pads or {}) do
   local roughX,roughY=project(p.x,p.y,course:height(p.x,p.y))
@@ -72,7 +68,16 @@ function D.draw(course,project)
     local age=p.fireAt and MachineArt.time-p.fireAt or 10
     local recoil=age>=0 and age<.24 and math.sin(age/.24*math.pi)*5 or 0
     D.drawCannon(p.angle or 0,x,y,recoil)
-    if D.active==p then for i=1,10 do local t=i*.1;local px,py=project(p.x+math.cos(p.angle)*210*t,p.y+math.sin(p.angle)*210*t,course:height(p.x,p.y)+150*t-150*t*t);g.setColor(g.kColorBlack);g.fillCircleAtPoint(px,py,2) end end
+    if D.active==p then
+     local px,py=project(D.trajectory(course,p,0))
+     g.setColor(g.kColorBlack)
+     for i=1,18 do
+      local qx,qy=project(D.trajectory(course,p,i*.05))
+      if i==1 then g.drawLine(px,py,qx,qy) else g.fillCircleAtPoint(qx,qy,i%2==0 and 1.5 or 1) end
+      px,py=qx,qy
+     end
+    end
+    if DepthOrder then DepthOrder.roads(course,p,0,project,drawTile) end
    elseif p.kind=='bridge' or p.kind=='fan' or p.kind=='extend' or p.kind=='switch' then
     Structures.dial(x,y,p.spin or math.deg(p.angle or 0))
    end

@@ -58,24 +58,10 @@ for _,c in ipairs(Courses) do
     m.dockLeft=left;m.dockRight=right
    end
   elseif m.kind=='lift' then
-   -- The first two columns of the upper bank have a solid abutment below them.
-   c.terrainDepth=c.terrainDepth or {}
-   m.frontTiles={}
-   for _,lip in ipairs(c.upperLips) do
-    if lip[5]==m.maxHeight and lip[1]==m.x-m.w/2 then
-     for x=lip[1]/32,lip[2]/32-1 do c.terrainDepth[string.format('%d,%d',x,lip[3]/32)]=m.maxHeight-m.minHeight+12/.65 end
-    end
-   end
-   for _,tile in ipairs(c.tiles) do
-    local x,y=tile.x*32+16,tile.y*32+16
-    if x>m.x and x<=m.x+m.w/2+64 and math.abs(y-m.y)<=m.h/2+16 then
-     local high=c:height(x,y)
-     if math.abs(high-m.maxHeight)<.01 then
-      c.terrainDepth[tile.x..','..tile.y]=high-m.minHeight+12/.65
-      m.frontTiles[#m.frontTiles+1]=tile
-     end
-    end
-   end
+   -- The landing is an open trestle, not a full-height wall behind the carriage.
+   -- Its walking surface and normal slab collision thickness stay unchanged.
+   local back=m.y-m.h/2
+   m.landingPosts={{m.x-m.w/2+5,back-26},{m.x+m.w/2+26,back-26}}
   end
  end
 end

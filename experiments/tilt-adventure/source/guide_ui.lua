@@ -132,11 +132,25 @@ function UI.lesson(kind,time)
     local px,py=map(ease((t-4)/1)*65,0,0);ball(px,py-13);left='KEEP BALANCED';right=t<4 and 'RIDE THE DECK' or 'ROLL OFF NOW'
    end
   elseif kind=='cannon' then
-   slab(206,155,78,10);slab(333,155,39,10);smallCannon(212,93,1+math.floor(ease((t-1)/2)*30+.5))
-   local q=ease((t-3)/1.4)
-   if t<1 then ball(217+ease(t)*20,142)
-   elseif t>=3 then ball(266+87*q,119-29*math.sin(q*math.pi)+23*q) end
-   if t>=1 and t<3 then for i=1,6 do ink();g.fillCircleAtPoint(274+i*12,118-24*math.sin(i/6*math.pi)+23*i/6,1) end end
+   local angle=-math.pi/3+ease((t-1)/2)*math.pi/3
+   local p={x=0,y=0,angle=angle};local c={height=function()return 0 end}
+   local function project(x,y,z) local sx,sy=CannonModel.project(x,y,z);return 232+sx*.5,104+sy*.5 end
+   local function island(x0,x1,y0,y1)
+    local p={};for _,v in ipairs({{x0,y0},{x1,y0},{x1,y1},{x0,y1}}) do local x,y=project(v[1],v[2],0);p[#p+1]=x;p[#p+1]=y end
+    ink();g.fillPolygon(p[3],p[4],p[5],p[6],p[5],p[6]+4,p[3],p[4]+4)
+    g.fillPolygon(p[5],p[6],p[7],p[8],p[7],p[8]+4,p[5],p[6]+4)
+    white();g.fillPolygon(table.unpack(p));ink();g.drawPolygon(table.unpack(p))
+   end
+   island(-30,45,-28,28);island(180,250,-25,25)
+   smallCannon(197,49,Dock.cannonFrame(angle))
+   local function tinyBall(x,y) marble:drawScaled(x-6.5,y-6.5,.5) end
+   if t<1 then local x,y=project(-28+ease(t)*28,0,CannonModel.ballCenter);tinyBall(x,y)
+   elseif t<3 then
+    for i=0,12 do local x,y=project(Dock.trajectory(c,p,i*.07));ink();g.fillCircleAtPoint(x,y,1) end
+   else
+    local flight=math.min(1,(t-3)/1.4)*(1-CannonModel.exitTime)
+    local x,y=project(Dock.trajectory(c,p,flight));tinyBall(x,y)
+   end
    left=t<1 and 'DOCK SLOWLY' or t<3 and 'TURN TO AIM' or 'PRESS A TO FIRE'
    right=t<1 and 'ENTER THE CANNON' or t<3 and 'CHECK THE ARC' or 'FLY TO THE ROAD'
   elseif kind=='extend' then
@@ -172,7 +186,7 @@ function UI.lesson(kind,time)
    left=t<1 and 'DOCK ON THE DECK' or t<3.5 and 'CRANK TO TRAVEL' or 'B: RELEASE'
    right=t<3.5 and 'MOVE TO THE FAR BANK' or 'ROLL OFF AT THE DOCK'
   elseif kind=='fan' then
-   slab(207,142,166,23);machineArt.fan:draw(210,88)
+   slab(207,142,166,23)
    local angle=data==info.windcontrol and (math.pi/2+math.rad(t*120)) or math.pi/2
    MachineArt.fan({angle=angle},t,236,131)
    ball(327,130);left=data==info.windcontrol and 'CRANK AT THE DIAL' or 'COUNTER THE GUST';right=data==info.windcontrol and 'AIM ALONG THE ROAD' or 'STAY ON THE ROAD'

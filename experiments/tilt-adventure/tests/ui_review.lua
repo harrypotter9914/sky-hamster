@@ -72,30 +72,30 @@ function playdate.update()
   end
   export('v40-road',function() world(1,176,48) end)
   for i,angle in ipairs({-math.pi/3,-math.pi/6,0,math.pi/6,math.pi/3}) do
-   export('v107-cannon-'..i,function()
+   export('v108-cannon-'..i,function()
     world(27,560,144);Courses[27].pads[2].angle=angle;Review.render()
    end)
   end
   for i,crank in ipairs({0,192,384}) do
-   export('v107-lift-'..i,function() world(19,224,96);Review.animate(0,crank);Review.render() end)
+   export('v108-lift-'..i,function() world(19,224,96);Review.animate(0,crank);Review.render() end)
   end
   for i,crank in ipairs({0,270,540}) do
-   export('v107-slider-'..i,function() world(22,200,80);Review.animate(0,crank);local m=Courses[22].mechanisms[1];local x,y=Mechanisms.pose(m,0);Review.place(x,y);Review.render() end)
+   export('v108-slider-'..i,function() world(22,200,80);Review.animate(0,crank);local m=Courses[22].mechanisms[1];local x,y=Mechanisms.pose(m,0);Review.place(x,y);Review.render() end)
   end
   for i,t in ipairs({0,3.1,4,5,7}) do
-   export('v107-rotor-'..i,function() world(12,256,176);Review.animate(t);Review.render() end)
+   export('v108-rotor-'..i,function() world(12,256,176);Review.animate(t);Review.render() end)
   end
   world(44,1392,80)
   local rotorArt=Structures.reviewArt()
   assert(rotorArt['160']==180 and rotorArt['192']==180,'missing baked rotor frame tables')
-  playdate.datastore.write({rotors=rotorArt,complete=true},'v107-native-review')
+  playdate.datastore.write({rotors=rotorArt,complete=true},'v108-native-review')
   world(27,560,144)
   for i=0,60 do
    Courses[27].pads[2].angle=-math.pi/3+i*math.pi/90
-   export(string.format('v107-aim-%02d',i),function() Review.render() end)
+   export(string.format('v108-aim-%02d',i),function() Review.render() end)
   end
   for i=0,89 do
-   export(string.format('v107-crank-%02d',i),function() UI.lesson('control',i/15) end)
+   export(string.format('v108-crank-%02d',i),function() UI.lesson('control',i/15) end)
   end
   for _,kind in ipairs({'ferry','slider','lift','rotor','trap','gate','sweeper','conveyor'}) do
    for i,t in ipairs({0,.1,.3,2.8,4.8}) do
@@ -105,6 +105,24 @@ function playdate.update()
     end)
    end
   end
+  local audited={}
+  for n,c in ipairs(Courses) do
+   for _,m in ipairs(c.mechanisms or {}) do
+    local kind=m.retract and 'extend' or m.kind
+    if not audited[kind] then
+     audited[kind]=n
+     for i,t in ipairs({0,2.9,4.2}) do
+      export('v108-audit-'..kind..'-'..i,function()
+       world(n,m.x,m.y);if m.kind~='lift' and m.kind~='ferry' and m.kind~='rotor' then Review.place(m.x-45,m.y+28) end;Review.animate(t,m.manual and 90 or nil);Review.render()
+      end)
+     end
+    end
+   end
+  end
+  for i,a in ipairs({-135,-90,-45,0,45,90,135,180}) do
+   export('v108-fan-'..i,function() world(24,144,112);Courses[24].mechanisms[1].angle=math.rad(a);Review.render() end)
+  end
+  playdate.datastore.write({complete=true,kinds=audited},'v108-audit')
   print('PASS: v40 native animation exports complete')
   done=true
  end

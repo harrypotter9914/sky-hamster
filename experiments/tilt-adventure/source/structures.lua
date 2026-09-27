@@ -69,7 +69,7 @@ function A.demo(kind,x,y,t,u)
    m.kind='rotor';m.w=100;m.maxWidth=100;m.joinSpan=100;m.h=20;m.manual=kind=='control'
    banks={{-76,-50,-16,16,0},{50,76,-16,16,0}}
   end
-  if kind=='lift' then banks={{-60,-24,-15,15,0},{-24,36,-39,-15,44}} end
+  if kind=='lift' then banks={{-60,-24,-15,15,0},{-24,36,-39,-15,44}};m.landingPosts={{-19,-36},{29,-36}} end
   if kind=='gate' or kind=='sweeper' then m.w=12;m.h=38 end
   item={m=m,course={mechanisms={m},height=function()return 0 end},banks=banks};demos[kind]=item
   if banks then
@@ -78,7 +78,7 @@ function A.demo(kind,x,y,t,u)
     local im=g.image.new(200,160,g.kColorClear);g.pushContext(im)
     local pts={}
     for _,v in ipairs({{b[1],b[3]},{b[2],b[3]},{b[2],b[4]},{b[1],b[4]}}) do pts[#pts+1]=100+(v[1]-v[2])*.9;pts[#pts+1]=70+(v[1]+v[2])*.45-b[5]*.65 end
-    prism(pts,b[5]*.65+8,roadTexture,tex.beam);g.popContext();item.roads[i]=im
+    prism(pts,8,roadTexture,tex.beam);g.popContext();item.roads[i]=im
    end
   end
  end
@@ -91,6 +91,8 @@ function A.demo(kind,x,y,t,u)
   A.drawUnder(item.course,t,project)
   for _,road in ipairs(item.roads) do road:draw(x-100,y-70) end
   A.drawTop(item.course,t,project)
+  local _,x1,_,y1=DepthOrder.bounds(m,t)
+  for i,b in ipairs(item.banks) do if b[1]>=x1-.001 or b[3]>=y1-.001 then item.roads[i]:draw(x-100,y-70) end end
  else M.draw(item.course,t,project) end
  local a,b=M.pose(m,t);local sx,sy=project(a,b,kind=='lift' and m.elevation or 0)
  return sx,sy,project
@@ -237,6 +239,12 @@ local function under(c,m,t,project,cx,cy,x,y,railsDone)
      -- A housed axle turns with real carriage displacement, not a floating cog.
      if m.manual then gearFrame(((cx-m.x)+(cy-m.y))*3):draw(x+10,y+6) end
     elseif kind=='lift' then
+     -- Two narrow stationary posts support the upper landing outside the moving deck.
+     for _,v in ipairs(m.landingPosts or {}) do
+      local p={}
+      for _,q in ipairs({{-3,-3},{3,-3},{3,3},{-3,3}}) do local a,b=project(v[1]+q[1],v[2]+q[2],m.maxHeight-Spatial.thickness);p[#p+1]=a;p[#p+1]=b end
+      prism(p,math.max(8,(m.maxHeight-m.minHeight+20)*.65),tex.rail,tex.beam)
+     end
      local _,foot=project(cx,cy,m.minHeight-48)
      parts.pillar:drawScaled(x-24,y+5,1,math.max(24,foot-y)/72)
      gearFrame((m.elevation or 0)*4):draw(x+13,y+4)
@@ -256,7 +264,7 @@ function M.draw(c,t,project)
     wall(c,m,t,project,cx,cy)
    elseif kind=='fan' and A.layer~='under' then
     base('small',x,y)
-    A.fanImage=A.fanImage or g.image.new('machine-fan');A.fanImage:draw(x-26,y-43);MachineArt.fan(m,t,x,y)
+    MachineArt.fan(m,t,x,y)
    elseif kind=='bumper' and A.layer~='under' then
     base('small',x,y)
     MachineArt.bumper(m,t,x,y)
@@ -318,9 +326,23 @@ function A.drawUnder(c,t,project)
   if x+extent>=-32 and x-extent<=432 and y+extent>=0 and y-extent<=240 then under(c,m,t,project,cx,cy,x,y,true) end
  end
 end
-function A.drawTop(c,t,project) A.layer='top';M.draw(c,t,project);A.layer=nil end
+function A.drawTop(c,t,project,drawTile)
+ local order=c.structureOrder
+ if not order then order={};for _,m in ipairs(c.mechanisms or {}) do order[#order+1]=m end;c.structureOrder=order end
+ for _,m in ipairs(order) do local x,y=M.pose(m,t);m.drawDepth=x+y end
+ table.sort(order,function(a,b)return a.drawDepth<b.drawDepth end)
+ local one=c.structureSingle
+ if not one then one=setmetatable({mechanisms={}},{__index=c});c.structureSingle=one end
+ A.layer='top'
+ for _,m in ipairs(order) do
+  one.mechanisms[1]=m;M.draw(one,t,project)
+  if DepthOrder then DepthOrder.roads(c,m,t,project,drawTile) end
+ end
+ A.layer=nil
+end
 local preparedCourse
 function A.prepare(c)
+ if DepthOrder then DepthOrder.prepare(c) end
  if preparedCourse and preparedCourse~=c then
   for _,m in ipairs(preparedCourse.mechanisms or {}) do m.structureCache=nil;m.railCache=nil;m.surfaceFrames=nil end
  end
@@ -338,6 +360,7 @@ function A.prepare(c)
   g.pushContext(scratch);g.clear(g.kColorClear)
   M.draw(view,0,function(a,b,h) return 200+(a-cx-b+cy)*.9,100+(a-cx+b-cy)*.45-(h-z)*.65 end)
   g.popContext()
+  if DepthOrder then DepthOrder.warm(c,m) end
   local progress=.66+.07*i/#c.mechanisms
   if m.kind=='gate' or m.kind=='sweeper' then
    local maximum=math.floor((m.wallHeight or 80)*.65+.5)

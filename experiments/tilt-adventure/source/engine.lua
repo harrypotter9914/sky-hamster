@@ -15,6 +15,7 @@ import "terrain"
 import "road_art"
 import "audio"
 import "tilt"
+import "cannon_model"
 import "dock"
 import "mechanism_cache"
 import "expansion"
@@ -23,6 +24,7 @@ import "machine_art"
 import "physics_index"
 import "render_index"
 import "pose"
+import "depth_order"
 import "structures"
 import "mechanism_audio"
 import "tilt_ui"
@@ -301,13 +303,8 @@ local function renderWorld()
    for i=0,3 do local yy=sy-2-i*(2-controls.charge);g.drawLine(sx-4,yy,sx+4,yy-1) end
   end
  end
- Structures.drawTop(scene,worldTime,project)
- for _,m in ipairs(scene.mechanisms or {}) do
-  if m.kind=='lift' and (m.elevation or m.minHeight)<m.maxHeight-.01 then
-   for _,tile in ipairs(m.frontTiles or {}) do drawTile(tile) end
-  end
- end
- Dock.draw(course,project)
+ Structures.drawTop(scene,worldTime,project,drawTile)
+ Dock.draw(course,project,drawTile)
  marker(course.start,'START');for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE') end;marker(course.goal,'GOAL')
  -- Rolling shell and rotating hamster face follow distance travelled.
  local ground=floorAt(x,y)
@@ -348,7 +345,7 @@ local function renderWorld()
  end
  g.popContext();ballImage:setMaskImage(ballMask)
  end
- ballImage:draw(left,top)
+ if not (Dock.active and Dock.active.kind=='cannon') then ballImage:draw(left,top) end
  Pose.finish()
  marker(course.start,'START',true);for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE',true) end;marker(course.goal,'GOAL',true)
  if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
@@ -476,7 +473,7 @@ function pd.update()
   local dock=Dock.update(course,x,y,vx,vy,airborne,crank,pd.buttonJustPressed(pd.kButtonA),pd.buttonJustPressed(pd.kButtonB))
   if dock then
    x,y=dock.x,dock.y;vx,vy=0,0;throttle=0;ballHeight=floorAt(x,y)
-   if dock.launch then vx,vy=dock.vx,dock.vy;airborne=true;jumpZ=ballHeight;jumpV=150 end
+   if dock.launch then vx,vy=dock.vx,dock.vy;airborne=true;jumpZ=dock.z;jumpV=dock.vz end
   end
   local locked=dock and dock.locked
   if locked then worldTime=worldTime+dt end

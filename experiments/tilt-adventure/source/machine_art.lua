@@ -26,16 +26,59 @@ function A.bumper(m,t,x,y)
  local squash=age>=0 and age<.5 and math.max(0,math.sin(age/.5*math.pi*3)*math.exp(-age*4)) or 0
  springs[math.floor(squash*7+.5)]:draw(x-22,y-36)
 end
+local fanHousings={}
 function A.fan(m,t,x,y)
- g.setColor(g.kColorBlack);g.fillCircleAtPoint(x+2,y-25,14)
- blades[math.floor(t*18)%8]:draw(x-12,y-39)
- g.setColor(g.kColorWhite);g.drawCircleAtPoint(x+2,y-25,14);g.setColor(g.kColorBlack);g.drawCircleAtPoint(x+2,y-25,15)
- local dx,dy=math.cos(m.angle or 0),math.sin(m.angle or 0);local ux,uy=(dx-dy)*.9,(dx+dy)*.45
+ local frame=math.floor(math.deg(m.angle or 0)/5+.5)%72
+ local angle=math.rad(frame*5);local dx,dy=math.cos(angle),math.sin(angle)
+ local ux,uy=(dx-dy)*.9,(dx+dy)*.45
+ local function point(side,z,along)
+  return 64+((-dy-dx)*side+(dx-dy)*along)*.9,78+((dx-dy)*side+(dx+dy)*along)*.45-z*.65
+ end
+ local im=fanHousings[frame]
+ if not im then
+  im=g.image.new(128,112,g.kColorClear);g.pushContext(im)
+  g.setColor(g.kColorBlack);g.fillRoundRect(60,55,8,24,2)
+  g.setColor(g.kColorWhite);g.drawLine(62,57,62,76)
+  local near=(dx+dy)>=0 and 9 or -9;local far=-near
+  local back,front={},{}
+  for i=0,23 do
+   local a=i*math.pi/12;local u,v=point(19*math.cos(a),36+19*math.sin(a),far);back[#back+1]=u;back[#back+1]=v
+   u,v=point(19*math.cos(a),36+19*math.sin(a),near);front[#front+1]=u;front[#front+1]=v
+  end
+  g.setColor(g.kColorBlack);g.fillPolygon(table.unpack(back))
+  for i=0,23 do local j=(i+1)%24;local a,b=i*2+1,j*2+1
+   if back[a]>back[b] then
+    local p={back[a],back[a+1],back[b],back[b+1],front[b],front[b+1],front[a],front[a+1]}
+    g.setColor(g.kColorWhite);g.fillPolygon(table.unpack(p));g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(p))
+   end
+  end
+  g.setColor(g.kColorWhite);g.fillPolygon(table.unpack(front));g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(front))
+  local hole={};for i=0,23 do local a=i*math.pi/12;local u,v=point(16*math.cos(a),36+16*math.sin(a),near);hole[#hole+1]=u;hole[#hole+1]=v end
+  g.fillPolygon(table.unpack(hole));g.popContext();fanHousings[frame]=im
+ end
+ im:draw(x-64,y-78)
+ -- Spin within the fan's own vertical plane. A side view compresses the blades too.
+ local near=(dx+dy)>=0 and 9 or -9
+ local px,py=point(0,36,near);px,py=x+px-64,y+py-78
+ if math.abs(dx+dy)>.06 then
+  for blade=0,2 do
+   local phase=t*12+blade*math.pi*2/3;local p={}
+   for _,v in ipairs({{3,-.4},{15,-.3},{16,.32},{4,.65}}) do
+    local u,vv=point(v[1]*math.cos(phase+v[2]),36+v[1]*math.sin(phase+v[2]),near)
+    p[#p+1]=x+u-64;p[#p+1]=y+vv-78
+   end
+   g.setColor(g.kColorWhite);g.fillPolygon(table.unpack(p));g.setColor(g.kColorBlack);g.drawPolygon(table.unpack(p))
+  end
+ end
+ g.setColor(g.kColorWhite);g.fillCircleAtPoint(px,py,2)
+ -- Gusts originate at the actual outlet, not at the ground or a fixed screen circle.
  for lane=-1,1 do
-  local d=18+(t*36+lane*19)%72;local px,py=x+ux*d-lane*uy*7,y+uy*d-16+lane*ux*7
-  for j=1,5 do local nx,ny=x+ux*(d+j*3)-lane*uy*7,y+uy*(d+j*3)-16+lane*ux*7+math.sin(t*4+j*.8+lane)*2;g.drawLine(px,py,nx,ny);px,py=nx,ny end
+  local d=18+(t*36+lane*19)%72;local px,py=x+ux*d-lane*uy*7,y+uy*d-36*.65+lane*ux*7
+  g.setColor(g.kColorBlack)
+  for j=1,5 do local nx,ny=x+ux*(d+j*3)-lane*uy*7,y+uy*(d+j*3)-36*.65+lane*ux*7+math.sin(t*4+j*.8+lane)*2;g.drawLine(px,py,nx,ny);px,py=nx,ny end
  end
 end
+
 local M,D=Mechanisms,Dock
 local previousOpen=M.open
 local function ease(v) v=math.max(0,math.min(1,v));return v*v*(3-2*v) end
@@ -99,8 +142,8 @@ function M.draw(c,t,project)
  end
 end
 local drawStations=D.draw
-function D.draw(c,project)
- drawStations(c,project)
+function D.draw(c,project,drawTile)
+ drawStations(c,project,drawTile)
  local t=A.time
  for _,p in ipairs(c.pads or {}) do
   local roughX,roughY=project(p.x,p.y,c:height(p.x,p.y))
@@ -112,9 +155,8 @@ function D.draw(c,project)
    end
    local age=p.fireAt and t-p.fireAt or 10
    if p.kind=='cannon' and age>=0 and age<.35 then
-    local dx,dy=math.cos(p.angle or 0),math.sin(p.angle or 0)
-    local ux,uy=(dx-dy)*.9,(dx+dy)*.45-.75;local length=math.sqrt(ux*ux+uy*uy)
-    g.setColor(g.kColorBlack);for i=1,3 do local d=28+i*6+age*35;g.drawCircleAtPoint(x+ux/length*d,y-47+uy/length*d,2+age*10) end
+    local mx,my=project(D.muzzle(c,p));local ux,uy=D.projectedDirection(p.angle or 0)
+    g.setColor(g.kColorBlack);for i=1,3 do local d=i*4+age*25;g.drawCircleAtPoint(mx+ux*d,my+uy*d,2+age*8) end
    end
   end
   end

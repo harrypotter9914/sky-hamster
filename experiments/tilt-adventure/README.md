@@ -1,4 +1,6 @@
-# Sky Hamster — 0.10.7
+# Sky Hamster — 0.10.8
+
+0.10.8 fixes foreground road compositing, replaces the lift wall with an open landing, and projects solid cannon/fan geometry. Cannon art, guide and projectile share one muzzle; landing ranges remain compatible. See [validation](VALIDATION-v0.10.8.md) and [art notes](art/PERSPECTIVE-v0.10.8.md). Run `python tests/check_depth.py` for the complete regression suite.
 
 0.10.7 adds visible cannon aiming, flush ferry/bridge joints, six rear-exit lift layouts and animated attached-crank tutorials. Rotation art is baked into SDK image tables. Host/native checks pass; final hardware profiling and normal-game installation await reconnection. See [validation](VALIDATION-v0.10.7.md). Run `python tests/check_joinery.py` for the complete regression suite.
 

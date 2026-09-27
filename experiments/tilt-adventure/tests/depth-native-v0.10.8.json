@@ -1,0 +1,17 @@
+{
+	"complete":true,
+	"kinds": {
+		"bumper":14,
+		"conveyor":34,
+		"extend":38,
+		"fan":16,
+		"ferry":11,
+		"gate":9,
+		"jet":36,
+		"lift":19,
+		"magnet":42,
+		"rotor":12,
+		"sweeper":13,
+		"trap":10
+	}
+}

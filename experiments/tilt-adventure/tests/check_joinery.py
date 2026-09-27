@@ -56,7 +56,7 @@ for i=-60,60 do
  local a=math.rad(i);local dx,dy=Dock.projectedDirection(a)
  local step=.000001
  local px=(210*math.cos(a)-210*math.sin(a))*.9*step
- local py=(210*math.cos(a)+210*math.sin(a))*.45*step-150*.65*step
+ local py=(210*math.cos(a)+210*math.sin(a))*.45*step-CannonModel.vertical*.65*step
  assert(math.abs(dx*py-dy*px)<1e-9,'muzzle misses launch tangent')
  assert(Dock.cannonFrame(a)>=1 and Dock.cannonFrame(a)<=61)
 end
