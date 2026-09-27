@@ -13,8 +13,10 @@
 
 The first deferred-import bootstrap failed on the native runtime (`import() called outside of pdz loading`). Static imports now occur during initial loading. Audio/image resource preparation runs in the subsequent cooperative worker. The native startup test was repeated successfully after the correction. Host-only mocks had not exposed this SDK restriction.
 
-## Device limitations
+## Subsequent physical-device verification
 
-Final installation attempts returned `No Playdate device detected`. This corrected build has not been confirmed installed or performance-tested on hardware. The early draft installed before the bootstrap correction is not a validated final build. Do not treat that transfer as release validation. Reconnect the powered-on device and run `install.ps1`; it overwrites `/Games/sky-hamster-tilt.pdx`.
+After USB reconnection, the corrected 0.10.4 release installed and started successfully. `tests/device-release-v0.10.4.log` contains the startup PASS checks and READY marker. The temporary audio workload verified all 45 assets plus slow/fast rolling (47 cases): `tests/audio-device-v0.10.4.json`. All 45 source WAVs are valid, non-silent mono PCM without clipped samples: `tests/audio-waveforms-v0.10.4.json`.
 
-No claim is made that the physical speaker has been heard, that this revision sustains 30 FPS, or that all 44 courses were human-playtested. Previous hardware measurements remain historical and do not validate the added mixer. Saved settings, bundle ID and installation folder are preserved.
+The eight normal-speed hardware scenes measured 26.02–29.97 FPS with audio, exposing a regression in heavier areas. `tests/device-audio-v0.10.4.log` records this baseline. Profiling measured mechanism-audio update at approximately 4.58 ms in the selected heavy scene. This led to the separate 0.10.5 optimization; see VALIDATION-v0.10.5.md.
+
+Playback-state checks do not establish speaker sound quality. These are automated workloads, not human playthroughs of all 44 courses. Saved preferences and the installation folder are preserved.

@@ -1,5 +1,5 @@
 -- Event sounds follow real state changes; a bounded mixer handles nearby machines.
-MechanismAudio={clock=0,states={},loops={},shots={},fresh=true,enabled=false}
+MechanismAudio={clock=0,states={},loops={},shots={},byName={},fresh=true,enabled=false}
 local S,M,D=MechanismAudio,Mechanisms,Dock
 local durations={connect=.13,release=.14,crank=.07,stop=.12,spring=.38,cannon=.34,
  gate_open=.23,gate_close=.22,trap_open=.19,trap_close=.14,warning=.09,switch=.11,
@@ -16,6 +16,7 @@ function S.init(enabled)
   loaded=loaded+1;if Loading then Loading.checkpoint(.43+loaded/16*.27,'WINDING THE MACHINES') end
  end
  for i,name in ipairs(families) do S.loops[i]={name=name,player=assert(playdate.sound.sampleplayer.new('audio/machines/'..name)),want=0,volume=0,rate=1}
+  S.byName[name]=S.loops[i]
   if Loading then Loading.checkpoint(.70+i/#families*.27,'WINDING THE MACHINES') end
  end
 end
@@ -38,8 +39,8 @@ function S.play(name,volume,priority)
  for _,v in pairs(S.shots) do if v.untilAt>S.clock then v.player:setVolume((v.volume or 0)*scale) end end
 end
 function S.quiet()
- for _,v in ipairs(S.loops) do v.player:stop();v.volume=0;v.want=0 end
- for _,v in pairs(S.shots) do v.player:stop();v.untilAt=0 end
+ for _,v in ipairs(S.loops) do if v.volume>0 then v.player:stop() end;v.volume=0;v.want=0 end
+ for _,v in pairs(S.shots) do if v.untilAt>0 then v.player:stop() end;v.untilAt=0 end
  S.command=nil;S.fresh=true
 end
 local function snapshot(s,t)
@@ -50,14 +51,25 @@ local function snapshot(s,t)
  s.jet=m.kind=='jet' and (t+(m.phase or 0))%m.period<m.period*.4 or false
  s.hit=m.hitAt;s.moving=false;s.contact=false;s.seen=t
 end
+-- Conservative hearing bounds include the complete travel range and fan region.
+-- Remote machinery still uses world time when it returns; its animation never freezes.
+local function hearingBounds(m)
+ local r=math.max(m.maxWidth or m.w or 0,m.h or 0)/2+220
+ local x0,x1,y0,y1=m.x-r,m.x+r,m.y-r,m.y+r
+ if m.toX then x0=math.min(x0,m.toX-r);x1=math.max(x1,m.toX+r);y0=math.min(y0,m.toY-r);y1=math.max(y1,m.toY+r) end
+ if m.range then y0=y0-m.range;y1=y1+m.range end
+ if m.retract then x0=math.min(x0,m.anchor-r);x1=math.max(x1,m.anchor+(m.maxWidth or m.w)+r) end
+ if m.region then local a=m.region;x0=math.min(x0,a[1]-a[3]/2);x1=math.max(x1,a[1]+a[3]/2);y0=math.min(y0,a[2]-a[4]/2);y1=math.max(y1,a[2]+a[4]/2) end
+ return x0,x1,y0,y1
+end
 function S.reset(course)
  S.quiet();S.course=course;S.states={};S.clock=0
  S.wasDriven=nil;S.commandUntil=nil
  for _,v in pairs(S.shots) do v.last=-10 end
- for _,m in ipairs(course.mechanisms or {}) do local s={m=m};snapshot(s,0);S.states[#S.states+1]=s end
+ for _,m in ipairs(course.mechanisms or {}) do local s={m=m};s.x0,s.x1,s.y0,s.y1=hearingBounds(m);snapshot(s,0);S.states[#S.states+1]=s end
 end
 local function want(name,volume,rate)
- for _,v in ipairs(S.loops) do if v.name==name and volume>v.want then v.want=volume;v.rate=rate or 1;return end end
+ local v=S.byName[name];if v and volume>v.want then v.want=volume;v.rate=rate or 1 end
 end
 local function controlValue(p)
  if p.kind=='lift' then return p.target.elevation or p.target.minHeight
@@ -96,6 +108,10 @@ function S.update(c,x,y,t,dt,playing,airborne,z)
  if S.course~=c then S.reset(c) end
  for _,v in ipairs(S.loops) do v.want=0 end
  for _,s in ipairs(S.states) do
+  if x<s.x0 or x>s.x1 or y<s.y0 or y>s.y1 then
+   s.audible=false;s.contact=false;s.skipped=true
+  else
+  if s.skipped then snapshot(s,t-dt);s.skipped=false end
   local m=s.m;local mx,my,angle=M.pose(m,t)
   local radius=math.max(m.w or 0,m.h or 0)/2
   local dx,dy=x-mx,y-my;local distance=math.sqrt(dx*dx+dy*dy)
@@ -141,6 +157,7 @@ function S.update(c,x,y,t,dt,playing,airborne,z)
   else s.contact=false end
   s.direction=h-s.height;s.x,s.y,s.angle,s.height,s.width=mx,my,angle,h,m.w
   s.open,s.warning,s.jet,s.hit,s.moving,s.audible,s.seen=opened,warning,jet,m.hitAt,moving,audible,t
+  end
  end
  -- Keep only the two strongest ambient families, plus the actively cranked one.
  local control=D.active and S.commandUntil and S.clock<S.commandUntil and S.command or nil
@@ -155,11 +172,15 @@ function S.update(c,x,y,t,dt,playing,airborne,z)
  for _,v in ipairs(S.loops) do
   local target=(v==first or v==second or v.name==control) and v.want*scale or 0
   -- Stop unselected voices immediately; fade retained loops without extra voices.
-  if target==0 then v.volume=0;v.player:stop()
+  if target==0 then if v.volume>0 then v.player:stop() end;v.volume=0
   else
+   local starting=v.volume==0
    v.volume=v.volume+(target-v.volume)*(1-math.exp(-dt*15))
-   v.player:setVolume(v.volume);v.player:setRate(v.rate)
-   if not v.player:isPlaying() then v.player:play(0) end
+   if starting or not v.appliedVolume or math.abs(v.volume-v.appliedVolume)>.00001 then
+    v.player:setVolume(v.volume);v.appliedVolume=v.volume
+   end
+   if v.appliedRate~=v.rate then v.player:setRate(v.rate);v.appliedRate=v.rate end
+   if starting then v.player:play(0) end
   end
  end
  S.fresh=false

@@ -1,10 +1,10 @@
-# Sky Hamster — v0.10.4
+# Sky Hamster — v0.10.5
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
-当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.4**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
+当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.5**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
 
-0.10.4 为不同机关补齐独立音效，并加入逐帧仓鼠加载动画、循环省略点和云翼进度条。详见 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.10.4.md)。
+0.10.5 完成真机音效检查，并减少远处机关与重复播放器调用的开销；保留独立机关音效、逐帧仓鼠加载动画和云翼进度条。详见 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.10.5.md)。
 
 当前包含 44 关：倾斜控球、抬机跳跃、摇柄操控机关、炮台及综合长关，包含标题、设置、教学、选关、检查点和结算循环。最新源码位于 [experiments/tilt-adventure](experiments/tilt-adventure/README.md)，保留原目录和存档标识以兼容已有构建与真机存档。
 
@@ -14,7 +14,7 @@ Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 ./experiments/tilt-adventure/build.ps1
 ```
 
-输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.10.5 继续，新增一批玩法时升至 0.11.0。
+输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.10.6 继续，新增一批玩法时升至 0.11.0。
 
 ## 0.6.7 及课堂版归档
 

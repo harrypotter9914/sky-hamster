@@ -1,0 +1,317 @@
+[
+  {
+    "file": "source/audio/charge.wav",
+    "seconds": 0.055011337868480725,
+    "peak": 0.192566,
+    "rms": 0.070103,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/checkpoint.wav",
+    "seconds": 0.4,
+    "peak": 0.320984,
+    "rms": 0.100857,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/fall.wav",
+    "seconds": 0.5500226757369614,
+    "peak": 0.402924,
+    "rms": 0.135018,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/jump.wav",
+    "seconds": 0.22,
+    "peak": 0.42868,
+    "rms": 0.153336,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/land.wav",
+    "seconds": 0.12,
+    "peak": 0.374298,
+    "rms": 0.124554,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/belt.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.207594,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/belt_contact.wav",
+    "seconds": 0.12,
+    "peak": 0.407867,
+    "rms": 0.059539,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/bridge.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.255641,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/cannon.wav",
+    "seconds": 0.34,
+    "peak": 0.639984,
+    "rms": 0.074741,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/cannon_aim.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.212852,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/connect.wav",
+    "seconds": 0.12997732426303854,
+    "peak": 0.596924,
+    "rms": 0.086871,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/crank.wav",
+    "seconds": 0.07002267573696146,
+    "peak": 0.420868,
+    "rms": 0.067143,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/fan.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.148155,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/fan_aim.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.299299,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/ferry.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.288345,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/gate_close.wav",
+    "seconds": 0.22,
+    "peak": 0.370667,
+    "rms": 0.053108,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/gate_open.wav",
+    "seconds": 0.23002267573696145,
+    "peak": 0.511261,
+    "rms": 0.057948,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/jet.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.118079,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/jet_off.wav",
+    "seconds": 0.12,
+    "peak": 0.612549,
+    "rms": 0.094621,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/jet_on.wav",
+    "seconds": 0.17002267573696145,
+    "peak": 0.508759,
+    "rms": 0.074381,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/lift.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.289298,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/magnet.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.36794,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/magnet_contact.wav",
+    "seconds": 0.2,
+    "peak": 0.545166,
+    "rms": 0.09382,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/release.wav",
+    "seconds": 0.14,
+    "peak": 0.623566,
+    "rms": 0.090678,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/rotor.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.252063,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/slider.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.238126,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/spring.wav",
+    "seconds": 0.38,
+    "peak": 0.569183,
+    "rms": 0.08272,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/stop.wav",
+    "seconds": 0.12,
+    "peak": 0.519714,
+    "rms": 0.079014,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/sweeper.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.134116,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/switch.wav",
+    "seconds": 0.11002267573696145,
+    "peak": 0.57663,
+    "rms": 0.073093,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/trap_close.wav",
+    "seconds": 0.14,
+    "peak": 0.513458,
+    "rms": 0.069355,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/trap_open.wav",
+    "seconds": 0.19002267573696144,
+    "peak": 0.506927,
+    "rms": 0.063772,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/ui_back.wav",
+    "seconds": 0.08997732426303855,
+    "peak": 0.592957,
+    "rms": 0.121377,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/ui_confirm.wav",
+    "seconds": 0.1,
+    "peak": 0.458038,
+    "rms": 0.085136,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/ui_move.wav",
+    "seconds": 0.04498866213151927,
+    "peak": 0.448883,
+    "rms": 0.099425,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/ui_ready.wav",
+    "seconds": 0.16,
+    "peak": 0.5466,
+    "rms": 0.091991,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/ui_toggle.wav",
+    "seconds": 0.07501133786848073,
+    "peak": 0.485779,
+    "rms": 0.091359,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/ui_unlock.wav",
+    "seconds": 0.3,
+    "peak": 0.526459,
+    "rms": 0.084055,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/warning.wav",
+    "seconds": 0.08997732426303855,
+    "peak": 0.538452,
+    "rms": 0.107898,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/machines/winch.wav",
+    "seconds": 1.0,
+    "peak": 0.639984,
+    "rms": 0.247568,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/menu.wav",
+    "seconds": 0.04498866213151927,
+    "peak": 0.220978,
+    "rms": 0.082471,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/music.wav",
+    "seconds": 12.0,
+    "peak": 0.194641,
+    "rms": 0.045197,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/roll.wav",
+    "seconds": 4.0,
+    "peak": 0.199982,
+    "rms": 0.012434,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/wall.wav",
+    "seconds": 0.08997732426303855,
+    "peak": 0.405975,
+    "rms": 0.107581,
+    "clipped_samples": 0
+  },
+  {
+    "file": "source/audio/win.wav",
+    "seconds": 0.9,
+    "peak": 0.347137,
+    "rms": 0.110828,
+    "clipped_samples": 0
+  }
+]

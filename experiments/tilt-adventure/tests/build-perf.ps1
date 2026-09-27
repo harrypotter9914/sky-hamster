@@ -1,5 +1,5 @@
 # Same installation folder as the release; restore the release after measuring.
-param([switch]$Smooth,[switch]$Profile)
+param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $repo=Resolve-Path (Join-Path $root '../..')
@@ -18,6 +18,11 @@ if($Smooth){'Bench.smooth=true' | Add-Content "$qa/game.lua"}
 if($Profile){'Bench.profile=true' | Add-Content "$qa/game.lua"}
 if($Profile){foreach($module in @('mechanism_cache','expansion','workshop','machine_art')){"PerfLayers.wrap('$module')" | Add-Content "$qa/$module.lua"}}
 Copy-Item "$PSScriptRoot/perf.lua" "$qa/main.lua"
+if($AudioAudit){
+ $code=Get-Content -LiteralPath "$qa/main.lua" -Raw
+ ("AudioAuditWrite=playdate.datastore.write`n"+$code+"`nimport 'audio_device'`n") | Set-Content "$qa/main.lua"
+ Copy-Item "$PSScriptRoot/audio_device.lua" "$qa/audio_device.lua"
+}
 $out=Join-Path $repo 'builds/tilt-perf/sky-hamster-tilt.pdx'
 New-Item -ItemType Directory -Force (Split-Path $out -Parent) | Out-Null
 $sdk=if($env:PLAYDATE_SDK_PATH){$env:PLAYDATE_SDK_PATH}else{'C:/Users/12063/Documents/PlaydateSDK'}

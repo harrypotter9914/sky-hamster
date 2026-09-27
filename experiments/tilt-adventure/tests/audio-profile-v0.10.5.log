@@ -1,0 +1,24 @@
+run /Games/sky-hamster-tilt.pdx
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH BEGIN	44
+BENCH route=44 frames=179 fps=25.74 frame95=52.00 frameMax=116.00 cpu95=47.00 cpuMax=114.00 cacheMiss=8 chunks=26 luaKB=1390
+STATS	table: 0x903ab5a0
+PROFILE	machines	8.938889
+PROFILE	occluders	1.961111
+PROFILE	support	2.116667
+PROFILE	mask	0.01111111
+PROFILE	hud	1.777778
+PROFILE	collide	1.438889
+PROFILE	tilt	0.1833333
+PROFILE	terrain	4.183333
+PROFILE	machineAudio	2.7
+PROFILE	wind	1.233333
+PROFILE	stations	1.344444
+PROFILE	ballAudio	0.2333333
+LAYER	mechanism_cache	5.411111
+LAYER	expansion	7.194445
+LAYER	workshop	7.455555
+LAYER	machine_art	8.9
+BENCH COMPLETE
