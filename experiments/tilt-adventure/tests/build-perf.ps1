@@ -1,5 +1,5 @@
 # Same installation folder as the release; restore the release after measuring.
-param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit)
+param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $repo=Resolve-Path (Join-Path $root '../..')
@@ -15,6 +15,25 @@ end,place=function(a,b)
 end,cache=function() return terrainChunks and terrainChunks.misses or 0,terrainChunks and terrainChunks.count or 0 end}
 '@ | Add-Content "$qa/game.lua"
 if($Smooth){'Bench.smooth=true' | Add-Content "$qa/game.lua"}
+if($Joins){
+ @'
+Bench.joins=true
+Bench.joinSample=function(n,frame)
+ local c=Courses[n];local m=c.mechanisms and c.mechanisms[1];local u=(1-math.cos(frame/180*math.pi*2))/2
+ worldTime=frame/30+2.4
+ local p=c.pads and c.pads[1]
+ Dock.active=nil;Dock.blocked=p
+ if n==26 then p.angle=-math.pi/3+u*math.pi*2/3;x=p.x;y=p.y;Dock.active=p
+ else
+  if m.kind=='lift' then m.elevation=m.minHeight+u*(m.maxHeight-m.minHeight)
+  elseif m.manual and m.kind=='ferry' then m.progress=u
+  elseif m.manual then m.angle=u*math.pi end
+  x,y=Mechanisms.pose(m,worldTime)
+ end
+ ballHeight=floorAt(x,y);jumpZ=ballHeight;airborne=false;state='play';vx=0;vy=0
+end
+'@ | Add-Content "$qa/game.lua"
+}
 if($Profile){'Bench.profile=true' | Add-Content "$qa/game.lua"}
 if($Profile){foreach($module in @('mechanism_cache','expansion','workshop','machine_art')){"PerfLayers.wrap('$module')" | Add-Content "$qa/$module.lua"}}
 Copy-Item "$PSScriptRoot/perf.lua" "$qa/main.lua"

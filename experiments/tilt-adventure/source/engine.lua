@@ -7,6 +7,7 @@ import "spatial"
 import "physics_tests"
 import "campaign"
 import "workshop_courses"
+import "joinery"
 import "ui"
 import "build"
 import "classroom"
@@ -129,7 +130,8 @@ local function floorAt(a,b) return Mechanisms.floor(course,a,b,worldTime) end
 local function tileGeometry(t)
  local a,b=t.x*32,t.y*32
  if not t.renderCache then
-  local function fixed(x,y) return 200+(x-y)*0.9,124+(x+y)*0.45-course:height(x,y)*0.65 end
+  local h,sx,sy=course:height(a+16,b+16)
+  local function fixed(x,y) return 200+(x-y)*0.9,124+(x+y)*0.45-(h+(x-a-16)*sx+(y-b-16)*(sy or 0))*.65 end
   local p,q=fixed(a,b);local r,s=fixed(a+32,b);local u,v=fixed(a+32,b+32);local w,z=fixed(a,b+32)
   local cx,cy=fixed(a+16,b+16);local _,slope=course:height(a+16,b+16)
   local sign=slope<0 and 1 or -1;local tx,ty=fixed(a+16+sign*8,b+16)
@@ -142,12 +144,14 @@ local function paintTile(t)
  local c=t.renderCache
  local p,q,r,s=c[1]-camX,c[2]-camY,c[3]-camX,c[4]-camY
  local u,v,w,z=c[5]-camX,c[6]-camY,c[7]-camX,c[8]-camY
- if not cachingTerrain and (math.max(p,r,u,w)<0 or math.min(p,r,u,w)>400 or math.max(q,s,v,z)<42 or math.min(q,s,v,z)>212) then return end
+ local depth=course.terrainDepth and course.terrainDepth[t.x..','..t.y]
+ depth=depth and depth*.65 or 12
+ if not cachingTerrain and (math.max(p,r,u,w)<0 or math.min(p,r,u,w)>400 or math.max(q,s,v,z)+depth<42 or math.min(q,s,v,z)>212) then return end
  g.setColor(g.kColorBlack)
  local edgeX=not course.lookup[(t.x+1)..','..t.y]
  local edgeY=not course.lookup[t.x..','..(t.y+1)]
- if edgeX then g.fillPolygon(r,s,u,v,u,v+12,r,s+12) end
- if edgeY then g.fillPolygon(w,z,u,v,u,v+12,w,z+12) end
+ if edgeX then g.fillPolygon(r,s,u,v,u,v+depth,r,s+depth) end
+ if edgeY then g.fillPolygon(w,z,u,v,u,v+depth,w,z+depth) end
  g.setColor(g.kColorWhite);g.fillPolygon(p,q,r,s,u,v,w,z)
  g.setColor(g.kColorBlack)
  -- Only exposed edges get a heavy outline; internal tile borders are hidden.
@@ -159,6 +163,16 @@ local function paintTile(t)
  g.setColor(g.kColorWhite)
  if edgeX then g.drawLine(r+1,s+4,u,v+4);g.drawLine((r+u)/2,(s+v)/2+5,(r+u)/2,(s+v)/2+10) end
  if edgeY then g.drawLine(w+1,z+3,u,v+3);g.drawLine((w+u)/2,(z+v)/2+4,(w+u)/2,(z+v)/2+10) end
+ if depth>24 then
+  -- Mortar courses on the abutment make the elevation readable at a glance.
+  for d=14,depth-2,13 do
+   if edgeX then g.drawLine(r+1,s+d,u,v+d) end
+   if edgeY then g.drawLine(w+1,z+d,u,v+d) end
+   local f=math.floor(d/13)%2==0 and .33 or .66
+   if edgeX then local xx,yy=r+(u-r)*f,s+(v-s)*f;g.drawLine(xx,yy+d,xx,yy+math.min(d+13,depth-2)) end
+   if edgeY then local xx,yy=w+(u-w)*f,z+(v-z)*f;g.drawLine(xx,yy+d,xx,yy+math.min(d+13,depth-2)) end
+  end
+ end
  g.setColor(g.kColorBlack)
  local sx=c[11]
  local cx,cy=c[9]-camX,c[10]-camY
@@ -179,13 +193,15 @@ local function warmTileSprites()
   local left=math.floor(math.min(c[1],c[3],c[5],c[7]))-1
   local top=math.floor(math.min(c[2],c[4],c[6],c[8]))-1
   local w=math.ceil(math.max(c[1],c[3],c[5],c[7])-left)+2
-  local h=math.ceil(math.max(c[2],c[4],c[6],c[8])-top)+14
+  local depth=course.terrainDepth and course.terrainDepth[t.x..','..t.y]
+  depth=depth and depth*.65 or 12
+  local h=math.ceil(math.max(c[2],c[4],c[6],c[8])-top+depth)+2
   local edges=0
   if not course.lookup[(t.x+1)..','..t.y] then edges=edges+1 end
   if not course.lookup[(t.x-1)..','..t.y] then edges=edges+2 end
   if not course.lookup[t.x..','..(t.y+1)] then edges=edges+4 end
   if not course.lookup[t.x..','..(t.y-1)] then edges=edges+8 end
-  local key=string.format('%d/%d/%d/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f',t.x%4+t.y%4*4,edges,(t.x+t.y)%4,c[1]-left,c[2]-top,c[3]-left,c[4]-top,c[5]-left,c[6]-top,c[7]-left,c[8]-top)
+  local key=depth..'/'..string.format('%d/%d/%d/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f/%.2f',t.x%4+t.y%4*4,edges,(t.x+t.y)%4,c[1]-left,c[2]-top,c[3]-left,c[4]-top,c[5]-left,c[6]-top,c[7]-left,c[8]-top)
   local im=cache[key]
   if not im then
    im=g.image.new(w,h,g.kColorClear);camX,camY=left,top
@@ -227,11 +243,12 @@ prepareTerrain=function()
  terrainChunks=nil
  local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
  for _,tile in ipairs(course.tiles) do
-  for dx=0,1 do for dy=0,1 do
-   local x,y=(tile.x+dx)*32,(tile.y+dy)*32
-   local sx,sy=200+(x-y)*0.9,124+(x+y)*0.45-course:height(x,y)*0.65
-   minX,minY=math.min(minX,sx),math.min(minY,sy);maxX,maxY=math.max(maxX,sx),math.max(maxY,sy+12)
-  end end
+  local points=tileGeometry(tile)
+  local depth=course.terrainDepth and course.terrainDepth[tile.x..','..tile.y]
+  for i=1,8,2 do
+   local sx,sy=points[i],points[i+1]
+   minX,minY=math.min(minX,sx),math.min(minY,sy);maxX,maxY=math.max(maxX,sx),math.max(maxY,sy+(depth and depth*.65 or 12))
+  end
  end
  terrainX,terrainY=math.floor(minX)-2,math.floor(minY)-2
  terrainImage=g.image.new(math.ceil(maxX-terrainX)+3,math.ceil(maxY-terrainY)+3,g.kColorClear)
@@ -273,6 +290,9 @@ local function renderWorld()
  -- Hold the camera at the edge while the ball falls away from the track.
  if state~='fall' then camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65 end
  g.clear(g.kColorWhite)
+ Pose.begin(worldTime)
+ local scene=RenderIndex.view(course,project)
+ Structures.drawUnder(scene,worldTime,project)
  if terrainChunks then Terrain.draw(terrainChunks,camX,camY) else terrainImage:draw(terrainX-camX,terrainY-camY) end
  if state~='fall' and support(x,y) then
   local sx,sy=project(x,y,floorAt(x,y))
@@ -281,8 +301,12 @@ local function renderWorld()
    for i=0,3 do local yy=sy-2-i*(2-controls.charge);g.drawLine(sx-4,yy,sx+4,yy-1) end
   end
  end
- Pose.begin(worldTime)
- Mechanisms.draw(RenderIndex.view(course,project),worldTime,project)
+ Structures.drawTop(scene,worldTime,project)
+ for _,m in ipairs(scene.mechanisms or {}) do
+  if m.kind=='lift' and (m.elevation or m.minHeight)<m.maxHeight-.01 then
+   for _,tile in ipairs(m.frontTiles or {}) do drawTile(tile) end
+  end
+ end
  Dock.draw(course,project)
  marker(course.start,'START');for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE') end;marker(course.goal,'GOAL')
  -- Rolling shell and rotating hamster face follow distance travelled.

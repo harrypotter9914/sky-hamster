@@ -6,10 +6,13 @@ function T.new(course,render)
  -- Index static geometry once; images are created only around the camera.
  for index,tile in ipairs(course.tiles) do
   local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
+  local height,slope,sy=course:height(tile.x*32+16,tile.y*32+16)
   for dx=0,1 do for dy=0,1 do
    local x,y=(tile.x+dx)*32,(tile.y+dy)*32
-   local sx,sy=200+(x-y)*0.9,124+(x+y)*0.45-course:height(x,y)*0.65
-   minX,minY=math.min(minX,sx),math.min(minY,sy);maxX,maxY=math.max(maxX,sx),math.max(maxY,sy+12)
+   local z=height+(dx*32-16)*slope+(dy*32-16)*(sy or 0)
+   local sx,sy=200+(x-y)*0.9,124+(x+y)*0.45-z*0.65
+   local depth=course.terrainDepth and course.terrainDepth[tile.x..','..tile.y]
+   minX,minY=math.min(minX,sx),math.min(minY,sy);maxX,maxY=math.max(maxX,sx),math.max(maxY,sy+(depth and depth*.65 or 12))
   end end
   for x=math.floor((minX-1)/size),math.floor((maxX+1)/size) do for y=math.floor((minY-1)/size),math.floor((maxY+1)/size) do
    local key=x..','..y;local bucket=cache.buckets[key]

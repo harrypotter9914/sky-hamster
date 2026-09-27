@@ -1,0 +1,21 @@
+run /Games/sky-hamster-tilt.pdx
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH BEGIN	11
+BENCH route=11 frames=179 fps=30.11 frame95=35.00 frameMax=37.00 cpu95=24.00 cpuMax=27.00 cacheMiss=0 chunks=9 luaKB=983
+STATS	table: 0x90032500
+BENCH BEGIN	12
+BENCH route=12 frames=179 fps=22.95 frame95=53.00 frameMax=55.00 cpu95=49.00 cpuMax=51.00 cacheMiss=0 chunks=11 luaKB=1002
+STATS	table: 0x90071110
+BENCH BEGIN	17
+BENCH route=17 frames=179 fps=22.66 frame95=48.00 frameMax=56.00 cpu95=46.00 cpuMax=54.00 cacheMiss=1 chunks=9 luaKB=1364
+STATS	table: 0x903bf090
+BENCH BEGIN	19
+BENCH route=19 frames=179 fps=29.55 frame95=36.00 frameMax=109.00 cpu95=28.00 cpuMax=107.00 cacheMiss=2 chunks=9 luaKB=1057
+STATS	table: 0x9008b790
+BENCH BEGIN	22
+BENCH route=22 frames=179 fps=30.09 frame95=35.00 frameMax=37.00 cpu95=24.00 cpuMax=27.00 cacheMiss=0 chunks=10 luaKB=1073
+STATS	table: 0x90256c80
+BENCH BEGIN	26
+BENCH ERROR	game.lua:569: attempt to index a nil value (field 'mechanisms')

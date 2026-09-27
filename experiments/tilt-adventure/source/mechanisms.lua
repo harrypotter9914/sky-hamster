@@ -29,7 +29,7 @@ function M.localPoint(m,x,y,t)
 end
 function M.contains(m,x,y,t)
  local a,b=M.localPoint(m,x,y,t)
- return math.abs(a)<=m.w/2 and math.abs(b)<=m.h/2
+ return math.abs(a)<=m.w/2+.000001 and math.abs(b)<=m.h/2+.000001
 end
 function M.carry(m,x,y,t,nextT)
  local a,b=M.localPoint(m,x,y,t);local cx,cy,r=M.pose(m,nextT)

@@ -7,6 +7,12 @@ local function create(name,hint,profile,start,goal)
  end
  function c:rect(x1,x2,y1,y2) for x=x1,x2 do for y=y1,y2 do self:add(x,y) end end end
  function c:height(x,y)
+  local bounds=self.upperLipBounds
+  if bounds and x>=bounds[1] and x<bounds[2] and y>=bounds[3] and y<bounds[4] then
+   for _,lip in ipairs(self.upperLips) do
+    if x>=lip[1] and x<lip[2] and y>=lip[3] and y<lip[4] then return lip[5],0,0 end
+   end
+  end
   for i=1,#self.profile-1 do
    local a,b=self.profile[i],self.profile[i+1]
    if x<b[1] then

@@ -57,20 +57,46 @@ function playdate.update()
   for _,n in ipairs({14,19,20,21,22,23,24,27,28,32,33}) do
    export('v20-map-'..n,function() UI.map(Courses[n],Courses[n].start[1],Courses[n].start[2],0) end)
   end
-  for _,v in ipairs({{14,224,112},{19,224,80},{22,184,80},{24,144,112},{27,560,144},{33,224,80}}) do
+  for _,v in ipairs({{14,224,112},{19,224,96},{22,184,80},{24,144,112},{27,560,144},{33,224,80}}) do
    export('v20-world-'..v[1],function() world(table.unpack(v)) end)
   end
-  export('v20-lift-top',function() world(19,224,80);Dock.update(Courses[19],224,80,0,0,false,384,false,false);Review.place(224,80);Review.render() end)
+  export('v20-lift-top',function() world(19,224,96);Dock.update(Courses[19],224,96,0,0,false,384,false,false);Review.place(224,96);Review.render() end)
   export('v20-slider-end',function() world(22,184,80);Dock.update(Courses[22],184,80,0,0,false,540,false,false);Review.place(488,80);Review.render() end)
   print('PASS: v20 campaign and machinery visual exports complete')
   for _,kind in ipairs({'conveyor','jet','extend','switch','magnet'}) do for i,t in ipairs({0,2,4}) do export('v30-'..kind..'-'..i,function() UI.lesson(kind,t) end) end end
   for _,v in ipairs({{34,304,112},{36,304,112},{38,144,112},{40,240,112},{42,272,112},{44,4800,240}}) do export('v30-world-'..v[1],function() world(table.unpack(v)) end) end
   export('v30-extended',function() world(38,144,112);Dock.update(Courses[38],144,112,0,0,false,400,false,false);Review.render() end)
   export('v30-map',function() UI.map(Courses[44],48,80,0) end)
-  for _,v in ipairs({{14,208,112},{19,224,80},{24,144,112},{34,304,112},{36,304,112},{38,144,112},{40,240,112},{42,272,112}}) do
+  for _,v in ipairs({{14,208,112},{19,224,96},{24,144,112},{34,304,112},{36,304,112},{38,144,112},{40,240,112},{42,272,112}}) do
    for i,t in ipairs({0,.12,.3,.65}) do export('v40-'..v[1]..'-'..i,function() world(table.unpack(v));Review.animate(t,i*50);Review.render() end) end
   end
   export('v40-road',function() world(1,176,48) end)
+  for i,angle in ipairs({-math.pi/3,-math.pi/6,0,math.pi/6,math.pi/3}) do
+   export('v107-cannon-'..i,function()
+    world(27,560,144);Courses[27].pads[2].angle=angle;Review.render()
+   end)
+  end
+  for i,crank in ipairs({0,192,384}) do
+   export('v107-lift-'..i,function() world(19,224,96);Review.animate(0,crank);Review.render() end)
+  end
+  for i,crank in ipairs({0,270,540}) do
+   export('v107-slider-'..i,function() world(22,200,80);Review.animate(0,crank);local m=Courses[22].mechanisms[1];local x,y=Mechanisms.pose(m,0);Review.place(x,y);Review.render() end)
+  end
+  for i,t in ipairs({0,3.1,4,5,7}) do
+   export('v107-rotor-'..i,function() world(12,256,176);Review.animate(t);Review.render() end)
+  end
+  world(44,1392,80)
+  local rotorArt=Structures.reviewArt()
+  assert(rotorArt['160']==180 and rotorArt['192']==180,'missing baked rotor frame tables')
+  playdate.datastore.write({rotors=rotorArt,complete=true},'v107-native-review')
+  world(27,560,144)
+  for i=0,60 do
+   Courses[27].pads[2].angle=-math.pi/3+i*math.pi/90
+   export(string.format('v107-aim-%02d',i),function() Review.render() end)
+  end
+  for i=0,89 do
+   export(string.format('v107-crank-%02d',i),function() UI.lesson('control',i/15) end)
+  end
   for _,kind in ipairs({'ferry','slider','lift','rotor','trap','gate','sweeper','conveyor'}) do
    for i,t in ipairs({0,.1,.3,2.8,4.8}) do
     export('v106-machine-'..kind..'-'..i,function()

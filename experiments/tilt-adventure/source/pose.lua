@@ -15,9 +15,14 @@ local function calculate(m,t)
  return m.x,m.y,0
 end
 function M.pose(m,t)
- if not active or t~=time then return calculate(m,t) end
+ if not active or t~=time then
+  local x,y,a=calculate(m,t)
+  if m.joinSpan then m.w=Joinery.width(m,a) end
+  return x,y,a
+ end
  if m.poseEpoch~=epoch then
   m.poseX,m.poseY,m.poseAngle=calculate(m,t);m.poseEpoch=epoch
+  if m.joinSpan then m.w=Joinery.width(m,m.poseAngle) end
  end
  return m.poseX,m.poseY,m.poseAngle
 end

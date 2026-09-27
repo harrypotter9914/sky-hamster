@@ -6,8 +6,8 @@ local function clamp(x,a,b) return math.max(a,math.min(b,x)) end
 -- Resolve low airborne contact with platform volume, never treat it as landing.
 function S.sides(course,x,y,vx,vy,z,t)
  local hit=false
- local function box(cx,cy,w,h,angle,floor)
-  if z>=floor-0.5 or z+24<=floor-S.thickness then return end
+ local function box(cx,cy,w,h,angle,floor,thickness)
+  if z>=floor-0.5 or z+24<=floor-(thickness or S.thickness) then return end
   local c,s=math.cos(angle),math.sin(angle)
   local px,py=(x-cx)*c+(y-cy)*s,-(x-cx)*s+(y-cy)*c
   local nx,ny=px-clamp(px,-w/2,w/2),py-clamp(py,-h/2,h/2)
@@ -28,7 +28,10 @@ function S.sides(course,x,y,vx,vy,z,t)
  local tx,ty=math.floor(x/32),math.floor(y/32)
  for i=tx-1,tx+1 do for j=ty-1,ty+1 do
   if course.lookup[i..','..j] then
-   box(i*32+16,j*32+16,32,32,0,course:height(clamp(x,i*32,(i+1)*32),clamp(y,j*32,(j+1)*32)))
+   local midX,midY=i*32+16,j*32+16
+   local h,sx,sy=course:height(midX,midY)
+   local edgeHeight=h+(clamp(x,i*32,(i+1)*32)-midX)*sx+(clamp(y,j*32,(j+1)*32)-midY)*(sy or 0)
+   box(midX,midY,32,32,0,edgeHeight,course.terrainDepth and course.terrainDepth[i..','..j])
   end
  end end
  for _,m in ipairs(course.mechanisms or empty) do
@@ -80,7 +83,8 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
   course.occlusionCache={};course.occlusionBuckets={}
   for _,tile in ipairs(course.tiles) do
    local x,y=tile.x*32+16,tile.y*32+16;local h,slope=course:height(x,y)
-   local box=makeBox(x,y,32,32,0,h-S.thickness,h,slope)
+   local depth=course.terrainDepth and course.terrainDepth[tile.x..','..tile.y] or S.thickness
+   local box=makeBox(x,y,32,32,0,h-depth,h,slope)
    course.occlusionCache[#course.occlusionCache+1]=box
    for bx=math.floor(box.minX/128),math.floor(box.maxX/128) do for by=math.floor(box.minY/128),math.floor(box.maxY/128) do
     local key=bx..','..by;local bucket=course.occlusionBuckets[key] or {};course.occlusionBuckets[key]=bucket;bucket[#bucket+1]=box

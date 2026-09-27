@@ -17,16 +17,16 @@ local d=Dock.update(c,224,80,0,0,false,0,false,false);assert(d.locked)
 Dock.update(c,224,80,0,0,false,10000,false,false);assert(m.elevation==96 and Mechanisms.floor(c,224,80,0)==96)
 Dock.update(c,224,80,0,0,false,-10000,false,false);assert(m.elevation==0)
 -- Raised bank cannot be reached by rolling through the low lift.
-selectReady(19);put('lesson',false);put('x',250);put('y',80);put('vx',180);put('ballHeight',0);frame()
-assert(get('x')<256 and get('ballHeight')==0,'low lift must not teleport onto high bank')
+selectReady(19);put('lesson',false);put('x',224);put('y',69);put('vy',-180);put('ballHeight',0);frame()
+assert(get('y')>64 and get('ballHeight')==0,'low lift must not teleport onto high bank')
 -- Lift carries player vertically; released player can cross onto the upper road.
 selectReady(19);put('lesson',false);put('x',224);put('y',80);frame();frame(nil,nil,384)
 assert(get('ballHeight')==96 and Dock.active)
-frame({b=true});put('vx',80);for i=1,20 do frame() end
-assert(get('state')=='play' and get('x')>256 and get('ballHeight')==96)
+frame({b=true});put('vy',-80);for i=1,20 do frame() end
+assert(get('state')=='play' and get('y')<64 and get('ballHeight')==96)
 c=Courses[22];m=c.mechanisms[1];Dock.reset(c)
 d=Dock.update(c,184,80,0,0,false,540,false,false)
-assert(d.locked and d.x==488 and c.pads[1].x==488)
+assert(d.locked and d.x==472 and c.pads[1].x==472)
 assert(Mechanisms.support(c,488,80,0));Dock.update(c,488,80,0,0,false,0,false,true)
 assert(not Dock.update(c,490,80,0,0,false,0,false,false))
 c=Courses[24];Dock.reset(c);m=c.mechanisms[1]

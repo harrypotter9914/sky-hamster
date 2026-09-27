@@ -29,6 +29,21 @@ local function flag(x,y)
  for a=0,3 do for b=0,2 do if (a+b)%2==0 then g.fillRect(x+2+a*4,y-27+b*4,3,3) end end end
 end
 local function ease(v) v=math.max(0,math.min(1,v));return v*v*(3-2*v) end
+local function crankDevice(x,y,angle)
+ -- The arm turns about the shaft on the device; no separate orbit symbol.
+ local a=math.rad(angle);local shaftX,shaftY=x+71,y+39
+ local tipX,tipY=shaftX+7+math.cos(a)*9,shaftY+math.sin(a)*17
+ local function arm()
+  ink();g.setLineWidth(5);g.drawLine(shaftX,shaftY,tipX,tipY)
+  white();g.setLineWidth(2);g.drawLine(shaftX,shaftY,tipX,tipY);g.setLineWidth(1)
+  ink();g.fillRoundRect(tipX-3,tipY-5,7,10,2)
+  white();g.fillRoundRect(tipX-1,tipY-3,3,6,1)
+ end
+ if math.cos(a)<0 then arm() end
+ g.setClipRect(x,y,72,90);poses.right[0]:draw(x,y);g.clearClipRect()
+ if math.cos(a)>=0 then arm() end
+ ink();g.fillCircleAtPoint(shaftX,shaftY,3);white();g.fillCircleAtPoint(shaftX,shaftY,1)
+end
 local info={
  arrival={'FOLLOW THE SKY ROAD','Roll along the road to reach the flag.'},
  roll={'TIP TO ROLL','Tip from your grip. Follow the road arrow.'},
@@ -58,8 +73,8 @@ end
 local cannons={}
 local function smallCannon(x,y,n)
  if not cannons[n] then
-  local full=image(104,104,function() Dock.drawCannon(-.9+(n-1)*.3,51,96) end)
-  cannons[n]=image(72,72,function() full:drawScaled(0,0,.68) end)
+  local full=image(144,132,function() Dock.drawCannon(-math.pi/3+(n-1)*math.pi/90,70,110) end)
+  cannons[n]=image(72,66,function() full:drawScaled(0,0,.5) end)
  end
  cannons[n]:draw(x,y)
 end
@@ -109,13 +124,15 @@ function UI.lesson(kind,time)
    left=t<1.6 and 'KEEP YOUR GRIP' or t<3 and 'LIFT SCREENWARD' or 'RETURN GENTLY'
    right=t<1.6 and 'READY AT THE GAP' or t<3 and 'CLEAR THE GAP' or 'LAND SAFELY'
   elseif kind=='control' or kind=='rotor' then
-   slab(209,147,31,14);slab(337,147,34,14)
-   local a=kind=='control' and (1-ease((t-1)/2))*math.pi/2 or (1-ease((t-.8)/3))*math.pi/2
-   Structures.demo('rotor',288,140,1.2+ease((t-.8)/3)*1.8)
-   if kind=='control' then ball(224,134);left='DOCK, THEN CRANK';right=t<3 and 'ALIGN THE BRIDGE' or 'B: RELEASE'
-   else local off=ease((t-4)/1);ball(288+off*66,132);left='KEEP BALANCED';right=t<4 and 'RIDE THE DECK' or 'ROLL OFF NOW' end
+   local u=ease((t-1)/2)
+   local bx,by,map=Structures.demo(kind,289,133,t,u)
+   if kind=='control' then
+    local px,py=map(-65,0,0);ball(px,py-13);left='DOCK, THEN CRANK';right=t<3 and 'ALIGN THE BRIDGE' or 'B: RELEASE'
+   else
+    local px,py=map(ease((t-4)/1)*65,0,0);ball(px,py-13);left='KEEP BALANCED';right=t<4 and 'RIDE THE DECK' or 'ROLL OFF NOW'
+   end
   elseif kind=='cannon' then
-   slab(206,155,78,10);slab(333,155,39,10);smallCannon(208,85,t<1 and 1 or t<2 and 2 or 3)
+   slab(206,155,78,10);slab(333,155,39,10);smallCannon(212,93,1+math.floor(ease((t-1)/2)*30+.5))
    local q=ease((t-3)/1.4)
    if t<1 then ball(217+ease(t)*20,142)
    elseif t>=3 then ball(266+87*q,119-29*math.sin(q*math.pi)+23*q) end
@@ -145,31 +162,29 @@ function UI.lesson(kind,time)
    ball(250+math.sin(t)*12,130);arrow(278,125,25,-8);left='COUNTER THE PULL';right='KEEP YOUR DISTANCE'
   elseif kind=='lift' then
    local u=ease((t-1)/2);local sy=148-u*37
-   slab(206,157,29,10);slab(335,115,38,10)
-   local bx,by=Structures.demo('lift',287,140,t,u);ball(bx,by-13)
+   local bx,by=Structures.demo('lift',287,138,t,u);ball(bx,by-13)
    arrow(347,154,0,-24)
    left=t<1 and 'DOCK IN THE CENTER' or t<3 and 'CRANK TO RAISE' or 'B: RELEASE'
-   right=t<3 and 'MATCH THE ROAD' or 'ROLL ONTO THE ROAD'
+   right=t<3 and 'MATCH THE LEDGE' or 'ROLL TO REAR LEDGE'
   elseif kind=='slider' then
-   slab(205,143,29,13);slab(342,143,30,13)
    local px=221+ease((t-1)/2.5)*48
-   local bx,by=Structures.demo('slider',288,134,t,ease((t-1)/2.5));ball(bx,by-13)
+   local bx,by=Structures.demo('slider',288,124,t,ease((t-1)/2.5));ball(bx,by-13)
    left=t<1 and 'DOCK ON THE DECK' or t<3.5 and 'CRANK TO TRAVEL' or 'B: RELEASE'
    right=t<3.5 and 'MOVE TO THE FAR BANK' or 'ROLL OFF AT THE DOCK'
   elseif kind=='fan' then
    slab(207,142,166,23);machineArt.fan:draw(210,88)
-   local angle=t<3 and math.pi/2 or 0
+   local angle=data==info.windcontrol and (math.pi/2+math.rad(t*120)) or math.pi/2
    MachineArt.fan({angle=angle},t,236,131)
-   ball(327,130);left=t<3 and 'COUNTER THE GUST' or 'CRANK AT THE DIAL';right=t<3 and 'STAY ON THE ROAD' or 'AIM ALONG THE ROAD'
+   ball(327,130);left=data==info.windcontrol and 'CRANK AT THE DIAL' or 'COUNTER THE GUST';right=data==info.windcontrol and 'AIM ALONG THE ROAD' or 'STAY ON THE ROAD'
   elseif kind=='bumper' then
    slab(207,135,166,29);MachineArt.bumper({hitAt=t-t%3+1.5},t,303,142)
    local q=t%3;local bx=q<1.5 and 234+q*22 or 267-(q-1.5)*22
    ball(bx,137);left='LEAVE SOME ROOM';right='CONTACT BOUNCES BACK'
   elseif kind=='ferry' then
-   slab(205,143,35,13);slab(336,143,37,13)
-   local travel=ease((t-1.2)/2.6);local px=240+travel*62
-   local bx,by=Structures.demo('ferry',288,134,1.2+travel*1.8)
-   if t<1.2 then bx=222+ease(t/1.2)*(bx-222) elseif t>=4 then bx=bx+ease((t-4)/1.1)*(353-bx) end
+   local travel=ease((t-1.2)/2.6)
+   local bx,by,map=Structures.demo('ferry',288,124,1.2+travel*1.8)
+   if t<1.2 then bx,by=map(-55+ease(t/1.2)*31,0,0)
+   elseif t>=4 then bx,by=map(24+ease((t-4)/1.1)*31,0,0) end
    ball(bx,by-13);left='TILT GENTLY';right=t<1.2 and 'BOARD' or t<4 and 'RIDE' or 'ROLL OFF'
   elseif kind=='trap' then
    slab(205,137,51,13);slab(315,137,57,13)
@@ -187,12 +202,16 @@ function UI.lesson(kind,time)
    Structures.demo('sweeper',315,139,t)
    ball(233,141);left='KEEP CLEAR';right='WATCH THE PANEL'
   end
+  local manual=kind=='control' or kind=='cannon' or kind=='lift' or kind=='slider' or kind=='extend' or kind=='switch' or data==info.windcontrol
+  local turn=t*120
+  if kind=='lift' then turn=ease((t-1)/2)*176
+  elseif kind=='slider' then turn=ease((t-1)/2.5)*540
+  elseif kind=='control' then turn=-ease((t-1)/2)*90
+  elseif kind=='cannon' then turn=ease((t-1)/2)*60 end
   if kind=='jump' then
    liftDevice:draw(48+lift*.31,85+lift*.95)
+  elseif manual then crankDevice(48,85,turn)
   else poses[dir][pose]:draw(48,85) end
-  if kind=='control' or kind=='cannon' or kind=='lift' or kind=='slider' or kind=='fan' or kind=='extend' or kind=='switch' then
-   local a=t*2;ink();g.drawCircleAtPoint(151,135,10);g.drawLine(151,135,151+math.cos(a)*9,135+math.sin(a)*9)
-  end
   if left=='PRESS A TO FIRE' then UI.key('A',58,175,'Fire') elseif left=='B: RELEASE' then UI.key('B',49,175,'Release') else center(left,96,177) end
   if right=='B: RELEASE' then UI.key('B',233,175,'Release') else center(right,281,177) end
   -- Progress dots stay clear of device and game examples.

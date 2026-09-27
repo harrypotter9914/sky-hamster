@@ -1,0 +1,39 @@
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+PASS: calibration, neutral drift, proportional tilt, jump debounce, dock re-entry, bridge, cannon landing, all courses, map, retry, save and campaign ending
+PASS: two home entries, settings persistence, paused menus, selector return, all UI states and column-first navigation
+PASS: first encounters, persisted acknowledgements, no repeated jump tutorial, replay, paused world, mixed-route queue and every animation phase
+PASS: arbitrary steady grips, stable tangent basis, four world directions and diagonal arrows, motion rejection, per-course calibration and inertial reversal
+PASS: screen-normal pulse, single trigger, upright support and lateral shake rejection, rearming and tutorial revision
+PASS: Help replay, B return, full replay resume, Goal paging, frozen physics/time, no accidental jump or cannon release, all route notes
+PASS: lift impulse follows device Z in angled, upright and side-on grips
+PASS: downward top contact preserves horizontal momentum
+PASS: current pose normal after turning, unpolluted steering, locked/released/leave/relock states, four-direction landing momentum
+PASS: 44-course anchors, progress migration, all tutorials, lift stops and height collision, moving dock, wind control, bumper jump clearance, cannon routes, five checkpoints
+PASS: grounded-only conveyor, timed jet, bridge endpoints/support, paired gates/collision, distance-limited attraction, 44-course runtime, seven checkpoints and new tutorials
+PASS: crank angle synchronization, stop/reverse, lift travel, impact-triggered spring, smooth shutters and matching collision height
+PASS: nearby-physics queries match full-course reference across 44 routes, moving endpoints, phases and offset positions
+PASS: 2400 terrain frames preserve drawn chunks, order, subpixel positions, cache misses and eviction counts
+PASS: render index includes original visible mechanisms across 44 courses, camera cells and movement phases
+PASS: direct and render-cached poses equal the original wrapper chain exactly
+PASS: lift-only height queries equal full support-based heights across machinery, boundaries and raised lifts
+PASS: 63 moderate lift/grip/rate combinations; pulse shapes, sideways shake rejection, quiet rearm, cooldown, steering isolation
+BRAKING speed=60 input=0.0 time=5.3967->5.3967 distance=138.8795->138.8795 reduction=0.00%
+BRAKING speed=60 input=0.5 time=0.6920->0.6745 distance=20.3765->19.8701 reduction=2.49%
+BRAKING speed=60 input=1.0 time=0.3710->0.3609 distance=11.0187->10.7232 reduction=2.68%
+BRAKING speed=120 input=0.0 time=8.2492->8.2492 distance=389.0778->389.0778 reduction=0.00%
+BRAKING speed=120 input=0.5 time=1.3150->1.2833 distance=76.1311->74.3580 reduction=2.33%
+BRAKING speed=120 input=1.0 time=0.7212->0.7022 distance=42.4356->41.3385 reduction=2.59%
+BRAKING speed=200 input=0.0 time=10.7350->10.7350 distance=780.2776->780.2776 reduction=0.00%
+BRAKING speed=200 input=0.5 time=2.0594->2.0124 distance=194.6430->190.4489 reduction=2.15%
+BRAKING speed=200 input=1.0 time=1.1595->1.1300 distance=112.3610->109.5856 reduction=2.47%
+PASS: modest stopping-distance change, continuous inertia; existing four-direction landing/cannon/slope regressions also passed
+PASS: every mechanism/control-pad sound, actual spring event, transition pairs, attenuation, voice limits, pause/effects/reset and six UI cues
+PASS: cooperative loading frames, real monotonic progress, completion callback and frozen course entry
+PASS: 6256 swept hearing-bound checks; 44 course audio traces match unculled reference, including distant exit/re-entry
+PASS: ferry and rotor move the ball without false rolling; motion relative to both surfaces still rolls
+PASS: long bridge remains inside its raster bounds through 73 rotation samples
+PASS: prepared gate, hatch and belt run 36-second animation cycles without new raster allocations
+PASS: 3439 moving poses without road intersections; 342 flush seam samples; 6 lift side-exits; 121 muzzle/tangent samples
+PASS: 35 distinct mono machine/UI samples

@@ -3,6 +3,7 @@
 Structures={}
 local A,M,g=Structures,Mechanisms,playdate.graphics
 local tex,parts,boxes,belt={},{},{},{}
+local rotorTables={}
 local wheel=g.image.new('detail-gear')
 local xf=playdate.geometry and playdate.geometry.affineTransform.new()
 for _,name in ipairs({'deck','beam','hatch','gate','belt','bearing','socket','rail'}) do tex[name]=g.image.new('structures/'..name) end
@@ -52,23 +53,47 @@ local function base(kind,x,y)
 end
 -- Storyboards use the same generated machinery and pose functions as play.
 local demos={}
+local roadTexture=g.image.new(64,64,g.kColorWhite)
+g.pushContext(roadTexture);g.image.new('paving/0'):drawScaled(0,0,2);g.popContext()
 function A.demo(kind,x,y,t,u)
  local item=demos[kind]
  if not item then
   local m={kind=kind,x=0,y=0,w=48,h=30,period=6,openFor=.4,wallHeight=48,range=24,angle=0,
-   minHeight=0,maxHeight=44,elevation=0,toX=44,toY=-44}
-  if kind=='slider' or kind=='ferry' then m.kind='ferry';m.x=-22;m.y=22;m.toX=22;m.toY=-22;m.w=34;m.h=28;m.manual=kind=='slider' end
-  if kind=='rotor' then m.w=100;m.h=20 end
+   minHeight=0,maxHeight=44,elevation=0,toX=44,toY=0}
+  local banks
+  if kind=='slider' or kind=='ferry' then
+   m.kind='ferry';m.x=-24;m.toX=24;m.w=34;m.h=28;m.manual=kind=='slider'
+   banks={{-65,-41,-14,14,0},{41,65,-14,14,0}}
+  end
+  if kind=='rotor' or kind=='control' then
+   m.kind='rotor';m.w=100;m.maxWidth=100;m.joinSpan=100;m.h=20;m.manual=kind=='control'
+   banks={{-76,-50,-16,16,0},{50,76,-16,16,0}}
+  end
+  if kind=='lift' then banks={{-60,-24,-15,15,0},{-24,36,-39,-15,44}} end
   if kind=='gate' or kind=='sweeper' then m.w=12;m.h=38 end
-  item={m=m,course={mechanisms={m},height=function()return 0 end}};demos[kind]=item
+  item={m=m,course={mechanisms={m},height=function()return 0 end},banks=banks};demos[kind]=item
+  if banks then
+   item.roads={}
+   for i,b in ipairs(banks) do
+    local im=g.image.new(200,160,g.kColorClear);g.pushContext(im)
+    local pts={}
+    for _,v in ipairs({{b[1],b[3]},{b[2],b[3]},{b[2],b[4]},{b[1],b[4]}}) do pts[#pts+1]=100+(v[1]-v[2])*.9;pts[#pts+1]=70+(v[1]+v[2])*.45-b[5]*.65 end
+    prism(pts,b[5]*.65+8,roadTexture,tex.beam);g.popContext();item.roads[i]=im
+   end
+  end
  end
  local m=item.m
  if kind=='lift' then m.elevation=(u or 0)*44 end
  if kind=='slider' then m.progress=u or 0 end
+ if kind=='control' then m.angle=math.pi/2*(1-(u or 0)) end
  local function project(a,b,z) return x+(a-b)*.9,y+(a+b)*.45-z*.65 end
- M.draw(item.course,t,project)
- local a,b=M.pose(m,t)
- return project(a,b,kind=='lift' and m.elevation or 0)
+ if item.roads then
+  A.drawUnder(item.course,t,project)
+  for _,road in ipairs(item.roads) do road:draw(x-100,y-70) end
+  A.drawTop(item.course,t,project)
+ else M.draw(item.course,t,project) end
+ local a,b=M.pose(m,t);local sx,sy=project(a,b,kind=='lift' and m.elevation or 0)
+ return sx,sy,project
 end
 local function beltFrame(t,m)
  local axis=math.abs(math.cos(m.angle or 0))>.5 and 1 or 2
@@ -86,6 +111,17 @@ local function beltFrame(t,m)
  return belt[key],key
 end
 local function deck(m,t,x,y,angle,mat,frame,opened,depth)
+ if not A.exporting and m.joinSpan and (m.joinSpan==160 or m.joinSpan==192) and m.h==64 and type(g.imagetable)=='table' then
+  local key=tostring(math.floor(m.joinSpan))
+  local frames=rotorTables[key]
+  if not frames then frames=g.imagetable.new('structures/rotor-'..key);rotorTables[key]=frames end
+  if frames then
+   local n=math.floor((math.deg(angle)%180)+.5)%180+1
+   local im=frames:getImage(n);local w,h=im:getSize()
+   im:draw(x-w/2,y-(h-18)/2)
+   return
+  end
+ end
  local animated=m.kind=='trap' or m.kind=='conveyor'
  local key=tostring(frame)..(opened and ':open' or ':closed')
  local cache=m.structureCache
@@ -94,7 +130,8 @@ local function deck(m,t,x,y,angle,mat,frame,opened,depth)
   cache=m.surfaceFrames[key]
  end
  -- A long rotating bridge can project wider at 45 degrees than at rest.
- local span=m.kind=='rotor' and math.sqrt(2*(m.w*m.w+m.h*m.h)) or m.w+m.h
+ local broad=m.maxWidth or m.w
+ local span=m.kind=='rotor' and math.sqrt(2*(broad*broad+m.h*m.h)) or m.w+m.h
  local width=math.ceil(span*.9)+8
  local top=math.ceil(span*.45/2)+4
  local height=top*2+depth+6
@@ -122,7 +159,18 @@ local function deck(m,t,x,y,angle,mat,frame,opened,depth)
     end
    end
    g.setColor(g.kColorWhite);g.setLineWidth(3);g.drawPolygon(table.unpack(p));g.setLineWidth(1);outline(p)
-  else prism(p,depth,mat,tex.beam) end
+  else
+   prism(p,depth,mat,tex.beam)
+   if m.joinSpan then
+    -- The steel shoes slide around a fixed-width central wooden span.
+    local u=math.max(0,(m.w-(m.joinSpan-m.h))/(2*m.w))
+    local function point(a,b) return p[1]+(p[3]-p[1])*a+(p[7]-p[1])*b,p[2]+(p[4]-p[2])*a+(p[8]-p[2])*b end
+    for _,range in ipairs({{0,u},{1-u,1}}) do
+     local a,b=point(range[1],0);local c,d=point(range[2],0);local e,f=point(range[2],1);local h,i=point(range[1],1)
+     local shoe={a,b,c,d,e,f,h,i};panel(tex.rail,shoe);outline(shoe)
+    end
+   end
+  end
   g.popContext()
   cache={image=im,width=width,height=height,top=top,a=angle,w=m.w,h=m.h,frame=frame,open=opened,depth=depth};m.structureCache=cache
   if animated then m.surfaceFrames[key]=cache end
@@ -181,23 +229,10 @@ function A.dial(x,y,angle)
  base('socket',x,y)
  MachineArt.handle(x,y-2,angle)
 end
-function M.draw(c,t,project)
- for _,m in ipairs(c.mechanisms or {}) do
-  local cx,cy,a=M.pose(m,t);local h=m.kind=='lift' and (m.elevation or m.minHeight) or c:height(cx,cy)
-  local x,y=project(cx,cy,h);local extent=(m.w+m.h)*.64+65
-  if x+extent>=-32 and x-extent<=432 and y+extent>=0 and y-extent-(m.wallHeight or 0)*.65<=240 then
-   local kind=m.kind
-   if kind=='gate' or kind=='sweeper' then
-    wall(c,m,t,project,cx,cy)
-   elseif kind=='fan' then
-    base('small',x,y)
-    A.fanImage=A.fanImage or g.image.new('machine-fan');A.fanImage:draw(x-26,y-43);MachineArt.fan(m,t,x,y)
-   elseif kind=='bumper' then
-    base('small',x,y)
-    MachineArt.bumper(m,t,x,y)
-   else
+local function under(c,m,t,project,cx,cy,x,y,railsDone)
+ local kind=m.kind
     if kind=='ferry' then
-     rail(c,m,project)
+     if not railsDone then rail(c,m,project) end
      parts.bogie:draw(x-30,y+3)
      -- A housed axle turns with real carriage displacement, not a floating cog.
      if m.manual then gearFrame(((cx-m.x)+(cy-m.y))*3):draw(x+10,y+6) end
@@ -210,6 +245,26 @@ function M.draw(c,t,project)
     elseif m.retract then
      base('rail',x,y)
     end
+end
+function M.draw(c,t,project)
+ for _,m in ipairs(c.mechanisms or {}) do
+  local cx,cy,a=M.pose(m,t);local h=m.kind=='lift' and (m.elevation or m.minHeight) or c:height(cx,cy)
+  local x,y=project(cx,cy,h);local extent=(m.w+m.h)*.64+65
+  if x+extent>=-32 and x-extent<=432 and y+extent>=0 and y-extent-(m.wallHeight or 0)*.65<=240 then
+   local kind=m.kind
+   if (kind=='gate' or kind=='sweeper') and A.layer~='under' then
+    wall(c,m,t,project,cx,cy)
+   elseif kind=='fan' and A.layer~='under' then
+    base('small',x,y)
+    A.fanImage=A.fanImage or g.image.new('machine-fan');A.fanImage:draw(x-26,y-43);MachineArt.fan(m,t,x,y)
+   elseif kind=='bumper' and A.layer~='under' then
+    base('small',x,y)
+    MachineArt.bumper(m,t,x,y)
+   elseif kind~='gate' and kind~='sweeper' and kind~='fan' and kind~='bumper' then
+    if A.layer~='top' then
+    under(c,m,t,project,cx,cy,x,y)
+    end
+    if A.layer~='under' then
     local mat,frame=tex.deck,0
     local opened=kind=='trap' and M.open(m,t)
     if kind=='trap' then
@@ -244,16 +299,35 @@ function M.draw(c,t,project)
       end
      end
     end
+    end
    end
   end
  end
 end
+function A.drawUnder(c,t,project)
+ local list=c.structureUnder
+ if not list then
+  list={};for _,m in ipairs(c.mechanisms or {}) do if m.kind=='ferry' or m.kind=='lift' or m.kind=='rotor' then list[#list+1]=m end end
+  c.structureUnder=list
+ end
+ for _,m in ipairs(list) do
+  -- Rails remain visible along the route even when the carriage is offscreen.
+  if m.kind=='ferry' then rail(c,m,project) end
+  local cx,cy=M.pose(m,t);local h=m.kind=='lift' and (m.elevation or m.minHeight) or c:height(cx,cy)
+  local x,y=project(cx,cy,h);local extent=(m.w+m.h)*.64+65
+  if x+extent>=-32 and x-extent<=432 and y+extent>=0 and y-extent<=240 then under(c,m,t,project,cx,cy,x,y,true) end
+ end
+end
+function A.drawTop(c,t,project) A.layer='top';M.draw(c,t,project);A.layer=nil end
 local preparedCourse
 function A.prepare(c)
  if preparedCourse and preparedCourse~=c then
   for _,m in ipairs(preparedCourse.mechanisms or {}) do m.structureCache=nil;m.railCache=nil;m.surfaceFrames=nil end
  end
  if preparedCourse~=c then wallSets={} end
+ local keep={}
+ for _,m in ipairs(c.mechanisms or {}) do if m.joinSpan then keep[tostring(math.floor(m.joinSpan))]=true end end
+ for key in pairs(rotorTables) do if not keep[key] then rotorTables[key]=nil end end
  preparedCourse=c
  for i=0,15 do gearFrame(i*22.5) end
  local scratch=g.image.new(400,240,g.kColorClear)

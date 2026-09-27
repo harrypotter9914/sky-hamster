@@ -1,4 +1,6 @@
-# Sky Hamster — 0.10.6
+# Sky Hamster — 0.10.7
+
+0.10.7 adds visible cannon aiming, flush ferry/bridge joints, six rear-exit lift layouts and animated attached-crank tutorials. Rotation art is baked into SDK image tables. Host/native checks pass; final hardware profiling and normal-game installation await reconnection. See [validation](VALIDATION-v0.10.7.md). Run `python tests/check_joinery.py` for the complete regression suite.
 
 0.10.6 replaces placeholder-like mechanism surfaces with generated material panels and solid machinery: carriage rails, lift supports, folding hatches, gate panels and a rounded cannon cradle. Ball rolling now excludes passive platform transport. Tutorials reuse the runtime machinery. See [validation](VALIDATION-v0.10.6.md) and [art/export specification](art/STRUCTURES-v0.10.6.md). Run `python tests/check_relative_roll.py` for the complete regression suite.
 

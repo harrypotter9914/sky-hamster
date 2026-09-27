@@ -22,7 +22,9 @@ local smooth=Bench.smooth
 if smooth then stages={30,44,44,44,44,44,44,44} end
 local anchors={{96,112},{48,80},{480,80},{1264,80},{1752,112},{2128,112},{4800,112},{5600,240}}
 if Bench.profile then smooth=true;stages={44};anchors={{2128,112}} end
+if Bench.joins then stages={11,12,17,19,22,26} end
 results.mode=smooth and '90-units-per-second camera samples' or 'full-route camera/cache stress'
+if Bench.joins then results.mode='moving dock, lift and aiming animation samples' end
 local stage,frame=0,0
 local samples,costs={},{}
 local now=playdate.getCurrentTimeMilliseconds
@@ -59,7 +61,8 @@ function playdate.update()
  local c=Courses[stages[stage]]
  -- Traverse the sorted road tiles in batches; this deliberately stresses camera/cache misses.
  local tile=c.tiles[math.min(#c.tiles,1+math.floor(frame/180*(#c.tiles-1)))]
- if smooth then Bench.place(anchors[stage][1]+frame*3,anchors[stage][2]) else Bench.place(tile.x*32+16,tile.y*32+16) end
+ if Bench.joins then Bench.joinSample(stages[stage],frame)
+ elseif smooth then Bench.place(anchors[stage][1]+frame*3,anchors[stage][2]) else Bench.place(tile.x*32+16,tile.y*32+16) end
  local t=now();if last then samples[#samples+1]=t-last end;last=t
  update();costs[#costs+1]=now()-t;frame=frame+1
 end

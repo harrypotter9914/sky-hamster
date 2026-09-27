@@ -6,6 +6,11 @@ $qa=Join-Path $repo 'builds/tilt-ui-qa-source'
 New-Item -ItemType Directory -Force $qa | Out-Null
 Copy-Item "$root/source/*" $qa -Recurse -Force
 Copy-Item "$root/source/engine.lua" "$qa/game.lua"
+@'
+function Structures.reviewArt()
+ local out={};for name,frames in pairs(rotorTables) do out[name]=frames:getLength() end;return out
+end
+'@ | Add-Content "$qa/structures.lua"
 @"
 Review={select=function(n) selectLevel(n);while Loading.busy do Loading.step(1/30) end end,render=renderWorld,animate=function(t,crank)
  worldTime=t;MachineArt.time=t

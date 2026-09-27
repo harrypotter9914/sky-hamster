@@ -28,27 +28,37 @@ function D.update(course,x,y,vx,vy,airborne,crank,a,b)
  end
  return {x=p.x,y=p.y,locked=true}
 end
--- Seventeen small prebuilt barrel orientations; no per-frame image allocation.
+-- The muzzle follows the projected launch tangent, including its elevation.
 local cannonArt={}
 local cannonBase
+local atan2=math.atan2 or function(y,x)return math.atan(y,x)end
+function D.projectedDirection(angle)
+ local x,y=math.cos(angle),math.sin(angle)
+ return (x-y)*.9,(x+y)*.45-(150/210)*.65
+end
+function D.cannonFrame(angle)
+ return math.max(1,math.min(61,math.floor((angle+math.pi/3)/(math.pi/90)+1.5)))
+end
 local function buildCannons()
  if cannonArt[1] then return end
  local g=playdate.graphics;local barrel=g.image.new('structures/barrel')
  cannonBase=g.image.new('structures/cradle')
- for n=1,17 do
-  local angle=-math.pi/3+(n-1)*math.pi/24
-  local dx,dy=math.cos(angle),math.sin(angle)
-  local bearing=math.deg(math.atan((dx+dy)*.45-.75,(dx-dy)*.9))
-  local im=g.image.new(104,104,g.kColorClear);g.pushContext(im)
-  barrel:drawRotated(51,49,bearing)
+ for n=1,61 do
+  local angle=-math.pi/3+(n-1)*math.pi/90
+  local ux,uy=D.projectedDirection(angle);local length=math.sqrt(ux*ux+uy*uy)
+  local bearing=math.deg(atan2(uy,ux))
+  local im=g.image.new(128,128,g.kColorClear);g.pushContext(im)
+  -- Back of the tube pivots in the saddle instead of spinning about its middle.
+  barrel:drawRotated(64+ux/length*13,64+uy/length*13,bearing)
   g.popContext();cannonArt[n]=im
  end
 end
 D.prepareArt=buildCannons
-function D.drawCannon(angle,x,y)
- buildCannons();local n=math.max(1,math.min(17,math.floor((angle+math.pi/3)/(math.pi/24)+1.5)))
+function D.drawCannon(angle,x,y,recoil)
+ buildCannons();local n=D.cannonFrame(angle)
+ local ux,uy=D.projectedDirection(angle);local length=math.sqrt(ux*ux+uy*uy)
  cannonBase:draw(x-35,y-56)
- cannonArt[n]:draw(x-51,y-96)
+ cannonArt[n]:draw(x-64-(recoil or 0)*ux/length,y-100-(recoil or 0)*uy/length)
 end
 function D.draw(course,project)
  local g=playdate.graphics
@@ -59,13 +69,9 @@ function D.draw(course,project)
   local x,y=project(p.x,p.y,Mechanisms.floor(course,p.x,p.y,0))
   if x>-50 and x<450 and y>35 and y<225 then
    if p.kind=='cannon' then
-    buildCannons();local n=math.max(1,math.min(17,math.floor(((p.angle or 0)+math.pi/3)/(math.pi/24)+1.5)))
     local age=p.fireAt and MachineArt.time-p.fireAt or 10
     local recoil=age>=0 and age<.24 and math.sin(age/.24*math.pi)*5 or 0
-    local dx,dy=math.cos(p.angle or 0),math.sin(p.angle or 0)
-    local ux,uy=(dx-dy)*.9,(dx+dy)*.45-.75;local length=math.sqrt(ux*ux+uy*uy)
-    cannonBase:draw(x-35,y-56)
-    cannonArt[n]:draw(x-51-recoil*ux/length,y-96-recoil*uy/length)
+    D.drawCannon(p.angle or 0,x,y,recoil)
     if D.active==p then for i=1,10 do local t=i*.1;local px,py=project(p.x+math.cos(p.angle)*210*t,p.y+math.sin(p.angle)*210*t,course:height(p.x,p.y)+150*t-150*t*t);g.setColor(g.kColorBlack);g.fillCircleAtPoint(px,py,2) end end
    elseif p.kind=='bridge' or p.kind=='fan' or p.kind=='extend' or p.kind=='switch' then
     Structures.dial(x,y,p.spin or math.deg(p.angle or 0))
