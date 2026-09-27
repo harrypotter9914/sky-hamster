@@ -22,6 +22,7 @@ import "machine_art"
 import "physics_index"
 import "render_index"
 import "pose"
+import "structures"
 import "mechanism_audio"
 import "tilt_ui"
 import "guide"
@@ -206,6 +207,7 @@ prepareTerrain=function()
  Loading.checkpoint(.3,"BUILDING STONE ROAD")
  warmTileSprites()
  Loading.checkpoint(.66,"WINDING THE MACHINES")
+ Structures.prepare(course)
  UI.markerOffset(course,course.start);UI.markerOffset(course,course.goal)
  for _,point in ipairs(course.checkpoints) do UI.markerOffset(course,point) end
  -- Allocate slope occlusion and HUD caches before the playable frame.
@@ -466,6 +468,7 @@ function pd.update()
    if not airborne and riding and (riding.kind=="ferry" or riding.kind=="rotor") then
     x,y=Mechanisms.carry(riding,x,y,beforeTime,worldTime)
    end
+   local rollX,rollY=x,y -- platform carry is not motion relative to its surface
    if airborne then
     local oldZ=jumpZ
     jumpZ,jumpV=Physics.air(jumpZ,jumpV,step)
@@ -498,8 +501,8 @@ function pd.update()
      airborne=true;jumpZ=ballHeight;jumpV=0
     else ballHeight=targetHeight;jumpZ=ballHeight end
    end
-   local travel=math.sqrt((x-oldX)^2+(y-oldY)^2)
-   local sign=(vx-vy)<0 and -1 or 1
+   local travel=math.sqrt((x-rollX)^2+(y-rollY)^2)
+   local sign=((x-rollX)-(y-rollY))<0 and -1 or 1
    rollAngle=(rollAngle+sign*travel/11)%(math.pi*2)
   end
   if not airborne and state=='play' then for i,point in ipairs(course.checkpoints) do

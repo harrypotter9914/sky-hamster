@@ -51,7 +51,7 @@ local info={
  switch={'CHOOSE YOUR ROUTE','Crank the dial. One lane opens, one closes.'},
  bumper={'GIVE SPRINGS SOME SPACE','Springs bounce you away. Steer around them.'}}
 local machineArt={}
-for _,name in ipairs({'lift','slider','fan','bumper'}) do
+for _,name in ipairs({'fan'}) do
  local source=g.image.new('machine-'..name)
  machineArt[name]=image(86,64,function() source:drawScaled(0,0,name=='slider' and .59 or name=='lift' and .72 or 1) end)
 end
@@ -111,13 +111,7 @@ function UI.lesson(kind,time)
   elseif kind=='control' or kind=='rotor' then
    slab(209,147,31,14);slab(337,147,34,14)
    local a=kind=='control' and (1-ease((t-1)/2))*math.pi/2 or (1-ease((t-.8)/3))*math.pi/2
-   local dx,dy=math.cos(a)*51,math.sin(a)*22
-   local nx,ny=-math.sin(a)*6,math.cos(a)*6
-   local ax,ay,bx,by=288-dx,145-dy,288+dx,145+dy
-   ink();g.fillPolygon(ax+nx,ay+ny+4,bx+nx,by+ny+4,bx-nx,by-ny+4,ax-nx,ay-ny+4)
-   white();g.fillPolygon(ax+nx,ay+ny,bx+nx,by+ny,bx-nx,by-ny,ax-nx,ay-ny)
-   ink();g.drawPolygon(ax+nx,ay+ny,bx+nx,by+ny,bx-nx,by-ny,ax-nx,ay-ny)
-   ink();g.drawCircleAtPoint(288,145,5)
+   Structures.demo('rotor',288,140,1.2+ease((t-.8)/3)*1.8)
    if kind=='control' then ball(224,134);left='DOCK, THEN CRANK';right=t<3 and 'ALIGN THE BRIDGE' or 'B: RELEASE'
    else local off=ease((t-4)/1);ball(288+off*66,132);left='KEEP BALANCED';right=t<4 and 'RIDE THE DECK' or 'ROLL OFF NOW' end
   elseif kind=='cannon' then
@@ -139,10 +133,9 @@ function UI.lesson(kind,time)
    MachineArt.sprite('switch',351,137);MachineArt.handle(350,107,t*60)
    ball(239,t<3 and 99 or 137);left='TURN THE DIAL';right=t<3 and 'UPPER LANE OPEN' or 'LOWER LANE OPEN'
   elseif kind=='conveyor' then
-   slab(207,138,166,24)
-   for i=0,4 do arrow(218+(i*29+t*12)%135,151,10,0) end
-   MachineArt.sprite('roller',235,134);MachineArt.gear(228,114,t*120)
-   ball(230+ease(t/5)*108,126);left='COUNTER-TILT';right='BELT CARRIES THE BALL'
+   slab(207,149,47,13);slab(321,149,52,13)
+   Structures.demo('conveyor',288,143,t)
+   ball(230+ease(t/5)*108,130);left='COUNTER-TILT';right='BELT CARRIES THE BALL'
   elseif kind=='jet' then
    slab(207,142,166,22);local on=t<2.4
    for i=0,3 do local px=225+i*43;MachineArt.sprite('nozzle',px,155);if on then ink();for j=1,2 do local d=(t*35+j*13)%28;g.drawArc(px+6,121-d,3+j,220,340) end end end
@@ -153,16 +146,14 @@ function UI.lesson(kind,time)
   elseif kind=='lift' then
    local u=ease((t-1)/2);local sy=148-u*37
    slab(206,157,29,10);slab(335,115,38,10)
-   machineArt.lift:draw(246,sy-28);ball(287,sy-18)
-   MachineArt.gear(266,sy-6,u*360);MachineArt.handle(266,sy-6,u*360)
+   local bx,by=Structures.demo('lift',287,140,t,u);ball(bx,by-13)
    arrow(347,154,0,-24)
    left=t<1 and 'DOCK IN THE CENTER' or t<3 and 'CRANK TO RAISE' or 'B: RELEASE'
    right=t<3 and 'MATCH THE ROAD' or 'ROLL ONTO THE ROAD'
   elseif kind=='slider' then
-   slab(205,151,29,13);slab(342,151,30,13)
+   slab(205,143,29,13);slab(342,143,30,13)
    local px=221+ease((t-1)/2.5)*48
-   machineArt.slider:draw(px,117);ball(px+42,133)
-   MachineArt.gear(px+64,144,ease((t-1)/2.5)*540)
+   local bx,by=Structures.demo('slider',288,134,t,ease((t-1)/2.5));ball(bx,by-13)
    left=t<1 and 'DOCK ON THE DECK' or t<3.5 and 'CRANK TO TRAVEL' or 'B: RELEASE'
    right=t<3.5 and 'MOVE TO THE FAR BANK' or 'ROLL OFF AT THE DOCK'
   elseif kind=='fan' then
@@ -175,25 +166,25 @@ function UI.lesson(kind,time)
    local q=t%3;local bx=q<1.5 and 234+q*22 or 267-(q-1.5)*22
    ball(bx,137);left='LEAVE SOME ROOM';right='CONTACT BOUNCES BACK'
   elseif kind=='ferry' then
-   slab(205,151,35,13);slab(336,151,37,13)
+   slab(205,143,35,13);slab(336,143,37,13)
    local travel=ease((t-1.2)/2.6);local px=240+travel*62
-   slab(px,151,34,13)
-   local bx=t<1.2 and 222+ease(t/1.2)*35 or t<4 and px+17 or 319+ease((t-4)/1.1)*34
-   ball(bx,138);left='TILT GENTLY';right=t<1.2 and 'BOARD' or t<4 and 'RIDE' or 'ROLL OFF'
+   local bx,by=Structures.demo('ferry',288,134,1.2+travel*1.8)
+   if t<1.2 then bx=222+ease(t/1.2)*(bx-222) elseif t>=4 then bx=bx+ease((t-4)/1.1)*(353-bx) end
+   ball(bx,by-13);left='TILT GENTLY';right=t<1.2 and 'BOARD' or t<4 and 'RIDE' or 'ROLL OFF'
   elseif kind=='trap' then
-   slab(205,151,51,13);slab(315,151,57,13)
+   slab(205,137,51,13);slab(315,137,57,13)
    local open=t<2
-   if not open then slab(256,151,59,13) else ink();for i=0,6 do g.drawLine(258+i*8,151,261+i*8,151) end end
-   ball(open and 231 or 231+ease((t-2.5)/2.5)*114,138)
+   Structures.demo('trap',286,135,open and 1 or 3)
+   ball(open and 231 or 231+ease((t-2.5)/2.5)*114,124)
    left='WAIT ON THE ROAD';right=open and 'GAP: WAIT' or 'SOLID: CROSS'
   elseif kind=='gate' then
    slab(205,151,167,13);local open=t>=2.5
-   if not open then ink();g.fillRect(285,103,12,48);white();for yy=108,143,10 do g.fillRect(286,yy,10,4) end end
+   Structures.demo('gate',296,146,open and .8 or 3)
    ball(open and 258+ease((t-2.7)/2)*85 or 258,138)
    left='WAIT, THEN TILT';right=open and 'OPEN: CROSS' or 'CLOSED: WAIT'
   else
    slab(205,128,167,35);local pos=315+math.sin(t*1.1)*28
-   ink();g.fillRect(pos,101,12,50);white();for yy=108,143,10 do g.fillRect(pos+1,yy,10,4) end
+   Structures.demo('sweeper',315,139,t)
    ball(233,141);left='KEEP CLEAR';right='WATCH THE PANEL'
   end
   if kind=='jump' then

@@ -1,6 +1,6 @@
-# Sky Hamster — 0.10.5
+# Sky Hamster — 0.10.6
 
-0.10.5 verifies all 45 audio assets on the physical device (47 cases including two rolling rates), culls inaudible mechanism calculations using conservative swept bounds and avoids redundant player calls. See [hardware validation](VALIDATION-v0.10.5.md). Run `python tests/check_audio_bounds.py` for the full regression suite and hearing-range/reference comparisons.
+0.10.6 replaces placeholder-like mechanism surfaces with generated material panels and solid machinery: carriage rails, lift supports, folding hatches, gate panels and a rounded cannon cradle. Ball rolling now excludes passive platform transport. Tutorials reuse the runtime machinery. See [validation](VALIDATION-v0.10.6.md) and [art/export specification](art/STRUCTURES-v0.10.6.md). Run `python tests/check_relative_roll.py` for the complete regression suite.
 
 0.10.4 adds distinct machinery/UI sound families and an illustrated frame-animation loader with real progress. Startup resources and course preparation run cooperatively across display frames. See [audio and loading](AUDIO-LOADING-v0.10.4.md) and [validation](VALIDATION-v0.10.4.md). Run `python tests/check_audio_loading.py` for the complete regression suite.
 

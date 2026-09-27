@@ -109,7 +109,7 @@ function D.draw(c,project)
   if x>-70 and x<470 and y>25 and y<255 then
    if p.kind=='extend' then A.sprite('winch',x-22,y-3);A.gear(x-25,y-27,p.spin);A.handle(x-25,y-27,p.spin)
    elseif p.kind=='switch' then A.sprite('switch',x-22,y-3);A.handle(x-24,y-33,p.spin)
-   elseif p.kind=='bridge' or p.kind=='fan' then A.handle(x,y-2,p.spin) end
+   end
    local age=p.fireAt and t-p.fireAt or 10
    if p.kind=='cannon' and age>=0 and age<.35 then
     local dx,dy=math.cos(p.angle or 0),math.sin(p.angle or 0)

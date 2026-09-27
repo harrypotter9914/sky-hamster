@@ -71,6 +71,14 @@ function playdate.update()
    for i,t in ipairs({0,.12,.3,.65}) do export('v40-'..v[1]..'-'..i,function() world(table.unpack(v));Review.animate(t,i*50);Review.render() end) end
   end
   export('v40-road',function() world(1,176,48) end)
+  for _,kind in ipairs({'ferry','slider','lift','rotor','trap','gate','sweeper','conveyor'}) do
+   for i,t in ipairs({0,.1,.3,2.8,4.8}) do
+    export('v106-machine-'..kind..'-'..i,function()
+     g.clear(g.kColorWhite);g.drawText(kind,14,12)
+     Structures.demo(kind,200,142,t,t/5)
+    end)
+   end
+  end
   print('PASS: v40 native animation exports complete')
   done=true
  end
