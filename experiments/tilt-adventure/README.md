@@ -1,4 +1,6 @@
-# Sky Hamster — 0.10.9
+# Sky Hamster — 0.10.10
+
+0.10.10 rebuilds the top 400×43 HUD as a compact mechanical instrument strip: generated monochrome emblems, course plaque, fixed-width readings and cached segmented meters. The lower controls and playfield are unchanged. See [validation](VALIDATION-v0.10.10.md) and [art/export notes](art/HUD-v0.10.10.md).
 
 0.10.9 adds USB-powered wakefulness across title, loading and gameplay, plus indexed height/support queries, prepared terrain chunks, cached lift supports/fan views and control hints. Leaving a course releases its derived caches. Battery-only use restores automatic locking. For the same policy outside this game, use the device's **Settings → Auto Lock → Off while charging** preference. See [all-course hardware validation](VALIDATION-v0.10.9.md). Run `python tests/check_perf_detail.py` and `python tests/check_awake.py`.
 
@@ -85,7 +87,7 @@ Body text uses the SDK's Asheville Sans 14 Bold. Home labels use the smaller fon
 
 Guides pause the real level under an animated popup. The arrival story has three picture panels. Paired device/result animations introduce tilt, lift, docking, crank bridges, cannons, gates, disappearing floors, ferries, rotors and sweepers. A acknowledges; B replays. Seen topics persist only after acknowledgement. Direct selection of later courses queues missing prerequisites; mixed courses do not repeat known mechanics.
 
-Art masters, export scripts and prompts: `art/ASSETS.md`. This section describes the initial presentation pass; later cannon geometry and hardware measurements are documented in the current [validation record](VALIDATION-v0.10.9.md).
+Art masters, export scripts and prompts: `art/ASSETS.md`. This section describes the initial presentation pass; later cannon geometry and hardware measurements are documented in [0.10.9 validation](VALIDATION-v0.10.9.md), with the current HUD and focused measurements in [0.10.10 validation](VALIDATION-v0.10.10.md).
 
 Visual QA: `tests/build-review.ps1` builds an isolated review bundle using `tests/ui_review.lua`; test-only drawing hooks are injected into the build-directory copy, never production. The bundle exports native 400x240 GIF stills into its own simulator datastore. Host checks cover first encounters, persisted acknowledgements, replay, paused physics and every animation phase, in addition to the original 17-course regression checks.
 

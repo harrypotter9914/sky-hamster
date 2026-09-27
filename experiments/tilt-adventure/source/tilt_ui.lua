@@ -1,5 +1,6 @@
 -- One-bit scene layers and a shared, cached instrument-panel vocabulary.
 local g=playdate.graphics
+import 'hud_panel'
 local scene=g.image.new('title-scene')
 local regular=g.font.new('fonts/ui-bold')
 local bold=regular
@@ -229,25 +230,10 @@ function UI.map(course,x,y,t)
 end
 -- Fixed-size keycaps and fixed label origins keep both rows aligned.
 local function controlHint(button,label,x,y) UI.key(button,x,y,label) end
-local hudBase,hudKey,readout,readoutKey,bottom,bottomKey
+local bottom,bottomKey
 local bottomCache={}
 function UI.hud(course,level,jump,power,charge,elapsed,falls,speed)
- local id=tostring(level)..tostring(jump)
- if hudKey~=id then hudKey=id;hudBase=bitmap(400,43,function()
-  g.setColor(g.kColorWhite);g.fillRect(0,0,400,43);ink();g.drawLine(0,42,400,42);g.drawLine(2,40,398,40)
-  icon('flag',5,1);text(fit(string.format('%02d %s',level,course.shortName),211),28,2)
-  icon('tilt',5,21);meter(31,27,95,0);icon(jump and 'jump' or 'lock',147,21);if jump then meter(171,27,55,0) else text('JUMP',173,23) end
-  icon('clock',250,0);icon('ball',347,0);text('SPEED',251,23)
- end) end
- hudBase:draw(0,0);g.setColor(g.kColorWhite);g.fillRect(4,21,22,19);ink();g.drawCircleAtPoint(15,31,8)
- local dx,dy=Tilt.dx or 0,Tilt.dy or 0;local sx,sy=(dx-dy)*.9,(dx+dy)*.45;local length=math.sqrt(sx*sx+sy*sy)
- if length>0 then g.fillCircleAtPoint(15+sx/length*power*6,31+sy/length*power*6,2) else g.fillCircleAtPoint(15,31,1) end
- meter(31,27,95,power);if jump then meter(171,27,55,math.max(0,1-Tilt.cooldown/.75)) end
- local value=math.floor(elapsed);local vel=math.floor(speed);local rk=string.format('%d/%d/%d',value,falls,vel)
- if rk~=readoutKey then readoutKey=rk;readout=readout or g.image.new(130,40,g.kColorClear);g.pushContext(readout);g.clear(g.kColorClear)
-  text(string.format('%02d:%02d',math.floor(value/60),value%60),0,1);text(tostring(falls),101,1);text(string.format('%03d',vel),63,23);g.popContext()
- end
- readout:draw(270,0)
+ HudPanel.draw(course,level,jump,power,elapsed,falls,speed)
  local dock=Dock.active and Dock.active.kind or 'roll';local bk=dock..tostring(jump)
  if bottomKey~=bk then bottomKey=bk;bottom=bottomCache[bk]
  if not bottom then bottom=bitmap(400,37,function()
