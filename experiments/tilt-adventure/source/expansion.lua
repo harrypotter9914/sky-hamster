@@ -11,13 +11,10 @@ function M.pose(m,t)
 end
 local oldSupport=M.support
 function M.support(c,x,y,t)
- for _,m in ipairs(c.mechanisms or {}) do if m.kind=='lift' and M.contains(m,x,y,t) then return true,m end end
  return oldSupport(c,x,y,t)
 end
 function M.floor(c,x,y,t)
- local supported,m=M.support(c,x,y,t)
- if m and m.kind=='lift' then return m.elevation or m.minHeight end
- return c:height(x,y)
+ local _,_,h=Footing.query(c,x,y,t);return h
 end
 local oldReset=D.reset
 function D.reset(c)
@@ -76,9 +73,9 @@ end
 function M.wind(c,x,y,vx,vy,z,dt)
  for _,m in ipairs(c.mechanisms or {}) do if m.kind=='fan' and z<85 then
   local r=m.region
-  if math.abs(x-r[1])<r[3]/2 and math.abs(y-r[2])<r[4]/2 then
-   vx=vx+math.cos(m.angle or 0)*(m.force or 65)*dt;vy=vy+math.sin(m.angle or 0)*(m.force or 65)*dt
-  end
+  local fraction=WindContact.fraction(r,x,y,vx,vy,dt)
+  local impulse=(m.force or 65)*WindContact.gain*dt*fraction
+  vx=vx+math.cos(m.angle or 0)*impulse;vy=vy+math.sin(m.angle or 0)*impulse
  end end
  return vx,vy
 end

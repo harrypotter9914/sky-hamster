@@ -1,4 +1,6 @@
-# Sky Hamster — 0.10.12
+# Sky Hamster — 0.11.0
+
+0.11.0 adds circular ball-footprint support at edges and seams, live GO/WAIT passage signals and four onboard-turntable routes (45–48). Rotation remains continuous. Shores and decks share control without resetting the angle. Crosswind force rises only 8%; swept contact catches quick crossings. Stone textures are clipped to their own top faces, and the new rotating deck uses 180 cached views. See [design and validation](VALIDATION-v0.11.0.md). Current regression: `python tests/check_turntable.py`.
 
 0.10.12 replaces the upright spring with a low rubber bumper ring: matching ground footprint, lateral contact height, cached outward pulse and one synchronized impact sound. See [validation](VALIDATION-v0.10.12.md). Current regression: `python tests/check_bumper_ring.py`.
 
@@ -24,7 +26,7 @@ This is the continuing full game after 0.6.7, using the single repository versio
 
 0.10.1 preserves the 0.10.0 visuals and behavior while reusing exact machinery poses, filtering remote render/occlusion candidates and caching the terrain viewport's chunk lists. See [0.10.1 validation](VALIDATION-v0.10.1.md). Run `python tests/check_render_optimization.py` for the current regression suite.
 
-The five workshop mechanisms have dedicated artwork, synchronized machinery animation and irregular stone roads. The campaign still has 44 courses. See [visuals and validation](VALIDATION-v0.10.0.md), [art and prompts](art/VISUALS-v0.10.0.md), and the [0.9.0 workshop expansion](WORKSHOP-v0.9.0.md).
+The five workshop mechanisms have dedicated artwork, synchronized machinery animation and irregular stone roads. The current campaign has 48 courses, including the four onboard routes added in 0.11.0. See [visuals and validation](VALIDATION-v0.10.0.md), [art and prompts](art/VISUALS-v0.10.0.md), and the [0.9.0 workshop expansion](WORKSHOP-v0.9.0.md).
 
 The full game's tilt-control development continues from Sky Hamster 0.6.7 at commit 9d2d7d9. Root source and other control experiments remain historical snapshots. A source snapshot is saved locally as `builds/sky-hamster-before-tilt.zip` (repository root); Git history also preserves the baseline.
 

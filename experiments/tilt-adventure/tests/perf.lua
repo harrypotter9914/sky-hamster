@@ -43,6 +43,13 @@ if Bench.all then
   for i,p in ipairs(c.pads or {}) do specs[#specs+1]={route=n,kind='pad',index=i,name=p.kind,frames=120} end
   end
  end
+ if Bench.mechanismIndices then
+  local focus={}
+  for _,spec in ipairs(specs) do if spec.kind=='mechanism' then
+   for _,index in ipairs(Bench.mechanismIndices) do if spec.index==index then focus[#focus+1]=spec;break end end
+  end end
+  specs=focus
+ end
  for _,spec in ipairs(specs) do stages[#stages+1]=spec.route end
  results.mode='all courses: road traversal stress plus each machinery and control station; production update and audio'
  print('BENCH PLAN courses='..#Courses..' scenes='..#specs)
@@ -51,7 +58,7 @@ local samples,costs={},{}
 local now=playdate.getCurrentTimeMilliseconds
 local profile={}
 if Bench.profile then
- for _,spec in ipairs({{MechanismAudio,'update','machineAudio'},{Audio,'update','ballAudio'},{Mechanisms,'support','support'},{Mechanisms,'collide','collide'},{Mechanisms,'wind','wind'},{Mechanisms,'draw','machines'},{Spatial,'occluders','occluders'},{Spatial,'maskPolygon','mask'},{Spatial,'sides','sides'},{Terrain,'draw','terrain'},{Dock,'draw','stations'},{UI,'hud','hud'},{Tilt,'update','tilt'},{DepthOrder,'roads','roadCover'},{Structures,'drawTop','structureTop'},{Structures,'drawUnder','structureUnder'}}) do
+ for _,spec in ipairs({{Passage,'draw','passage'},{MechanismAudio,'update','machineAudio'},{Audio,'update','ballAudio'},{Mechanisms,'support','support'},{Mechanisms,'collide','collide'},{Mechanisms,'wind','wind'},{Mechanisms,'draw','machines'},{Spatial,'occluders','occluders'},{Spatial,'maskPolygon','mask'},{Spatial,'sides','sides'},{Terrain,'draw','terrain'},{Dock,'draw','stations'},{UI,'hud','hud'},{Tilt,'update','tilt'},{DepthOrder,'roads','roadCover'},{Structures,'drawTop','structureTop'},{Structures,'drawUnder','structureUnder'}}) do
   local owner,key,label=spec[1],spec[2],spec[3];local f=owner[key]
   owner[key]=function(...) local t=now();local a,b,c,d,e=f(...);profile[label]=(profile[label] or 0)+now()-t;return a,b,c,d,e end
  end

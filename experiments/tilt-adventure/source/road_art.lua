@@ -10,9 +10,15 @@ local function prepare(t,slope)
  if not entry then
   source[n]=source[n] or g.image.new('paving/'..n)
   local h=math.ceil(math.abs(.45-.65*slope)*32+14.4)+6
-  local im=g.image.new(64,h,g.kColorClear)
+  local im=g.image.new(64,h,g.kColorWhite)
   local transform=playdate.geometry.affineTransform.new(.9,-.9,.45-.65*slope,.45,0,0)
-  g.pushContext(im);source[n]:drawWithTransform(transform,32,h/2);g.popContext()
+  -- Clip the texture to its own top face, especially at inside road corners.
+  local mask=g.image.new(64,h,g.kColorBlack);local poly={}
+  for _,p in ipairs({{-16,-16},{16,-16},{16,16},{-16,16}}) do
+   poly[#poly+1]=32+(p[1]-p[2])*.9;poly[#poly+1]=h/2+(p[1]+p[2])*.45-p[1]*slope*.65
+  end
+  g.pushContext(mask);g.setColor(g.kColorWhite);g.fillPolygon(table.unpack(poly));g.popContext()
+  g.pushContext(im);source[n]:drawWithTransform(transform,32,h/2);g.popContext();im:setMaskImage(mask)
   entry={image=im,h=h};cache[key]=entry
  end
  return entry

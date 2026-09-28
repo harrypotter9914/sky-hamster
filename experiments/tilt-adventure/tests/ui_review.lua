@@ -87,7 +87,7 @@ function playdate.update()
   end
   world(44,1392,80)
   local rotorArt=Structures.reviewArt()
-  assert(rotorArt['160']==180 and rotorArt['192']==180,'missing baked rotor frame tables')
+  assert(rotorArt['rotor-160']==180 and rotorArt['rotor-192']==180,'missing baked rotor frame tables')
   playdate.datastore.write({rotors=rotorArt,complete=true},'v108-native-review')
   world(27,560,144)
   for i=0,60 do

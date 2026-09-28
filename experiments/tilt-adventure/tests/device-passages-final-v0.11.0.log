@@ -1,0 +1,179 @@
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH PLAN courses=48 scenes=43
+BENCH BEGIN	44
+SCENE	1	road	0	traverse
+BENCH route=44 frames=179 fps=25.19 frame95=57.00 frameMax=68.00 cpu95=52.00 cpuMax=64.00 cacheMiss=0 chunks=39 luaKB=1694
+STATS	GC=3.0 audio=5.0 game=89.2 idle=2.8
+BENCH BEGIN	44
+SCENE	2	normal	0	traverse
+BENCH route=44 frames=119 fps=29.63 frame95=35.00 frameMax=48.00 cpu95=31.00 cpuMax=32.00 cacheMiss=0 chunks=39 luaKB=1660
+STATS	GC=7.0 audio=3.0 game=86.0 idle=3.0 kernel=1.0
+BENCH BEGIN	44
+SCENE	3	normal	0	traverse
+BENCH route=44 frames=119 fps=28.76 frame95=38.00 frameMax=40.00 cpu95=34.00 cpuMax=38.00 cacheMiss=0 chunks=39 luaKB=1746
+STATS	GC=5.2 audio=2.6 game=88.4 idle=2.8 kernel=1.0
+BENCH BEGIN	44
+SCENE	4	normal	0	traverse
+BENCH route=44 frames=119 fps=29.39 frame95=36.00 frameMax=55.00 cpu95=33.00 cpuMax=35.00 cacheMiss=0 chunks=39 luaKB=1663
+STATS	GC=6.2 audio=3.2 game=85.8 idle=3.8 kernel=1.0
+BENCH BEGIN	44
+SCENE	5	mechanism	1	lift
+BENCH route=44 frames=119 fps=29.87 frame95=35.00 frameMax=39.00 cpu95=31.00 cpuMax=32.00 cacheMiss=0 chunks=39 luaKB=1675
+STATS	GC=8.8 audio=3.2 game=84.4 idle=3.2 kernel=0.4
+BENCH BEGIN	44
+SCENE	6	mechanism	2	rotor
+BENCH route=44 frames=119 fps=26.92 frame95=39.00 frameMax=40.00 cpu95=36.00 cpuMax=37.00 cacheMiss=0 chunks=39 luaKB=1792
+STATS	GC=2.6 audio=2.2 game=92.0 idle=2.6 kernel=0.6
+BENCH BEGIN	44
+SCENE	7	mechanism	3	ferry
+BENCH route=44 frames=119 fps=25.09 frame95=45.00 frameMax=46.00 cpu95=41.00 cpuMax=42.00 cacheMiss=0 chunks=39 luaKB=2051
+STATS	GC=2.4 audio=2.8 game=91.0 idle=2.8 kernel=1.0
+BENCH BEGIN	44
+SCENE	8	mechanism	4	fan
+BENCH route=44 frames=119 fps=22.03 frame95=48.00 frameMax=132.00 cpu95=43.00 cpuMax=44.00 cacheMiss=0 chunks=39 luaKB=1887
+STATS	GC=3.8 audio=2.4 game=90.6 idle=2.0 kernel=1.2
+BENCH BEGIN	44
+SCENE	9	mechanism	5	bumper
+BENCH route=44 frames=119 fps=21.44 frame95=49.00 frameMax=50.00 cpu95=46.00 cpuMax=48.00 cacheMiss=0 chunks=39 luaKB=1910
+STATS	GC=2.2 audio=2.8 game=93.2 idle=1.8
+BENCH BEGIN	44
+SCENE	10	mechanism	6	trap
+BENCH route=44 frames=119 fps=26.12 frame95=45.00 frameMax=49.00 cpu95=42.00 cpuMax=44.00 cacheMiss=0 chunks=39 luaKB=2081
+STATS	GC=2.8 audio=2.4 game=91.4 idle=3.0 kernel=0.4
+BENCH BEGIN	44
+SCENE	11	mechanism	7	gate
+BENCH route=44 frames=119 fps=22.41 frame95=50.00 frameMax=52.00 cpu95=48.00 cpuMax=49.00 cacheMiss=0 chunks=39 luaKB=2282
+STATS	GC=2.2 audio=2.4 game=92.6 idle=2.8
+BENCH BEGIN	44
+SCENE	12	mechanism	8	ferry
+BENCH route=44 frames=119 fps=26.67 frame95=40.00 frameMax=47.00 cpu95=37.00 cpuMax=39.00 cacheMiss=0 chunks=39 luaKB=2240
+STATS	GC=4.8 audio=1.8 game=89.4 idle=2.8 kernel=1.2
+BENCH BEGIN	44
+SCENE	13	mechanism	9	rotor
+BENCH route=44 frames=119 fps=27.38 frame95=41.00 frameMax=43.00 cpu95=36.00 cpuMax=38.00 cacheMiss=0 chunks=39 luaKB=1784
+STATS	GC=5.4 audio=2.8 game=88.0 idle=2.6 kernel=1.2
+BENCH BEGIN	44
+SCENE	14	mechanism	10	sweeper
+BENCH route=44 frames=119 fps=26.08 frame95=44.00 frameMax=47.00 cpu95=41.00 cpuMax=44.00 cacheMiss=0 chunks=39 luaKB=1961
+STATS	GC=2.8 audio=2.0 game=92.6 idle=2.4 kernel=0.2
+BENCH BEGIN	44
+SCENE	15	mechanism	11	extend
+BENCH route=44 frames=119 fps=23.44 frame95=44.00 frameMax=46.00 cpu95=42.00 cpuMax=43.00 cacheMiss=0 chunks=39 luaKB=2021
+STATS	GC=2.2 audio=2.2 game=93.2 idle=2.4
+BENCH BEGIN	44
+SCENE	16	mechanism	12	conveyor
+BENCH route=44 frames=119 fps=18.71 frame95=56.00 frameMax=58.00 cpu95=53.00 cpuMax=56.00 cacheMiss=0 chunks=39 luaKB=2140
+STATS	GC=2.0 audio=2.6 game=93.4 idle=2.0
+BENCH BEGIN	44
+SCENE	17	mechanism	13	jet
+BENCH route=44 frames=119 fps=26.49 frame95=43.00 frameMax=55.00 cpu95=38.00 cpuMax=39.00 cacheMiss=0 chunks=39 luaKB=1844
+STATS	GC=4.2 audio=2.4 game=88.6 idle=3.0 kernel=1.8
+BENCH BEGIN	44
+SCENE	18	mechanism	14	magnet
+BENCH route=44 frames=119 fps=29.59 frame95=36.00 frameMax=76.00 cpu95=29.00 cpuMax=31.00 cacheMiss=0 chunks=39 luaKB=1682
+STATS	GC=8.8 audio=3.8 game=84.4 idle=2.0 kernel=1.0
+BENCH BEGIN	44
+SCENE	19	mechanism	15	gate
+BENCH route=44 frames=119 fps=18.70 frame95=56.00 frameMax=60.00 cpu95=53.00 cpuMax=58.00 cacheMiss=0 chunks=39 luaKB=1799
+STATS	GC=1.8 audio=2.4 game=93.4 idle=2.2 kernel=0.2
+BENCH BEGIN	44
+SCENE	20	mechanism	16	gate
+BENCH route=44 frames=119 fps=18.62 frame95=57.00 frameMax=58.00 cpu95=53.00 cpuMax=55.00 cacheMiss=0 chunks=39 luaKB=1913
+STATS	GC=1.8 audio=2.4 game=94.2 idle=1.6
+BENCH BEGIN	44
+SCENE	21	mechanism	17	gate
+BENCH route=44 frames=119 fps=18.41 frame95=58.00 frameMax=63.00 cpu95=53.00 cpuMax=56.00 cacheMiss=0 chunks=39 luaKB=1768
+STATS	GC=1.8 audio=1.8 game=93.6 idle=2.6 kernel=0.2
+BENCH BEGIN	44
+SCENE	22	pad	1	lift
+BENCH route=44 frames=119 fps=29.84 frame95=38.00 frameMax=42.00 cpu95=28.00 cpuMax=29.00 cacheMiss=0 chunks=39 luaKB=1678
+STATS	GC=14.6 audio=2.0 game=80.8 idle=1.8 kernel=0.8
+BENCH BEGIN	44
+SCENE	23	pad	2	cannon
+BENCH route=44 frames=119 fps=29.97 frame95=35.00 frameMax=44.00 cpu95=27.00 cpuMax=29.00 cacheMiss=0 chunks=39 luaKB=1674
+STATS	GC=17.4 audio=2.6 game=75.6 idle=3.6 kernel=0.8
+BENCH BEGIN	44
+SCENE	24	pad	3	bridge
+BENCH route=44 frames=119 fps=29.94 frame95=35.00 frameMax=40.00 cpu95=27.00 cpuMax=28.00 cacheMiss=0 chunks=39 luaKB=1703
+STATS	GC=20.4 audio=3.2 game=72.8 idle=2.6 kernel=1.0
+BENCH BEGIN	44
+SCENE	25	pad	4	slider
+BENCH route=44 frames=119 fps=27.85 frame95=39.00 frameMax=44.00 cpu95=34.00 cpuMax=35.00 cacheMiss=0 chunks=39 luaKB=1856
+STATS	GC=2.4 audio=2.6 game=92.6 idle=2.0 kernel=0.4
+BENCH BEGIN	44
+SCENE	26	pad	5	fan
+BENCH route=44 frames=119 fps=23.92 frame95=45.00 frameMax=46.00 cpu95=42.00 cpuMax=44.00 cacheMiss=0 chunks=39 luaKB=2065
+STATS	GC=2.0 audio=4.0 game=90.8 idle=2.6 kernel=0.6
+BENCH BEGIN	44
+SCENE	27	pad	6	extend
+BENCH route=44 frames=119 fps=20.78 frame95=52.00 frameMax=53.00 cpu95=50.00 cpuMax=51.00 cacheMiss=0 chunks=39 luaKB=2279
+STATS	GC=2.0 audio=3.0 game=92.4 idle=2.4 kernel=0.2
+BENCH BEGIN	44
+SCENE	28	pad	7	switch
+BENCH route=44 frames=119 fps=23.83 frame95=46.00 frameMax=53.00 cpu95=42.00 cpuMax=47.00 cacheMiss=0 chunks=39 luaKB=2345
+STATS	GC=3.8 audio=4.2 game=88.2 idle=2.8 kernel=1.0
+BENCH BEGIN	48
+SCENE	29	road	0	traverse
+BENCH route=48 frames=179 fps=26.25 frame95=47.00 frameMax=55.00 cpu95=42.00 cpuMax=46.00 cacheMiss=0 chunks=9 luaKB=1423
+STATS	GC=4.2 audio=2.2 game=90.6 idle=2.4 kernel=0.6
+BENCH BEGIN	48
+SCENE	30	normal	0	traverse
+BENCH route=48 frames=119 fps=29.12 frame95=35.00 frameMax=37.00 cpu95=33.00 cpuMax=33.00 cacheMiss=0 chunks=9 luaKB=1486
+STATS	GC=3.0 audio=2.2 game=92.6 idle=2.0 kernel=0.2
+BENCH BEGIN	48
+SCENE	31	normal	0	traverse
+BENCH route=48 frames=119 fps=22.67 frame95=48.00 frameMax=96.00 cpu95=44.00 cpuMax=47.00 cacheMiss=0 chunks=9 luaKB=1435
+STATS	GC=2.2 audio=2.6 game=93.2 idle=1.4 kernel=0.6
+BENCH BEGIN	48
+SCENE	32	normal	0	traverse
+BENCH route=48 frames=119 fps=29.71 frame95=36.00 frameMax=55.00 cpu95=28.00 cpuMax=29.00 cacheMiss=0 chunks=9 luaKB=1316
+STATS	GC=20.6 audio=2.6 game=74.0 idle=2.0 kernel=0.8
+BENCH BEGIN	48
+SCENE	33	mechanism	1	rotor
+BENCH route=48 frames=119 fps=28.95 frame95=36.00 frameMax=38.00 cpu95=33.00 cpuMax=34.00 cacheMiss=0 chunks=9 luaKB=1428
+STATS	GC=2.6 audio=3.2 game=90.2 idle=3.0 kernel=1.0
+BENCH BEGIN	48
+SCENE	34	mechanism	2	rotor
+BENCH route=48 frames=119 fps=23.35 frame95=46.00 frameMax=48.00 cpu95=41.00 cpuMax=43.00 cacheMiss=0 chunks=9 luaKB=1520
+STATS	GC=2.2 audio=3.2 game=89.6 idle=4.6 kernel=0.4
+BENCH BEGIN	48
+SCENE	35	mechanism	3	rotor
+BENCH route=48 frames=119 fps=29.31 frame95=36.00 frameMax=37.00 cpu95=32.00 cpuMax=33.00 cacheMiss=0 chunks=9 luaKB=1647
+STATS	GC=2.6 audio=3.2 game=91.8 idle=2.2 kernel=0.2
+BENCH BEGIN	48
+SCENE	36	mechanism	4	ferry
+BENCH route=48 frames=119 fps=26.70 frame95=41.00 frameMax=45.00 cpu95=36.00 cpuMax=37.00 cacheMiss=0 chunks=9 luaKB=1862
+STATS	GC=2.6 audio=3.6 game=90.6 idle=3.0 kernel=0.2
+BENCH BEGIN	48
+SCENE	37	mechanism	5	fan
+BENCH route=48 frames=119 fps=24.74 frame95=42.00 frameMax=44.00 cpu95=36.00 cpuMax=37.00 cacheMiss=0 chunks=9 luaKB=1539
+STATS	GC=2.6 audio=2.4 game=91.8 idle=2.4 kernel=0.8
+BENCH BEGIN	48
+SCENE	38	mechanism	6	bumper
+BENCH route=48 frames=119 fps=22.92 frame95=46.00 frameMax=48.00 cpu95=43.00 cpuMax=46.00 cacheMiss=0 chunks=9 luaKB=1741
+STATS	GC=2.2 audio=2.6 game=92.0 idle=3.0 kernel=0.2
+BENCH BEGIN	48
+SCENE	39	pad	1	bridge
+BENCH route=48 frames=119 fps=29.61 frame95=35.00 frameMax=40.00 cpu95=32.00 cpuMax=37.00 cacheMiss=0 chunks=9 luaKB=1853
+STATS	GC=3.0 audio=3.2 game=90.8 idle=2.6 kernel=0.4
+BENCH BEGIN	48
+SCENE	40	pad	2	bridge
+BENCH route=48 frames=119 fps=23.45 frame95=45.00 frameMax=51.00 cpu95=40.00 cpuMax=43.00 cacheMiss=0 chunks=9 luaKB=1765
+STATS	GC=4.4 audio=2.8 game=88.6 idle=2.4 kernel=1.8
+BENCH BEGIN	48
+SCENE	41	pad	3	bridge
+BENCH route=48 frames=119 fps=29.47 frame95=36.00 frameMax=37.00 cpu95=31.00 cpuMax=31.00 cacheMiss=0 chunks=9 luaKB=1600
+STATS	GC=7.8 audio=3.0 game=85.8 idle=2.8 kernel=0.6
+BENCH BEGIN	48
+SCENE	42	pad	4	bridge
+BENCH route=48 frames=119 fps=28.88 frame95=38.00 frameMax=39.00 cpu95=31.00 cpuMax=33.00 cacheMiss=0 chunks=9 luaKB=1459
+STATS	GC=5.2 audio=2.8 game=89.0 idle=1.4 kernel=1.6
+BENCH BEGIN	48
+SCENE	43	pad	5	slider
+BENCH route=48 frames=119 fps=26.90 frame95=41.00 frameMax=43.00 cpu95=35.00 cpuMax=37.00 cacheMiss=0 chunks=9 luaKB=1596
+STATS	GC=2.6 audio=3.2 game=90.4 idle=3.2 kernel=0.6
+BENCH COMPLETE

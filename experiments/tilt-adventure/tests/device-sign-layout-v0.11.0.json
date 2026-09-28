@@ -1,0 +1,114 @@
+{
+  "complete": true,
+  "scenes": 9,
+  "rows": [
+    {
+      "route": 40.0,
+      "frames": 119.0,
+      "fps": 29.78,
+      "frame95": 35.0,
+      "frameMax": 52.0,
+      "cpu95": 29.0,
+      "cpuMax": 42.0,
+      "cacheMiss": 0.0,
+      "chunks": 8.0,
+      "luaKB": 1184.0
+    },
+    {
+      "route": 40.0,
+      "frames": 119.0,
+      "fps": 29.83,
+      "frame95": 35.0,
+      "frameMax": 56.0,
+      "cpu95": 31.0,
+      "cpuMax": 32.0,
+      "cacheMiss": 0.0,
+      "chunks": 8.0,
+      "luaKB": 1224.0
+    },
+    {
+      "route": 41.0,
+      "frames": 119.0,
+      "fps": 27.77,
+      "frame95": 38.0,
+      "frameMax": 53.0,
+      "cpu95": 35.0,
+      "cpuMax": 50.0,
+      "cacheMiss": 0.0,
+      "chunks": 9.0,
+      "luaKB": 1344.0
+    },
+    {
+      "route": 41.0,
+      "frames": 119.0,
+      "fps": 25.88,
+      "frame95": 40.0,
+      "frameMax": 42.0,
+      "cpu95": 37.0,
+      "cpuMax": 39.0,
+      "cacheMiss": 0.0,
+      "chunks": 9.0,
+      "luaKB": 1450.0
+    },
+    {
+      "route": 44.0,
+      "frames": 119.0,
+      "fps": 29.59,
+      "frame95": 35.0,
+      "frameMax": 67.0,
+      "cpu95": 32.0,
+      "cpuMax": 65.0,
+      "cacheMiss": 0.0,
+      "chunks": 39.0,
+      "luaKB": 1700.0
+    },
+    {
+      "route": 44.0,
+      "frames": 119.0,
+      "fps": 25.88,
+      "frame95": 41.0,
+      "frameMax": 48.0,
+      "cpu95": 37.0,
+      "cpuMax": 42.0,
+      "cacheMiss": 0.0,
+      "chunks": 39.0,
+      "luaKB": 1694.0
+    },
+    {
+      "route": 44.0,
+      "frames": 119.0,
+      "fps": 18.6,
+      "frame95": 57.0,
+      "frameMax": 78.0,
+      "cpu95": 54.0,
+      "cpuMax": 75.0,
+      "cacheMiss": 0.0,
+      "chunks": 39.0,
+      "luaKB": 1817.0
+    },
+    {
+      "route": 44.0,
+      "frames": 119.0,
+      "fps": 18.2,
+      "frame95": 58.0,
+      "frameMax": 62.0,
+      "cpu95": 54.0,
+      "cpuMax": 60.0,
+      "cacheMiss": 0.0,
+      "chunks": 39.0,
+      "luaKB": 1971.0
+    },
+    {
+      "route": 44.0,
+      "frames": 119.0,
+      "fps": 17.72,
+      "frame95": 60.0,
+      "frameMax": 66.0,
+      "cpu95": 55.0,
+      "cpuMax": 56.0,
+      "cacheMiss": 0.0,
+      "chunks": 39.0,
+      "luaKB": 1731.0
+    }
+  ]
+}

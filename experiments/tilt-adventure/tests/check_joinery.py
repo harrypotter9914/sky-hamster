@@ -23,6 +23,17 @@ for n,course in ipairs(Courses) do
     end
     samples=samples+1
    end
+   if m.turnSquare then
+    for _,port in ipairs(m.ports) do
+     m.angle=math.atan(port.dy,port.dx)
+     Mechanisms.pose(m,0)
+     for _,off in ipairs({-23,0,23}) do for _,eps in ipairs({-.01,0,.01}) do
+      local px,py=port.x-port.dy*off+port.dx*eps,port.y+port.dx*off+port.dy*eps
+      assert(Mechanisms.support(course,px,py,0),'turntable seam '..n)
+      seams=seams+1
+     end end
+    end
+   else
    for _,side in ipairs({0,1}) do
     if m.manual then m.progress=side;m.angle=0 end
     local t=m.kind=='ferry' and side*(m.period or 10)*.5 or 0
@@ -34,6 +45,7 @@ for n,course in ipairs(Courses) do
       seams=seams+1
      end
     end
+   end
    end
   elseif m.kind=='lift' then
    local back=m.y-m.h/2

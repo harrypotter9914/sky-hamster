@@ -1,3 +1,4 @@
+import "footing"
 Mechanisms={}
 local M=Mechanisms
 local empty={}
@@ -36,10 +37,7 @@ function M.carry(m,x,y,t,nextT)
  return cx+a*math.cos(r)-b*math.sin(r),cy+a*math.sin(r)+b*math.cos(r)
 end
 function M.support(course,x,y,t)
- for _,m in ipairs(course.mechanisms or empty) do
-  if (m.kind=='ferry' or m.kind=='rotor' or (m.kind=='trap' and not M.open(m,t))) and M.contains(m,x,y,t) then return true,m end
- end
- return course.lookup[math.floor(x/32)..','..math.floor(y/32)]==true,nil
+ local ok,m=Footing.query(course,x,y,t);return ok,m
 end
 -- Circle / moving AABB response. Substeps prevent tunnelling; no bonus brake.
 function M.collide(course,x,y,vx,vy,z,t,dt)

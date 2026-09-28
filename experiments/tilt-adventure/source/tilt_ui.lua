@@ -283,7 +283,15 @@ end
 
 -- World callouts stay in the final foreground pass, above the rolling ball.
 local signCache={}
-function UI.worldSign(label,x,y)
+function UI.worldSign(label,x,y,ax,ay)
+ if Passage then
+  x,y=Passage.labelPosition(x,y,78,25)
+  if not x then return end
+  if ax then
+   g.setColor(g.kColorBlack);Passage.leader(ax,ay,math.max(x+4,math.min(x+74,ax)),math.max(y+3,math.min(y+22,ay)))
+  end
+  Passage.reserve(x,y,78,25)
+ end
  if not signCache[label] then signCache[label]=bitmap(78,25,function()
   UI.panel(0,0,75,22);g.setFont(bold);g.drawTextAligned(label,37,3,kTextAlignment.center);g.setFont(regular)
  end) end
@@ -325,13 +333,15 @@ local machineNotes={
  jet={'STEAM NOZZLES','Pulses push hard across the road.','Wait for the quiet part of the cycle.'},
  magnet={'MAGNETIC FIELD','Attraction gets stronger nearby.','Keep distance; counter-tilt early.'},
  extend={'EXTENDING BRIDGE','Dock, then crank the bridge outward.','Reach the far road before releasing.'},
- switch={'ROUTE SWITCH','Crank to open one of two lanes.','One gate opens as the other closes.'}}
+ switch={'ROUTE SWITCH','Crank to open one of two lanes.','One gate opens as the other closes.'},
+ onboard={'ONBOARD TURNTABLE','Board and dock at the centre control.','Crank to GO at the exit; B releases.'}}
 local goalCache={}
 function UI.goalPages(course,level)
  if goalCache[level] then return goalCache[level] end
  local hint=course.note or notes[course.legacyIndex or level] or {'Stay on the road.','Reach the finish flag.'}
  local pages={{'REACH THE FINISH',hint[1],hint[2]},
-  {'SAFE PROGRESS',course.checkpoint and 'Touch CHECK to save your retry point.' or 'Falls restart this route from START.',course.jump and 'Jump: lift screenward or press A.' or 'No jumping on this route.'}}
+  {'SAFE PROGRESS',course.checkpoint and 'Touch CHECK to save your retry point.' or 'Falls restart this route from START.',course.jump and 'Jump: lift screenward or press A.' or 'No jumping on this route.'},
+  {'PASSAGE SIGNALS','Check mark + GO: this crossing is ready.','Cross + WAIT: wait or adjust the crank.'}}
  local seen={}
  local function add(k) if machineNotes[k] and not seen[k] then pages[#pages+1]=machineNotes[k];seen[k]=true end end
  for _,m in ipairs(course.mechanisms or {}) do add(m.lesson or (m.manual and 'control' or m.kind)) end

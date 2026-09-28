@@ -1,0 +1,43 @@
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH PLAN courses=48 scenes=9
+BENCH BEGIN	40
+SCENE	1	mechanism	1	gate
+BENCH route=40 frames=119 fps=29.78 frame95=35.00 frameMax=52.00 cpu95=29.00 cpuMax=42.00 cacheMiss=0 chunks=8 luaKB=1184
+STATS	GC=10.4 audio=1.2 game=84.0 idle=4.4
+BENCH BEGIN	40
+SCENE	2	mechanism	2	gate
+BENCH route=40 frames=119 fps=29.83 frame95=35.00 frameMax=56.00 cpu95=31.00 cpuMax=32.00 cacheMiss=0 chunks=8 luaKB=1224
+STATS	GC=4.6 audio=1.2 game=88.8 idle=5.0 kernel=0.4
+BENCH BEGIN	41
+SCENE	3	mechanism	1	gate
+BENCH route=41 frames=119 fps=27.77 frame95=38.00 frameMax=53.00 cpu95=35.00 cpuMax=50.00 cacheMiss=0 chunks=9 luaKB=1344
+STATS	GC=2.6 audio=2.0 game=91.8 idle=3.4 kernel=0.2
+BENCH BEGIN	41
+SCENE	4	mechanism	2	gate
+BENCH route=41 frames=119 fps=25.88 frame95=40.00 frameMax=42.00 cpu95=37.00 cpuMax=39.00 cacheMiss=0 chunks=9 luaKB=1450
+STATS	GC=2.6 audio=2.6 game=90.0 idle=4.8
+BENCH BEGIN	44
+SCENE	5	mechanism	1	lift
+BENCH route=44 frames=119 fps=29.59 frame95=35.00 frameMax=67.00 cpu95=32.00 cpuMax=65.00 cacheMiss=0 chunks=39 luaKB=1700
+STATS	GC=6.2 audio=3.2 game=86.6 idle=3.8 kernel=0.2
+BENCH BEGIN	44
+SCENE	6	mechanism	2	rotor
+BENCH route=44 frames=119 fps=25.88 frame95=41.00 frameMax=48.00 cpu95=37.00 cpuMax=42.00 cacheMiss=0 chunks=39 luaKB=1694
+STATS	GC=2.4 audio=2.0 game=90.8 idle=4.6 kernel=0.2
+BENCH BEGIN	44
+SCENE	7	mechanism	15	gate
+BENCH route=44 frames=119 fps=18.60 frame95=57.00 frameMax=78.00 cpu95=54.00 cpuMax=75.00 cacheMiss=0 chunks=39 luaKB=1817
+STATS	GC=1.8 audio=2.2 game=92.4 idle=3.4 kernel=0.2
+BENCH BEGIN	44
+SCENE	8	mechanism	16	gate
+BENCH route=44 frames=119 fps=18.20 frame95=58.00 frameMax=62.00 cpu95=54.00 cpuMax=60.00 cacheMiss=0 chunks=39 luaKB=1971
+STATS	GC=1.8 audio=2.2 game=89.6 idle=6.4
+BENCH BEGIN	44
+SCENE	9	mechanism	17	gate
+BENCH route=44 frames=119 fps=17.72 frame95=60.00 frameMax=66.00 cpu95=55.00 cpuMax=56.00 cacheMiss=0 chunks=39 luaKB=1731
+STATS	GC=1.8 audio=2.4 game=91.4 idle=4.2 kernel=0.2
+BENCH COMPLETE

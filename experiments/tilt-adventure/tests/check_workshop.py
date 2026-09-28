@@ -21,5 +21,5 @@ assert(#Courses[44].checkpoints==7)
 for n=34,44 do selectReady(n);put('lesson',false);for i=1,5 do frame() end end
 Guide.seen={arrival=true,roll=true,jump=true};Guide.enter(Courses[44]);local seen={};for _,k in ipairs(Guide.queue) do seen[k]=true end
 for _,k in ipairs({'extend','switch','jet','conveyor','magnet'}) do assert(seen[k],'finale missing teaching '..k) end
-print('PASS: grounded-only conveyor, timed jet, bridge endpoints/support, paired gates/collision, distance-limited attraction, 44-course runtime, seven checkpoints and new tutorials')
+print('PASS: grounded-only conveyor, timed jet, bridge endpoints/support, paired gates/collision, distance-limited attraction, '..#Courses..'-course runtime, seven checkpoints and new tutorials')
 ''')

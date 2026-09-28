@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "scenes": 3,
+  "rows": [
+    {
+      "route": 44.0,
+      "frames": 119.0,
+      "fps": 18.01,
+      "frame95": 58.0,
+      "frameMax": 87.0,
+      "cpu95": 55.0,
+      "cpuMax": 85.0,
+      "cacheMiss": 0.0,
+      "chunks": 39.0,
+      "luaKB": 1665.0
+    },
+    {
+      "route": 44.0,
+      "frames": 119.0,
+      "fps": 17.47,
+      "frame95": 60.0,
+      "frameMax": 62.0,
+      "cpu95": 57.0,
+      "cpuMax": 59.0,
+      "cacheMiss": 0.0,
+      "chunks": 39.0,
+      "luaKB": 1819.0
+    },
+    {
+      "route": 44.0,
+      "frames": 119.0,
+      "fps": 17.55,
+      "frame95": 61.0,
+      "frameMax": 69.0,
+      "cpu95": 56.0,
+      "cpuMax": 58.0,
+      "cacheMiss": 0.0,
+      "chunks": 39.0,
+      "luaKB": 1736.0
+    }
+  ]
+}

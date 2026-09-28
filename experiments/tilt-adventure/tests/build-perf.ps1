@@ -1,5 +1,5 @@
 # Same installation folder as the release; restore the release after measuring.
-param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[int[]]$Routes=@())
+param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[int[]]$Routes=@(),[int[]]$MechanismIndices=@())
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $repo=Resolve-Path (Join-Path $root '../..')
@@ -16,6 +16,7 @@ end,cache=function() return terrainChunks and terrainChunks.misses or 0,terrainC
 '@ | Add-Content "$qa/game.lua"
 if($Smooth){'Bench.smooth=true' | Add-Content "$qa/game.lua"}
 if($Routes.Count){("Bench.routes={"+($Routes -join ',')+"}") | Add-Content "$qa/game.lua"}
+if($MechanismIndices.Count){("Bench.mechanismIndices={"+($MechanismIndices -join ',')+"}") | Add-Content "$qa/game.lua"}
 if($All){
  @'
 Bench.all=true

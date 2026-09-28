@@ -64,6 +64,7 @@ local info={
  magnet={'FEEL THE PULL','Stay away from the magnet. Counter-tilt early.'},
  extend={'BUILD YOUR CROSSING','Dock. Crank to extend the road. B releases.'},
  switch={'CHOOSE YOUR ROUTE','Crank the dial. One lane opens, one closes.'},
+ onboard={'RIDE AND TURN','Board. Crank until the exit says GO. B releases.'},
  bumper={'WATCH THE RUBBER RING','Touch its side to rebound. Jump over its top.'}}
 local machineArt={}
 for _,name in ipairs({'fan'}) do
@@ -123,6 +124,13 @@ function UI.lesson(kind,time)
    arrow(146,141,-10,-31)
    left=t<1.6 and 'KEEP YOUR GRIP' or t<3 and 'LIFT SCREENWARD' or 'RETURN GENTLY'
    right=t<1.6 and 'READY AT THE GAP' or t<3 and 'CLEAR THE GAP' or 'LAND SAFELY'
+  elseif kind=='onboard' then
+   local u=ease((t-1.5)/2)
+   local bx,by,map=Structures.demo(kind,281,133,t,u)
+   local px,py=map(t<1.5 and -65*(1-ease(t/1.2)) or 0,t>=4 and -65*ease((t-4)/1.2) or 0,0)
+   ball(px,py-13)
+   left=t<1.5 and 'BOARD AND DOCK' or t<4 and 'TURN THE CRANK' or 'B: RELEASE'
+   right=t<4 and 'LINE UP THE EXIT' or 'GO: ROLL OFF'
   elseif kind=='control' or kind=='rotor' then
    local u=ease((t-1)/2)
    local bx,by,map=Structures.demo(kind,289,133,t,u)
@@ -217,10 +225,11 @@ function UI.lesson(kind,time)
    Structures.demo('sweeper',315,139,t)
    ball(233,141);left='KEEP CLEAR';right='WATCH THE PANEL'
   end
-  local manual=kind=='control' or kind=='cannon' or kind=='lift' or kind=='slider' or kind=='extend' or kind=='switch' or data==info.windcontrol
+  local manual=kind=='onboard' or kind=='control' or kind=='cannon' or kind=='lift' or kind=='slider' or kind=='extend' or kind=='switch' or data==info.windcontrol
   local turn=t*120
   if kind=='lift' then turn=ease((t-1)/2)*176
   elseif kind=='slider' then turn=ease((t-1)/2.5)*540
+  elseif kind=='onboard' then turn=-ease((t-1.5)/2)*90
   elseif kind=='control' then turn=-ease((t-1)/2)*90
   elseif kind=='cannon' then turn=ease((t-1)/2)*60 end
   if kind=='jump' then

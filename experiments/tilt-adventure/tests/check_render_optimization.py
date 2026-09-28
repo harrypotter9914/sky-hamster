@@ -47,7 +47,7 @@ for _,c in ipairs(Courses) do
   end end
  end
 end
-print('PASS: render index includes original visible mechanisms across 44 courses, camera cells and movement phases')
+print('PASS: render index includes original visible mechanisms across '..#Courses..' courses, camera cells and movement phases')
 for _,c in ipairs(Courses) do for _,m in ipairs(c.mechanisms or {}) do
  for _,t in ipairs({0,.01,1.7,4.4,7.9,19.7}) do
   local x,y,a=Pose.reference(m,t)

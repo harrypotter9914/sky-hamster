@@ -42,5 +42,5 @@ for _,c in ipairs(Courses) do
  local reference=trace(c,true);local filtered=trace(c,false)
  for i,v in ipairs(reference) do assert(math.abs(v-filtered[i])<.00001,'hearing changed audio in course '..c.name..' at '..i) end
 end
-print('PASS: '..count..' swept hearing-bound checks; 44 course audio traces match unculled reference, including distant exit/re-entry')
+print('PASS: '..count..' swept hearing-bound checks; '..#Courses..' course audio traces match unculled reference, including distant exit/re-entry')
 ''')

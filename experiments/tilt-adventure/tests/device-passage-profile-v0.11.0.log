@@ -1,0 +1,67 @@
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH PLAN courses=48 scenes=3
+BENCH BEGIN	44
+SCENE	1	mechanism	15	gate
+BENCH route=44 frames=119 fps=17.09 frame95=62.00 frameMax=88.00 cpu95=59.00 cpuMax=86.00 cacheMiss=0 chunks=39 luaKB=1659
+STATS	GC=1.8 audio=2.4 game=91.2 idle=4.4 kernel=0.2
+PROFILE	hud	1.416667
+PROFILE	passage	2.708333
+PROFILE	structureUnder	0.45
+PROFILE	mask	1.875
+PROFILE	support	7.45
+PROFILE	structureTop	13.13333
+PROFILE	occluders	2.008333
+PROFILE	ballAudio	0.175
+PROFILE	roadCover	4.633333
+PROFILE	machines	6.608333
+PROFILE	machineAudio	3.25
+PROFILE	tilt	0.2166667
+PROFILE	terrain	2.483333
+PROFILE	collide	2.975
+PROFILE	stations	6.266667
+PROFILE	wind	1.383333
+BENCH BEGIN	44
+SCENE	2	mechanism	16	gate
+BENCH route=44 frames=119 fps=16.82 frame95=62.00 frameMax=65.00 cpu95=59.00 cpuMax=62.00 cacheMiss=0 chunks=39 luaKB=1772
+STATS	GC=1.6 audio=2.8 game=91.0 idle=4.4 kernel=0.2
+PROFILE	hud	1.45
+PROFILE	passage	3.916667
+PROFILE	structureUnder	0.65
+PROFILE	mask	2.175
+PROFILE	support	7.525
+PROFILE	structureTop	13.25
+PROFILE	occluders	1.891667
+PROFILE	ballAudio	0.1833333
+PROFILE	roadCover	4.475
+PROFILE	machines	6.966667
+PROFILE	machineAudio	3.133333
+PROFILE	tilt	0.1666667
+PROFILE	terrain	1.783333
+PROFILE	collide	3.066667
+PROFILE	stations	6.166667
+PROFILE	wind	1.591667
+BENCH BEGIN	44
+SCENE	3	mechanism	17	gate
+BENCH route=44 frames=119 fps=16.71 frame95=63.00 frameMax=72.00 cpu95=58.00 cpuMax=60.00 cacheMiss=0 chunks=39 luaKB=1630
+STATS	GC=2.2 audio=3.0 game=89.2 idle=4.6 kernel=1.0
+PROFILE	hud	1.441667
+PROFILE	passage	3.908333
+PROFILE	structureUnder	0.5833333
+PROFILE	mask	1.675
+PROFILE	support	7.05
+PROFILE	structureTop	13.10833
+PROFILE	occluders	2.158333
+PROFILE	ballAudio	0.2333333
+PROFILE	roadCover	4.666667
+PROFILE	machines	6.666667
+PROFILE	machineAudio	3.141667
+PROFILE	tilt	0.2916667
+PROFILE	terrain	1.75
+PROFILE	collide	3.225
+PROFILE	stations	6.241667
+PROFILE	wind	1.716667
+BENCH COMPLETE

@@ -13,7 +13,7 @@ end
 local function switch(c,x)
  local a={kind='gate',switchGate=true,lesson='switch',x=x,y=64,w=16,h=64,initialOpen=true,isOpen=true}
  local b={kind='gate',switchGate=true,lesson='switch',x=x,y=160,w=16,h=64,initialOpen=false,isOpen=false}
- a.partner=b;c.mechanisms[#c.mechanisms+1]=a;c.mechanisms[#c.mechanisms+1]=b
+ a.partner=b;a.lane=1;b.lane=2;c.mechanisms[#c.mechanisms+1]=a;c.mechanisms[#c.mechanisms+1]=b
  c.pads[#c.pads+1]={kind='switch',x=x-96,y=112,target=a,initialAngle=.5}
 end
 local c=route('belt-school','Moving stones',18)
@@ -48,7 +48,7 @@ c:rect(133,139,6,8);c:rect(146,166,5,9);extend(c,4480,240,192,4432,240)
 field(c,'conveyor',4320,240,192,64,0);field(c,'jet',4832,240,160,128,math.pi/2);field(c,'magnet',5056,176,32,32,0)
 -- A two-lane gate station before the new bridge gives a safe routing choice.
 local a={kind='gate',switchGate=true,lesson='switch',x=4320,y=208,w=16,h=32,initialOpen=true,isOpen=true}
-local b={kind='gate',switchGate=true,lesson='switch',x=4320,y=272,w=16,h=32,initialOpen=false,isOpen=false};a.partner=b
+local b={kind='gate',switchGate=true,lesson='switch',x=4320,y=272,w=16,h=32,initialOpen=false,isOpen=false};a.partner=b;a.lane=1;b.lane=2
 c.mechanisms[#c.mechanisms+1]=a;c.mechanisms[#c.mechanisms+1]=b;c.pads[#c.pads+1]={kind='switch',x=4240,y=240,target=a,initialAngle=.5}
 c.mechanisms[#c.mechanisms+1]={kind='gate',x=4320,y=240,w=16,h=32,period=1,openFor=0,hideLabel=true}
 c.checkpoints[#c.checkpoints+1]={4208,240};c.checkpoints[#c.checkpoints+1]={4752,240};Courses[#Courses+1]=c

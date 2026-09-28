@@ -21,5 +21,5 @@ for _,c in ipairs(Courses) do
   end
  end
 end
-print('PASS: nearby-physics queries match full-course reference across 44 routes, moving endpoints, phases and offset positions')
+print('PASS: nearby-physics queries match full-course reference across '..#Courses..' routes, moving endpoints, phases and offset positions')
 ''')

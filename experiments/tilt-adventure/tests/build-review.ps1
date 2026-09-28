@@ -1,5 +1,5 @@
 # Isolated SDK visual review bundle. No review hooks enter the shipping source.
-param([switch]$Hud,[switch]$Occlusion,[switch]$Bumper)
+param([switch]$Hud,[switch]$Occlusion,[switch]$Bumper,[switch]$Turntable,[switch]$Passage)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $repo=Resolve-Path (Join-Path $root '../..')
@@ -13,7 +13,7 @@ function Structures.reviewArt()
 end
 '@ | Add-Content "$qa/structures.lua"
 @"
-Review={select=function(n) selectLevel(n);while Loading.busy do Loading.step(1/30) end end,render=renderWorld,animate=function(t,crank)
+Review={select=function(n) selectLevel(n);while Loading.busy do Loading.step(1/30) end;lesson=false;title=false end,render=renderWorld,animate=function(t,crank)
  worldTime=t;MachineArt.time=t
  if crank then Dock.update(course,x,y,0,0,false,crank,false,false);ballHeight=floorAt(x,y) end
  for _,m in ipairs(course.mechanisms or {}) do if m.kind=='bumper' then m.hitAt=0 end end
@@ -26,6 +26,8 @@ Copy-Item "$PSScriptRoot/ui_review.lua" "$qa/main.lua"
 if($Hud){Copy-Item "$PSScriptRoot/hud_review.lua" "$qa/main.lua"}
 if($Occlusion){Copy-Item "$PSScriptRoot/occlusion_review.lua" "$qa/main.lua"}
 if($Bumper){Copy-Item "$PSScriptRoot/bumper_review.lua" "$qa/main.lua"}
+if($Turntable){Copy-Item "$PSScriptRoot/turntable_review.lua" "$qa/main.lua"}
+if($Passage){Copy-Item "$PSScriptRoot/passage_review.lua" "$qa/main.lua"}
 $releaseInfo=Get-Content "$root/source/pdxinfo" -Raw
 $releaseVersion=[regex]::Match($releaseInfo,'(?m)^version=([^\r\n]+)').Groups[1].Value
 "name=Tilt UI Review`nbundleID=com.wangyibo.skyhamster.ui-review`nversion=$releaseVersion" | Set-Content "$qa/pdxinfo"

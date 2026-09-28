@@ -3,6 +3,7 @@ import "awake"
 import "loading"
 import "physics"
 import "courses"
+import "footing"
 import "mechanisms"
 import "spatial"
 import "prop_occlusion"
@@ -10,6 +11,7 @@ import "physics_tests"
 import "bumper_model"
 import "campaign"
 import "workshop_courses"
+import "turntable_courses"
 import "joinery"
 import "height_index"
 import "ui"
@@ -22,6 +24,7 @@ import "tilt"
 import "cannon_model"
 import "dock"
 import "mechanism_cache"
+import "wind_contact"
 import "expansion"
 import "workshop"
 import "machine_art"
@@ -30,6 +33,7 @@ import "render_index"
 import "pose"
 import "depth_order"
 import "structures"
+import "passage"
 import "mechanism_audio"
 import "tilt_ui"
 import "guide"
@@ -291,8 +295,7 @@ local function marker(point,label,foreground)
  local tx=math.max(5,math.min(323,p+ox));local ty=math.max(46,math.min(176,q+oy))
  -- Raised sign with a leader to the exact pad, never text on the road surface.
  g.setColor(g.kColorBlack)
- g.drawLine(p,q,math.max(tx+4,math.min(tx+68,p)),math.max(ty+3,math.min(ty+20,q)))
- UI.worldSign(text,tx,ty)
+ UI.worldSign(text,tx,ty,p,q)
  if label=='GOAL' then
   g.drawLine(p-15,q,p-15,q-23)
   for i=0,2 do for j=0,1 do if (i+j)%2==0 then g.fillRect(p-15+i*4,q-23+j*4,4,4) end end end
@@ -368,8 +371,14 @@ local function renderWorld()
  end
  PropOcclusion.finish()
  Pose.finish()
+ Passage.begin();Passage.reserve(screenX-14,screenY-14,28,28)
+ if state=='play' and not lesson and not Tilt.calibrating and Dock.status() then Passage.reserve(145,47,110,23) end
+ if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
+  Passage.reserve(screenX-14,screenY-43,29,31)
+ end
  Dock.drawLabels(course,project)
  marker(course.start,'START',true);for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE',true) end;marker(course.goal,'GOAL',true)
+ Passage.draw(scene,worldTime,project)
  if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
   UI.tiltPointer(screenX,screenY,Tilt.dx or 0,Tilt.dy or 0,Tilt.power or 0)
  end

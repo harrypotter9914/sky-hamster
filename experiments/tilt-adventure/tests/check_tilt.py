@@ -200,7 +200,7 @@ assert(keys.jump and keys.rotor and keys.trap and keys.sweeper and keys.gate and
 for i=1,10 do frame() end
 assert(get('x')==xx and get('y')==yy and get('elapsed')==tt and get('worldTime')==wt)
 frame({b=true});assert(not get('lesson') and not get('airborne'))
-frame({right=true});assert(get('briefing'));assert(#UI.goalPages(Courses.legacy[14],Courses.legacyIndex[14])==6)
+frame({right=true});assert(get('briefing'));assert(#UI.goalPages(Courses.legacy[14],Courses.legacyIndex[14])==7)
 for i=1,10 do frame() end
 assert(get('x')==xx and get('elapsed')==tt and get('worldTime')==wt)
 frame({a=true});assert(get('infoPage')==2 and not get('airborne'))

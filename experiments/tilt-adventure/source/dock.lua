@@ -14,7 +14,11 @@ function D.update(course,x,y,vx,vy,airborne,crank,a,b)
  if blocked and (x-blocked.x)^2+(y-blocked.y)^2>32^2 then D.blocked=nil end
  if not D.active and not airborne then
   for _,p in ipairs(course.pads or {}) do
-   if p~=D.blocked and (x-p.x)^2+(y-p.y)^2<17^2 and vx*vx+vy*vy<35^2 then D.active=p;break end
+   if p~=D.blocked and (x-p.x)^2+(y-p.y)^2<17^2 and vx*vx+vy*vy<35^2
+    and (not p.onboard or Mechanisms.contains(p.target,x,y,0)) then
+    if p.target and p.target.kind=='rotor' then p.angle=p.target.angle or p.angle end
+    D.active=p;break
+   end
   end
  end
  local p=D.active;if not p then return nil end
@@ -89,6 +93,10 @@ function D.draw(course,project,drawTile)
     if DepthOrder then DepthOrder.roads(course,p,0,project,drawTile) end
    elseif p.kind=='bridge' or p.kind=='fan' or p.kind=='extend' or p.kind=='switch' then
     Structures.dial(x,y,p.spin or math.deg(p.angle or 0))
+    if p.onboard then
+     MachineArt.solidSprite('switch',x,y,p.x,p.y,course:height(p.x,p.y),16,16,25)
+     MachineArt.handle(x,y-18,p.spin or 0)
+    end
    end
   end
   end
@@ -105,8 +113,7 @@ function D.drawLabels(course,project)
     local tx=math.max(4,math.min(319,x>275 and x-114 or x+48));local ty=math.max(48,math.min(176,y-29))
     -- The wind dial is beside a tall fan; keep its road sign above the housing.
     if p.kind=='fan' then ty=math.max(48,ty-47) end
-    g.setColor(g.kColorBlack);g.drawLine(x+18,y-12,tx,ty+11)
-    UI.worldSign(({cannon='CANNON',lift='LIFT',slider='FERRY',fan='WIND',extend='EXTEND',switch='ROUTE'})[p.kind] or 'CRANK',tx,ty)
+    UI.worldSign(({cannon='CANNON',lift='LIFT',slider='FERRY',fan='WIND',extend='EXTEND',switch='ROUTE'})[p.kind] or 'CRANK',tx,ty,x+18,y-12)
    end
   end
  end

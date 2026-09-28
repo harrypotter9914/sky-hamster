@@ -69,6 +69,10 @@ function A.demo(kind,x,y,t,u)
    m.kind='rotor';m.w=100;m.maxWidth=100;m.joinSpan=100;m.h=20;m.manual=kind=='control'
    banks={{-76,-50,-16,16,0},{50,76,-16,16,0}}
   end
+  if kind=='onboard' then
+   m.kind='rotor';m.w=100;m.maxWidth=100;m.turnSquare=100;m.h=28;m.manual=true
+   banks={{-72,-50,-14,14,0},{-14,14,-74,-50,0}}
+  end
   if kind=='lift' then banks={{-60,-24,-15,15,0},{-24,36,-39,-15,44}};m.landingPosts={{-19,-36},{29,-36}} end
   if kind=='gate' or kind=='sweeper' then m.w=12;m.h=38 end
   item={m=m,course={mechanisms={m},height=function()return 0 end},banks=banks};demos[kind]=item
@@ -86,6 +90,7 @@ function A.demo(kind,x,y,t,u)
  if kind=='lift' then m.elevation=(u or 0)*44 end
  if kind=='slider' then m.progress=u or 0 end
  if kind=='control' then m.angle=math.pi/2*(1-(u or 0)) end
+ if kind=='onboard' then m.angle=-math.pi/2*(u or 0) end
  local function project(a,b,z) return x+(a-b)*.9,y+(a+b)*.45-z*.65 end
  if item.roads then
   A.drawUnder(item.course,t,project)
@@ -113,10 +118,10 @@ local function beltFrame(t,m)
  return belt[key],key
 end
 local function deck(m,t,x,y,angle,mat,frame,opened,depth)
- if not A.exporting and m.joinSpan and (m.joinSpan==160 or m.joinSpan==192) and m.h==64 and type(g.imagetable)=='table' then
-  local key=tostring(math.floor(m.joinSpan))
+ if not A.exporting and (m.turnSquare==192 or m.joinSpan==160 or m.joinSpan==192) and m.h==64 and type(g.imagetable)=='table' then
+  local key=m.turnSquare and 'turn-192' or 'rotor-'..tostring(math.floor(m.joinSpan))
   local frames=rotorTables[key]
-  if not frames then frames=g.imagetable.new('structures/rotor-'..key);rotorTables[key]=frames end
+  if not frames then frames=g.imagetable.new('structures/'..key);rotorTables[key]=frames end
   if frames then
    local n=math.floor((math.deg(angle)%180)+.5)%180+1
    local im=frames:getImage(n);local w,h=im:getSize()
@@ -163,9 +168,9 @@ local function deck(m,t,x,y,angle,mat,frame,opened,depth)
    g.setColor(g.kColorWhite);g.setLineWidth(3);g.drawPolygon(table.unpack(p));g.setLineWidth(1);outline(p)
   else
    prism(p,depth,mat,tex.beam)
-   if m.joinSpan then
+   if m.joinSpan or m.turnSquare then
     -- The steel shoes slide around a fixed-width central wooden span.
-    local u=math.max(0,(m.w-(m.joinSpan-m.h))/(2*m.w))
+    local u=math.max(0,(m.w-((m.joinSpan or m.turnSquare)-m.h))/(2*m.w))
     local function point(a,b) return p[1]+(p[3]-p[1])*a+(p[7]-p[1])*b,p[2]+(p[4]-p[2])*a+(p[8]-p[2])*b end
     for _,range in ipairs({{0,u},{1-u,1}}) do
      local a,b=point(range[1],0);local c,d=point(range[2],0);local e,f=point(range[2],1);local h,i=point(range[1],1)
@@ -372,7 +377,9 @@ function A.prepare(c)
  end
  if preparedCourse~=c then wallSets={} end
  local keep={}
- for _,m in ipairs(c.mechanisms or {}) do if m.joinSpan then keep[tostring(math.floor(m.joinSpan))]=true end end
+ for _,m in ipairs(c.mechanisms or {}) do
+  if m.turnSquare then keep['turn-192']=true elseif m.joinSpan then keep['rotor-'..tostring(math.floor(m.joinSpan))]=true end
+ end
  for key in pairs(rotorTables) do if not keep[key] then rotorTables[key]=nil end end
  preparedCourse=c
  for i=0,15 do gearFrame(i*22.5) end

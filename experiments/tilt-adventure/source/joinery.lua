@@ -51,7 +51,7 @@ for _,c in ipairs(Courses) do
     m.x=left+m.w/2;m.toX=right-m.w/2;m.dockLeft=left;m.dockRight=right
     for _,p in ipairs(c.pads or {}) do if p.target==m then p.x=m.x;p.y=m.y end end
    end
-  elseif m.kind=='rotor' and not m.retract then
+  elseif m.kind=='rotor' and not m.retract and not m.turnSquare then
    local left,right=banks(c,m.x,m.y,m.h/2)
    if left>-math.huge and right<math.huge and right-left>m.h then
     m.x=(left+right)/2;m.joinSpan=right-left;m.w=m.joinSpan;m.maxWidth=m.joinSpan
@@ -66,6 +66,12 @@ for _,c in ipairs(Courses) do
  end
 end
 function J.width(m,angle)
+ if m.turnSquare then
+  local co,si=math.abs(math.cos(angle)),math.abs(math.sin(angle));local w=m.turnSquare
+  if co>.00001 then w=math.min(w,(m.turnSquare-m.h*si)/co) end
+  if si>.00001 then w=math.min(w,(m.turnSquare-m.h*co)/si) end
+  return math.max(m.h,w)
+ end
  if not m.joinSpan then return m.w end
  -- Sliding end shoes retract just enough to clear both banks while turning.
  -- At alignment the full rectangular end face closes exactly against the road.

@@ -1,0 +1,19 @@
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH PLAN courses=48 scenes=3
+BENCH BEGIN	44
+SCENE	1	mechanism	15	gate
+BENCH route=44 frames=119 fps=18.01 frame95=58.00 frameMax=87.00 cpu95=55.00 cpuMax=85.00 cacheMiss=0 chunks=39 luaKB=1665
+STATS	GC=1.8 audio=2.8 game=89.8 idle=5.0 kernel=0.6
+BENCH BEGIN	44
+SCENE	2	mechanism	16	gate
+BENCH route=44 frames=119 fps=17.47 frame95=60.00 frameMax=62.00 cpu95=57.00 cpuMax=59.00 cacheMiss=0 chunks=39 luaKB=1819
+STATS	GC=1.6 audio=2.4 game=91.6 idle=4.2 kernel=0.2
+BENCH BEGIN	44
+SCENE	3	mechanism	17	gate
+BENCH route=44 frames=119 fps=17.55 frame95=61.00 frameMax=69.00 cpu95=56.00 cpuMax=58.00 cacheMiss=0 chunks=39 luaKB=1736
+STATS	GC=2.0 audio=2.2 game=90.0 idle=4.6 kernel=1.2
+BENCH COMPLETE

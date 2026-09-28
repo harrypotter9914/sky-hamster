@@ -47,18 +47,24 @@ local M,S=Mechanisms,Spatial
 P.reference={support=M.support,collide=M.collide,wind=M.wind,sides=S.sides,floor=M.floor}
 local epoch=0
 function M.floor(c,x,y,t)
- -- Only lifts can override course height. Other support types need no query here.
  local root=c.physicsOwner or c
  local memo=root.floorMemo
- if memo and memo.x==x and memo.y==y and memo.epoch==epoch then
-  if not memo.lift then return memo.z end
-  return memo.lift.elevation or memo.lift.minHeight
+ if memo and memo.x==x and memo.y==y and memo.epoch==epoch and (memo.terrain or memo.t==t) then
+  return memo.lift and (memo.lift.elevation or memo.lift.minHeight) or memo.z
  end
- local lift
- for _,m in ipairs(P.near(c,x,y).lifts) do if M.contains(m,x,y,t) then lift=m;break end end
- local z=lift and (lift.elevation or lift.minHeight) or root:height(x,y)
+ local terrain=root.lookup[math.floor(x/32)..','..math.floor(y/32)]==true
+ local z,lift
+ if terrain then
+  -- On real road, only a lift under the centre can override road height.
+  -- Overhangs and gaps still use the exact shared circular-footprint query.
+  for _,m in ipairs(P.near(c,x,y).lifts) do if M.contains(m,x,y,t) then lift=m;break end end
+  z=lift and (lift.elevation or lift.minHeight) or root:height(x,y)
+ else
+  M.support(c,x,y,t);local s=root.supportMemo
+  z=s.z;lift=s.m and s.m.kind=='lift' and s.m or nil
+ end
  memo=memo or {};root.floorMemo=memo
- memo.x,memo.y,memo.epoch,memo.z,memo.lift=x,y,epoch,z,lift
+ memo.x,memo.y,memo.t,memo.epoch,memo.terrain,memo.z,memo.lift=x,y,t,epoch,terrain,z,lift
  return z
 end
 local reset,update=Dock.reset,Dock.update
@@ -69,19 +75,9 @@ function M.support(c,x,y,t)
  local memo=root.supportMemo
  if memo and memo.x==x and memo.y==y and memo.t==t and memo.epoch==epoch then return memo.ok,memo.m end
  local view=P.near(c,x,y)
- local ok,m
- -- Preserve the original two-pass priority: lifts first, then moving decks,
- -- closed trap floors, and finally terrain. Avoid traversing wrapper views.
- for _,item in ipairs(view.lifts) do if M.contains(item,x,y,t) then ok,m=true,item;break end end
- if not ok then
-  for _,item in ipairs(view.supportView.mechanisms) do
-   local kind=item.kind
-   if (kind=='ferry' or kind=='rotor' or (kind=='trap' and not M.open(item,t))) and M.contains(item,x,y,t) then ok,m=true,item;break end
-  end
- end
- if not ok then ok=root.lookup[math.floor(x/32)..','..math.floor(y/32)]==true end
+ local ok,m,z=Footing.query(view.supportView,x,y,t)
  memo=memo or {};root.supportMemo=memo
- memo.x,memo.y,memo.t,memo.epoch,memo.ok,memo.m=x,y,t,epoch,ok,m
+ memo.x,memo.y,memo.t,memo.epoch,memo.ok,memo.m,memo.z=x,y,t,epoch,ok,m,z
  return ok,m
 end
 function M.collide(c,x,y,vx,vy,z,t,dt)
