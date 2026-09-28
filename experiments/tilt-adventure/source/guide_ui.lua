@@ -64,7 +64,7 @@ local info={
  magnet={'FEEL THE PULL','Stay away from the magnet. Counter-tilt early.'},
  extend={'BUILD YOUR CROSSING','Dock. Crank to extend the road. B releases.'},
  switch={'CHOOSE YOUR ROUTE','Crank the dial. One lane opens, one closes.'},
- bumper={'GIVE SPRINGS SOME SPACE','Springs bounce you away. Steer around them.'}}
+ bumper={'WATCH THE RUBBER RING','Touch its side to rebound. Jump over its top.'}}
 local machineArt={}
 for _,name in ipairs({'fan'}) do
  local source=g.image.new('machine-'..name)
@@ -192,8 +192,9 @@ function UI.lesson(kind,time)
    ball(327,130);left=data==info.windcontrol and 'CRANK AT THE DIAL' or 'COUNTER THE GUST';right=data==info.windcontrol and 'AIM ALONG THE ROAD' or 'STAY ON THE ROAD'
   elseif kind=='bumper' then
    slab(207,135,166,29);MachineArt.bumper({hitAt=t-t%3+1.5},t,303,142)
-   local q=t%3;local bx=q<1.5 and 234+q*22 or 267-(q-1.5)*22
-   ball(bx,137);left='LEAVE SOME ROOM';right='CONTACT BOUNCES BACK'
+   local q=t%3;local reach=303-(BumperModel.radius+9)*math.sqrt(2)*.9
+   local bx=240+(reach-240)*(q<1.5 and q/1.5 or 1-(q-1.5)/1.5)
+   ball(bx,130);left='TOUCH THE SIDE';right='THE RING PUSHES BACK'
   elseif kind=='ferry' then
    local travel=ease((t-1.2)/2.6)
    local bx,by,map=Structures.demo('ferry',288,124,1.2+travel*1.8)

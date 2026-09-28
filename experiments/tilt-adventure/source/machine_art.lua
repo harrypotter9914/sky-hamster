@@ -11,8 +11,9 @@ function A.prepare()
  for i=0,7 do
   local im=g.image.new(28,28,g.kColorClear);g.pushContext(im);images.blade:drawRotated(14,14,i*15);g.popContext();blades[i]=im
  end
- local spring=g.image.new('machine-bumper')
- for i=0,7 do local sy=1-i*.045;local im=g.image.new(44,44,g.kColorClear);g.pushContext(im);spring:drawScaled(0,44-44*sy,1,sy);g.popContext();springs[i]=im end
+ local spring=g.image.new('machine-ring')
+ -- A contact drives a short outward pulse around the fixed ground anchor.
+ for i=0,7 do local s=1+i*.02;local im=g.image.new(48,36,g.kColorClear);g.pushContext(im);spring:drawScaled(24*(1-s),24*(1-s),s,s);g.popContext();springs[i]=im end
 end
 function A.sprite(name,x,y) local im=images[name];local w,h=im:getSize();im:draw(math.floor(x-w/2),math.floor(y-h)) end
 function A.solidSprite(name,x,y,wx,wy,floor,w,h,roof)
@@ -29,10 +30,10 @@ function A.handle(x,y,angle)
 end
 function A.bumper(m,t,x,y,floor)
  local age=m.hitAt and t-m.hitAt or 10
- local squash=age>=0 and age<.5 and math.max(0,math.sin(age/.5*math.pi*3)*math.exp(-age*4)) or 0
- local im=springs[math.floor(squash*7+.5)]
- im:draw(x-22,y-36)
- if floor then PropOcclusion.add(im,x-22,y-36,m.x,m.y,36,36,0,floor-12,floor+55,true) end
+ local pulse=age>=0 and age<.36 and math.sin(age/.36*math.pi) or 0
+ local frame=math.floor(pulse*7+.5);local im=springs[frame]
+ im:draw(x-BumperModel.anchorX,y-BumperModel.anchorY)
+ if floor then local s=1+frame*.02;local r=BumperModel.radiusAt(m)*s;PropOcclusion.add(im,x-24,y-24,m.x,m.y,r*2,r*2,0,floor,floor+(m.sideHeight or BumperModel.height)*s) end
 end
 local fanHousings={}
 function A.fan(m,t,x,y,floor)

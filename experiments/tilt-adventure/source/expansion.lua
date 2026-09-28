@@ -48,9 +48,13 @@ end
 local oldCollide=M.collide
 function M.collide(c,x,y,vx,vy,z,t,dt)
  local hit;x,y,vx,vy,hit=oldCollide(c,x,y,vx,vy,z,t,dt)
- for _,m in ipairs(c.mechanisms or {}) do if m.kind=='bumper' and z<28 then
-  local dx,dy=x-m.x,y-m.y;local r=(m.radius or 18)+9;local d=math.sqrt(dx*dx+dy*dy)
-  if d<r then
+ for _,m in ipairs(c.mechanisms or {}) do if m.kind=='bumper' then
+  local dx,dy=x-m.x,y-m.y
+  local localZ=z+c:height(x,y)-c:height(m.x,m.y)
+  local r=BumperModel.contactRadius(m,localZ);local d=math.sqrt(dx*dx+dy*dy)
+  -- A jump across the top is not a strike against the lateral rubber wall.
+  local side=localZ<=.5 or d>BumperModel.radiusAt(m)
+  if r and side and d<r then
    local speed=math.sqrt(vx*vx+vy*vy)
    local nx,ny
    if d>.001 then nx,ny=dx/d,dy/d
@@ -80,7 +84,7 @@ function M.wind(c,x,y,vx,vy,z,dt)
 end
 local assets
 local function art()
- if not assets then assets={lift=playdate.graphics.image.new('machine-lift'),slider=playdate.graphics.image.new('machine-slider'),fan=playdate.graphics.image.new('machine-fan'),bumper=playdate.graphics.image.new('machine-bumper')} end
+ if not assets then assets={lift=playdate.graphics.image.new('machine-lift'),slider=playdate.graphics.image.new('machine-slider'),fan=playdate.graphics.image.new('machine-fan'),bumper=playdate.graphics.image.new('machine-ring')} end
  return assets
 end
 local oldDraw=M.draw

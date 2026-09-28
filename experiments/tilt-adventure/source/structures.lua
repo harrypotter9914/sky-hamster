@@ -290,7 +290,6 @@ function M.draw(c,t,project)
     base('small',x,y)
     MachineArt.fan(m,t,x,y,h)
    elseif kind=='bumper' and A.layer~='under' then
-    base('small',x,y)
     MachineArt.bumper(m,t,x,y,h)
    elseif kind~='gate' and kind~='sweeper' and kind~='fan' and kind~='bumper' then
     if A.layer~='top' then

@@ -8,11 +8,15 @@ for _,c in ipairs(Courses) do
    local a=math.rad(angle);local nx,ny=math.cos(a),math.sin(a)
    local inward=math.sqrt(1-graze*graze)
    local vx,vy=(-nx*inward-ny*graze)*speed,(-ny*inward+nx*graze)*speed
-   local x,y,ox,oy,hit=Mechanisms.collide(c,m.x+nx*26.9,m.y+ny*26.9,vx,vy,0,100+hits,.001)
+   local r=m.radius+9
+   local d=m.radius+4
+   local px,py=m.x+nx*d,m.y+ny*d
+   r=BumperModel.contactRadius(m,c:height(px,py)-c:height(m.x,m.y))
+   local x,y,ox,oy,hit=Mechanisms.collide(c,px,py,vx,vy,0,100+hits,.001)
    assert(hit,'missed contact '..angle)
    assert(ox*nx+oy*ny>=89.999,'weak radial rebound '..angle)
    assert(math.abs(ox*ny-oy*nx)<.0001,'spring kept sideways glancing drift')
-   assert((x-m.x)^2+(y-m.y)^2>27^2,'not separated')
+   assert((x-m.x)^2+(y-m.y)^2>r^2,'not separated')
    local at=m.hitAt
    local xx,yy,ux,uy=Mechanisms.collide(c,x,y,ox,oy,0,101+hits,.001)
    assert(ux==ox and uy==oy and at==m.hitAt,'outgoing ball retriggered')

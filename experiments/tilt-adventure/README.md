@@ -1,6 +1,8 @@
-# Sky Hamster — 0.10.11
+# Sky Hamster — 0.10.12
 
-0.10.11 gives round springs an outward impulse at every contact angle and masks the ball with illustrated props' actual silhouettes clipped by foreground depth. Moving deck skirts have full thickness, and station labels render in front. Includes 7,488 spring contacts and 408 native direction/animation snapshots. See [validation](VALIDATION-v0.10.11.md). Run `python tests/check_spring_occlusion.py` for the current regression chain.
+0.10.12 replaces the upright spring with a low rubber bumper ring: matching ground footprint, lateral contact height, cached outward pulse and one synchronized impact sound. See [validation](VALIDATION-v0.10.12.md). Current regression: `python tests/check_bumper_ring.py`.
+
+0.10.11 gives round springs an outward impulse at every contact angle and masks the ball with illustrated props' actual silhouettes clipped by foreground depth. Moving deck skirts have full thickness, and station labels render in front. Includes 7,488 spring contacts and 408 native direction/animation snapshots. See [validation](VALIDATION-v0.10.11.md). Run `python tests/check_spring_occlusion.py` for the preceding spring/occlusion checks.
 
 0.10.10 rebuilds the top 400×43 HUD as a compact mechanical instrument strip: generated monochrome emblems, course plaque, fixed-width readings and cached segmented meters. The lower controls and playfield are unchanged. See [validation](VALIDATION-v0.10.10.md) and [art/export notes](art/HUD-v0.10.10.md).
 

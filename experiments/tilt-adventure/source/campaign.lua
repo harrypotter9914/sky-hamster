@@ -5,7 +5,7 @@ local function route(id,name,start,goal,profile,note,jump)
  local c=create(name,'',profile or {{0,0},{5000,0}},start,goal)
  c.id=id;c.shortName=name;c.note=note;c.jump=jump~=false;c.mechanisms={};c.pads={};return c
 end
-local function bumper(c,x,y) c.mechanisms[#c.mechanisms+1]={kind='bumper',x=x,y=y,w=36,h=36,radius=18} end
+local function bumper(c,x,y) local r=BumperModel.radius;c.mechanisms[#c.mechanisms+1]={kind='bumper',x=x,y=y,w=r*2,h=r*2,radius=r,sideHeight=BumperModel.height} end
 local function lift(c,x,y,low,high)
  local m={kind='lift',x=x,y=y,w=64,h=64,minHeight=low,maxHeight=high,elevation=low}
  c.mechanisms[#c.mechanisms+1]=m;c.pads[#c.pads+1]={kind='lift',x=x,y=y,target=m};return m
@@ -22,9 +22,9 @@ local function fan(c,x,y,rx,ry,rw,rh,controlled)
 end
 local jump=route('hop-bends','Hop and turn',{48,80},{816,240},nil,{'Land before steering around the bend.','Set up each jump on the next straight.'})
 jump:rect(0,5,1,3);jump:rect(8,12,1,3);jump:rect(11,13,4,7);jump:rect(14,18,6,8);jump:rect(21,26,6,8);jump.checkpoint={400,240}
-local bumps=route('bumpers','Spring garden',{48,112},{560,112},nil,{'Spring bumpers rebound on contact.','Steer around them or jump over them.'})
+local bumps=route('bumpers','Spring garden',{48,112},{560,112},nil,{'Rubber rings rebound on side contact.','Steer around them or jump over them.'})
 bumps:rect(0,18,1,5);bumper(bumps,240,112);bumper(bumps,368,64);bumper(bumps,432,144)
-local slalom=route('bumper-slalom','Bumper slalom',{48,112},{944,240},{{0,64},{128,64},{352,0},{1200,0}},{'Brake down the slope before the springs.','Take the wide side of each bumper.'})
+local slalom=route('bumper-slalom','Bumper slalom',{48,112},{944,240},{{0,64},{128,64},{352,0},{1200,0}},{'Brake down the slope before the bumpers.','Take the wide side of each bumper.'})
 slalom:rect(0,20,1,5);slalom:rect(19,21,6,8);slalom:rect(22,30,6,8)
 for i=0,3 do bumper(slalom,272+i*112,80+(i%2)*64) end;bumper(slalom,816,240);slalom.checkpoint={656,240}
 local gust=route('crosswind','Crosswind',{48,112},{656,112},nil,{'The gust pushes while you cross.','Counter-tilt to hold the middle lane.'})
@@ -45,7 +45,7 @@ local zig=route('ferry-zigzag','Ferry zigzag',{48,80},{1136,272},nil,{'Ride both
 zig:rect(0,4,1,3);zig:rect(14,19,6,10);zig:rect(31,36,7,9);slider(zig,184,80,424,272);slider(zig,664,272,968,272);zig.checkpoint={560,272}
 local wind=route('wind-dial','Wind workshop',{48,112},{720,112},nil,{'Dock at the fan dial and aim the gust.','Point it along the road, then release.'})
 wind:rect(0,7,1,5);wind:rect(8,16,2,4);wind:rect(17,23,1,5);fan(wind,192,80,400,112,384,160,true)
-local windrelay=route('wind-relay','Wind and springs',{48,112},{1168,112},nil,{'Aim each gust before entering its lane.','Leave room to avoid the spring bumpers.'})
+local windrelay=route('wind-relay','Wind and springs',{48,112},{1168,112},nil,{'Aim each gust before entering its lane.','Leave room to avoid the rubber bumpers.'})
 windrelay:rect(0,37,1,5);fan(windrelay,192,80,400,112,352,160,true);fan(windrelay,704,80,912,112,352,160,true);bumper(windrelay,432,80);bumper(windrelay,880,144);windrelay.checkpoint={624,112}
 local cannons=route('cannon-relay','Cannon relay',{48,80},{1040,240},nil,{'Aim each cannon at the broad landing road.','A fires; B lets you change your plan.'})
 cannons:rect(0,4,1,3);cannons:rect(9,19,0,5);cannons:rect(23,33,5,9)

@@ -5,7 +5,7 @@ Dock.update(c,224,80,0,0,false,90,false,false)
 assert(Dock.active.spin==90 and c.mechanisms[1].spin==90 and c.mechanisms[1].elevation==22.5)
 Dock.update(c,224,80,0,0,false,0,false,false);assert(c.mechanisms[1].spin==90)
 Dock.update(c,224,80,0,0,false,-45,false,false);assert(c.mechanisms[1].spin==45 and c.mechanisms[1].elevation==11.25)
-c=Courses[14];Dock.reset(c);Mechanisms.collide(c,215,112,100,0,0,2,.01);assert(c.mechanisms[1].hitAt==2)
+c=Courses[14];Dock.reset(c);Mechanisms.collide(c,218,112,100,0,0,2,.01);assert(c.mechanisms[1].hitAt==2)
 c=Courses[40];Dock.reset(c);MachineArt.time=0
 Dock.update(c,240,112,0,0,false,-90,false,false)
 local a,b=c.mechanisms[1],c.mechanisms[2]

@@ -1,5 +1,5 @@
 # Isolated SDK visual review bundle. No review hooks enter the shipping source.
-param([switch]$Hud,[switch]$Occlusion)
+param([switch]$Hud,[switch]$Occlusion,[switch]$Bumper)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $repo=Resolve-Path (Join-Path $root '../..')
@@ -25,6 +25,7 @@ end,height=function(z) airborne=z~=0;jumpZ=ballHeight+z end}
 Copy-Item "$PSScriptRoot/ui_review.lua" "$qa/main.lua"
 if($Hud){Copy-Item "$PSScriptRoot/hud_review.lua" "$qa/main.lua"}
 if($Occlusion){Copy-Item "$PSScriptRoot/occlusion_review.lua" "$qa/main.lua"}
+if($Bumper){Copy-Item "$PSScriptRoot/bumper_review.lua" "$qa/main.lua"}
 $releaseInfo=Get-Content "$root/source/pdxinfo" -Raw
 $releaseVersion=[regex]::Match($releaseInfo,'(?m)^version=([^\r\n]+)').Groups[1].Value
 "name=Tilt UI Review`nbundleID=com.wangyibo.skyhamster.ui-review`nversion=$releaseVersion" | Set-Content "$qa/pdxinfo"

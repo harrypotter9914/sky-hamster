@@ -34,7 +34,7 @@ local vx,vy=Mechanisms.wind(c,400,112,0,0,0,1);assert(vy>50)
 Dock.update(c,144,112,0,0,false,-90,false,false)
 vx,vy=Mechanisms.wind(c,400,112,0,0,0,1);assert(vx>50 and math.abs(vy)<.001)
 Guide.seen={arrival=true,roll=true,jump=true,fan=true};Guide.enter(c);assert(Guide.key()=='windcontrol')
-c=Courses[14];local x,y,vx,vy,hit=Mechanisms.collide(c,215,112,100,0,0,0,1/120)
+c=Courses[14];local x,y,vx,vy,hit=Mechanisms.collide(c,218,112,100,0,0,0,1/120)
 assert(hit and vx<0);x,y,vx,vy,hit=Mechanisms.collide(c,215,112,100,0,35,0,1/120);assert(not hit and vx==100)
 -- Fire every new cannon using actual physics, including raised launch decks.
 for _,n in ipairs({26,27,28,33}) do

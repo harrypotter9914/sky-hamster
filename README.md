@@ -1,8 +1,10 @@
-# Sky Hamster — v0.10.11
+# Sky Hamster — v0.10.12
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
-当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.11**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
+当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.12**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
+
+0.10.12 将竖直弹簧替换为低矮圆形弹力护圈，统一底座、碰撞与遮挡，增加触碰后外扩回弹动画。见 [接触位置与动画验证](experiments/tilt-adventure/VALIDATION-v0.10.12.md)。
 
 0.10.11 修复弹簧擦边时反弹不明显及背面遮挡缺失，补充风机、炮台等实体轮廓和平台侧面遮挡。见 [方向／动画审查与验证](experiments/tilt-adventure/VALIDATION-v0.10.11.md)。
 
@@ -20,7 +22,7 @@ Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 ./experiments/tilt-adventure/build.ps1
 ```
 
-输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.10.12 继续，新增一批玩法时升至 0.11.0。
+输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.10.13 继续，新增一批玩法时升至 0.11.0。
 
 ## 0.6.7 及课堂版归档
 
