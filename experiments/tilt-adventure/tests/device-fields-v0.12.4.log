@@ -1,0 +1,466 @@
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+BENCH PLAN courses=53 scenes=61
+LOAD	ENTERING COURSE 21	luaKB=900
+LOAD	UNPACKING STONE ROAD	luaKB=928
+LOAD	FITTING THE ROAD EDGES	luaKB=943
+LOAD	TURNING THE FAN HEADS	luaKB=945
+LOAD	FITTING THE ROAD EDGES	luaKB=1033
+LOAD	PREPARING ROAD SHADOWS	luaKB=1054
+LOAD	PREPARING THE CONTROLS	luaKB=1065
+LOAD	PACKING THE ROAD	luaKB=1069
+LOAD	READY	luaKB=945
+READY: course 21 loading complete
+LOAD COMPLETE route=21 elapsedMS=897 maxUpdateMS=206
+ROAD ASSETS	PACKAGED
+LOAD WORK	LOOKING TO THE SKY	total=0	max=0	slices=1
+LOAD WORK	UNPACKING STONE ROAD	total=37	max=37	slices=1
+LOAD WORK	GATHERING THE STONES	total=1	max=1	slices=1
+LOAD WORK	FITTING THE ROAD EDGES	total=41	max=22	slices=3
+LOAD WORK	PREPARING ROAD SHADOWS	total=30	max=17	slices=2
+LOAD WORK	READY	total=174	max=174	slices=2
+LOAD WORK	PREPARING THE CONTROLS	total=28	max=28	slices=1
+LOAD WORK	PREPARING COURSE	total=4	max=4	slices=1
+LOAD WORK	PACKING THE ROAD	total=36	max=10	slices=7
+LOAD WORK	WINDING THE MACHINES	total=7	max=7	slices=1
+LOAD WORK	FINDING THE WAY	total=14	max=8	slices=2
+LOAD WORK	TURNING THE FAN HEADS	total=252	max=26	slices=18
+BENCH BEGIN	21
+SCENE	1	normal	0	traverse
+BENCH route=21 frames=59 fps=29.43 frame95=53.00 frameMax=61.00 cpu95=25.00 cpuMax=30.00 cacheMiss=0 chunks=7 luaKB=964
+STATS	GC=21.2 audio=3.0 game=70.2 idle=5.0 kernel=0.6
+BENCH BEGIN	21
+SCENE	2	normal	0	traverse
+BENCH route=21 frames=59 fps=29.46 frame95=47.00 frameMax=64.00 cpu95=26.00 cpuMax=26.00 cacheMiss=0 chunks=7 luaKB=964
+STATS	GC=19.6 audio=3.0 game=71.6 idle=5.6 kernel=0.2
+BENCH BEGIN	21
+SCENE	3	normal	0	traverse
+BENCH route=21 frames=59 fps=29.74 frame95=39.00 frameMax=58.00 cpu95=24.00 cpuMax=25.00 cacheMiss=0 chunks=7 luaKB=979
+STATS	GC=21.6 audio=2.2 game=71.8 idle=3.8 kernel=0.6
+BENCH BEGIN	21
+SCENE	4	field	1	fan
+BENCH route=21 frames=89 fps=29.62 frame95=48.00 frameMax=55.00 cpu95=21.00 cpuMax=22.00 cacheMiss=0 chunks=7 luaKB=966
+STATS	GC=29.4 audio=2.4 game=63.8 idle=4.2 kernel=0.2
+BENCH BEGIN	21
+SCENE	5	field	1	fan
+BENCH route=21 frames=89 fps=29.75 frame95=40.00 frameMax=55.00 cpu95=22.00 cpuMax=22.00 cacheMiss=0 chunks=7 luaKB=977
+STATS	GC=27.0 audio=2.6 game=65.2 idle=4.8 kernel=0.4
+LOAD	ENTERING COURSE 22	luaKB=955
+LOAD	PLANNING THE ROUTE	luaKB=980
+LOAD	FITTING THE LANDINGS	luaKB=1060
+LOAD	PREPARING COURSE	luaKB=1076
+LOAD	UNPACKING STONE ROAD	luaKB=1159
+LOAD	FITTING THE ROAD EDGES	luaKB=1269
+LOAD	WINDING THE MACHINES	luaKB=1397
+LOAD	FITTING THE ROAD EDGES	luaKB=1433
+LOAD	WINDING THE MACHINES	luaKB=1436
+LOAD	FITTING THE ROAD EDGES	luaKB=1445
+LOAD	WINDING THE MACHINES	luaKB=1448
+LOAD	FITTING THE ROAD EDGES	luaKB=1457
+LOAD	PREPARING ROAD SHADOWS	luaKB=1492
+LOAD	PREPARING THE CONTROLS	luaKB=1645
+LOAD	FINDING THE WAY	luaKB=1644
+LOAD	PREPARING THE START	luaKB=1616
+LOAD	READY	luaKB=1443
+READY: course 22 loading complete
+LOAD COMPLETE route=22 elapsedMS=3380 maxUpdateMS=309
+ROAD ASSETS	PACKAGED
+LOAD WORK	FITTING THE LANDINGS	total=109	max=95	slices=5
+LOAD WORK	UNPACKING STONE ROAD	total=248	max=125	slices=10
+LOAD WORK	GATHERING THE STONES	total=2	max=2	slices=1
+LOAD WORK	READY	total=229	max=229	slices=2
+LOAD WORK	FITTING THE ROAD EDGES	total=992	max=288	slices=48
+LOAD WORK	PLANNING THE ROUTE	total=113	max=17	slices=10
+LOAD WORK	PREPARING THE START	total=53	max=11	slices=42
+LOAD WORK	PREPARING THE CONTROLS	total=34	max=34	slices=1
+LOAD WORK	PREPARING COURSE	total=31	max=31	slices=1
+LOAD WORK	FINDING THE WAY	total=116	max=8	slices=21
+LOAD WORK	WINDING THE MACHINES	total=594	max=38	slices=48
+LOAD WORK	LOOKING TO THE SKY	total=0	max=0	slices=1
+LOAD WORK	PREPARING ROAD SHADOWS	total=284	max=25	slices=21
+BENCH BEGIN	22
+SCENE	6	normal	0	traverse
+BENCH route=22 frames=59 fps=29.60 frame95=38.00 frameMax=43.00 cpu95=29.00 cpuMax=36.00 cacheMiss=0 chunks=10 luaKB=1470
+STATS	GC=15.6 audio=2.2 game=76.4 idle=4.4 kernel=1.4
+BENCH BEGIN	22
+SCENE	7	normal	0	traverse
+BENCH route=22 frames=59 fps=27.63 frame95=39.00 frameMax=72.00 cpu95=36.00 cpuMax=69.00 cacheMiss=5 chunks=23 luaKB=1578
+STATS	GC=2.8 audio=4.2 game=88.8 idle=3.8 kernel=0.4
+BENCH BEGIN	22
+SCENE	8	normal	0	traverse
+BENCH route=22 frames=59 fps=29.71 frame95=35.00 frameMax=45.00 cpu95=32.00 cpuMax=42.00 cacheMiss=7 chunks=36 luaKB=1639
+STATS	GC=4.8 audio=3.4 game=86.6 idle=5.2
+BENCH BEGIN	22
+SCENE	9	field	1	fan
+BENCH route=22 frames=89 fps=29.06 frame95=36.00 frameMax=109.00 cpu95=26.00 cpuMax=36.00 cacheMiss=7 chunks=36 luaKB=1488
+STATS	GC=18.8 audio=2.8 game=73.6 idle=3.6 kernel=1.2
+BENCH BEGIN	22
+SCENE	10	field	1	fan
+BENCH route=22 frames=89 fps=29.46 frame95=36.00 frameMax=87.00 cpu95=28.00 cpuMax=31.00 cacheMiss=7 chunks=36 luaKB=1502
+STATS	GC=12.8 audio=3.6 game=77.8 idle=4.4 kernel=1.4
+BENCH BEGIN	22
+SCENE	11	field	5	fan
+BENCH route=22 frames=89 fps=27.00 frame95=40.00 frameMax=52.00 cpu95=38.00 cpuMax=49.00 cacheMiss=7 chunks=36 luaKB=1662
+STATS	GC=2.6 audio=3.6 game=89.8 idle=3.8 kernel=0.2
+BENCH BEGIN	22
+SCENE	12	field	5	fan
+BENCH route=22 frames=89 fps=27.47 frame95=39.00 frameMax=42.00 cpu95=37.00 cpuMax=40.00 cacheMiss=7 chunks=36 luaKB=1827
+STATS	GC=2.8 audio=3.6 game=89.2 idle=3.8 kernel=0.6
+LOAD	ENTERING COURSE 34	luaKB=1482
+LOAD	PREPARING COURSE	luaKB=1488
+LOAD	UNPACKING STONE ROAD	luaKB=1509
+LOAD	FITTING THE ROAD EDGES	luaKB=1518
+LOAD	PREPARING ROAD SHADOWS	luaKB=1535
+LOAD	PREPARING THE CONTROLS	luaKB=1554
+LOAD	PACKING THE ROAD	luaKB=1558
+LOAD	READY	luaKB=1008
+READY: course 34 loading complete
+LOAD COMPLETE route=34 elapsedMS=841 maxUpdateMS=303
+ROAD ASSETS	PACKAGED
+LOAD WORK	LOOKING TO THE SKY	total=1	max=1	slices=1
+LOAD WORK	UNPACKING STONE ROAD	total=33	max=33	slices=1
+LOAD WORK	GATHERING THE STONES	total=12	max=12	slices=1
+LOAD WORK	FITTING THE ROAD EDGES	total=33	max=12	slices=3
+LOAD WORK	PREPARING ROAD SHADOWS	total=30	max=15	slices=2
+LOAD WORK	PREPARING THE CONTROLS	total=30	max=21	slices=2
+LOAD WORK	PREPARING COURSE	total=33	max=33	slices=1
+LOAD WORK	READY	total=295	max=295	slices=2
+LOAD WORK	WINDING THE MACHINES	total=11	max=11	slices=1
+LOAD WORK	PACKING THE ROAD	total=39	max=9	slices=9
+LOAD WORK	FINDING THE WAY	total=12	max=6	slices=2
+BENCH BEGIN	34
+SCENE	13	normal	0	traverse
+BENCH route=34 frames=59 fps=29.81 frame95=35.00 frameMax=44.00 cpu95=31.00 cpuMax=42.00 cacheMiss=0 chunks=9 luaKB=1108
+STATS	GC=5.4 audio=3.0 game=85.8 idle=5.6 kernel=0.2
+BENCH BEGIN	34
+SCENE	14	normal	0	traverse
+BENCH route=34 frames=59 fps=27.88 frame95=38.00 frameMax=40.00 cpu95=35.00 cpuMax=37.00 cacheMiss=0 chunks=9 luaKB=1217
+STATS	GC=2.6 audio=3.6 game=89.2 idle=4.6
+BENCH BEGIN	34
+SCENE	15	normal	0	traverse
+BENCH route=34 frames=59 fps=29.71 frame95=39.00 frameMax=52.00 cpu95=22.00 cpuMax=26.00 cacheMiss=0 chunks=9 luaKB=1006
+STATS	GC=29.4 audio=2.2 game=62.6 idle=5.8
+BENCH BEGIN	34
+SCENE	16	field	1	fan
+BENCH route=34 frames=89 fps=28.27 frame95=39.00 frameMax=41.00 cpu95=36.00 cpuMax=39.00 cacheMiss=0 chunks=9 luaKB=1165
+STATS	GC=2.8 audio=3.6 game=89.6 idle=3.8 kernel=0.2
+BENCH BEGIN	34
+SCENE	17	field	1	fan
+BENCH route=34 frames=89 fps=25.57 frame95=42.00 frameMax=49.00 cpu95=39.00 cpuMax=40.00 cacheMiss=0 chunks=9 luaKB=1105
+STATS	GC=5.6 audio=3.2 game=86.6 idle=3.4 kernel=1.2
+BENCH BEGIN	34
+SCENE	18	pad	1	fan
+BENCH route=34 frames=89 fps=28.77 frame95=41.00 frameMax=77.00 cpu95=26.00 cpuMax=28.00 cacheMiss=0 chunks=9 luaKB=1010
+STATS	GC=20.4 audio=3.8 game=69.8 idle=6.0
+LOAD	ENTERING COURSE 35	luaKB=1006
+LOAD	PLANNING THE ROUTE	luaKB=1030
+LOAD	FITTING THE LANDINGS	luaKB=1190
+LOAD	PREPARING COURSE	luaKB=1236
+LOAD	UNPACKING STONE ROAD	luaKB=1371
+LOAD	FITTING THE ROAD EDGES	luaKB=1559
+LOAD	WINDING THE MACHINES	luaKB=1732
+LOAD	FITTING THE ROAD EDGES	luaKB=1711
+LOAD	WINDING THE MACHINES	luaKB=1712
+LOAD	FITTING THE ROAD EDGES	luaKB=1715
+LOAD	WINDING THE MACHINES	luaKB=1684
+LOAD	FITTING THE ROAD EDGES	luaKB=1669
+LOAD	PREPARING ROAD SHADOWS	luaKB=1658
+LOAD	PREPARING THE CONTROLS	luaKB=2036
+LOAD	FINDING THE WAY	luaKB=2042
+LOAD	PREPARING THE START	luaKB=2069
+LOAD	READY	luaKB=1856
+READY: course 35 loading complete
+LOAD COMPLETE route=35 elapsedMS=5474 maxUpdateMS=369
+ROAD ASSETS	PACKAGED
+LOAD WORK	FITTING THE LANDINGS	total=382	max=173	slices=18
+LOAD WORK	UNPACKING STONE ROAD	total=419	max=194	slices=18
+LOAD WORK	GATHERING THE STONES	total=3	max=3	slices=1
+LOAD WORK	READY	total=294	max=293	slices=2
+LOAD WORK	FITTING THE ROAD EDGES	total=1824	max=344	slices=78
+LOAD WORK	PLANNING THE ROUTE	total=186	max=22	slices=15
+LOAD WORK	PREPARING THE START	total=40	max=6	slices=42
+LOAD WORK	PREPARING THE CONTROLS	total=68	max=39	slices=7
+LOAD WORK	PREPARING COURSE	total=50	max=50	slices=1
+LOAD WORK	FINDING THE WAY	total=219	max=8	slices=36
+LOAD WORK	WINDING THE MACHINES	total=594	max=36	slices=49
+LOAD WORK	LOOKING TO THE SKY	total=1	max=1	slices=1
+LOAD WORK	PREPARING ROAD SHADOWS	total=487	max=32	slices=36
+BENCH BEGIN	35
+SCENE	19	normal	0	traverse
+BENCH route=35 frames=59 fps=29.43 frame95=36.00 frameMax=55.00 cpu95=31.00 cpuMax=52.00 cacheMiss=2 chunks=14 luaKB=1870
+STATS	GC=9.4 audio=2.6 game=83.4 idle=3.8 kernel=0.8
+BENCH BEGIN	35
+SCENE	20	normal	0	traverse
+BENCH route=35 frames=59 fps=29.54 frame95=36.00 frameMax=56.00 cpu95=32.00 cpuMax=53.00 cacheMiss=5 chunks=29 luaKB=1908
+STATS	GC=14.8 audio=2.2 game=78.8 idle=4.0 kernel=0.2
+BENCH BEGIN	35
+SCENE	21	normal	0	traverse
+BENCH route=35 frames=59 fps=29.50 frame95=41.00 frameMax=46.00 cpu95=27.00 cpuMax=44.00 cacheMiss=7 chunks=28 luaKB=1877
+STATS	GC=21.0 audio=3.0 game=70.8 idle=4.6 kernel=0.6
+BENCH BEGIN	35
+SCENE	22	field	1	fan
+BENCH route=35 frames=89 fps=28.18 frame95=39.00 frameMax=62.00 cpu95=37.00 cpuMax=60.00 cacheMiss=11 chunks=38 luaKB=2043
+STATS	GC=3.0 audio=3.0 game=90.0 idle=4.0
+BENCH BEGIN	35
+SCENE	23	field	1	fan
+BENCH route=35 frames=89 fps=27.23 frame95=41.00 frameMax=43.00 cpu95=38.00 cpuMax=41.00 cacheMiss=11 chunks=38 luaKB=2208
+STATS	GC=3.2 audio=3.2 game=89.4 idle=4.2
+BENCH BEGIN	35
+SCENE	24	field	6	fan
+BENCH route=35 frames=89 fps=24.59 frame95=45.00 frameMax=83.00 cpu95=43.00 cpuMax=81.00 cacheMiss=14 chunks=21 luaKB=2372
+STATS	GC=2.4 audio=3.2 game=89.0 idle=4.6 kernel=0.8
+BENCH BEGIN	35
+SCENE	25	field	6	fan
+BENCH route=35 frames=89 fps=25.71 frame95=41.00 frameMax=62.00 cpu95=38.00 cpuMax=42.00 cacheMiss=14 chunks=21 luaKB=2286
+STATS	GC=4.6 audio=3.2 game=86.4 idle=4.2 kernel=1.6
+BENCH BEGIN	35
+SCENE	26	field	16	fan
+BENCH route=35 frames=89 fps=28.75 frame95=37.00 frameMax=138.00 cpu95=28.00 cpuMax=30.00 cacheMiss=14 chunks=21 luaKB=2020
+STATS	GC=16.2 audio=2.2 game=77.4 idle=3.8 kernel=0.4
+BENCH BEGIN	35
+SCENE	27	field	16	fan
+BENCH route=35 frames=89 fps=29.30 frame95=39.00 frameMax=59.00 cpu95=30.00 cpuMax=55.00 cacheMiss=18 chunks=36 luaKB=1960
+STATS	GC=8.0 audio=2.8 game=83.4 idle=4.4 kernel=1.4
+BENCH BEGIN	35
+SCENE	28	pad	1	fan
+BENCH route=35 frames=89 fps=29.09 frame95=38.00 frameMax=116.00 cpu95=28.00 cpuMax=30.00 cacheMiss=18 chunks=36 luaKB=1972
+STATS	GC=16.6 audio=3.2 game=75.2 idle=4.4 kernel=0.6
+LOAD	ENTERING COURSE 48	luaKB=1896
+LOAD	UNPACKING STONE ROAD	luaKB=1918
+LOAD	FITTING THE ROAD EDGES	luaKB=1935
+LOAD	PREPARING ROAD SHADOWS	luaKB=1949
+LOAD	PREPARING THE CONTROLS	luaKB=1977
+LOAD	PACKING THE ROAD	luaKB=1981
+LOAD	READY	luaKB=1075
+READY: course 48 loading complete
+LOAD COMPLETE route=48 elapsedMS=882 maxUpdateMS=414
+ROAD ASSETS	PACKAGED
+LOAD WORK	LOOKING TO THE SKY	total=1	max=1	slices=1
+LOAD WORK	UNPACKING STONE ROAD	total=32	max=32	slices=1
+LOAD WORK	GATHERING THE STONES	total=19	max=19	slices=1
+LOAD WORK	FITTING THE ROAD EDGES	total=39	max=17	slices=3
+LOAD WORK	PREPARING ROAD SHADOWS	total=40	max=14	slices=3
+LOAD WORK	PREPARING THE CONTROLS	total=24	max=24	slices=1
+LOAD WORK	PREPARING COURSE	total=4	max=4	slices=1
+LOAD WORK	READY	total=402	max=402	slices=2
+LOAD WORK	WINDING THE MACHINES	total=11	max=11	slices=1
+LOAD WORK	PACKING THE ROAD	total=40	max=10	slices=8
+LOAD WORK	FINDING THE WAY	total=18	max=7	slices=3
+BENCH BEGIN	48
+SCENE	29	normal	0	traverse
+BENCH route=48 frames=59 fps=29.74 frame95=42.00 frameMax=45.00 cpu95=25.00 cpuMax=31.00 cacheMiss=0 chunks=8 luaKB=1072
+STATS	GC=22.4 audio=3.2 game=69.0 idle=5.0 kernel=0.4
+BENCH BEGIN	48
+SCENE	30	normal	0	traverse
+BENCH route=48 frames=59 fps=29.93 frame95=36.00 frameMax=43.00 cpu95=24.00 cpuMax=25.00 cacheMiss=0 chunks=8 luaKB=1076
+STATS	GC=23.6 audio=3.4 game=66.2 idle=6.4 kernel=0.4
+BENCH BEGIN	48
+SCENE	31	normal	0	traverse
+BENCH route=48 frames=59 fps=30.03 frame95=39.00 frameMax=45.00 cpu95=24.00 cpuMax=24.00 cacheMiss=0 chunks=8 luaKB=1079
+STATS	GC=24.0 audio=3.2 game=68.0 idle=4.8
+BENCH BEGIN	48
+SCENE	32	field	1	magnet
+BENCH route=48 frames=89 fps=29.79 frame95=40.00 frameMax=47.00 cpu95=25.00 cpuMax=27.00 cacheMiss=0 chunks=8 luaKB=1077
+STATS	GC=23.2 audio=3.0 game=67.4 idle=5.2 kernel=1.2
+BENCH BEGIN	48
+SCENE	33	field	1	magnet
+BENCH route=48 frames=89 fps=29.89 frame95=36.00 frameMax=46.00 cpu95=26.00 cpuMax=27.00 cacheMiss=0 chunks=8 luaKB=1085
+STATS	GC=17.6 audio=2.6 game=74.6 idle=4.8 kernel=0.4
+LOAD	ENTERING COURSE 49	luaKB=1077
+LOAD	PLANNING THE ROUTE	luaKB=1116
+LOAD	FITTING THE LANDINGS	luaKB=1343
+LOAD	PREPARING COURSE	luaKB=1403
+LOAD	UNPACKING STONE ROAD	luaKB=1611
+LOAD	FITTING THE ROAD EDGES	luaKB=1916
+LOAD	WINDING THE MACHINES	luaKB=1862
+LOAD	FITTING THE ROAD EDGES	luaKB=1866
+LOAD	WINDING THE MACHINES	luaKB=1870
+LOAD	FITTING THE ROAD EDGES	luaKB=1893
+LOAD	WINDING THE MACHINES	luaKB=1896
+LOAD	FITTING THE ROAD EDGES	luaKB=1903
+LOAD	WINDING THE MACHINES	luaKB=1909
+LOAD	FITTING THE ROAD EDGES	luaKB=1948
+LOAD	WINDING THE MACHINES	luaKB=1951
+LOAD	FITTING THE ROAD EDGES	luaKB=1960
+LOAD	WINDING THE MACHINES	luaKB=1962
+LOAD	FITTING THE ROAD EDGES	luaKB=1973
+LOAD	WINDING THE MACHINES	luaKB=2131
+LOAD	FITTING THE ROAD EDGES	luaKB=2140
+LOAD	WINDING THE MACHINES	luaKB=2142
+LOAD	FITTING THE ROAD EDGES	luaKB=2150
+LOAD	PREPARING ROAD SHADOWS	luaKB=2165
+LOAD	PREPARING THE CONTROLS	luaKB=2682
+LOAD	FINDING THE WAY	luaKB=2647
+LOAD	PREPARING THE START	luaKB=2581
+LOAD	READY	luaKB=2429
+READY: course 49 loading complete
+LOAD COMPLETE route=49 elapsedMS=8534 maxUpdateMS=352
+ROAD ASSETS	PACKAGED
+LOAD WORK	FITTING THE LANDINGS	total=701	max=315	slices=30
+LOAD WORK	UNPACKING STONE ROAD	total=764	max=313	slices=30
+LOAD WORK	GATHERING THE STONES	total=1	max=1	slices=1
+LOAD WORK	READY	total=349	max=349	slices=2
+LOAD WORK	FITTING THE ROAD EDGES	total=2266	max=350	slices=119
+LOAD WORK	PLANNING THE ROUTE	total=294	max=33	slices=21
+LOAD WORK	PREPARING THE START	total=74	max=12	slices=42
+LOAD WORK	PREPARING THE CONTROLS	total=115	max=70	slices=11
+LOAD WORK	PREPARING COURSE	total=75	max=75	slices=1
+LOAD WORK	FINDING THE WAY	total=364	max=9	slices=60
+LOAD WORK	WINDING THE MACHINES	total=1369	max=37	slices=112
+LOAD WORK	LOOKING TO THE SKY	total=0	max=0	slices=1
+LOAD WORK	PREPARING ROAD SHADOWS	total=784	max=35	slices=60
+BENCH BEGIN	49
+SCENE	34	normal	0	traverse
+BENCH route=49 frames=59 fps=21.06 frame95=49.00 frameMax=76.00 cpu95=47.00 cpuMax=74.00 cacheMiss=1 chunks=15 luaKB=2493
+STATS	GC=2.2 audio=4.0 game=89.4 idle=4.2 kernel=0.2
+BENCH BEGIN	49
+SCENE	35	normal	0	traverse
+BENCH route=49 frames=59 fps=26.03 frame95=42.00 frameMax=87.00 cpu95=38.00 cpuMax=85.00 cacheMiss=6 chunks=29 luaKB=2569
+STATS	GC=3.0 audio=3.4 game=88.8 idle=4.6 kernel=0.2
+BENCH BEGIN	49
+SCENE	36	normal	0	traverse
+BENCH route=49 frames=59 fps=29.16 frame95=38.00 frameMax=60.00 cpu95=29.00 cpuMax=57.00 cacheMiss=10 chunks=13 luaKB=2470
+STATS	GC=13.0 audio=3.2 game=77.8 idle=4.8 kernel=1.2
+BENCH BEGIN	49
+SCENE	37	field	1	magnet
+BENCH route=49 frames=89 fps=26.11 frame95=40.00 frameMax=89.00 cpu95=38.00 cpuMax=87.00 cacheMiss=16 chunks=25 luaKB=2525
+STATS	GC=2.4 audio=3.4 game=89.6 idle=4.2 kernel=0.4
+BENCH BEGIN	49
+SCENE	38	field	1	magnet
+BENCH route=49 frames=89 fps=27.68 frame95=38.00 frameMax=44.00 cpu95=35.00 cpuMax=38.00 cacheMiss=16 chunks=25 luaKB=2574
+STATS	GC=3.6 audio=3.8 game=88.6 idle=3.6 kernel=0.4
+BENCH BEGIN	49
+SCENE	39	field	2	magnet
+BENCH route=49 frames=89 fps=25.81 frame95=44.00 frameMax=53.00 cpu95=42.00 cpuMax=45.00 cacheMiss=16 chunks=26 luaKB=2624
+STATS	GC=3.4 audio=3.8 game=88.6 idle=3.6 kernel=0.6
+BENCH BEGIN	49
+SCENE	40	field	2	magnet
+BENCH route=49 frames=89 fps=25.00 frame95=42.00 frameMax=45.00 cpu95=40.00 cpuMax=42.00 cacheMiss=16 chunks=27 luaKB=2672
+STATS	GC=2.2 audio=4.0 game=87.6 idle=5.8 kernel=0.4
+BENCH BEGIN	49
+SCENE	41	field	8	fan
+BENCH route=49 frames=89 fps=26.02 frame95=41.00 frameMax=83.00 cpu95=39.00 cpuMax=61.00 cacheMiss=19 chunks=36 luaKB=2779
+STATS	GC=2.6 audio=3.0 game=89.8 idle=4.4 kernel=0.2
+BENCH BEGIN	49
+SCENE	42	field	8	fan
+BENCH route=49 frames=89 fps=25.34 frame95=43.00 frameMax=46.00 cpu95=38.00 cpuMax=42.00 cacheMiss=19 chunks=37 luaKB=2673
+STATS	GC=3.8 audio=3.8 game=87.8 idle=3.4 kernel=1.2
+BENCH BEGIN	49
+SCENE	43	field	21	fan
+BENCH route=49 frames=89 fps=23.70 frame95=47.00 frameMax=113.00 cpu95=45.00 cpuMax=110.00 cacheMiss=24 chunks=29 luaKB=2848
+STATS	GC=2.4 audio=3.4 game=90.4 idle=3.6 kernel=0.2
+BENCH BEGIN	49
+SCENE	44	field	21	fan
+BENCH route=49 frames=89 fps=24.80 frame95=43.00 frameMax=44.00 cpu95=40.00 cpuMax=42.00 cacheMiss=24 chunks=29 luaKB=3021
+STATS	GC=2.6 audio=3.0 game=89.8 idle=4.2 kernel=0.4
+BENCH BEGIN	49
+SCENE	45	field	22	fan
+BENCH route=49 frames=89 fps=29.40 frame95=37.00 frameMax=78.00 cpu95=30.00 cpuMax=34.00 cacheMiss=24 chunks=29 luaKB=3121
+STATS	GC=8.8 audio=2.0 game=83.4 idle=5.2 kernel=0.6
+BENCH BEGIN	49
+SCENE	46	field	22	fan
+BENCH route=49 frames=89 fps=28.46 frame95=38.00 frameMax=44.00 cpu95=33.00 cpuMax=39.00 cacheMiss=24 chunks=34 luaKB=2813
+STATS	GC=8.6 audio=3.0 game=82.6 idle=4.0 kernel=1.8
+BENCH BEGIN	49
+SCENE	47	pad	2	fan
+BENCH route=49 frames=89 fps=29.62 frame95=38.00 frameMax=41.00 cpu95=30.00 cpuMax=37.00 cacheMiss=24 chunks=36 luaKB=2860
+STATS	GC=12.2 audio=3.4 game=79.6 idle=4.4 kernel=0.4
+LOAD	ENTERING COURSE 53	luaKB=2485
+LOAD	PLANNING THE ROUTE	luaKB=2513
+LOAD	FITTING THE LANDINGS	luaKB=2890
+LOAD	PREPARING COURSE	luaKB=2987
+LOAD	GATHERING THE STONES	luaKB=2988
+LOAD	UNPACKING STONE ROAD	luaKB=3310
+LOAD	FITTING THE ROAD EDGES	luaKB=3815
+LOAD	WINDING THE MACHINES	luaKB=4159
+LOAD	FITTING THE ROAD EDGES	luaKB=4167
+LOAD	WINDING THE MACHINES	luaKB=4170
+LOAD	FITTING THE ROAD EDGES	luaKB=4217
+LOAD	WINDING THE MACHINES	luaKB=4244
+LOAD	FITTING THE ROAD EDGES	luaKB=4230
+LOAD	WINDING THE MACHINES	luaKB=4172
+LOAD	FITTING THE ROAD EDGES	luaKB=4159
+LOAD	WINDING THE MACHINES	luaKB=4160
+LOAD	FITTING THE ROAD EDGES	luaKB=4162
+LOAD	WINDING THE MACHINES	luaKB=4164
+LOAD	PREPARING ROAD SHADOWS	luaKB=4178
+LOAD	PREPARING THE CONTROLS	luaKB=4268
+LOAD	FINDING THE WAY	luaKB=4235
+LOAD	PREPARING THE START	luaKB=4309
+LOAD	READY	luaKB=3263
+READY: course 53 loading complete
+LOAD COMPLETE route=53 elapsedMS=10716 maxUpdateMS=828
+ROAD ASSETS	PACKAGED
+LOAD WORK	FITTING THE LANDINGS	total=1153	max=518	slices=46
+LOAD WORK	UNPACKING STONE ROAD	total=1193	max=466	slices=46
+LOAD WORK	GATHERING THE STONES	total=33	max=33	slices=1
+LOAD WORK	READY	total=811	max=811	slices=2
+LOAD WORK	FITTING THE ROAD EDGES	total=1729	max=50	slices=144
+LOAD WORK	PLANNING THE ROUTE	total=441	max=42	slices=28
+LOAD WORK	PREPARING THE START	total=60	max=11	slices=42
+LOAD WORK	PREPARING THE CONTROLS	total=155	max=86	slices=20
+LOAD WORK	PREPARING COURSE	total=106	max=106	slices=1
+LOAD WORK	FINDING THE WAY	total=563	max=8	slices=93
+LOAD WORK	WINDING THE MACHINES	total=1411	max=35	slices=141
+LOAD WORK	LOOKING TO THE SKY	total=0	max=0	slices=1
+LOAD WORK	PREPARING ROAD SHADOWS	total=1299	max=48	slices=93
+BENCH BEGIN	53
+SCENE	48	normal	0	traverse
+BENCH route=53 frames=59 fps=29.34 frame95=39.00 frameMax=50.00 cpu95=29.00 cpuMax=46.00 cacheMiss=3 chunks=23 luaKB=3274
+STATS	GC=11.4 audio=2.6 game=80.6 idle=4.6 kernel=0.8
+BENCH BEGIN	53
+SCENE	49	normal	0	traverse
+BENCH route=53 frames=59 fps=27.43 frame95=39.00 frameMax=65.00 cpu95=36.00 cpuMax=63.00 cacheMiss=6 chunks=38 luaKB=3320
+STATS	GC=2.8 audio=2.2 game=90.2 idle=4.8
+BENCH BEGIN	53
+SCENE	50	normal	0	traverse
+BENCH route=53 frames=59 fps=29.27 frame95=42.00 frameMax=69.00 cpu95=30.00 cpuMax=67.00 cacheMiss=10 chunks=31 luaKB=3373
+STATS	GC=24.6 audio=2.8 game=69.0 idle=3.2 kernel=0.4
+BENCH BEGIN	53
+SCENE	51	field	1	magnet
+BENCH route=53 frames=89 fps=24.87 frame95=42.00 frameMax=92.00 cpu95=38.00 cpuMax=90.00 cacheMiss=16 chunks=27 luaKB=3308
+STATS	GC=2.4 audio=3.6 game=89.0 idle=4.4 kernel=0.6
+BENCH BEGIN	53
+SCENE	52	field	1	magnet
+BENCH route=53 frames=89 fps=26.51 frame95=40.00 frameMax=45.00 cpu95=37.00 cpuMax=40.00 cacheMiss=16 chunks=27 luaKB=3360
+STATS	GC=3.6 audio=3.4 game=87.0 idle=5.8 kernel=0.2
+BENCH BEGIN	53
+SCENE	53	field	2	magnet
+BENCH route=53 frames=89 fps=26.57 frame95=43.00 frameMax=47.00 cpu95=40.00 cpuMax=44.00 cacheMiss=16 chunks=29 luaKB=3413
+STATS	GC=2.8 audio=4.0 game=88.6 idle=4.2 kernel=0.4
+BENCH BEGIN	53
+SCENE	54	field	2	magnet
+BENCH route=53 frames=89 fps=26.78 frame95=40.00 frameMax=43.00 cpu95=37.00 cpuMax=41.00 cacheMiss=16 chunks=29 luaKB=3465
+STATS	GC=2.2 audio=3.2 game=89.2 idle=5.0 kernel=0.4
+BENCH BEGIN	53
+SCENE	55	field	12	fan
+BENCH route=53 frames=89 fps=23.19 frame95=47.00 frameMax=75.00 cpu95=45.00 cpuMax=72.00 cacheMiss=18 chunks=15 luaKB=3664
+STATS	GC=2.4 audio=3.4 game=89.8 idle=3.8 kernel=0.6
+BENCH BEGIN	53
+SCENE	56	field	12	fan
+BENCH route=53 frames=89 fps=25.14 frame95=43.00 frameMax=49.00 cpu95=40.00 cpuMax=47.00 cacheMiss=18 chunks=17 luaKB=3833
+STATS	GC=2.2 audio=3.2 game=90.2 idle=3.8 kernel=0.6
+BENCH BEGIN	53
+SCENE	57	field	13	fan
+BENCH route=53 frames=89 fps=28.01 frame95=39.00 frameMax=42.00 cpu95=36.00 cpuMax=39.00 cacheMiss=18 chunks=20 luaKB=4000
+STATS	GC=2.6 audio=2.6 game=90.0 idle=4.4 kernel=0.4
+BENCH BEGIN	53
+SCENE	58	field	13	fan
+BENCH route=53 frames=89 fps=28.46 frame95=37.00 frameMax=57.00 cpu95=34.00 cpuMax=36.00 cacheMiss=18 chunks=20 luaKB=4084
+STATS	GC=6.4 audio=3.0 game=85.2 idle=3.8 kernel=1.6
+BENCH BEGIN	53
+SCENE	59	field	19	fan
+BENCH route=53 frames=89 fps=24.86 frame95=45.00 frameMax=80.00 cpu95=39.00 cpuMax=75.00 cacheMiss=24 chunks=34 luaKB=3878
+STATS	GC=5.6 audio=2.8 game=86.0 idle=4.4 kernel=1.2
+BENCH BEGIN	53
+SCENE	60	field	19	fan
+BENCH route=53 frames=89 fps=24.08 frame95=45.00 frameMax=50.00 cpu95=40.00 cpuMax=46.00 cacheMiss=24 chunks=34 luaKB=3735
+STATS	GC=3.2 audio=2.6 game=88.6 idle=4.2 kernel=1.4
+BENCH BEGIN	53
+SCENE	61	pad	6	fan
+BENCH route=53 frames=89 fps=29.62 frame95=36.00 frameMax=46.00 cpu95=32.00 cpuMax=41.00 cacheMiss=24 chunks=36 luaKB=3891
+STATS	GC=5.8 audio=4.2 game=85.0 idle=4.2 kernel=0.8
+BENCH COMPLETE

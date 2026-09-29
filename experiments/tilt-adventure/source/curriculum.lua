@@ -1,6 +1,6 @@
--- Revision 4: stable campaign identities, redesigned finale layouts and records.
+-- Revision 5: stable campaign identities, redesigned finale layouts and records.
 -- Geometry is built from short, separated encounters, never a pile of all machines.
-Curriculum={revision=4,chapters={}}
+Curriculum={revision=5,chapters={}}
 local C=Curriculum
 local previous={};local byId={}
 for i,c in ipairs(Courses) do previous[i]=c.id;byId[c.id]=c end
@@ -26,7 +26,7 @@ local function buildCourse(id,name,keys,variant)
    local v=m('fan',160,16,40,40,{angle=math.pi/2,initialAngle=math.pi/2,force=55,region={ox+304,80,192,96}})
    if controlled then pad({kind='fan',x=ox+112,y=48,target=v,initialAngle=math.pi/2}) end
   end
-  local design=ReviewDesign.build(c,key,variant,ox,oz) or FinaleDesign.build(c,key,visits[key],variant,ox,oz)
+  local design=key=='windcontrol' and WindDesign.build(c,ox,oz,variant) or ReviewDesign.build(c,key,variant,ox,oz) or FinaleDesign.build(c,key,visits[key],variant,ox,oz)
   if design then width=design.width;profile=design.profile;raised=design.raised or 0
   elseif key=='terrain' then
    width=544
@@ -136,6 +136,7 @@ function C.ensure(c)
  c.name=name;c.baseHeight=built.height;c.materialized=true
  if Joinery then Joinery.prepare(c) end
  if HeightIndex then HeightIndex.prepare(c) end
+ if WindContact then WindContact.prepare(c) end
 end
 local keep={id=true,name=true,shortName=true,hint=true,jump=true,layoutRevision=true,chapter=true,chapterName=true,
  review=true,finale=true,blueprint=true,encounters=true,add=true,rect=true,height=true,baseHeight=true}
@@ -226,12 +227,22 @@ for i,c in ipairs(Courses) do
  if c.legacyIndex then Courses.legacyIndex[c.legacyIndex]=i end
 end
 function Courses.migrate(saved)
- if saved.campaignRevision==4 then return saved end
+ if saved.campaignRevision==5 then return saved end
+ if saved.guides then saved.guides.windcontrol=nil;saved.guides.magnet=nil end
+ if saved.campaignRevision==4 then
+  -- Force balance affects records on every wind/magnet encounter.
+  for n,c in ipairs(Courses) do
+   local changed=c.id=='wind-dial' or c.id=='crosswind' or c.id=='magnet-school'
+   if c.blueprint then for _,key in ipairs(c.blueprint.keys) do if key=='fan' or key=='windcontrol' or key=='magnet' or key=='bumper' then changed=true end end end
+   if changed and saved.best then saved.best[tostring(n)]=nil;saved.best[n]=nil end
+  end
+  saved.campaignRevision=5;return saved
+ end
  if saved.campaignRevision==3 then
-  for n,c in ipairs(Courses) do if c.blueprint or c.revisedLesson then
+  for n,c in ipairs(Courses) do if c.blueprint or c.revisedLesson or c.id=='crosswind' or c.id=='magnet-school' then
    if saved.best then saved.best[tostring(n)]=nil;saved.best[n]=nil end
   end end
-  saved.campaignRevision=4;return saved
+  saved.campaignRevision=5;return saved
  end
  local completed,best={},{}
  local function mapped(n)
@@ -243,6 +254,6 @@ function Courses.migrate(saved)
   -- Keep wins, but an old short-course time is not a record for a rebuilt voyage.
   if n and not Courses[n].layoutRevision then best[tostring(n)]=v end
  end
- saved.level=mapped(saved.level or 1) or 1;saved.completed=completed;saved.best=best;saved.campaignRevision=4
+ saved.level=mapped(saved.level or 1) or 1;saved.completed=completed;saved.best=best;saved.campaignRevision=5
  return saved
 end

@@ -1,8 +1,10 @@
-# Sky Hamster — v0.12.3
+# Sky Hamster — v0.12.4
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
 当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.x → 0.11.0 → 0.12.x**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
+
+0.12.4 风场覆盖整段路宽，磁场扩大有效边缘、连续检测高速穿越；旋转风机改为顺风爬坡，增加 GO／WAIT 与地面方向提示。保留渐进加速和反向倾斜控制。见 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.12.4.md)。
 
 0.12.3 审查全部 53 关，重做 19 个累计复习关、调整 5 个专项教学关和四个终局关。最终三关分别有 6／6／10 门大炮，加入斜向落点、可刹车的接收台、水平折返平台及分路组合；保留稳定关卡身份与已有进度，改图关卡的旧最佳时间清除。见 [关卡检查与处置表](experiments/tilt-adventure/CAMPAIGN-v0.12.3.md) 和 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.12.3.md)。
 
@@ -28,7 +30,7 @@ Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 ./experiments/tilt-adventure/build.ps1
 ```
 
-输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。修改地图或相关绘制代码后，按 [预生成流程](experiments/tilt-adventure/art/RUNTIME-v0.12.2.md) 更新资源。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.12.3 继续。
+输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。修改地图或相关绘制代码后，按 [预生成流程](experiments/tilt-adventure/art/RUNTIME-v0.12.2.md) 更新资源。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.12.4 继续。
 
 ## 0.6.7 及课堂版归档
 

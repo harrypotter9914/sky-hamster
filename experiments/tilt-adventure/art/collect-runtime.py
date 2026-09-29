@@ -31,7 +31,7 @@ for name in report['courses']:
 for kind, target, count in [('cannon', 'cannon', 62), ('fan', 'fan-housings', 72)]:
     for n in range(1, count + 1):
         Image.open(data / f'images/bake-{kind}-{n}.gif').convert('RGBA').save(root / f'source/structures/{target}-table-{n}.png')
-inputs = ['courses.lua','campaign.lua','workshop_courses.lua','turntable_courses.lua','finale_design.lua','review_design.lua','lesson_revisions.lua','curriculum.lua','joinery.lua','height_index.lua','engine.lua','road_art.lua','cannon_model.lua','machine_art.lua']
+inputs = ['courses.lua','campaign.lua','workshop_courses.lua','turntable_courses.lua','wind_design.lua','finale_design.lua','review_design.lua','lesson_revisions.lua','curriculum.lua','joinery.lua','height_index.lua','engine.lua','road_art.lua','cannon_model.lua','machine_art.lua']
 hashes = {name: hashlib.sha256((root/'source'/name).read_text(encoding='utf-8').encode()).hexdigest() for name in inputs}
 for p in sorted((root/'source/paving').glob('*.png')):
     hashes[p.relative_to(root/'source').as_posix()] = hashlib.sha256(p.read_bytes()).hexdigest()

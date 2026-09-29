@@ -171,7 +171,7 @@ function S.update(c,x,y,t,dt,playing,airborne,z)
    end
    local contact=false
    if m.kind=='conveyor' then contact=not airborne and M.contains(m,x,y,t)
-   elseif m.kind=='magnet' then contact=(z or 0)<45 and distance<(m.radius or 140) and distance>10 end
+   elseif m.kind=='magnet' then contact=(z or 0)<45 and distance<(m.fieldRadius or math.max(m.radius or 140,184))+Footing.radius and distance>10 end
    if contact and not s.contact and not S.fresh then S.play(m.kind=='magnet' and 'magnet_contact' or 'belt_contact',gain*.22) end
    s.contact=contact
   else s.contact=false end

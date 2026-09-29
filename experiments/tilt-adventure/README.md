@@ -1,4 +1,6 @@
-# Sky Hamster — 0.12.3
+# Sky Hamster — 0.12.4
+
+0.12.4 gives crank-controlled fans an uphill-assist role, widens wind coverage to the road edges, and strengthens swept magnetic contact with a soft boundary. Ground arrows and GO/WAIT clarify direction. See [validation](VALIDATION-v0.12.4.md) and [targeted hardware measurements](tests/PERFORMANCE-v0.12.4.md).
 
 0.12.3 audits all 53 courses and revises 19 cumulative reviews, five teaching courses and four expeditions. Angled cannon chains have braking terraces; elevated hairpins have level turning areas. Stable progress survives; best times for redesigned courses reset. See [per-course dispositions](CAMPAIGN-v0.12.3.md), [validation](VALIDATION-v0.12.3.md) and [hardware measurements](tests/PERFORMANCE-v0.12.3.md). Added checks: `check_campaign_routes.py`, `check_finale_variety.py`, `check_lesson_controls.py`, `check_road_assets.py`, `check_terrain_index.py`.
 

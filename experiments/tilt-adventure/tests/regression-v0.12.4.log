@@ -1,0 +1,160 @@
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+READY: course 1 loading complete
+READY: course 2 loading complete
+READY: course 3 loading complete
+READY: course 4 loading complete
+READY: course 5 loading complete
+READY: course 6 loading complete
+READY: course 7 loading complete
+READY: course 8 loading complete
+READY: course 9 loading complete
+READY: course 10 loading complete
+READY: course 11 loading complete
+READY: course 12 loading complete
+READY: course 13 loading complete
+READY: course 14 loading complete
+READY: course 15 loading complete
+READY: course 16 loading complete
+READY: course 17 loading complete
+READY: course 18 loading complete
+READY: course 19 loading complete
+READY: course 20 loading complete
+READY: course 21 loading complete
+READY: course 22 loading complete
+READY: course 23 loading complete
+READY: course 24 loading complete
+READY: course 25 loading complete
+READY: course 26 loading complete
+READY: course 27 loading complete
+READY: course 28 loading complete
+READY: course 29 loading complete
+READY: course 30 loading complete
+READY: course 31 loading complete
+READY: course 32 loading complete
+READY: course 33 loading complete
+READY: course 34 loading complete
+READY: course 35 loading complete
+READY: course 36 loading complete
+READY: course 37 loading complete
+READY: course 38 loading complete
+READY: course 39 loading complete
+READY: course 40 loading complete
+READY: course 41 loading complete
+READY: course 42 loading complete
+READY: course 43 loading complete
+READY: course 44 loading complete
+READY: course 45 loading complete
+READY: course 46 loading complete
+READY: course 47 loading complete
+READY: course 48 loading complete
+READY: course 26 loading complete
+READY: course 5 loading complete
+READY: course 1 loading complete
+READY: course 1 loading complete
+READY: course 48 loading complete
+READY: course 1 loading complete
+PASS: calibration, neutral drift, proportional tilt, jump debounce, dock re-entry, bridge, cannon landing, all courses, map, retry, save and campaign ending
+READY: course 1 loading complete
+PASS: two home entries, settings persistence, paused menus, selector return, all UI states and column-first navigation
+READY: course 1 loading complete
+READY: course 1 loading complete
+READY: course 5 loading complete
+READY: course 6 loading complete
+READY: course 9 loading complete
+READY: course 29 loading complete
+READY: course 17 loading complete
+READY: course 26 loading complete
+READY: course 31 loading complete
+READY: course 26 loading complete
+READY: course 30 loading complete
+PASS: first encounters, persisted acknowledgements, no repeated jump tutorial, replay, paused world, mixed-route queue and every animation phase
+READY: course 2 loading complete
+PASS: arbitrary steady grips, stable tangent basis, four world directions and diagonal arrows, motion rejection, per-course calibration and inertial reversal
+PASS: screen-normal pulse, single trigger, upright support and lateral shake rejection, rearming and tutorial revision
+READY: course 30 loading complete
+READY: course 26 loading complete
+PASS: Help replay, B return, full replay resume, Goal paging, frozen physics/time, no accidental jump or cannon release, all route notes
+PASS: lift impulse follows device Z in angled, upright and side-on grips
+READY: course 1 loading complete
+PASS: downward top contact preserves horizontal momentum
+READY: course 1 loading complete
+READY: course 1 loading complete
+READY: course 1 loading complete
+READY: course 1 loading complete
+PASS: current pose normal after turning, unpolluted steering, locked/released/leave/relock states, four-direction landing momentum
+READY: course 19 loading complete
+READY: course 19 loading complete
+READY: course 26 loading complete
+READY: course 27 loading complete
+READY: course 27 loading complete
+READY: course 28 loading complete
+READY: course 33 loading complete
+READY: course 33 loading complete
+PASS: 48-course anchors, progress migration, all tutorials, lift stops and height collision, moving dock, wind control, bumper jump clearance, cannon routes, five checkpoints
+READY: course 34 loading complete
+READY: course 35 loading complete
+READY: course 36 loading complete
+READY: course 37 loading complete
+READY: course 38 loading complete
+READY: course 39 loading complete
+READY: course 40 loading complete
+READY: course 41 loading complete
+READY: course 42 loading complete
+READY: course 43 loading complete
+READY: course 44 loading complete
+PASS: grounded-only conveyor, timed jet, bridge endpoints/support, paired gates/collision, distance-limited attraction, 48-course runtime, seven checkpoints and new tutorials
+PASS: crank angle synchronization, stop/reverse, lift travel, impact-triggered spring, smooth shutters and matching collision height
+PASS: nearby-physics queries match full-course reference across 48 routes, moving endpoints, phases and offset positions
+PASS: 2400 terrain frames preserve drawn chunks, order, subpixel positions, cache misses and eviction counts
+PASS: render index includes original visible mechanisms across 48 courses, camera cells and movement phases
+PASS: direct and render-cached poses equal the original wrapper chain exactly
+PASS: lift-only height queries equal full support-based heights across machinery, boundaries and raised lifts
+PASS: 63 moderate lift/grip/rate combinations; pulse shapes, sideways shake rejection, quiet rearm, cooldown, steering isolation
+BRAKING speed=60 input=0.0 time=5.3967->5.3967 distance=138.8795->138.8795 reduction=0.00%
+BRAKING speed=60 input=0.5 time=0.6920->0.6745 distance=20.3765->19.8701 reduction=2.49%
+BRAKING speed=60 input=1.0 time=0.3710->0.3609 distance=11.0187->10.7232 reduction=2.68%
+BRAKING speed=120 input=0.0 time=8.2492->8.2492 distance=389.0778->389.0778 reduction=0.00%
+BRAKING speed=120 input=0.5 time=1.3150->1.2833 distance=76.1311->74.3580 reduction=2.33%
+BRAKING speed=120 input=1.0 time=0.7212->0.7022 distance=42.4356->41.3385 reduction=2.59%
+BRAKING speed=200 input=0.0 time=10.7350->10.7350 distance=780.2776->780.2776 reduction=0.00%
+BRAKING speed=200 input=0.5 time=2.0594->2.0124 distance=194.6430->190.4489 reduction=2.15%
+BRAKING speed=200 input=1.0 time=1.1595->1.1300 distance=112.3610->109.5856 reduction=2.47%
+PASS: modest stopping-distance change, continuous inertia; existing four-direction landing/cannon/slope regressions also passed
+PASS: every mechanism/control-pad sound, actual spring event, transition pairs, attenuation, voice limits, pause/effects/reset and six UI cues
+READY: course 44 loading complete
+PASS: cooperative loading frames, real monotonic progress, completion callback and frozen course entry
+PASS: 6936 swept hearing-bound checks; 48 course audio traces match unculled reference, including distant exit/re-entry
+READY: course 11 loading complete
+READY: course 12 loading complete
+PASS: ferry and rotor move the ball without false rolling; motion relative to both surfaces still rolls
+PASS: long bridge remains inside its raster bounds through 73 rotation samples
+PASS: prepared gate, hatch and belt run 36-second animation cycles without new raster allocations
+PASS: 4887 moving poses without road intersections; 486 flush seam samples; 6 lift side-exits; 121 muzzle/tangent samples
+PASS: 2142 cached terrain covers match uncached tile selection and painter order
+PASS: 67 near-bank samples, 12 mechanism types indexed; open lift supports; 121 exact muzzle/trajectory/spawn and preserved landing checks; cannon foreshortening
+PASS: 74826 indexed height samples exactly match original slopes, step boundaries and lift lips
+READY: course 20 loading complete
+PASS: repeated floor queries retain live lift elevation and reset invalidation
+READY: course 24 loading complete
+PASS: prepared lift supports and every fan heading allocate no new images during motion; old course supports released
+PASS: 4955 prepared terrain views match streaming; zero visible misses; maximum 39 chunks; larger-map fallback retained
+READY: course 33 loading complete
+READY: course 1 loading complete
+READY: course 33 loading complete
+PASS: leaving releases derived course caches; returning rebuilds them without losing level data
+PASS: 8064 spring hits across every campaign spring, 72 angles, slow/fast/head-on/grazing; outgoing and jump clearance; solid deck skirts; depth and height rejection
+PASS: static masks reuse rasters without allocation; relative depth and animation changes invalidate
+PASS: 2880 exact footprint boundary checks, 360 passing lanes, 1440 clear-air passes, top-entry exclusion, one synchronized impact sound/pulse and no animation image allocation
+READY: course 45 loading complete
+PASS: circular edge support, diameter gap boundary, 74 real landing signals, four onboard routes, no snap, release/re-entry, gates/traps/jets, fast wind crossing and +8% force
+READY: course 45 loading complete
+PASS: scripted route 45 reaches win through real dock, collision, support and checkpoint logic
+READY: course 46 loading complete
+PASS: scripted route 46 reaches win through real dock, collision, support and checkpoint logic
+READY: course 47 loading complete
+PASS: scripted route 47 reaches win through real dock, collision, support and checkpoint logic
+READY: course 48 loading complete
+PASS: scripted route 48 reaches win through real dock, collision, support and checkpoint logic
+PASS: 35 distinct mono machine/UI samples

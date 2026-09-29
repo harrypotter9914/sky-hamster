@@ -1,6 +1,6 @@
 """Check the generated benchmark's cooperative loader with mocked device I/O.
 
-Build with build-perf.ps1 -All -Routes 50,51,52,53 or -Survey first. This verifies control
+Build with build-perf.ps1 -All -Routes 50,51,52,53 or -Survey / -Fields first. This verifies control
 flow and report completeness only; its synthetic clock cannot measure FPS.
 """
 from pathlib import Path
@@ -31,7 +31,11 @@ for n,c in ipairs(Courses) do
  for _,route in ipairs(Bench.routes or {}) do if route==n then included=true end end
  if included then
   expectedLoads=expectedLoads+1;Curriculum.ensure(c)
-  if Bench.survey then expected=expected+3+((#(c.mechanisms or {})>0 or #(c.pads or {})>0) and 1 or 0)
+  if Bench.fields then
+   expected=expected+3
+   for _,m in ipairs(c.mechanisms or {}) do if m.kind=='fan' or m.kind=='magnet' then expected=expected+2 end end
+   for _,p in ipairs(c.pads or {}) do if p.kind=='fan' then expected=expected+1 end end
+  elseif Bench.survey then expected=expected+3+((#(c.mechanisms or {})>0 or #(c.pads or {})>0) and 1 or 0)
   else expected=expected+4+#(c.mechanisms or {})+#(c.pads or {}) end
   Curriculum.release(c)
  end

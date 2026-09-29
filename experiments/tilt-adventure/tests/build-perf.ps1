@@ -1,5 +1,5 @@
 # Same installation folder as the release; restore the release after measuring.
-param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[switch]$Travel,[switch]$Survey,[int[]]$Routes=@(),[int[]]$MechanismIndices=@())
+param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[switch]$Travel,[switch]$Survey,[switch]$Fields,[int[]]$Routes=@(),[int[]]$MechanismIndices=@())
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 & "$root/art/check-bake.ps1"
@@ -20,7 +20,8 @@ if($Routes.Count){("Bench.routes={"+($Routes -join ',')+"}") | Add-Content "$qa/
 if($MechanismIndices.Count){("Bench.mechanismIndices={"+($MechanismIndices -join ',')+"}") | Add-Content "$qa/game.lua"}
 if($Travel){'Bench.travel=true' | Add-Content "$qa/game.lua"}
 if($Survey){'Bench.survey=true' | Add-Content "$qa/game.lua"}
-if($All -or $Travel -or $Survey){
+if($Fields){'Bench.fields=true' | Add-Content "$qa/game.lua"}
+if($All -or $Travel -or $Survey -or $Fields){
  @'
 Bench.all=true
 Bench.sample=function(spec,frame)
@@ -32,6 +33,15 @@ Bench.sample=function(spec,frame)
   local steps=math.ceil((c.goal[1]-c.start[1])/8)
   local distance=frame<=steps and frame*8 or (steps*2-frame)*8
   x,y=c.start[1]+distance,80;vx,vy=240,0
+ elseif spec.kind=='field' then
+  local m=c.mechanisms[spec.index]
+  if m.kind=='fan' then
+   local r=m.region;m.angle=(frame/90)*math.pi*2
+   x,y=r[1]-48+frame*1.6,r[2]+spec.side*(r[4]/2-10)
+  else
+   x=m.x-48+frame*1.6;y=m.y+(m.y>80 and -1 or 1)*(spec.side<0 and 60 or 150)
+  end
+  vx,vy=240,0
  elseif spec.kind=='road' then
   local tile=c.tiles[math.min(#c.tiles,1+math.floor(frame/180*(#c.tiles-1)))]
   x,y=tile.x*32+16,tile.y*32+16;vx,vy=70,20

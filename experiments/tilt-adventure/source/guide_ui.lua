@@ -58,10 +58,10 @@ local info={
  lift={'CRANK UP TO THE CLOUDS','Dock on the lift. Crank up; B releases.'},
  slider={'YOUR OWN SKY FERRY','Dock on the deck. Crank across; B releases.'},
  fan={'READ THE WIND','Counter-tilt. At a dial, crank to aim.'},
- windcontrol={'TURN THE WIND','Dock at the dial. Crank to aim; B releases.'},
+ windcontrol={'TURN THE WIND','Aim uphill until GO. B releases.'},
  conveyor={'BELT: ALWAYS MOVING','Rollers carry you. Counter-tilt or jump clear.'},
  jet={'STEAM: TIMED BURSTS','These are air nozzles. Cross when they stop.'},
- magnet={'MAGNET: PULLS IN','It pulls toward itself. Keep your distance.'},
+ magnet={'MAGNET: PULLS IN','The field reaches both edges. Counter-tilt.'},
  extend={'BUILD YOUR CROSSING','Dock. Crank to extend the road. B releases.'},
  switch={'CHOOSE YOUR ROUTE','Crank the dial. One lane opens, one closes.'},
  onboard={'RIDE AND TURN','Board. Crank until the exit says GO. B releases.'},
@@ -194,10 +194,14 @@ function UI.lesson(kind,time)
    left=t<1 and 'DOCK ON THE DECK' or t<3.5 and 'CRANK TO TRAVEL' or 'B: RELEASE'
    right=t<3.5 and 'MOVE TO THE FAR BANK' or 'ROLL OFF AT THE DOCK'
   elseif kind=='fan' then
-   slab(207,142,166,23)
-   local angle=data==info.windcontrol and (math.pi/2+math.rad(t*120)) or math.pi/2
+   local controlled=data==info.windcontrol
+   if controlled then
+    ink();g.setColor(g.kColorWhite);g.fillPolygon(260,147,315,102,366,116,309,161)
+    ink();g.drawPolygon(260,147,315,102,366,116,309,161);g.drawLine(309,161,309,171);g.drawLine(309,171,366,126);g.drawLine(366,126,366,116)
+   else slab(207,142,166,23) end
+   local angle=controlled and (math.pi/2*(1-ease(t/2))) or math.pi/2
    MachineArt.fan({angle=angle},t,236,131)
-   ball(327,130);left=data==info.windcontrol and 'CRANK AT THE DIAL' or 'COUNTER THE GUST';right=data==info.windcontrol and 'AIM ALONG THE ROAD' or 'STAY ON THE ROAD'
+   if controlled then local u=ease((t-2)/2.5);ball(277+u*61,137-u*35) else ball(327,130) end;left=controlled and (t<2 and 'CRANK AT THE DIAL' or 'B: RELEASE') or 'COUNTER THE GUST';right=controlled and 'RIDE THE TAILWIND' or 'STAY ON THE ROAD'
   elseif kind=='bumper' then
    slab(207,135,166,29);MachineArt.bumper({hitAt=t-t%3+1.5},t,303,142)
    local q=t%3;local reach=303-(BumperModel.radius+9)*math.sqrt(2)*.9
@@ -227,7 +231,8 @@ function UI.lesson(kind,time)
   end
   local manual=kind=='onboard' or kind=='control' or kind=='cannon' or kind=='lift' or kind=='slider' or kind=='extend' or kind=='switch' or data==info.windcontrol
   local turn=t*120
-  if kind=='lift' then turn=ease((t-1)/2)*176
+  if data==info.windcontrol then turn=-ease(t/2)*90
+  elseif kind=='lift' then turn=ease((t-1)/2)*176
   elseif kind=='slider' then turn=ease((t-1)/2.5)*540
   elseif kind=='onboard' then turn=-ease((t-1.5)/2)*90
   elseif kind=='control' then turn=-ease((t-1)/2)*90

@@ -32,9 +32,8 @@ function M.wind(c,x,y,vx,vy,z,dt,t)
    vx,vy=vx+dx*force*dt,vy+dy*force*dt
   elseif m.kind=='jet' and z<70 and M.contains(m,x,y,t or 0) and ((t or 0)+(m.phase or 0))%m.period<m.period*.4 then
    vx,vy=vx+math.cos(m.angle or 0)*160*dt,vy+math.sin(m.angle or 0)*160*dt
-  elseif m.kind=='magnet' and z<45 then
-   local dx,dy=m.x-x,m.y-y;local d=math.sqrt(dx*dx+dy*dy)
-   if d>10 and d<(m.radius or 140) then local f=(1-d/(m.radius or 140))*110*dt;vx,vy=vx+dx/d*f,vy+dy/d*f end
+  elseif m.kind=='magnet' and z<45 and z>=-9 then
+   vx,vy=WindContact.magnet(m,x,y,vx,vy,dt)
   end
  end
  return vx,vy

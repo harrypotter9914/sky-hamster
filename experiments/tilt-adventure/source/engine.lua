@@ -12,6 +12,7 @@ import "bumper_model"
 import "campaign"
 import "workshop_courses"
 import "turntable_courses"
+import "wind_design"
 import "finale_design"
 import "review_design"
 import "lesson_revisions"
@@ -341,6 +342,7 @@ local function renderWorld()
    for i=0,3 do local yy=sy-2-i*(2-controls.charge);g.drawLine(sx-4,yy,sx+4,yy-1) end
   end
  end
+ WindContact.draw(scene,worldTime,project)
  Structures.drawTop(scene,worldTime,project,drawTile)
  Dock.draw(scene,project,drawTile)
  marker(course.start,'START');for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE') end;marker(course.goal,'GOAL')

@@ -14,6 +14,8 @@ local function extent(c,m,low,high)
  if m.retract then x0=math.min(x0,m.anchor-r);x1=math.max(x1,m.anchor+m.maxWidth+r) end
  if m.toX then x0=math.min(x0,m.toX-r);x1=math.max(x1,m.toX+r);y0=math.min(y0,m.toY-r);y1=math.max(y1,m.toY+r) end
  if m.range then y0=y0-m.range;y1=y1+m.range end
+ if m.region then local a=m.region;x0=math.min(x0,a[1]-a[3]/2);x1=math.max(x1,a[1]+a[3]/2);y0=math.min(y0,a[2]-a[4]/2);y1=math.max(y1,a[2]+a[4]/2) end
+ if m.kind=='magnet' then local d=m.fieldRadius or 184;x0=math.min(x0,m.x-d);x1=math.max(x1,m.x+d);y0=math.min(y0,m.y-d);y1=math.max(y1,m.y+d) end
  low,high=heights(c,x0,x1)
  low=math.min(low,m.minHeight or low);high=math.max(high,m.maxHeight or high)+(m.wallHeight or 80)
  -- Includes signs, gear/handle overhang, steam, wind trails and the full turn.

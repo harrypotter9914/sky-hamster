@@ -1,6 +1,7 @@
 -- Keep the first encounter readable; make later practice ask for a new decision.
 LessonRevisions={}
 function LessonRevisions.apply(byId)
+ WindDesign.lesson(assert(byId['wind-dial']))
  local function revise(id)
   local c=assert(byId[id]);c.tiles={};c.lookup={};c.revisedLesson=true;c.layoutRevision=4;return c
  end

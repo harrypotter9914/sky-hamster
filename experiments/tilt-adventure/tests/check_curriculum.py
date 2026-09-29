@@ -52,7 +52,7 @@ end
 for old=1,48 do
  local s={campaignRevision=2,level=old,completed={[old]=true},best={[tostring(old)]=42},options={music=false},guides={jump=true}}
  local got=Courses.migrate(s);local n=Courses.indexById[Curriculum.previousIds[old]]
- assert(got.level==n and got.completed[n] and got.campaignRevision==4)
+ assert(got.level==n and got.completed[n] and got.campaignRevision==5)
  assert(got.options.music==false and got.guides.jump)
  assert((got.best[tostring(n)]~=nil)==(not Courses[n].layoutRevision))
  assert(Courses.migrate(got)==got)

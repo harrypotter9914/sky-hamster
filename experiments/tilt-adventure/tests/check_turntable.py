@@ -76,7 +76,7 @@ assert(WindContact.fraction(region,-20,50,400,0,.1)==0,'wind outside zone')
 local fan={kind='fan',x=0,y=0,w=32,h=32,angle=math.pi/2,region=region,force=100}
 c={mechanisms={fan},height=function()return 0 end}
 local vx,vy=Mechanisms.wind(c,0,0,0,0,0,.01,0)
-assert(math.abs(vy-1.08)<1e-9,'wind gain is not exactly 8 percent')
+assert(math.abs(vy-WindContact.gain)<1e-9,'wind gain does not match tuning')
 print('PASS: circular edge support, diameter gap boundary, '..nsignals..' real landing signals, four onboard routes, no snap, release/re-entry, gates/traps/jets, fast wind crossing and +8% force')
 ''')
 

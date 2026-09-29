@@ -8,7 +8,7 @@ local function bounds(m)
  if m.toX then x0=math.min(x0,m.toX-r);x1=math.max(x1,m.toX+r);y0=math.min(y0,m.toY-r);y1=math.max(y1,m.toY+r) end
  if m.range then y0=y0-m.range;y1=y1+m.range end
  if m.retract then x0=math.min(x0,m.anchor-32);x1=math.max(x1,m.anchor+m.maxWidth+32) end
- if m.kind=='magnet' then local d=(m.radius or 140)+32;x0,x1,y0,y1=m.x-d,m.x+d,m.y-d,m.y+d end
+ if m.kind=='magnet' then local d=(m.fieldRadius or math.max(m.radius or 140,184))+32;x0,x1,y0,y1=m.x-d,m.x+d,m.y-d,m.y+d end
  if m.region then local a=m.region;x0=math.min(x0,a[1]-a[3]/2-32);x1=math.max(x1,a[1]+a[3]/2+32);y0=math.min(y0,a[2]-a[4]/2-32);y1=math.max(y1,a[2]+a[4]/2+32) end
  return {x0,x1,y0,y1}
 end

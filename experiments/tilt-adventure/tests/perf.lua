@@ -41,6 +41,12 @@ local function planAll()
   if Curriculum then Curriculum.ensure(c) end
   if Bench.travel then
    specs[#specs+1]={route=n,kind='stream',frames=math.ceil((c.goal[1]-c.start[1])/8)*2,name='240-units-per-second'}
+  elseif Bench.fields then
+   for _,fraction in ipairs({.1,.5,.9}) do specs[#specs+1]={route=n,kind='normal',fraction=fraction,frames=60} end
+   for i,m in ipairs(c.mechanisms or {}) do if m.kind=='fan' or m.kind=='magnet' then
+    for _,side in ipairs({-1,1}) do specs[#specs+1]={route=n,kind='field',index=i,name=m.kind,side=side,frames=90} end
+   end end
+   for i,p in ipairs(c.pads or {}) do if p.kind=='fan' then specs[#specs+1]={route=n,kind='pad',index=i,name='fan',frames=90} end end
   elseif Bench.survey then
    for _,fraction in ipairs({.1,.5,.9}) do specs[#specs+1]={route=n,kind='normal',fraction=fraction,frames=60} end
    local count=#(c.mechanisms or {})

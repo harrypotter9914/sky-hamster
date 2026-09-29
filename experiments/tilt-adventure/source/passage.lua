@@ -181,6 +181,10 @@ function P.draw(c,t,project)
     P.signal(sx,sy,P.ready(c,m,p,t))
    end
   end
+  if m.assistAngle then
+   local sx,sy=project(m.x+24,m.y+16,c:height(m.x,m.y))
+   if sx>34 and sx<366 and sy>55 and sy<193 then P.signal(sx,sy,WindContact.assistReady(m)) end
+  end
   local state=P.state(m,t)
   if state~=nil and not (m.hideLabel and m.openFor==0) then
    -- Signals sit beside the crossing, not on the moving/vanishing surface.
