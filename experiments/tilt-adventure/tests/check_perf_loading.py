@@ -26,7 +26,7 @@ for i=1,40000 do
 end
 assert(store.saved and store.saved.complete,'benchmark never completed')
 assert(#store.saved.stages==156,'a scene was omitted')
-assert(loadingFrames>100,'long-course loading did not yield across frames')
+assert(loadingFrames>8,'long-course loading did not yield across frames')
 for _,stage in ipairs(store.saved.stages) do
  assert(stage.frames==stage.scenario.frames-1,'loading contaminated measured frame count')
 end

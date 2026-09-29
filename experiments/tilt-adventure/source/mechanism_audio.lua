@@ -63,10 +63,30 @@ local function hearingBounds(m)
  return x0,x1,y0,y1
 end
 function S.reset(course)
- S.quiet();S.course=course;S.states={};S.clock=0
+ S.quiet();S.course=course;S.states={};S.clock=0;S.cells={};S.near=nil;S.cellX=nil;S.cellY=nil
  S.wasDriven=nil;S.commandUntil=nil
  for _,v in pairs(S.shots) do v.last=-10 end
  for _,m in ipairs(course.mechanisms or {}) do local s={m=m};s.x0,s.x1,s.y0,s.y1=hearingBounds(m);snapshot(s,0);S.states[#S.states+1]=s end
+end
+local function nearby(x,y)
+ local ix,iy=math.floor(x/128),math.floor(y/128)
+ if ix==S.cellX and iy==S.cellY then return S.near end
+ -- Departing states must lose contact history even though they will no longer
+ -- be visited. On return snapshot the current world time, never replay old cues.
+ local key=ix..','..iy;local list=S.cells[key]
+ if not list then
+  list={};S.cells[key]=list
+  for _,s in ipairs(S.states) do
+   if s.x0<=(ix+1)*128 and s.x1>=ix*128 and s.y0<=(iy+1)*128 and s.y1>=iy*128 then list[#list+1]=s end
+  end
+ end
+ local stamp={}
+ for _,s in ipairs(list) do s.nearStamp=stamp end
+ for _,s in ipairs(S.near or {}) do
+  if s.nearStamp~=stamp then s.audible=false;s.contact=false;s.skipped=true end
+ end
+ S.cellX,S.cellY,S.near=ix,iy,list
+ return list
 end
 local function want(name,volume,rate)
  local v=S.byName[name];if v and volume>v.want then v.want=volume;v.rate=rate or 1 end
@@ -107,7 +127,7 @@ function S.update(c,x,y,t,dt,playing,airborne,z)
  if not playing or not active() then S.quiet();return end
  if S.course~=c then S.reset(c) end
  for _,v in ipairs(S.loops) do v.want=0 end
- for _,s in ipairs(S.states) do
+ for _,s in ipairs(nearby(x,y)) do
   if x<s.x0 or x>s.x1 or y<s.y0 or y>s.y1 then
    s.audible=false;s.contact=false;s.skipped=true
   else

@@ -166,16 +166,19 @@ local maximum=0
 for n=50,53 do
  local c=Courses[n];Curriculum.ensure(c)
  local cache=Terrain.new(c,function()end);Terrain.prepare(cache,0,0)
- assert(cache.keepAll and cache.count<=128,'long course not prepared within two-MB chunk budget')
+ assert(cache.stream and not cache.keepAll and cache.count<=35,'long course must prepare only the starting neighbourhood')
  maximum=math.max(maximum,cache.count)
- for _,s in ipairs(c.sections) do
-  Terrain.draw(cache,(s.x+48-80)*.9,(s.x+48+80)*.45-c:height(s.x+48,80)*.65)
+ for wx=48,c.goal[1],5 do
+  clock=clock+1000/30
+  Terrain.draw(cache,(wx-80)*.9,(wx+80)*.45-c:height(wx,80)*.65)
+  maximum=math.max(maximum,cache.count)
  end
- assert(cache.misses==0,'crossing long course allocates visible chunks')
+ assert(cache.misses==0,'150 units/sec traversal outran the terrain preparation margin')
+ assert(cache.count<=48,'streamed road images grew without a bound')
  UI.mapSection=nil;UI.mapMove(c,48,1);assert(UI.mapSection==2)
  for i=1,100 do UI.mapMove(c,48,1) end;assert(UI.mapSection==#c.sections)
  Curriculum.release(c);assert(not c.materialized and #c.tiles==0 and #c.mechanisms==0)
  Curriculum.ensure(c);assert(#c.sections==({21,23,25,28})[n-49]);Curriculum.release(c)
 end
-print('PASS: lazy geometry release/re-entry; four fully prepared long maps, zero visible chunk misses, maximum '..maximum..' chunks; section navigation clamps')
+print('PASS: lazy geometry release/re-entry; four streamed long maps, zero visible chunk misses at 150 units/sec, maximum '..maximum..' chunks; section navigation clamps')
 ''')

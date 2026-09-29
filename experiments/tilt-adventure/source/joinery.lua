@@ -1,16 +1,18 @@
 -- Dock faces are measured from the road, not from a visually convenient overlap.
 Joinery={}
 local J=Joinery
-local function banks(c,x,y,half)
+local function banks(rows,x,y,half)
  local left,right=-math.huge,math.huge
- for index,tile in ipairs(c.tiles) do
-  local y0,y1=tile.y*32,(tile.y+1)*32
-  if y1>y-half+.01 and y0<y+half-.01 then
-   local x0,x1=tile.x*32,(tile.x+1)*32
-   if x1<=x+.01 then left=math.max(left,x1) end
-   if x0>=x-.01 then right=math.min(right,x0) end
+ for j=math.floor((y-half+.01)/32),math.ceil((y+half-.01)/32)-1 do
+  local row=rows[j]
+  if row then
+   local lo,hi=1,#row+1
+   while lo<hi do local mid=(lo+hi)//2;if (row[mid]+1)*32<=x+.01 then lo=mid+1 else hi=mid end end
+   if lo>1 then left=math.max(left,(row[lo-1]+1)*32) end
+   lo,hi=1,#row+1
+   while lo<hi do local mid=(lo+hi)//2;if row[mid]*32<x-.01 then lo=mid+1 else hi=mid end end
+   if lo<=#row then right=math.min(right,row[lo]*32) end
   end
-  if Loading and index%128==0 then Loading.checkpoint(.05,'FITTING THE LANDINGS') end
  end
  return left,right
 end
@@ -45,16 +47,22 @@ function J.prepare(c)
   c.upperLipBounds=bounds
   table.sort(c.tiles,function(a,b)return a.x+a.y<b.x+b.y end)
  end
+ local rows={}
+ for index,tile in ipairs(c.tiles) do
+  local row=rows[tile.y];if not row then row={};rows[tile.y]=row end;row[#row+1]=tile.x
+  if Loading and index%128==0 then Loading.checkpoint(.05,'FITTING THE LANDINGS') end
+ end
+ for _,row in pairs(rows) do table.sort(row) end
  for _,m in ipairs(c.mechanisms or {}) do
   if m.kind=='ferry' then
-   local left=banks(c,m.x,m.y,m.h/2)
-   local _,right=banks(c,m.toX,m.toY,m.h/2)
+   local left=banks(rows,m.x,m.y,m.h/2)
+   local _,right=banks(rows,m.toX,m.toY,m.h/2)
    if left>-math.huge and right<math.huge and m.toX>m.x then
     m.x=left+m.w/2;m.toX=right-m.w/2;m.dockLeft=left;m.dockRight=right
     for _,p in ipairs(c.pads or {}) do if p.target==m then p.x=m.x;p.y=m.y end end
    end
   elseif m.kind=='rotor' and not m.retract and not m.turnSquare then
-   local left,right=banks(c,m.x,m.y,m.h/2)
+   local left,right=banks(rows,m.x,m.y,m.h/2)
    if left>-math.huge and right<math.huge and right-left>m.h then
     m.x=(left+right)/2;m.joinSpan=right-left;m.w=m.joinSpan;m.maxWidth=m.joinSpan
     m.dockLeft=left;m.dockRight=right

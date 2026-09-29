@@ -10,9 +10,12 @@ function D.prepare(c)
   for _,m in ipairs(previousCourse.pads or {}) do m.roadCovers=nil;m.coverPose=nil end
  end
  previousCourse=c
+ local grid={}
  for i,tile in ipairs(c.tiles or {}) do
   local x,y=tile.x*32+16,tile.y*32+16
   tile.depthX=(x-y)*.9;tile.depthY=(x+y)*.45-c:height(x,y)*.65;tile.depthId=i
+  grid[tile.x..','..tile.y]=tile
+  if Loading and i%64==0 then Loading.checkpoint(.66,'FITTING THE ROAD EDGES') end
  end
  local items={}
  for _,m in ipairs(c.mechanisms or {}) do items[#items+1]=m end
@@ -22,10 +25,12 @@ function D.prepare(c)
   local x0,x1=math.min(m.x,m.toX or m.x)-reach,math.max(m.x,m.toX or m.x)+reach
   local y0,y1=math.min(m.y,m.toY or m.y)-reach-(m.range or 0),math.max(m.y,m.toY or m.y)+reach+(m.range or 0)
   m.roadFrontCandidates={}
-  for _,tile in ipairs(c.tiles or {}) do
-   local x,y=tile.x*32,tile.y*32
-   if x+32>=x0 and x<=x1 and y+32>=y0 and y<=y1 then m.roadFrontCandidates[#m.roadFrontCandidates+1]=tile end
-  end
+  for ix=math.ceil(x0/32)-1,math.floor(x1/32) do for iy=math.ceil(y0/32)-1,math.floor(y1/32) do
+   local tile=grid[ix..','..iy]
+   if tile then m.roadFrontCandidates[#m.roadFrontCandidates+1]=tile end
+  end end
+  table.sort(m.roadFrontCandidates,function(a,b)return a.depthId<b.depthId end)
+  if Loading then Loading.checkpoint(.66,'FITTING THE ROAD EDGES') end
  end
 end
 function D.bounds(m,t)

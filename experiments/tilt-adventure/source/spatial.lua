@@ -64,13 +64,14 @@ function S.hidden(box,x,y,z)
  return math.min(high,h)>=math.max(low,l)
 end
 local function makeBox(x,y,w,h,a,bottom,roof,slope)
-  local c,s=math.cos(a),math.sin(a);local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
-  for _,u in ipairs({-w/2,w/2}) do for _,v in ipairs({-h/2,h/2}) do
-   local px,py=x+u*c-v*s,y+u*s+v*c
-   for _,z in ipairs({bottom,roof}) do
-    local sx,sy=(px-py)*0.9,(px+py)*0.45-(z+slope*(px-x))*0.65;minX=math.min(minX,sx);maxX=math.max(maxX,sx);minY=math.min(minY,sy);maxY=math.max(maxY,sy)
-   end
-  end end
+  -- Linear projection of a box: centre plus absolute half-extents gives
+  -- the same eight-corner bounds without temporary tables and nested loops.
+  local c,s=math.cos(a),math.sin(a)
+  local cx,cy=(x-y)*.9,(x+y)*.45
+  local ex=(math.abs(c-s)*w+math.abs(s+c)*h)*.45
+  local ey=math.abs((c+s)*.45-slope*c*.65)*w/2+math.abs((c-s)*.45+slope*s*.65)*h/2
+  local minX,maxX=cx-ex,cx+ex
+  local minY,maxY=cy-ey-roof*.65,cy+ey-bottom*.65
   return {x=x,y=y,w=w,h=h,c=c,s=s,bottom=bottom,top=roof,slope=slope,minX=minX,maxX=maxX,minY=minY,maxY=maxY,maxRoof=roof+math.abs(slope)*(math.abs(w*c)+math.abs(h*s))/2}
 end
 function S.occluders(course,t,project,left,top,width,height,minZ)

@@ -20,6 +20,7 @@ import "build"
 import "classroom"
 import "terrain"
 import "road_art"
+import "road_assets"
 import "audio"
 import "tilt"
 import "cannon_model"
@@ -244,9 +245,11 @@ prepareTerrain=function()
   if Curriculum then Curriculum.release(terrainCourse) end
  end
  Loading.checkpoint(.12,"GATHERING THE STONES")
- RoadArt.warm(course)
- Loading.checkpoint(.3,"BUILDING STONE ROAD")
- warmTileSprites()
+ if not RoadAssets.apply(course) then
+  RoadArt.warm(course)
+  Loading.checkpoint(.3,"BUILDING STONE ROAD")
+  warmTileSprites()
+ end
  Loading.checkpoint(.66,"WINDING THE MACHINES")
  Structures.prepare(course)
  UI.markerOffset(course,course.start);UI.markerOffset(course,course.goal)
@@ -257,9 +260,9 @@ prepareTerrain=function()
  Loading.checkpoint(.75,"LOOKING TO THE SKY")
  if Build.terrainMode=='chunks' then
   terrainImage=nil
-  terrainChunks=Terrain.new(course,function(image,tiles,ox,oy)
+  terrainChunks=Terrain.new(course,function(image,tiles,ox,oy,first,last)
    local oldX,oldY=camX,camY;camX,camY=ox,oy;cachingTerrain=true
-   g.pushContext(image);for _,tile in ipairs(tiles) do drawTile(tile) end;g.popContext()
+   g.pushContext(image);for i=first or 1,last or #tiles do drawTile(tiles[i]) end;g.popContext()
    cachingTerrain=false;camX,camY=oldX,oldY
   end)
   Terrain.prepare(terrainChunks,(x-y)*0.9,(x+y)*0.45-ballHeight*0.65)
@@ -291,7 +294,11 @@ local function marker(point,label,foreground)
    if (point[1]-pad.x)^2+(point[2]-pad.y)^2<28^2 then return end
   end
  end
- local p,q=project(point[1],point[2],course:height(point[1],point[2]))
+ if not point.screenX then
+  point.screenX=200+(point[1]-point[2])*.9
+  point.screenY=124+(point[1]+point[2])*.45-course:height(point[1],point[2])*.65
+ end
+ local p,q=point.screenX-camX,point.screenY-camY
  if p < -70 or p>440 or q<50 or q>210 then return end
  local text=label=='SAVE' and 'CHECK' or label=='SAVED' and 'SAVED' or label=='GOAL' and 'FINISH' or 'START'
  if not foreground then
@@ -332,7 +339,7 @@ local function renderWorld()
   end
  end
  Structures.drawTop(scene,worldTime,project,drawTile)
- Dock.draw(course,project,drawTile)
+ Dock.draw(scene,project,drawTile)
  marker(course.start,'START');for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE') end;marker(course.goal,'GOAL')
  -- Rolling shell and rotating hamster face follow distance travelled.
  local ground=floorAt(x,y)
@@ -384,7 +391,7 @@ local function renderWorld()
  if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then
   Passage.reserve(screenX-14,screenY-43,29,31)
  end
- Dock.drawLabels(course,project)
+ Dock.drawLabels(scene,project)
  marker(course.start,'START',true);for i,point in ipairs(course.checkpoints) do marker(point,checkpoint and i<=checkpoint and 'SAVED' or 'SAVE',true) end;marker(course.goal,'GOAL',true)
  Passage.draw(scene,worldTime,project)
  if state=='play' and not Dock.active and not Tilt.calibrating and not lesson then

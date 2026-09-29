@@ -105,11 +105,11 @@ end
 print('PASS: every mechanism/control-pad sound, actual spring event, transition pairs, attenuation, voice limits, pause/effects/reset and six UI cues')
 
 local work,done=0,false
-Loading.begin(function() for i=1,12 do work=work+1;Loading.checkpoint(i/12,'TEST') end end,'TEST',function() done=true end)
+Loading.begin(function() for i=1,12 do work=work+1;clock=clock+8;Loading.checkpoint(i/12,'TEST') end end,'TEST',function() done=true end)
 local old=0;local frames=0
 while Loading.busy do
  local before=work;Loading.step(1/30);frames=frames+1
- assert(work-before<=1,'loading blocks all work in a single frame')
+ assert(work-before<=3,'loading exceeds its measured 24 ms budget')
  assert(Loading.shown>=old and Loading.shown<=1);old=Loading.shown
  assert(frames<100)
 end

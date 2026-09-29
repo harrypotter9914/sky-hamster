@@ -36,6 +36,7 @@ function A.bumper(m,t,x,y,floor)
  if floor then local s=1+frame*.02;local r=BumperModel.radiusAt(m)*s;PropOcclusion.add(im,x-24,y-24,m.x,m.y,r*2,r*2,0,floor,floor+(m.sideHeight or BumperModel.height)*s) end
 end
 local fanHousings={}
+local fanAtlas
 function A.fan(m,t,x,y,floor)
  local frame=math.floor(math.deg(m.angle or 0)/5+.5)%72
  local angle=math.rad(frame*5);local dx,dy=math.cos(angle),math.sin(angle)
@@ -44,6 +45,10 @@ function A.fan(m,t,x,y,floor)
   return 64+((-dy-dx)*side+(dx-dy)*along)*.9,78+((dx-dy)*side+(dx+dy)*along)*.45-z*.65
  end
  local im=fanHousings[frame]
+ if not im and not Build.baking and playdate.geometry then
+  fanAtlas=fanAtlas or g.imagetable.new('structures/fan-housings')
+  if fanAtlas then im=fanAtlas:getImage(frame+1);fanHousings[frame]=im end
+ end
  if not im then
   im=g.image.new(128,112,g.kColorClear);g.pushContext(im)
   g.setColor(g.kColorBlack);g.fillRoundRect(60,55,8,24,2)

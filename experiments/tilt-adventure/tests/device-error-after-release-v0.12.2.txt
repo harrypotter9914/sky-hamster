@@ -1,0 +1,32 @@
+Update check failed (1)
+
+Update check failed (1)
+
+2026/09/26 19:11:52
+/Games/sky-hamster-tilt.pdx
+loading.lua:56: Loading: main.lua:7: import() called outside of pdz loading
+stack traceback:
+	[C]: in function 'error'
+	loading.lua:56: in field 'step'
+	main.lua:12: in function <main.lua:12>
+
+2026/09/28 22:11:05
+/Games/sky-hamster-tilt.pdx
+Run loop stalled for more than 10 seconds pc=0x240B3024 lr=0x240ABF97
+
+joinery.lua:6 banks()
+joinery.lua:49 
+
+
+2026/09/28 22:47:28
+/Games/sky-hamster-tilt.pdx
+Run loop stalled for more than 10 seconds pc=0x240A999C lr=0x240A9321
+
+[C] min()
+spatial.lua:71 makeBox()
+spatial.lua:87 occluders()
+game.lua:252 prepareTerrain()
+game.lua:123 selectLevel()
+game.lua:115 game.lua:115
+
+

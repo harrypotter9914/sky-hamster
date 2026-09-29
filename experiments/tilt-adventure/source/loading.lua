@@ -1,5 +1,5 @@
 -- Cooperative work: every checkpoint yields after graphics contexts are closed.
-Loading={busy=false,progress=0,shown=0,time=0}
+Loading={busy=false,progress=0,shown=0,time=0,budgetMS=24,maxSlices=64}
 local L=Loading
 local g=playdate.graphics
 local sky,font
@@ -59,9 +59,18 @@ function L.step(dt)
  L.time=L.time+(dt or 1/30)
  -- Let the first loading frame reach the display before starting expensive work.
  if L.time>1/30 and not L.finished then
-  local ok,err=coroutine.resume(L.worker)
-  if not ok then error('Loading: '..tostring(err)) end
-  if coroutine.status(L.worker)=='dead' then L.finished=true;L.progress=1;L.label='READY' end
+  -- Checkpoints bound each unit of work, not the number of display frames.
+  -- Spend a small measured budget on several cheap units, then return to the
+  -- system. A hard slice cap also bounds synthetic clocks and coarse timers.
+  local started=playdate.getCurrentTimeMilliseconds()
+  for slice=1,L.maxSlices do
+   local before=L.traceSlice and playdate.getCurrentTimeMilliseconds()
+   local ok,err=coroutine.resume(L.worker)
+   if not ok then error('Loading: '..tostring(err)) end
+   if L.traceSlice then L.traceSlice(L.label,playdate.getCurrentTimeMilliseconds()-before) end
+   if coroutine.status(L.worker)=='dead' then L.finished=true;L.progress=1;L.label='READY';break end
+   if playdate.getCurrentTimeMilliseconds()-started>=L.budgetMS then break end
+  end
  end
  L.shown=L.shown+(L.progress-L.shown)*math.min(1,(dt or 1/30)*14)
  if L.finished and L.shown>.995 then L.shown=1 end

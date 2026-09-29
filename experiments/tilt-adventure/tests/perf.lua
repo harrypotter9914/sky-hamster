@@ -5,7 +5,8 @@
 if playdate.setAutoLockDisabled then playdate.setAutoLockDisabled(true) end
 local writeReport=playdate.datastore.write
 local results={device=false,stages={}}
-playdate.datastore.read=function() return nil end
+local readData=playdate.datastore.read
+playdate.datastore.read=function(name) if name~='tilt-progress' then return readData(name) end end
 playdate.datastore.write=function() end
 playdate.readAccelerometer=function() return 0,0,1 end
 playdate.buttonJustPressed=function() return false end
@@ -38,10 +39,14 @@ local function planAll()
   for _,route in ipairs(Bench.routes or {}) do if route==n then included=true end end
   if included then
   if Curriculum then Curriculum.ensure(c) end
+  if Bench.travel then
+   specs[#specs+1]={route=n,kind='stream',frames=math.ceil((c.goal[1]-c.start[1])/8)*2,name='240-units-per-second'}
+  else
   specs[#specs+1]={route=n,kind='road',frames=180}
   for _,fraction in ipairs({.1,.5,.9}) do specs[#specs+1]={route=n,kind='normal',fraction=fraction,frames=120} end
   for i,m in ipairs(c.mechanisms or {}) do specs[#specs+1]={route=n,kind='mechanism',index=i,name=m.retract and 'extend' or m.kind,frames=120} end
   for i,p in ipairs(c.pads or {}) do specs[#specs+1]={route=n,kind='pad',index=i,name=p.kind,frames=120} end
+  end
   if Curriculum then Curriculum.release(c) end
   collectgarbage('collect')
   end
@@ -89,6 +94,11 @@ end
 local preparing=false
 local loadLabel
 local loadStart,loadMax
+local loadWork={}
+Loading.traceSlice=function(label,ms)
+ local row=loadWork[label] or {total=0,max=0,count=0};loadWork[label]=row
+ row.total=row.total+ms;row.max=math.max(row.max,ms);row.count=row.count+1
+end
 local planning=false
 local function beginScene()
  profile={};PerfLayers.values={};print('BENCH BEGIN',stages[stage])
@@ -113,6 +123,8 @@ function playdate.update()
   end
   if not Loading.busy then
    print('LOAD COMPLETE route='..stages[stage]..' elapsedMS='..(now()-loadStart)..' maxUpdateMS='..loadMax)
+   print('ROAD ASSETS',Courses[stages[stage]].roadBaked and 'PACKAGED' or 'RUNTIME')
+   for label,row in pairs(loadWork) do print('LOAD WORK',label,'total='..row.total,'max='..row.max,'slices='..row.count) end
    Bench.ready();preparing=false;beginScene()
   end
   return
@@ -121,7 +133,7 @@ function playdate.update()
   report();stage=stage+1;frame=0;samples={};costs={};last=nil
   if stage>#stages then results.complete=true;writeReport(results,'tilt-perf-report');print('BENCH COMPLETE');playdate.update=function() playdate.graphics.clear(playdate.graphics.kColorWhite);playdate.graphics.drawText('Hardware check complete.',35,100) end;return end
   if not specs or stage==1 or stages[stage]~=stages[stage-1] then
-   collectgarbage('collect');loadStart=now();loadMax=0;Bench.select(stages[stage]);preparing=true;loadLabel=nil;return
+   collectgarbage('collect');loadWork={};loadStart=now();loadMax=0;Bench.select(stages[stage]);preparing=true;loadLabel=nil;return
   end
   beginScene()
  end

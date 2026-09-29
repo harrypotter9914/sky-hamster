@@ -8,6 +8,7 @@ local function run()
  for n=50,53 do
   Review.select(n);Tilt.calibrating=false;Tilt.ready=true
   local c=Courses[n]
+  assert(c.roadBaked,'native review did not use packaged road rasters')
   for i,s in ipairs(c.sections) do
    Dock.active=nil;Dock.blocked=nil
    local m=c.mechanisms[s.first];local p=c.pads[s.firstPad]

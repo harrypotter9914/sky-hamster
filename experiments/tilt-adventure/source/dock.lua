@@ -42,6 +42,14 @@ function D.cannonFrame(angle)
 end
 local function buildCannons()
  if cannonArt[1] then return end
+ if not Build.baking and playdate.geometry then
+  local frames=playdate.graphics.imagetable.new('structures/cannon')
+  if frames then
+   cannonBase=frames:getImage(1)
+   for n=1,61 do cannonArt[n]=frames:getImage(n+1) end
+   return
+  end
+ end
  cannonBase=CannonModel.base()
  for n=1,61 do cannonArt[n]=CannonModel.raster(-math.pi/3+(n-1)*math.pi/90) end
 end

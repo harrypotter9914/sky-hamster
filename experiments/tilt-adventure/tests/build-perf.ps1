@@ -1,7 +1,8 @@
 # Same installation folder as the release; restore the release after measuring.
-param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[int[]]$Routes=@(),[int[]]$MechanismIndices=@())
+param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[switch]$Travel,[int[]]$Routes=@(),[int[]]$MechanismIndices=@())
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
+& "$root/art/check-bake.ps1"
 $repo=Resolve-Path (Join-Path $root '../..')
 $qa=Join-Path $repo 'builds/tilt-perf-source'
 New-Item -ItemType Directory -Force $qa | Out-Null
@@ -17,7 +18,8 @@ end,cache=function() return terrainChunks and terrainChunks.misses or 0,terrainC
 if($Smooth){'Bench.smooth=true' | Add-Content "$qa/game.lua"}
 if($Routes.Count){("Bench.routes={"+($Routes -join ',')+"}") | Add-Content "$qa/game.lua"}
 if($MechanismIndices.Count){("Bench.mechanismIndices={"+($MechanismIndices -join ',')+"}") | Add-Content "$qa/game.lua"}
-if($All){
+if($Travel){'Bench.travel=true' | Add-Content "$qa/game.lua"}
+if($All -or $Travel){
  @'
 Bench.all=true
 Bench.sample=function(spec,frame)
@@ -25,7 +27,11 @@ Bench.sample=function(spec,frame)
  local u=(1-math.cos(frame/120*math.pi*2))/2
  Bench.crank=0
  Dock.active=nil;Dock.blocked=nil
- if spec.kind=='road' then
+ if spec.kind=='stream' then
+  local steps=math.ceil((c.goal[1]-c.start[1])/8)
+  local distance=frame<=steps and frame*8 or (steps*2-frame)*8
+  x,y=c.start[1]+distance,80;vx,vy=240,0
+ elseif spec.kind=='road' then
   local tile=c.tiles[math.min(#c.tiles,1+math.floor(frame/180*(#c.tiles-1)))]
   x,y=tile.x*32+16,tile.y*32+16;vx,vy=70,20
  elseif spec.kind=='normal' then

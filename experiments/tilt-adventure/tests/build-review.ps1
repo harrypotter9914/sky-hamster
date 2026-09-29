@@ -2,6 +2,7 @@
 param([switch]$Hud,[switch]$Occlusion,[switch]$Bumper,[switch]$Turntable,[switch]$Passage,[switch]$Curriculum)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
+& "$root/art/check-bake.ps1"
 $repo=Resolve-Path (Join-Path $root '../..')
 $qa=Join-Path $repo 'builds/tilt-ui-qa-source'
 New-Item -ItemType Directory -Force $qa | Out-Null

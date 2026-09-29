@@ -13,6 +13,7 @@ local function bounds(m)
  return {x0,x1,y0,y1}
 end
 function P.near(c,x,y)
+ c=c.renderOwner or c
  if c.physicsOwner then return c end
  local ix,iy=math.floor(x/128),math.floor(y/128)
  local view=c.physicsView
@@ -47,7 +48,7 @@ local M,S=Mechanisms,Spatial
 P.reference={support=M.support,collide=M.collide,wind=M.wind,sides=S.sides,floor=M.floor}
 local epoch=0
 function M.floor(c,x,y,t)
- local root=c.physicsOwner or c
+ local root=c.physicsOwner or c.renderOwner or c
  local memo=root.floorMemo
  if memo and memo.x==x and memo.y==y and memo.epoch==epoch and (memo.terrain or memo.t==t) then
   return memo.lift and (memo.lift.elevation or memo.lift.minHeight) or memo.z
@@ -71,7 +72,7 @@ local reset,update=Dock.reset,Dock.update
 function Dock.reset(...) epoch=epoch+1;return reset(...) end
 function Dock.update(...) epoch=epoch+1;return update(...) end
 function M.support(c,x,y,t)
- local root=c.physicsOwner or c
+ local root=c.physicsOwner or c.renderOwner or c
  local memo=root.supportMemo
  if memo and memo.x==x and memo.y==y and memo.t==t and memo.epoch==epoch then return memo.ok,memo.m end
  local view=P.near(c,x,y)

@@ -2,7 +2,7 @@ Terrain={}
 local T=Terrain
 local size=256
 function T.new(course,render)
- local cache={buckets={},images={},render=render,tick=0,misses=0,count=0,preparedLimit=course.preparedChunkLimit or 64}
+ local cache={buckets={},images={},render=render,tick=0,misses=0,count=0,preparedLimit=course.preparedChunkLimit or 64,stream=course.blueprint~=nil,jobs={}}
  -- Index static geometry once; images are created only around the camera.
  for index,tile in ipairs(course.tiles) do
   local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
@@ -27,8 +27,10 @@ local function ensure(c,x,y)
  local key=x..','..y;local entry=c.images[key]
  if entry then entry.used=c.tick;return entry end
  local bucket=c.buckets[key];if not bucket then return nil end
- local image=playdate.graphics.image.new(size,size,playdate.graphics.kColorClear)
- c.render(image,bucket.tiles,x*size,y*size)
+ local job=c.jobs and c.jobs[key]
+ local image=job and job.image or playdate.graphics.image.new(size,size,playdate.graphics.kColorClear)
+ c.render(image,bucket.tiles,x*size,y*size,job and job.next or 1,#bucket.tiles)
+ if c.jobs then c.jobs[key]=nil end
  entry={image=image,used=c.tick,x=x*size,y=y*size};c.images[key]=entry;c.count=c.count+1;return entry
 end
 function T.warm(c,x,y)
@@ -37,6 +39,17 @@ function T.warm(c,x,y)
  end
 end
 function T.prepare(c,x,y)
+ if c.stream then
+  -- Only imagery streams; the entire collision map already exists. Two chunks
+  -- of margin cover high-speed travel, with a synchronous visual fallback on
+  -- teleports so an unprepared image can never become a hole in the track.
+  for i=math.floor(x/size)-2,math.floor((x+400)/size)+2 do
+   for j=math.floor((y+44)/size)-2,math.floor((y+204)/size)+2 do
+    ensure(c,i,j);if Loading then Loading.checkpoint(.9,'PREPARING THE START') end
+   end
+  end
+  return
+ end
  -- Larger chunks reduce native bitmap calls. Prepare up to 1 MB of sparse
  -- monochrome image/mask data during loading, not on a moving frame.
  -- Drawing still touches only the viewport; larger future maps retain streaming.
@@ -62,7 +75,8 @@ function T.draw(c,x,y)
    local entry=ensure(c,i,j)
    if entry then window.visible[#window.visible+1]=entry end
   end end
-  for i=x0-1,x1+1 do for j=y0-1,y1+1 do
+  local margin=c.stream and 2 or 1
+  for i=x0-margin,x1+margin do for j=y0-margin,y1+margin do
    local key=i..','..j;local entry=c.images[key]
    if entry then window.retained[#window.retained+1]=entry
    elseif c.buckets[key] then window.pending[#window.pending+1]=c.buckets[key] end
@@ -73,7 +87,23 @@ function T.draw(c,x,y)
  if c.keepAll then return end -- Prepared maps have no eviction/prefetch bookkeeping.
  for _,entry in ipairs(window.retained) do entry.used=c.tick end
  local pending=window.pending[window.next]
- if pending then
+ if pending and c.stream then
+  local started=playdate.getCurrentTimeMilliseconds()
+  for batch=1,8 do
+   pending=window.pending[window.next];if not pending then break end
+   local key=pending.x..','..pending.y
+   local job=c.jobs[key]
+   if not job then job={image=playdate.graphics.image.new(size,size,playdate.graphics.kColorClear),next=1};c.jobs[key]=job end
+   local last=math.min(#pending.tiles,job.next+3)
+   c.render(job.image,pending.tiles,pending.x*size,pending.y*size,job.next,last);job.next=last+1
+   if job.next>#pending.tiles then
+    local entry={image=job.image,used=c.tick,x=pending.x*size,y=pending.y*size}
+    c.images[key]=entry;c.jobs[key]=nil;c.count=c.count+1
+    window.retained[#window.retained+1]=entry;window.next=window.next+1
+   end
+   if playdate.getCurrentTimeMilliseconds()-started>=2 then break end
+  end
+ elseif pending then
   local entry=ensure(c,pending.x,pending.y)
   window.retained[#window.retained+1]=entry;window.next=window.next+1
  end
@@ -81,6 +111,12 @@ function T.draw(c,x,y)
  if not c.keepAll and c.count>40 then
   for key,entry in pairs(c.images) do
    if entry.used<c.tick-30 then c.images[key]=nil;c.count=c.count-1 end
+  end
+ end
+ if c.stream then
+  for key,job in pairs(c.jobs) do
+   local b=c.buckets[key]
+   if b.x<x0-2 or b.x>x1+2 or b.y<y0-2 or b.y>y1+2 then c.jobs[key]=nil end
   end
  end
 end

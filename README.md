@@ -1,10 +1,10 @@
-# Sky Hamster — v0.12.1
+# Sky Hamster — v0.12.2
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
 当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.x → 0.11.0 → 0.12.x**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
 
-0.12.x 将关卡重排为 20 个教学阶段与四个全机制远征，共 53 关。每阶段先教学，再累计复习此前机制；最后四关有 21、23、25、28 段挑战。长关按需生成，当前道路在加载时预备，地图可左右分段查看。0.12.1 修正长关加载超时崩溃，将路线、接岸和遮挡准备拆到多个加载帧，存档中的长关也在按 Start 后才生成。见 [完整顺序表](experiments/tilt-adventure/CAMPAIGN-v0.12.0.md) 和 [当前验证状态](experiments/tilt-adventure/VALIDATION-v0.12.1.md)。
+0.12.x 将关卡重排为 20 个教学阶段与四个全机制远征，共 53 关。每阶段先教学，再累计复习此前机制；最后四关有 21、23、25、28 段挑战。0.12.2 提前打包固定道路、大炮和风机图片，并按相机位置逐步准备长关道路区块，缩短进关等待；碰撞地图先完整就绪。接岸、遮挡候选、远处控制点与声音查询使用索引，保留原有画面和玩法。见 [完整顺序表](experiments/tilt-adventure/CAMPAIGN-v0.12.0.md) 和 [当前验证状态](experiments/tilt-adventure/VALIDATION-v0.12.2.md)。
 
 0.11.0 增加按小球圆形占地判断的接缝容错，以及接岸口、闸门、消失地板、移动挡板和喷气口的 GO／WAIT 提示。增加四关板上转台与双控制点路线；风力增加 8%，快速穿越风区也受到作用。见 [设计与验证](experiments/tilt-adventure/VALIDATION-v0.11.0.md)。
 
@@ -26,7 +26,7 @@ Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 ./experiments/tilt-adventure/build.ps1
 ```
 
-输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.12.2 继续。
+输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。修改地图或相关绘制代码后，按 [预生成流程](experiments/tilt-adventure/art/RUNTIME-v0.12.2.md) 更新资源。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.12.3 继续。
 
 ## 0.6.7 及课堂版归档
 

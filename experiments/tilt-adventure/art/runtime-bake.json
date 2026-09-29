@@ -1,0 +1,33 @@
+{
+  "courses": 53,
+  "roadSprites": 1647,
+  "sourceHashes": {
+    "courses.lua": "dffff4ad04e0ae704fe6a9ffa68834af4b16ed270c2fceb087251163e0764f6e",
+    "campaign.lua": "14c659eac9f62dcb952cd3cde17d355ff512bb4bb72bc0b13b195e4b53cac019",
+    "workshop_courses.lua": "383e6ee9a83ee411fed6754fe55f229df895b991dd3895ac9972263442c2a22d",
+    "turntable_courses.lua": "92540c6c797647fbc175a31fc464c19a9fd37e49888f3e43fad68cb54a5f5758",
+    "curriculum.lua": "0ba6976efc436c6666e8d5f206664173941ff780b164d2d18118e0f1ba55d8ae",
+    "joinery.lua": "183abb407c092fcfdb8e1add1b455ebad66d38ecff523938a3a8d8738c91ed1a",
+    "height_index.lua": "7ff73c0991080c405879d3d222f97202871d4fe2bb50c6134ca3b193c29238e8",
+    "engine.lua": "eb771965e385cc516930f9602b12a98ebfdeec846c89f5d26e43c628872ccfcd",
+    "road_art.lua": "f5cd792605fddd28c1a3870330fc557fcfbc405b5e0c4c570fafb01a76525fcf",
+    "cannon_model.lua": "ba573673131d01ec11dae6a36867a8edde6387859dd26986006d88855e46c3b3",
+    "machine_art.lua": "4474db49dc085a8c672043404348162891e01e25506cd2ab4bbb114067753c01",
+    "paving/0.png": "d242a7af79b9e1e34cfe33665475fd5cbf10c596fbc3eb3d089b1cffcf216db8",
+    "paving/1.png": "3dbbbe7a6b2c94ea44d931d9b7fbe6b0aad92ceabc3f4d2bf23493bd1e7a5354",
+    "paving/10.png": "5ebe26613184179454e3f27e940396f48d634536b5f4ed2eb5a1bda2badafc5f",
+    "paving/11.png": "b804188863c11d8dfcad069d827b204b593a4b55223a1fb6a347be7c5e84be5c",
+    "paving/12.png": "f28fd3cfc4943f4ca9b58fb9a941f00b8abfe816443e5043f00654148503483f",
+    "paving/13.png": "9eb5b3748130b068af481b3dbb6855381269371acfc4081f9333b576fd464828",
+    "paving/14.png": "ea57a01e0e2c2b51ce58ccd34366adb6e9473d1709e8db83954acff447d83e76",
+    "paving/15.png": "cb15a37373052aab7b1cbca62de6ffd9d600a0a78255ded6a11ac058be5585fc",
+    "paving/2.png": "8a81c2f59cfa213a3d4d264f83780ef8a276acff47d07bb764e340a5e9b8b679",
+    "paving/3.png": "988dcc7f9c3a1e3d0d3a3329830a1c11bdfbc578f24679d073f3a6bf46cd4825",
+    "paving/4.png": "ff41ddfc61f6ef5bafe578bc05852875383c9676b8ba21adb364816cb3ab893c",
+    "paving/5.png": "286b5d4e7433a1f8b4b128ae8e319adc44218d16f6bd197792115fd76edc2ba4",
+    "paving/6.png": "6b48c795be62a4e95b18d393c38dd1af23464e4b1614333bbaea563f1f976d23",
+    "paving/7.png": "56d230e4f31d57ee31e03acc9c563458901e464a7850e12efbda07c273cb2fdd",
+    "paving/8.png": "546a344b14fc05ea03ed1e55e8d6755f2223a6ea345a72e414f271dc8554be37",
+    "paving/9.png": "de5327cec10e9f21c43945c3764a88b742f478a769c734e7dab0630679cb12d2"
+  }
+}

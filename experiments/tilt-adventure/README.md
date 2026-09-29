@@ -1,4 +1,6 @@
-# Sky Hamster — 0.12.1
+# Sky Hamster — 0.12.2
+
+0.12.2 packages exact native road/cannon/fan rasters, prepares only the starting neighbourhood of long-course terrain images, and incrementally prepares upcoming chunks. Full collision geometry is ready before play. Indexed landing/foreground queries and culled station/audio work reduce repeated CPU work. See [validation](VALIDATION-v0.12.2.md) and [asset rebuild instructions](art/RUNTIME-v0.12.2.md). Checks include `tests/check_runtime_assets.py` and `tests/check_streaming.py`.
 
 0.12.x reorganizes 53 courses into 20 teaching chapters followed by four complete expeditions with 21/23/25/28 encounters. Chapter reviews accumulate previously learned mechanics. Generated geometry is materialized on entry and released on departure; maps offer section navigation and progress migrates by stable identity. Version 0.12.1 addresses the device's 10-second run-loop watchdog: generation, landing scans and occlusion preparation yield through the loader, including entry from a saved expedition. See [campaign table](CAMPAIGN-v0.12.0.md) and [current validation status](VALIDATION-v0.12.1.md). Checks: `python tests/check_curriculum.py` and `python tests/check_loading_watchdog.py`.
 
