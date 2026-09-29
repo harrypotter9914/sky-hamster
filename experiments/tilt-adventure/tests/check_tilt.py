@@ -1,5 +1,6 @@
 """Host-side Lua checks. Requires Python package lupa; no SDK modifications."""
 from pathlib import Path
+import os
 from lupa.lua54 import LuaRuntime
 
 root = Path(__file__).resolve().parents[1] / 'source'
@@ -7,6 +8,10 @@ lua = LuaRuntime()
 loaded = set()
 
 def load(name):
+    # Explicit historical geometry fixture run; current campaign is exercised
+    # separately by check_curriculum.py using the full production imports.
+    if name == 'curriculum' and os.environ.get('SKY_LEGACY_FIXTURES') == '1':
+        return
     if name.startswith('CoreLibs/') or name in loaded:
         return
     loaded.add(name)

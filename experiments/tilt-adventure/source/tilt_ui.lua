@@ -193,7 +193,7 @@ function UI.calibration()
 end
 local previews={}
 local function route(course,x,y,w,h,px,py,t)
- local minX,minY,maxX,maxY=0,0,1,1
+ local minX,minY,maxX,maxY=math.huge,math.huge,-math.huge,-math.huge
  for _,tile in ipairs(course.tiles) do minX=math.min(minX,tile.x);minY=math.min(minY,tile.y);maxX=math.max(maxX,tile.x+1);maxY=math.max(maxY,tile.y+1) end
  for _,m in ipairs(course.mechanisms or {}) do local r=math.max(m.w,m.h)/32
   minX=math.min(minX,m.x/32-r);minY=math.min(minY,m.y/32-r)
@@ -202,10 +202,10 @@ local function route(course,x,y,w,h,px,py,t)
  local s=math.min(w/(maxX-minX),h/(maxY-minY));local ox=x+(w-(maxX-minX)*s)/2-minX*s;local oy=y+(h-(maxY-minY)*s)/2-minY*s
  ink();for _,tile in ipairs(course.tiles) do g.fillRect(ox+tile.x*s,oy+tile.y*s,math.max(1,s),math.max(1,s)) end
  if t then for _,m in ipairs(course.mechanisms or {}) do local poly={};for _,p in ipairs(Mechanisms.corners(m,t)) do poly[#poly+1]=ox+p[1]/32*s;poly[#poly+1]=oy+p[2]/32*s end;g.drawPolygon(table.unpack(poly)) end end
- if px then
+ if px or course.sectionMap then
   local function pin(p,name) if p then local a,b=ox+p[1]/32*s,oy+p[2]/32*s;g.setColor(g.kColorWhite);g.fillRect(a-7,b-9,15,18);if name=='flag' then icon(name,a-10,b-10) else text(name,a-5,b-8) end end end
   pin(course.start,'S');for _,point in ipairs(course.checkpoints or {}) do pin(point,'C') end;pin(course.goal,'flag')
-  ball(ox+px/32*s,oy+py/32*s,5)
+  if px then ball(ox+px/32*s,oy+py/32*s,5) end
  end
 end
 function UI.selector(selected,completed)
@@ -215,18 +215,46 @@ function UI.selector(selected,completed)
  for n=first,math.min(first+5,#Courses) do
   local c=Courses[n];local x=20+math.floor((n-first)/3)*186;local y=75+(n-first)%3*41
   if n==selected then ink();g.fillRoundRect(x,y,175,37,3) else g.drawRoundRect(x,y,175,37,3) end
-  if not previews[n] then previews[n]=bitmap(38,24,function() route(c,1,2,36,20) end) end
+  if not previews[n] then previews[n]=bitmap(38,24,function()
+   if c.blueprint then
+    ink();g.drawRoundRect(1,2,36,20,3);g.drawTextAligned(tostring(c.encounters),19,4,kTextAlignment.center)
+   else route(c,1,2,36,20) end
+  end) end
   g.setImageDrawMode(n==selected and g.kDrawModeFillWhite or g.kDrawModeCopy);previews[n]:draw(x+7,y+6)
   g.drawText(fit(string.format('%02d %s',n,c.shortName),120),x+49,y+3)
-  g.drawText(completed[n] and 'CLEARED' or (c.jump and 'LEAP ROUTE' or 'ROLL ROUTE'),x+49,y+18);g.setImageDrawMode(g.kDrawModeCopy)
+  g.drawText(completed[n] and 'CLEARED' or (c.finale and 'EXPEDITION' or c.review and 'SKILL REVIEW' or (c.jump and 'LEAP ROUTE' or 'ROLL ROUTE')),x+49,y+18);g.setImageDrawMode(g.kDrawModeCopy)
  end
  footer('play','back')
 end
 function UI.map(course,x,y,t)
  page('ROUTE CHART','map',course.shortName..' / PAUSED')
- UI.panel(22,75,356,98);route(course,39,87,320,73,x,y,t)
- icon('ball',24,178);text('YOU',49,179);icon('flag',135,178);text('FINISH',160,179);text('S start / C save',252,179)
+ UI.panel(22,75,356,98)
+ if course.sections then
+  local index=UI.mapSection or UI.sectionIndex(course,x)
+  index=math.max(1,math.min(#course.sections,index));local s=course.sections[index]
+  course.mapViews=course.mapViews or {};local view=course.mapViews[index]
+  if not view then
+   view={tiles={},mechanisms={},checkpoints={s.start},sectionMap=true};course.mapViews[index]=view
+   for _,tile in ipairs(course.tiles) do if tile.x*32>=s.x and tile.x*32<s.x+s.width then view.tiles[#view.tiles+1]=tile end end
+   for i=s.first,s.last do view.mechanisms[#view.mechanisms+1]=course.mechanisms[i] end
+   if index==1 then view.start=course.start end;if index==#course.sections then view.goal=course.goal end
+  end
+  text(string.format('SECTION %d/%d  /  %s',index,#course.sections,s.kind:upper()),32,80)
+  route(view,40,103,320,53,x>=s.x and x<s.x+s.width and x or nil,y,t)
+  for i=1,#course.sections do
+   local a=32+(i-1)*336/#course.sections;local w=math.max(2,math.floor(336/#course.sections)-2)
+   ink();if i==index then g.fillRect(a,162,w,5) else g.drawRect(a,162,w,5) end
+  end
+  text('< > Sections',252,179)
+ else route(course,39,87,320,73,x,y,t);text('S start / C save',252,179) end
+ icon('ball',24,178);text('YOU',49,179);icon('flag',135,178);text('FINISH',160,179)
  footer('resume','resume')
+end
+function UI.sectionIndex(course,x)
+ local found=1;for i,s in ipairs(course.sections or {}) do if x>=s.x then found=i else break end end;return found
+end
+function UI.mapMove(course,x,direction)
+ if course.sections then UI.mapSection=math.max(1,math.min(#course.sections,(UI.mapSection or UI.sectionIndex(course,x))+direction)) end
 end
 -- Fixed-size keycaps and fixed label origins keep both rows aligned.
 local function controlHint(button,label,x,y) UI.key(button,x,y,label) end

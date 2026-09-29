@@ -12,6 +12,7 @@ import "bumper_model"
 import "campaign"
 import "workshop_courses"
 import "turntable_courses"
+import "curriculum"
 import "joinery"
 import "height_index"
 import "ui"
@@ -81,9 +82,10 @@ for k,v in pairs(saved.completed or {}) do if tonumber(k) then completed[tonumbe
 local best=saved.best or {}
 local ending=false
 local function saveProgress()
- if pd.datastore then pd.datastore.write({campaignRevision=2,completed=completed,best=best,level=level,guideRevision=3,jumpGuideRevision=1,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
+ if pd.datastore then pd.datastore.write({campaignRevision=Curriculum and Curriculum.revision or 2,completed=completed,best=best,level=level,guideRevision=3,jumpGuideRevision=1,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
+if Curriculum then Curriculum.ensure(course) end
 local jumpEnabled=false
 local worldTime=0
 local ballImage=g.image.new(28,28,g.kColorClear)
@@ -114,7 +116,9 @@ local function selectLevel(n)
   return
  end
  briefing=false;ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump
+ if Curriculum then Curriculum.ensure(course) end
  overview=false;choosing=false;lesson=Guide.enter(course);reset(true);Tilt.startCalibration()
+ UI.mapSection=nil
  Loading.checkpoint(.08,'PREPARING COURSE')
  if prepareTerrain then prepareTerrain() end
  Loading.checkpoint(1,'READY')
@@ -234,6 +238,7 @@ prepareTerrain=function()
   terrainCourse.renderIndex=nil;terrainCourse.structureUnder=nil;terrainCourse.structureOrder=nil;terrainCourse.structureSingle=nil
   terrainCourse.occlusionCache=nil;terrainCourse.occlusionBuckets=nil
   for _,tile in ipairs(terrainCourse.tiles) do tile.surface=nil;tile.renderCache=nil end
+  if Curriculum then Curriculum.release(terrainCourse) end
  end
  Loading.checkpoint(.12,"GATHERING THE STONES")
  RoadArt.warm(course)
@@ -462,6 +467,8 @@ function pd.update()
   UI.goal(course,level,infoPage);return
  end
  if overview then
+  if pd.buttonJustPressed(pd.kButtonLeft) then UI.mapMove(course,x,-1) end
+  if pd.buttonJustPressed(pd.kButtonRight) then UI.mapMove(course,x,1) end
   Audio.quiet()
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then Audio.ui("back");overview=false end
   pd.getCrankChange();UI.map(course,x,y,worldTime);return
@@ -481,7 +488,7 @@ function pd.update()
  if state=='play' and pd.buttonJustPressed(pd.kButtonLeft) then lesson=Guide.enter(course,true);Audio.quiet();Audio.ui('confirm');pd.getCrankChange();UI.lesson(Guide.key(),0);return end
  if state=='play' and pd.buttonJustPressed(pd.kButtonRight) then briefing=true;infoPage=1;Audio.quiet();Audio.ui('confirm');pd.getCrankChange();UI.goal(course,level,infoPage);return end
  if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonDown) then Audio.ui('confirm');Tilt.startCalibration();return end
- if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonUp) then overview=true;Audio.quiet();Audio.ui('confirm');return end
+ if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonUp) then overview=true;UI.mapSection=nil;Audio.quiet();Audio.ui('confirm');return end
  local lifted=Tilt.consumeJump() and gesture
  if not started and not Dock.active and (pd.buttonJustPressed(pd.kButtonA) or lifted) then
   if state=='win' and pd.buttonJustPressed(pd.kButtonA) then
@@ -587,7 +594,7 @@ if not Build.classroom then
  -- Playdate permits three custom system menu entries: replace restart with home.
  pd.getSystemMenu():removeAllMenuItems()
  pd.getSystemMenu():addMenuItem('Level select',openSelector)
- pd.getSystemMenu():addMenuItem('Map / pause',function() if Loading.busy then return end;if not title and not briefing and not (lesson and Guide.manual) then overview=not overview end;Audio.quiet() end)
+ pd.getSystemMenu():addMenuItem('Map / pause',function() if Loading.busy then return end;if not title and not briefing and not (lesson and Guide.manual) then overview=not overview;if overview then UI.mapSection=nil end end;Audio.quiet() end)
  pd.getSystemMenu():addMenuItem('Title / settings',function() if Loading.busy then return end;briefing=false;settings=false;ending=false;title=true;choosing=false;overview=false;titleChoice=1;Audio.quiet() end)
 end
 pd.gameWillPause=function() Audio.pause();saveProgress() end

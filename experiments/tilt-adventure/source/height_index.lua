@@ -1,7 +1,7 @@
 -- Profiles are static after campaign/joinery construction. Find the same first
 -- upper endpoint as the original linear walk, including duplicate-x steps.
 HeightIndex={reference={}}
-for _,course in ipairs(Courses) do
+function HeightIndex.prepare(course)
  HeightIndex.reference[course]=course.height
  local profile=course.profile
  local segments={}
@@ -32,3 +32,4 @@ for _,course in ipairs(Courses) do
   return segment.z+math.max(0,x-segment.x)*segment.slope,segment.slope,0
  end
 end
+for _,course in ipairs(Courses) do if not course.blueprint then HeightIndex.prepare(course) end end

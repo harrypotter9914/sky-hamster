@@ -1,0 +1,12 @@
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+PASS: 53 stable identities, 20 teaching chapters, cumulative reviews, four 21/23/25/28-encounter finales, 48+17 save migrations; 19045 tiles
+PASS: 232 production landing ports meet their road at the correct height
+PASS: sequential teaching introduces at most one new lesson per course; final four introduce none
+PASS: production finale 50 traverses 21 encounters, 20 checkpoints, reaches win with zero falls
+PASS: production finale 51 traverses 23 encounters, 22 checkpoints, reaches win with zero falls
+PASS: production finale 52 traverses 25 encounters, 24 checkpoints, reaches win with zero falls
+PASS: production finale 53 traverses 28 encounters, 27 checkpoints, reaches win with zero falls
+PASS: lazy geometry release/re-entry; four fully prepared long maps, zero visible chunk misses, maximum 115 chunks; section navigation clamps
+Wrote production campaign manifest and chapter table

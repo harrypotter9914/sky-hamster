@@ -13,7 +13,7 @@ local function banks(c,x,y,half)
  end
  return left,right
 end
-for _,c in ipairs(Courses) do
+function J.prepare(c)
  local lifts={}
  for _,m in ipairs(c.mechanisms or {}) do if m.kind=='lift' then lifts[#lifts+1]=m end end
  if #lifts>0 then
@@ -65,6 +65,7 @@ for _,c in ipairs(Courses) do
   end
  end
 end
+for _,c in ipairs(Courses) do if not c.blueprint then J.prepare(c) end end
 function J.width(m,angle)
  if m.turnSquare then
   local co,si=math.abs(math.cos(angle)),math.abs(math.sin(angle));local w=m.turnSquare

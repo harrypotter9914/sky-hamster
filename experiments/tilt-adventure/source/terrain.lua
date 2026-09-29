@@ -2,7 +2,7 @@ Terrain={}
 local T=Terrain
 local size=256
 function T.new(course,render)
- local cache={buckets={},images={},render=render,tick=0,misses=0,count=0}
+ local cache={buckets={},images={},render=render,tick=0,misses=0,count=0,preparedLimit=course.preparedChunkLimit or 64}
  -- Index static geometry once; images are created only around the camera.
  for index,tile in ipairs(course.tiles) do
   local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
@@ -41,7 +41,7 @@ function T.prepare(c,x,y)
  -- monochrome image/mask data during loading, not on a moving frame.
  -- Drawing still touches only the viewport; larger future maps retain streaming.
  local count=0;for _ in pairs(c.buckets) do count=count+1 end
- if count>64 then T.warm(c,x,y);return end
+ if count>(c.preparedLimit or 64) then T.warm(c,x,y);return end
  c.keepAll=true
  local ready=0
  for _,bucket in pairs(c.buckets) do

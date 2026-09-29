@@ -37,10 +37,12 @@ if Bench.all then
   local included=not Bench.routes
   for _,route in ipairs(Bench.routes or {}) do if route==n then included=true end end
   if included then
+  if Curriculum then Curriculum.ensure(c) end
   specs[#specs+1]={route=n,kind='road',frames=180}
   for _,fraction in ipairs({.1,.5,.9}) do specs[#specs+1]={route=n,kind='normal',fraction=fraction,frames=120} end
   for i,m in ipairs(c.mechanisms or {}) do specs[#specs+1]={route=n,kind='mechanism',index=i,name=m.retract and 'extend' or m.kind,frames=120} end
   for i,p in ipairs(c.pads or {}) do specs[#specs+1]={route=n,kind='pad',index=i,name=p.kind,frames=120} end
+  if Curriculum then Curriculum.release(c) end
   end
  end
  if Bench.mechanismIndices then

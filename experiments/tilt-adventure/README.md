@@ -1,4 +1,8 @@
-# Sky Hamster — 0.11.0
+# Sky Hamster — 0.12.0
+
+0.12.0 reorganizes 53 courses into 20 teaching chapters followed by four complete expeditions with 21/23/25/28 encounters. Chapter reviews accumulate previously learned mechanics. Generated geometry is materialized on entry and released on departure; long-course terrain is prepared during loading, and maps offer section navigation. Progress migrates by stable course identity. See [campaign table](CAMPAIGN-v0.12.0.md) and [validation status](VALIDATION-v0.12.0.md). Current check: `python tests/check_curriculum.py`. Hardware validation and normal installation are pending USB recovery.
+
+Historical fixed-layout regressions can be run with `SKY_LEGACY_FIXTURES=1` and `python tests/check_passage_layout.py`; these exercise the preserved pre-reorder geometry as physics fixtures. They do not replace the current campaign checks.
 
 0.11.0 adds circular ball-footprint support at edges and seams, live GO/WAIT passage signals and four onboard-turntable routes (45–48). Rotation remains continuous. Shores and decks share control without resetting the angle. Crosswind force rises only 8%; swept contact catches quick crossings. Stone textures are clipped to their own top faces, and the new rotating deck uses 180 cached views. See [design and validation](VALIDATION-v0.11.0.md). Current regression: `python tests/check_turntable.py`.
 
