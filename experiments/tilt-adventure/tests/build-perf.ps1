@@ -8,8 +8,8 @@ New-Item -ItemType Directory -Force $qa | Out-Null
 Copy-Item "$root/source/*" $qa -Recurse -Force
 Copy-Item "$root/source/engine.lua" "$qa/game.lua"
 @'
-Bench={select=function(n)
- selectLevel(n);while Loading.busy do Loading.step(1/30) end;lesson=false;title=false;for i=1,60 do Tilt.update(1/30) end
+Bench={select=function(n) selectLevel(n) end,ready=function()
+ lesson=false;title=false;for i=1,60 do Tilt.update(1/30) end
 end,place=function(a,b)
  x=a;y=b;ballHeight=floorAt(x,y);jumpZ=ballHeight;airborne=false;state='play';vx=90;vy=0;Dock.active=nil;Dock.blocked=nil
 end,cache=function() return terrainChunks and terrainChunks.misses or 0,terrainChunks and terrainChunks.count or 0 end}

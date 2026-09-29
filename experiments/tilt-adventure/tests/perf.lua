@@ -43,6 +43,7 @@ if Bench.all then
   for i,m in ipairs(c.mechanisms or {}) do specs[#specs+1]={route=n,kind='mechanism',index=i,name=m.retract and 'extend' or m.kind,frames=120} end
   for i,p in ipairs(c.pads or {}) do specs[#specs+1]={route=n,kind='pad',index=i,name=p.kind,frames=120} end
   if Curriculum then Curriculum.release(c) end
+  collectgarbage('collect')
   end
  end
  if Bench.mechanismIndices then
@@ -85,14 +86,31 @@ local function report()
  if specs then results.stages[#results.stages].scenario=specs[stage] end
  writeReport(results,'tilt-perf-report')
 end
+local preparing=false
+local loadLabel
+local function beginScene()
+ profile={};PerfLayers.values={};print('BENCH BEGIN',stages[stage])
+ if specs then print('SCENE',stage,specs[stage].kind,specs[stage].index or 0,specs[stage].name or 'traverse') end
+end
 function playdate.update()
  if now()-start<4500 then playdate.graphics.clear(playdate.graphics.kColorWhite);playdate.graphics.drawText('Hardware workload starting...',30,100);return end
+ -- Match production loading: one cooperative step per display frame. Draining
+ -- the entire long-course loader inside one callback bypasses frame-time GC.
+ if preparing then
+  Loading.step(1/30)
+  if Loading.label~=loadLabel then
+   loadLabel=Loading.label;print('LOAD',loadLabel,'luaKB='..math.floor(collectgarbage('count')))
+  end
+  if not Loading.busy then Bench.ready();preparing=false;beginScene() end
+  return
+ end
  if stage==0 or frame>=(specs and specs[stage].frames or 180) then
   report();stage=stage+1;frame=0;samples={};costs={};last=nil
   if stage>#stages then results.complete=true;writeReport(results,'tilt-perf-report');print('BENCH COMPLETE');playdate.update=function() playdate.graphics.clear(playdate.graphics.kColorWhite);playdate.graphics.drawText('Hardware check complete.',35,100) end;return end
-  if not specs or stage==1 or stages[stage]~=stages[stage-1] then Bench.select(stages[stage]) end
-  profile={};PerfLayers.values={};print('BENCH BEGIN',stages[stage])
-  if specs then print('SCENE',stage,specs[stage].kind,specs[stage].index or 0,specs[stage].name or 'traverse') end
+  if not specs or stage==1 or stages[stage]~=stages[stage-1] then
+   collectgarbage('collect');Bench.select(stages[stage]);preparing=true;loadLabel=nil;return
+  end
+  beginScene()
  end
  local c=Courses[stages[stage]]
  -- Traverse the sorted road tiles in batches; this deliberately stresses camera/cache misses.
