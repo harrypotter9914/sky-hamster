@@ -1,6 +1,6 @@
-# Sky Hamster — 0.12.0
+# Sky Hamster — 0.12.1
 
-0.12.0 reorganizes 53 courses into 20 teaching chapters followed by four complete expeditions with 21/23/25/28 encounters. Chapter reviews accumulate previously learned mechanics. Generated geometry is materialized on entry and released on departure; long-course terrain is prepared during loading, and maps offer section navigation. Progress migrates by stable course identity. See [campaign table](CAMPAIGN-v0.12.0.md) and [validation status](VALIDATION-v0.12.0.md). Current check: `python tests/check_curriculum.py`. Hardware validation and normal installation are pending USB recovery.
+0.12.x reorganizes 53 courses into 20 teaching chapters followed by four complete expeditions with 21/23/25/28 encounters. Chapter reviews accumulate previously learned mechanics. Generated geometry is materialized on entry and released on departure; maps offer section navigation and progress migrates by stable identity. Version 0.12.1 addresses the device's 10-second run-loop watchdog: generation, landing scans and occlusion preparation yield through the loader, including entry from a saved expedition. See [campaign table](CAMPAIGN-v0.12.0.md) and [current validation status](VALIDATION-v0.12.1.md). Checks: `python tests/check_curriculum.py` and `python tests/check_loading_watchdog.py`.
 
 Historical fixed-layout regressions can be run with `SKY_LEGACY_FIXTURES=1` and `python tests/check_passage_layout.py`; these exercise the preserved pre-reorder geometry as physics fixtures. They do not replace the current campaign checks.
 

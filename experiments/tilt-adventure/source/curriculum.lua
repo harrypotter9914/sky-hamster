@@ -108,6 +108,7 @@ local function buildCourse(id,name,keys,variant)
   if order<#keys then
    rect(width/32,width/32+3,1,3);c.profile[#c.profile+1]={x+128,z};x=x+128
   end
+  if Loading then Loading.checkpoint(.04*order/#keys,'PLANNING THE ROUTE') end
  end
  c.goal={x-48,80};c.checkpoint=c.checkpoints[1]
  c.note={'Read each landing signal before crossing.','Safe checkpoints separate every encounter.'}

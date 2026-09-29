@@ -1,0 +1,5 @@
+{
+  "frames": 118,
+  "pixelDifferences": [],
+  "purpose": "Verify cooperative loading preserves the v0.12.0 native expedition/map/selector frames"
+}

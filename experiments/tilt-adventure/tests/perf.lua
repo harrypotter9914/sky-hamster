@@ -31,7 +31,7 @@ results.mode=smooth and '90-units-per-second camera samples' or 'full-route came
 if Bench.joins then results.mode='moving dock, lift and aiming animation samples' end
 local stage,frame=0,0
 local specs
-if Bench.all then
+local function planAll()
  specs={};stages={}
  for n,c in ipairs(Courses) do
   local included=not Bench.routes
@@ -88,27 +88,40 @@ local function report()
 end
 local preparing=false
 local loadLabel
+local loadStart,loadMax
+local planning=false
 local function beginScene()
  profile={};PerfLayers.values={};print('BENCH BEGIN',stages[stage])
  if specs then print('SCENE',stage,specs[stage].kind,specs[stage].index or 0,specs[stage].name or 'traverse') end
 end
 function playdate.update()
  if now()-start<4500 then playdate.graphics.clear(playdate.graphics.kColorWhite);playdate.graphics.drawText('Hardware workload starting...',30,100);return end
+ if planning then
+  Loading.step(1/30)
+  if not Loading.busy then planning=false;collectgarbage('collect') end
+  return
+ end
+ if Bench.all and not specs then
+  Loading.begin(planAll,'PLANNING THE BENCHMARK');planning=true;return
+ end
  -- Match production loading: one cooperative step per display frame. Draining
  -- the entire long-course loader inside one callback bypasses frame-time GC.
  if preparing then
-  Loading.step(1/30)
+  local loadTick=now();Loading.step(1/30);loadMax=math.max(loadMax,now()-loadTick)
   if Loading.label~=loadLabel then
    loadLabel=Loading.label;print('LOAD',loadLabel,'luaKB='..math.floor(collectgarbage('count')))
   end
-  if not Loading.busy then Bench.ready();preparing=false;beginScene() end
+  if not Loading.busy then
+   print('LOAD COMPLETE route='..stages[stage]..' elapsedMS='..(now()-loadStart)..' maxUpdateMS='..loadMax)
+   Bench.ready();preparing=false;beginScene()
+  end
   return
  end
  if stage==0 or frame>=(specs and specs[stage].frames or 180) then
   report();stage=stage+1;frame=0;samples={};costs={};last=nil
   if stage>#stages then results.complete=true;writeReport(results,'tilt-perf-report');print('BENCH COMPLETE');playdate.update=function() playdate.graphics.clear(playdate.graphics.kColorWhite);playdate.graphics.drawText('Hardware check complete.',35,100) end;return end
   if not specs or stage==1 or stages[stage]~=stages[stage-1] then
-   collectgarbage('collect');Bench.select(stages[stage]);preparing=true;loadLabel=nil;return
+   collectgarbage('collect');loadStart=now();loadMax=0;Bench.select(stages[stage]);preparing=true;loadLabel=nil;return
   end
   beginScene()
  end

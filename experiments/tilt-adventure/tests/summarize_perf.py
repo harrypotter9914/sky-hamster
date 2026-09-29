@@ -24,7 +24,11 @@ for line in text.splitlines():
 routes = sorted({int(r['route']) for r in rows})
 report = dict(complete='BENCH COMPLETE' in text, errors=re.findall(r'BENCH ERROR[^\r\n]*', text),
               routes=routes, scenes=len(rows), rows=rows)
-print(f"Complete: {report['complete']}; courses: {len(routes)}/44; scenes: {len(rows)}; errors: {report['errors']}")
+plan = re.search(r'BENCH PLAN courses=(\d+) scenes=(\d+)', text)
+campaign_size = int(plan[1]) if plan else None
+print(f"Complete: {report['complete']}; sampled courses: {len(routes)}" +
+      (f" (campaign: {campaign_size})" if campaign_size else '') +
+      f"; scenes: {len(rows)}; errors: {report['errors']}")
 for label, subset in [('road stress', [r for r in rows if r.get('kind') == 'road']),
                       ('normal and machinery', [r for r in rows if r.get('kind') != 'road'])]:
     if not subset:

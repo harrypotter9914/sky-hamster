@@ -85,7 +85,8 @@ local function saveProgress()
  if pd.datastore then pd.datastore.write({campaignRevision=Curriculum and Curriculum.revision or 2,completed=completed,best=best,level=level,guideRevision=3,jumpGuideRevision=1,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
-if Curriculum then Curriculum.ensure(course) end
+-- Generated saved courses are materialized by selectLevel inside the loader,
+-- not synchronously while importing the game before its first update.
 local jumpEnabled=false
 local worldTime=0
 local ballImage=g.image.new(28,28,g.kColorClear)
@@ -112,7 +113,9 @@ end
 local function selectLevel(n)
  if not Loading.working() then
   Tilt.startCalibration()
-  Loading.begin(function() selectLevel(n) end,'ENTERING COURSE '..n,function() Audio.ui('ready') end)
+  Loading.begin(function() selectLevel(n) end,'ENTERING COURSE '..n,function()
+   Audio.ui('ready');print('READY: course '..n..' loading complete')
+  end)
   return
  end
  briefing=false;ending=false;title=false;level=n;selected=n;course=Courses[level];jumpEnabled=course.jump
@@ -306,7 +309,7 @@ local function marker(point,label,foreground)
   for i=0,2 do for j=0,1 do if (i+j)%2==0 then g.fillRect(p-15+i*4,q-23+j*4,4,4) end end end
  end
 end
-if not Loading.busy and not Loading.booting then prepareTerrain() end
+if not Loading.busy and not Loading.booting and not (course.blueprint and not course.materialized) then prepareTerrain() end
 local function renderWorld()
  -- Hold the camera at the edge while the ball falls away from the track.
  if state~='fall' then camX=(x-y)*0.9;camY=(x+y)*0.45-ballHeight*0.65 end

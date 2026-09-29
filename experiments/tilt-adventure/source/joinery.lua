@@ -3,13 +3,14 @@ Joinery={}
 local J=Joinery
 local function banks(c,x,y,half)
  local left,right=-math.huge,math.huge
- for _,tile in ipairs(c.tiles) do
+ for index,tile in ipairs(c.tiles) do
   local y0,y1=tile.y*32,(tile.y+1)*32
   if y1>y-half+.01 and y0<y+half-.01 then
    local x0,x1=tile.x*32,(tile.x+1)*32
    if x1<=x+.01 then left=math.max(left,x1) end
    if x0>=x-.01 then right=math.min(right,x0) end
   end
+  if Loading and index%128==0 then Loading.checkpoint(.05,'FITTING THE LANDINGS') end
  end
  return left,right
 end
@@ -27,10 +28,11 @@ function J.prepare(c)
    local lip={m.x-m.w/2,m.x+m.w/2,back-32,back,m.maxHeight}
    c.upperLips[#c.upperLips+1]=lip
    local kept={}
-   for _,tile in ipairs(c.tiles) do
+   for index,tile in ipairs(c.tiles) do
     local x0,y0=tile.x*32,tile.y*32
     if x0>=lip[2] and x0<lip[2]+64 and y0>=back and y0<back+m.h then c.lookup[tile.x..','..tile.y]=nil
     else kept[#kept+1]=tile end
+    if Loading and index%128==0 then Loading.checkpoint(.05,'FITTING THE LANDINGS') end
    end
    c.tiles=kept
    c:rect(math.floor(lip[1]/32),math.floor(lip[2]/32)-1,math.floor(lip[3]/32),math.floor(lip[4]/32)-1)

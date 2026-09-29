@@ -81,7 +81,7 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
  local needTerrain=not minZ or course.maxTerrainRoof>minZ
  if needTerrain and not course.occlusionCache then
   course.occlusionCache={};course.occlusionBuckets={}
-  for _,tile in ipairs(course.tiles) do
+  for index,tile in ipairs(course.tiles) do
    local x,y=tile.x*32+16,tile.y*32+16;local h,slope=course:height(x,y)
    local depth=course.terrainDepth and course.terrainDepth[tile.x..','..tile.y] or S.thickness
    local box=makeBox(x,y,32,32,0,h-depth,h,slope)
@@ -89,6 +89,7 @@ function S.occluders(course,t,project,left,top,width,height,minZ)
    for bx=math.floor(box.minX/128),math.floor(box.maxX/128) do for by=math.floor(box.minY/128),math.floor(box.maxY/128) do
     local key=bx..','..by;local bucket=course.occlusionBuckets[key] or {};course.occlusionBuckets[key]=bucket;bucket[#bucket+1]=box
    end end
+   if Loading and index%32==0 then Loading.checkpoint(.73,'PREPARING ROAD SHADOWS') end
   end
  end
  local out={};local ox,oy=project(0,0,0)
