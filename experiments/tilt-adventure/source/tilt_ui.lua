@@ -239,7 +239,8 @@ function UI.map(course,x,y,t)
    for i=s.first,s.last do view.mechanisms[#view.mechanisms+1]=course.mechanisms[i] end
    if index==1 then view.start=course.start end;if index==#course.sections then view.goal=course.goal end
   end
-  text(string.format('SECTION %d/%d  /  %s',index,#course.sections,s.kind:upper()),32,80)
+  local names={jet='STEAM JETS',conveyor='CONVEYOR BELT',magnet='MAGNET',windcontrol='WIND DIAL',switch='ROUTE GATES'}
+  text(string.format('SECTION %d/%d / %s',index,#course.sections,names[s.kind] or s.kind:upper()),32,80)
   route(view,40,103,320,53,x>=s.x and x<s.x+s.width and x or nil,y,t)
   for i=1,#course.sections do
    local a=32+(i-1)*336/#course.sections;local w=math.max(2,math.floor(336/#course.sections)-2)

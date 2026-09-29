@@ -1,0 +1,4342 @@
+{
+  "courses": [
+    {
+      "course": 1,
+      "id": "legacy-1",
+      "name": "Corner school",
+      "chapter": 1,
+      "review": false,
+      "finale": false,
+      "tiles": 40,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": []
+    },
+    {
+      "course": 2,
+      "id": "legacy-2",
+      "name": "Downhill",
+      "chapter": 1,
+      "review": false,
+      "finale": false,
+      "tiles": 42,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": []
+    },
+    {
+      "course": 3,
+      "id": "legacy-3",
+      "name": "Momentum valley",
+      "chapter": 1,
+      "review": false,
+      "finale": false,
+      "tiles": 51,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": []
+    },
+    {
+      "course": 4,
+      "id": "legacy-4",
+      "name": "Brake bend",
+      "chapter": 1,
+      "review": false,
+      "finale": false,
+      "tiles": 45,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": []
+    },
+    {
+      "course": 5,
+      "id": "legacy-5",
+      "name": "First hop",
+      "chapter": 2,
+      "review": false,
+      "finale": false,
+      "tiles": 36,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": []
+    },
+    {
+      "course": 6,
+      "id": "legacy-6",
+      "name": "Precision",
+      "chapter": 2,
+      "review": false,
+      "finale": false,
+      "tiles": 33,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": []
+    },
+    {
+      "course": 7,
+      "id": "legacy-7",
+      "name": "Jump chain",
+      "chapter": 2,
+      "review": false,
+      "finale": false,
+      "tiles": 63,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": []
+    },
+    {
+      "course": 8,
+      "id": "hop-bends",
+      "name": "Hop and turn",
+      "chapter": 2,
+      "review": true,
+      "finale": false,
+      "tiles": 129,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        }
+      ]
+    },
+    {
+      "course": 9,
+      "id": "legacy-8",
+      "name": "Timed gate",
+      "chapter": 3,
+      "review": false,
+      "finale": false,
+      "tiles": 54,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "gate"
+      ],
+      "sections": []
+    },
+    {
+      "course": 10,
+      "id": "gate-revisit",
+      "name": "Gate and leap",
+      "chapter": 3,
+      "review": true,
+      "finale": false,
+      "tiles": 171,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "gate"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        }
+      ]
+    },
+    {
+      "course": 11,
+      "id": "legacy-9",
+      "name": "Vanishing floor",
+      "chapter": 4,
+      "review": false,
+      "finale": false,
+      "tiles": 45,
+      "machines": 2,
+      "cannons": 0,
+      "features": [
+        "trap"
+      ],
+      "sections": []
+    },
+    {
+      "course": 12,
+      "id": "trap-revisit",
+      "name": "Floor memory",
+      "chapter": 4,
+      "review": true,
+      "finale": false,
+      "tiles": 207,
+      "machines": 2,
+      "cannons": 0,
+      "features": [
+        "gate",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        }
+      ]
+    },
+    {
+      "course": 13,
+      "id": "legacy-10",
+      "name": "Shuttle",
+      "chapter": 5,
+      "review": false,
+      "finale": false,
+      "tiles": 30,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "ferry"
+      ],
+      "sections": []
+    },
+    {
+      "course": 14,
+      "id": "legacy-13",
+      "name": "Valley relay",
+      "chapter": 5,
+      "review": true,
+      "finale": false,
+      "tiles": 243,
+      "machines": 3,
+      "cannons": 0,
+      "features": [
+        "ferry",
+        "gate",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        }
+      ]
+    },
+    {
+      "course": 15,
+      "id": "legacy-11",
+      "name": "Turn table",
+      "chapter": 6,
+      "review": false,
+      "finale": false,
+      "tiles": 33,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "rotor"
+      ],
+      "sections": []
+    },
+    {
+      "course": 16,
+      "id": "legacy-14",
+      "name": "Sky circuit",
+      "chapter": 6,
+      "review": true,
+      "finale": false,
+      "tiles": 282,
+      "machines": 4,
+      "cannons": 0,
+      "features": [
+        "ferry",
+        "gate",
+        "rotor",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        }
+      ]
+    },
+    {
+      "course": 17,
+      "id": "legacy-12",
+      "name": "Side sweep",
+      "chapter": 7,
+      "review": false,
+      "finale": false,
+      "tiles": 100,
+      "machines": 2,
+      "cannons": 0,
+      "features": [
+        "sweeper"
+      ],
+      "sections": []
+    },
+    {
+      "course": 18,
+      "id": "sweep-revisit",
+      "name": "Moving maze",
+      "chapter": 7,
+      "review": true,
+      "finale": false,
+      "tiles": 354,
+      "machines": 5,
+      "cannons": 0,
+      "features": [
+        "ferry",
+        "gate",
+        "rotor",
+        "sweeper",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        }
+      ]
+    },
+    {
+      "course": 19,
+      "id": "bumpers",
+      "name": "Spring garden",
+      "chapter": 8,
+      "review": false,
+      "finale": false,
+      "tiles": 95,
+      "machines": 3,
+      "cannons": 0,
+      "features": [
+        "bumper"
+      ],
+      "sections": []
+    },
+    {
+      "course": 20,
+      "id": "bumper-slalom",
+      "name": "Bumper slalom",
+      "chapter": 8,
+      "review": true,
+      "finale": false,
+      "tiles": 426,
+      "machines": 7,
+      "cannons": 0,
+      "features": [
+        "bumper",
+        "ferry",
+        "gate",
+        "rotor",
+        "sweeper",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        }
+      ]
+    },
+    {
+      "course": 21,
+      "id": "crosswind",
+      "name": "Crosswind",
+      "chapter": 9,
+      "review": false,
+      "finale": false,
+      "tiles": 92,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "fan"
+      ],
+      "sections": []
+    },
+    {
+      "course": 22,
+      "id": "storm-run",
+      "name": "Storm run",
+      "chapter": 9,
+      "review": true,
+      "finale": false,
+      "tiles": 508,
+      "machines": 8,
+      "cannons": 0,
+      "features": [
+        "bumper",
+        "fan",
+        "ferry",
+        "gate",
+        "rotor",
+        "sweeper",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        }
+      ]
+    },
+    {
+      "course": 23,
+      "id": "legacy-15",
+      "name": "Crank crossing",
+      "chapter": 10,
+      "review": false,
+      "finale": false,
+      "tiles": 33,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "bridge"
+      ],
+      "sections": []
+    },
+    {
+      "course": 24,
+      "id": "bridge-workshop",
+      "name": "Bridge workshop",
+      "chapter": 10,
+      "review": true,
+      "finale": false,
+      "tiles": 547,
+      "machines": 9,
+      "cannons": 0,
+      "features": [
+        "bridge",
+        "bumper",
+        "fan",
+        "ferry",
+        "gate",
+        "rotor",
+        "sweeper",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        }
+      ]
+    },
+    {
+      "course": 25,
+      "id": "onboard-turn",
+      "name": "Turn with the road",
+      "chapter": 11,
+      "review": false,
+      "finale": false,
+      "tiles": 22,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "onboard"
+      ],
+      "sections": []
+    },
+    {
+      "course": 26,
+      "id": "onboard-relay",
+      "name": "Two turning rooms",
+      "chapter": 11,
+      "review": false,
+      "finale": false,
+      "tiles": 38,
+      "machines": 2,
+      "cannons": 0,
+      "features": [
+        "onboard"
+      ],
+      "sections": []
+    },
+    {
+      "course": 27,
+      "id": "dual-turn",
+      "name": "Call and ride",
+      "chapter": 11,
+      "review": false,
+      "finale": false,
+      "tiles": 22,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "onboard"
+      ],
+      "sections": []
+    },
+    {
+      "course": 28,
+      "id": "onboard-expedition",
+      "name": "Sky interchange",
+      "chapter": 11,
+      "review": true,
+      "finale": false,
+      "tiles": 614,
+      "machines": 10,
+      "cannons": 0,
+      "features": [
+        "bridge",
+        "bumper",
+        "fan",
+        "ferry",
+        "gate",
+        "onboard",
+        "rotor",
+        "sweeper",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        }
+      ]
+    },
+    {
+      "course": 29,
+      "id": "lift-school",
+      "name": "Going up",
+      "chapter": 12,
+      "review": false,
+      "finale": false,
+      "tiles": 40,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "lift"
+      ],
+      "sections": []
+    },
+    {
+      "course": 30,
+      "id": "switchback",
+      "name": "Cloud switchback",
+      "chapter": 12,
+      "review": false,
+      "finale": false,
+      "tiles": 141,
+      "machines": 0,
+      "cannons": 0,
+      "features": [],
+      "sections": []
+    },
+    {
+      "course": 31,
+      "id": "lift-towers",
+      "name": "Elevation relay",
+      "chapter": 12,
+      "review": true,
+      "finale": false,
+      "tiles": 660,
+      "machines": 11,
+      "cannons": 0,
+      "features": [
+        "bridge",
+        "bumper",
+        "fan",
+        "ferry",
+        "gate",
+        "lift",
+        "onboard",
+        "rotor",
+        "sweeper",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        }
+      ]
+    },
+    {
+      "course": 32,
+      "id": "crank-ferry",
+      "name": "Crank ferry",
+      "chapter": 13,
+      "review": false,
+      "finale": false,
+      "tiles": 30,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "slider"
+      ],
+      "sections": []
+    },
+    {
+      "course": 33,
+      "id": "ferry-zigzag",
+      "name": "Ferry zigzag",
+      "chapter": 13,
+      "review": true,
+      "finale": false,
+      "tiles": 708,
+      "machines": 12,
+      "cannons": 0,
+      "features": [
+        "bridge",
+        "bumper",
+        "fan",
+        "ferry",
+        "gate",
+        "lift",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "trap"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        }
+      ]
+    },
+    {
+      "course": 34,
+      "id": "wind-dial",
+      "name": "Wind workshop",
+      "chapter": 14,
+      "review": false,
+      "finale": false,
+      "tiles": 102,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "fan",
+        "windcontrol"
+      ],
+      "sections": []
+    },
+    {
+      "course": 35,
+      "id": "wind-relay",
+      "name": "Wind and springs",
+      "chapter": 14,
+      "review": true,
+      "finale": false,
+      "tiles": 790,
+      "machines": 13,
+      "cannons": 0,
+      "features": [
+        "bridge",
+        "bumper",
+        "fan",
+        "ferry",
+        "gate",
+        "lift",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        }
+      ]
+    },
+    {
+      "course": 36,
+      "id": "legacy-16",
+      "name": "Cannon clouds",
+      "chapter": 15,
+      "review": false,
+      "finale": false,
+      "tiles": 51,
+      "machines": 0,
+      "cannons": 1,
+      "features": [
+        "cannon"
+      ],
+      "sections": []
+    },
+    {
+      "course": 37,
+      "id": "cannon-relay",
+      "name": "Cannon relay",
+      "chapter": 15,
+      "review": false,
+      "finale": false,
+      "tiles": 136,
+      "machines": 0,
+      "cannons": 2,
+      "features": [
+        "cannon"
+      ],
+      "sections": []
+    },
+    {
+      "course": 38,
+      "id": "high-flight",
+      "name": "High flight",
+      "chapter": 15,
+      "review": false,
+      "finale": false,
+      "tiles": 142,
+      "machines": 1,
+      "cannons": 1,
+      "features": [
+        "cannon",
+        "lift"
+      ],
+      "sections": []
+    },
+    {
+      "course": 39,
+      "id": "legacy-17",
+      "name": "Flight review",
+      "chapter": 15,
+      "review": true,
+      "finale": false,
+      "tiles": 842,
+      "machines": 13,
+      "cannons": 1,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "fan",
+        "ferry",
+        "gate",
+        "lift",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        }
+      ]
+    },
+    {
+      "course": 40,
+      "id": "belt-school",
+      "name": "Moving stones",
+      "chapter": 16,
+      "review": false,
+      "finale": false,
+      "tiles": 95,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "conveyor"
+      ],
+      "sections": []
+    },
+    {
+      "course": 41,
+      "id": "belt-bends",
+      "name": "Belt bends",
+      "chapter": 16,
+      "review": true,
+      "finale": false,
+      "tiles": 914,
+      "machines": 14,
+      "cannons": 1,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "fan",
+        "ferry",
+        "gate",
+        "lift",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        }
+      ]
+    },
+    {
+      "course": 42,
+      "id": "jet-school",
+      "name": "Steam windows",
+      "chapter": 17,
+      "review": false,
+      "finale": false,
+      "tiles": 105,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "jet"
+      ],
+      "sections": []
+    },
+    {
+      "course": 43,
+      "id": "jet-relay",
+      "name": "Pressure alley",
+      "chapter": 17,
+      "review": true,
+      "finale": false,
+      "tiles": 986,
+      "machines": 15,
+      "cannons": 1,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "fan",
+        "ferry",
+        "gate",
+        "jet",
+        "lift",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        },
+        {
+          "kind": "jet",
+          "width": 384,
+          "signature": "6e0a1dfda8226c803b6e504a9e0a49546fa080b35a0a07e9771e4b1c0a6f6b3a"
+        }
+      ]
+    },
+    {
+      "course": 44,
+      "id": "extend-school",
+      "name": "Unfold the road",
+      "chapter": 18,
+      "review": false,
+      "finale": false,
+      "tiles": 70,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "extend"
+      ],
+      "sections": []
+    },
+    {
+      "course": 45,
+      "id": "extend-relay",
+      "name": "Twin drawbridges",
+      "chapter": 18,
+      "review": true,
+      "finale": false,
+      "tiles": 1022,
+      "machines": 16,
+      "cannons": 1,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "extend",
+        "fan",
+        "ferry",
+        "gate",
+        "jet",
+        "lift",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        },
+        {
+          "kind": "jet",
+          "width": 384,
+          "signature": "6e0a1dfda8226c803b6e504a9e0a49546fa080b35a0a07e9771e4b1c0a6f6b3a"
+        },
+        {
+          "kind": "extend",
+          "width": 448,
+          "signature": "621cde506a8be3f17f03828580421bc5294c0755d82ee7bde010515d0ba9681c"
+        }
+      ]
+    },
+    {
+      "course": 46,
+      "id": "switch-school",
+      "name": "Choose a lane",
+      "chapter": 19,
+      "review": false,
+      "finale": false,
+      "tiles": 108,
+      "machines": 2,
+      "cannons": 0,
+      "features": [
+        "switch"
+      ],
+      "sections": []
+    },
+    {
+      "course": 47,
+      "id": "switch-risk",
+      "name": "Fork in the wind",
+      "chapter": 19,
+      "review": true,
+      "finale": false,
+      "tiles": 1099,
+      "machines": 18,
+      "cannons": 1,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "extend",
+        "fan",
+        "ferry",
+        "gate",
+        "jet",
+        "lift",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "switch",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        },
+        {
+          "kind": "jet",
+          "width": 384,
+          "signature": "6e0a1dfda8226c803b6e504a9e0a49546fa080b35a0a07e9771e4b1c0a6f6b3a"
+        },
+        {
+          "kind": "extend",
+          "width": 448,
+          "signature": "621cde506a8be3f17f03828580421bc5294c0755d82ee7bde010515d0ba9681c"
+        },
+        {
+          "kind": "switch",
+          "width": 448,
+          "signature": "ff7cdb9b91628b5cbc91a429196eb2ddc81d26512c5ddedc52891ab63eb5e540"
+        }
+      ]
+    },
+    {
+      "course": 48,
+      "id": "magnet-school",
+      "name": "Magnetic island",
+      "chapter": 20,
+      "review": false,
+      "finale": false,
+      "tiles": 115,
+      "machines": 1,
+      "cannons": 0,
+      "features": [
+        "magnet"
+      ],
+      "sections": []
+    },
+    {
+      "course": 49,
+      "id": "magnet-relay",
+      "name": "Polar crossing",
+      "chapter": 20,
+      "review": true,
+      "finale": false,
+      "tiles": 1171,
+      "machines": 19,
+      "cannons": 1,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "extend",
+        "fan",
+        "ferry",
+        "gate",
+        "jet",
+        "lift",
+        "magnet",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "switch",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        },
+        {
+          "kind": "jet",
+          "width": 384,
+          "signature": "6e0a1dfda8226c803b6e504a9e0a49546fa080b35a0a07e9771e4b1c0a6f6b3a"
+        },
+        {
+          "kind": "extend",
+          "width": 448,
+          "signature": "621cde506a8be3f17f03828580421bc5294c0755d82ee7bde010515d0ba9681c"
+        },
+        {
+          "kind": "switch",
+          "width": 448,
+          "signature": "ff7cdb9b91628b5cbc91a429196eb2ddc81d26512c5ddedc52891ab63eb5e540"
+        },
+        {
+          "kind": "magnet",
+          "width": 384,
+          "signature": "e2a440f45f26d1c6c0d529b1bc51e1039e278ba5f7529fc697cd298a83d4f844"
+        }
+      ]
+    },
+    {
+      "course": 50,
+      "id": "sky-odyssey",
+      "name": "Sky odyssey",
+      "chapter": 21,
+      "review": false,
+      "finale": true,
+      "tiles": 1171,
+      "machines": 19,
+      "cannons": 1,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "extend",
+        "fan",
+        "ferry",
+        "gate",
+        "jet",
+        "lift",
+        "magnet",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "switch",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        },
+        {
+          "kind": "jet",
+          "width": 384,
+          "signature": "6e0a1dfda8226c803b6e504a9e0a49546fa080b35a0a07e9771e4b1c0a6f6b3a"
+        },
+        {
+          "kind": "extend",
+          "width": 448,
+          "signature": "621cde506a8be3f17f03828580421bc5294c0755d82ee7bde010515d0ba9681c"
+        },
+        {
+          "kind": "switch",
+          "width": 448,
+          "signature": "ff7cdb9b91628b5cbc91a429196eb2ddc81d26512c5ddedc52891ab63eb5e540"
+        },
+        {
+          "kind": "magnet",
+          "width": 384,
+          "signature": "e2a440f45f26d1c6c0d529b1bc51e1039e278ba5f7529fc697cd298a83d4f844"
+        },
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        }
+      ]
+    },
+    {
+      "course": 51,
+      "id": "grand-expedition",
+      "name": "Grand expedition",
+      "chapter": 21,
+      "review": false,
+      "finale": true,
+      "tiles": 1273,
+      "machines": 22,
+      "cannons": 1,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "extend",
+        "fan",
+        "ferry",
+        "gate",
+        "jet",
+        "lift",
+        "magnet",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "switch",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        },
+        {
+          "kind": "jet",
+          "width": 384,
+          "signature": "6e0a1dfda8226c803b6e504a9e0a49546fa080b35a0a07e9771e4b1c0a6f6b3a"
+        },
+        {
+          "kind": "extend",
+          "width": 448,
+          "signature": "621cde506a8be3f17f03828580421bc5294c0755d82ee7bde010515d0ba9681c"
+        },
+        {
+          "kind": "switch",
+          "width": 448,
+          "signature": "ff7cdb9b91628b5cbc91a429196eb2ddc81d26512c5ddedc52891ab63eb5e540"
+        },
+        {
+          "kind": "magnet",
+          "width": 384,
+          "signature": "e2a440f45f26d1c6c0d529b1bc51e1039e278ba5f7529fc697cd298a83d4f844"
+        },
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        }
+      ]
+    },
+    {
+      "course": 52,
+      "id": "master-crossing",
+      "name": "Master crossing",
+      "chapter": 21,
+      "review": false,
+      "finale": true,
+      "tiles": 1377,
+      "machines": 23,
+      "cannons": 2,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "extend",
+        "fan",
+        "ferry",
+        "gate",
+        "jet",
+        "lift",
+        "magnet",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "switch",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        },
+        {
+          "kind": "jet",
+          "width": 384,
+          "signature": "6e0a1dfda8226c803b6e504a9e0a49546fa080b35a0a07e9771e4b1c0a6f6b3a"
+        },
+        {
+          "kind": "extend",
+          "width": 448,
+          "signature": "621cde506a8be3f17f03828580421bc5294c0755d82ee7bde010515d0ba9681c"
+        },
+        {
+          "kind": "switch",
+          "width": 448,
+          "signature": "ff7cdb9b91628b5cbc91a429196eb2ddc81d26512c5ddedc52891ab63eb5e540"
+        },
+        {
+          "kind": "magnet",
+          "width": 384,
+          "signature": "e2a440f45f26d1c6c0d529b1bc51e1039e278ba5f7529fc697cd298a83d4f844"
+        },
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        }
+      ]
+    },
+    {
+      "course": 53,
+      "id": "homeward-voyage",
+      "name": "Homeward voyage",
+      "chapter": 21,
+      "review": false,
+      "finale": true,
+      "tiles": 1542,
+      "machines": 30,
+      "cannons": 2,
+      "features": [
+        "bridge",
+        "bumper",
+        "cannon",
+        "conveyor",
+        "extend",
+        "fan",
+        "ferry",
+        "gate",
+        "jet",
+        "lift",
+        "magnet",
+        "onboard",
+        "rotor",
+        "slider",
+        "sweeper",
+        "switch",
+        "trap",
+        "windcontrol"
+      ],
+      "sections": [
+        {
+          "kind": "magnet",
+          "width": 384,
+          "signature": "e2a440f45f26d1c6c0d529b1bc51e1039e278ba5f7529fc697cd298a83d4f844"
+        },
+        {
+          "kind": "valley",
+          "width": 416,
+          "signature": "e460e94604eaf5693c3fb3c1d20e836684ebf883ba8ce666032cd5bc22977935"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "gate",
+          "width": 320,
+          "signature": "7e92ccd97ec26788ec077f646e010e8e5d59d22933eb9739deda4d4ec45e4d50"
+        },
+        {
+          "kind": "trap",
+          "width": 320,
+          "signature": "59598f1ba334f1ade0c863f994af1156352b174ee848c3fbb9eb0c44cb76f7f3"
+        },
+        {
+          "kind": "ferry",
+          "width": 480,
+          "signature": "a08f206b34a12b8e441f6f4d606dfbd2f539b9435b282e63786f2065abfad9d5"
+        },
+        {
+          "kind": "rotor",
+          "width": 448,
+          "signature": "b7a3308144db60a457d463ca34d43f061608fa805ff1e87bd542521b1474fbcd"
+        },
+        {
+          "kind": "sweeper",
+          "width": 384,
+          "signature": "7818259cb0d244b75ef95f21cbdb1f3e4418ab63befe8d56fca46b02a2c874f2"
+        },
+        {
+          "kind": "bumper",
+          "width": 384,
+          "signature": "1af3a1176ffc7c62fbda29623761e286dd470709bac747aee4a9d380b136efe2"
+        },
+        {
+          "kind": "fan",
+          "width": 448,
+          "signature": "73cada6b9bc34c4f4ad4302ce1d78147eb509272852b50881ba82d4a8b4c7f5d"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "slider",
+          "width": 544,
+          "signature": "9865fc52866d12f76c1ce1a725a574acfd72b1b95c9484c463a040a003750098"
+        },
+        {
+          "kind": "windcontrol",
+          "width": 448,
+          "signature": "64a265d870883aa400e2d606c8f1419af3d9941316e463719a6c5b2554711a3d"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "conveyor",
+          "width": 384,
+          "signature": "b3bf2fd646e33ad3c4eb0649ef9f214a8e7c9eca24d5e2e54f957828ce27c2b3"
+        },
+        {
+          "kind": "jet",
+          "width": 384,
+          "signature": "6e0a1dfda8226c803b6e504a9e0a49546fa080b35a0a07e9771e4b1c0a6f6b3a"
+        },
+        {
+          "kind": "extend",
+          "width": 448,
+          "signature": "621cde506a8be3f17f03828580421bc5294c0755d82ee7bde010515d0ba9681c"
+        },
+        {
+          "kind": "switch",
+          "width": 448,
+          "signature": "ff7cdb9b91628b5cbc91a429196eb2ddc81d26512c5ddedc52891ab63eb5e540"
+        },
+        {
+          "kind": "bridge",
+          "width": 448,
+          "signature": "ac099cb88596e8b3b6e231cc303f12820bf0144f0aab262c5c06d2100d6049a7"
+        },
+        {
+          "kind": "jump",
+          "width": 384,
+          "signature": "c3f5e0be0eef58e668fb755d87a02e0a70c46de57fe6261807e06cd5978bebc5"
+        },
+        {
+          "kind": "onboard",
+          "width": 608,
+          "signature": "88bb9dd8526c0f266d2a8f37fcc197c39fc36d1ee7d0d28a70c1a85c5ccb4545"
+        },
+        {
+          "kind": "lift",
+          "width": 448,
+          "signature": "c9a12ffcda4354e25078aee9e83cbaddf8b295cf12ddd9e657c5f90035f49173"
+        },
+        {
+          "kind": "cannon",
+          "width": 448,
+          "signature": "930b296a075103e8660e15cadc2cf10d54e5215173abf59d68791650cc926152"
+        },
+        {
+          "kind": "switch",
+          "width": 448,
+          "signature": "ff7cdb9b91628b5cbc91a429196eb2ddc81d26512c5ddedc52891ab63eb5e540"
+        },
+        {
+          "kind": "terrain",
+          "width": 544,
+          "signature": "a3d5ca117788b0e25c82c0a150d49638d5e88c9546ef170dba3ec215de1c3800"
+        }
+      ]
+    }
+  ],
+  "firstMechanics": {
+    "gate": 9,
+    "trap": 11,
+    "ferry": 13,
+    "rotor": 15,
+    "sweeper": 17,
+    "bumper": 19,
+    "fan": 21,
+    "bridge": 23,
+    "onboard": 25,
+    "lift": 29,
+    "slider": 32,
+    "windcontrol": 34,
+    "cannon": 36,
+    "conveyor": 40,
+    "jet": 42,
+    "extend": 44,
+    "switch": 46,
+    "magnet": 48
+  },
+  "sequenceProblems": [],
+  "repeatedRoomShapes": [
+    [
+      {
+        "course": 8,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 10,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 12,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 14,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 16,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 18,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 20,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 22,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 24,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 28,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 31,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 33,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 35,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 39,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 41,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 43,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 45,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 47,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 49,
+        "section": 1,
+        "kind": "valley"
+      },
+      {
+        "course": 50,
+        "section": 17,
+        "kind": "valley"
+      },
+      {
+        "course": 51,
+        "section": 12,
+        "kind": "valley"
+      },
+      {
+        "course": 52,
+        "section": 7,
+        "kind": "valley"
+      },
+      {
+        "course": 52,
+        "section": 22,
+        "kind": "valley"
+      },
+      {
+        "course": 53,
+        "section": 2,
+        "kind": "valley"
+      }
+    ],
+    [
+      {
+        "course": 8,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 10,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 12,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 14,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 16,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 18,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 20,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 22,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 24,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 28,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 31,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 33,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 35,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 39,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 41,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 43,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 45,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 47,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 49,
+        "section": 2,
+        "kind": "terrain"
+      },
+      {
+        "course": 50,
+        "section": 18,
+        "kind": "terrain"
+      },
+      {
+        "course": 51,
+        "section": 13,
+        "kind": "terrain"
+      },
+      {
+        "course": 52,
+        "section": 8,
+        "kind": "terrain"
+      },
+      {
+        "course": 52,
+        "section": 25,
+        "kind": "terrain"
+      },
+      {
+        "course": 53,
+        "section": 3,
+        "kind": "terrain"
+      },
+      {
+        "course": 53,
+        "section": 28,
+        "kind": "terrain"
+      }
+    ],
+    [
+      {
+        "course": 8,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 10,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 12,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 14,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 16,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 18,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 20,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 22,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 24,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 28,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 31,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 33,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 35,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 39,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 41,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 43,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 45,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 47,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 49,
+        "section": 3,
+        "kind": "jump"
+      },
+      {
+        "course": 50,
+        "section": 19,
+        "kind": "jump"
+      },
+      {
+        "course": 51,
+        "section": 14,
+        "kind": "jump"
+      },
+      {
+        "course": 51,
+        "section": 22,
+        "kind": "jump"
+      },
+      {
+        "course": 52,
+        "section": 9,
+        "kind": "jump"
+      },
+      {
+        "course": 53,
+        "section": 4,
+        "kind": "jump"
+      },
+      {
+        "course": 53,
+        "section": 23,
+        "kind": "jump"
+      }
+    ],
+    [
+      {
+        "course": 10,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 12,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 14,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 16,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 18,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 20,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 22,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 24,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 28,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 31,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 33,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 35,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 39,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 41,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 43,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 45,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 47,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 49,
+        "section": 4,
+        "kind": "gate"
+      },
+      {
+        "course": 50,
+        "section": 20,
+        "kind": "gate"
+      },
+      {
+        "course": 51,
+        "section": 15,
+        "kind": "gate"
+      },
+      {
+        "course": 52,
+        "section": 10,
+        "kind": "gate"
+      },
+      {
+        "course": 53,
+        "section": 5,
+        "kind": "gate"
+      }
+    ],
+    [
+      {
+        "course": 12,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 14,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 16,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 18,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 20,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 22,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 24,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 28,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 31,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 33,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 35,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 39,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 41,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 43,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 45,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 47,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 49,
+        "section": 5,
+        "kind": "trap"
+      },
+      {
+        "course": 50,
+        "section": 21,
+        "kind": "trap"
+      },
+      {
+        "course": 51,
+        "section": 16,
+        "kind": "trap"
+      },
+      {
+        "course": 52,
+        "section": 11,
+        "kind": "trap"
+      },
+      {
+        "course": 53,
+        "section": 6,
+        "kind": "trap"
+      }
+    ],
+    [
+      {
+        "course": 14,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 16,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 18,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 20,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 22,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 24,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 28,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 31,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 33,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 35,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 39,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 41,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 43,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 45,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 47,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 49,
+        "section": 6,
+        "kind": "ferry"
+      },
+      {
+        "course": 50,
+        "section": 1,
+        "kind": "ferry"
+      },
+      {
+        "course": 51,
+        "section": 17,
+        "kind": "ferry"
+      },
+      {
+        "course": 52,
+        "section": 12,
+        "kind": "ferry"
+      },
+      {
+        "course": 53,
+        "section": 7,
+        "kind": "ferry"
+      }
+    ],
+    [
+      {
+        "course": 16,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 18,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 20,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 22,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 24,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 28,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 31,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 33,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 35,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 39,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 41,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 43,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 45,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 47,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 49,
+        "section": 7,
+        "kind": "rotor"
+      },
+      {
+        "course": 50,
+        "section": 2,
+        "kind": "rotor"
+      },
+      {
+        "course": 51,
+        "section": 18,
+        "kind": "rotor"
+      },
+      {
+        "course": 52,
+        "section": 13,
+        "kind": "rotor"
+      },
+      {
+        "course": 53,
+        "section": 8,
+        "kind": "rotor"
+      }
+    ],
+    [
+      {
+        "course": 18,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 20,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 22,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 24,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 28,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 31,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 33,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 35,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 39,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 41,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 43,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 45,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 47,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 49,
+        "section": 8,
+        "kind": "sweeper"
+      },
+      {
+        "course": 50,
+        "section": 3,
+        "kind": "sweeper"
+      },
+      {
+        "course": 51,
+        "section": 19,
+        "kind": "sweeper"
+      },
+      {
+        "course": 52,
+        "section": 14,
+        "kind": "sweeper"
+      },
+      {
+        "course": 53,
+        "section": 9,
+        "kind": "sweeper"
+      }
+    ],
+    [
+      {
+        "course": 20,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 22,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 24,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 28,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 31,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 33,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 35,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 39,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 41,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 43,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 45,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 47,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 49,
+        "section": 9,
+        "kind": "bumper"
+      },
+      {
+        "course": 50,
+        "section": 4,
+        "kind": "bumper"
+      },
+      {
+        "course": 51,
+        "section": 20,
+        "kind": "bumper"
+      },
+      {
+        "course": 52,
+        "section": 15,
+        "kind": "bumper"
+      },
+      {
+        "course": 53,
+        "section": 10,
+        "kind": "bumper"
+      }
+    ],
+    [
+      {
+        "course": 22,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 24,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 28,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 31,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 33,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 35,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 39,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 41,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 43,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 45,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 47,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 49,
+        "section": 10,
+        "kind": "fan"
+      },
+      {
+        "course": 50,
+        "section": 5,
+        "kind": "fan"
+      },
+      {
+        "course": 51,
+        "section": 21,
+        "kind": "fan"
+      },
+      {
+        "course": 52,
+        "section": 16,
+        "kind": "fan"
+      },
+      {
+        "course": 53,
+        "section": 11,
+        "kind": "fan"
+      }
+    ],
+    [
+      {
+        "course": 24,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 28,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 31,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 33,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 35,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 39,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 41,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 43,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 45,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 47,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 49,
+        "section": 11,
+        "kind": "bridge"
+      },
+      {
+        "course": 50,
+        "section": 6,
+        "kind": "bridge"
+      },
+      {
+        "course": 51,
+        "section": 1,
+        "kind": "bridge"
+      },
+      {
+        "course": 52,
+        "section": 17,
+        "kind": "bridge"
+      },
+      {
+        "course": 53,
+        "section": 12,
+        "kind": "bridge"
+      },
+      {
+        "course": 53,
+        "section": 22,
+        "kind": "bridge"
+      }
+    ],
+    [
+      {
+        "course": 28,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 31,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 33,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 35,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 39,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 41,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 43,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 45,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 47,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 49,
+        "section": 12,
+        "kind": "onboard"
+      },
+      {
+        "course": 50,
+        "section": 7,
+        "kind": "onboard"
+      },
+      {
+        "course": 51,
+        "section": 2,
+        "kind": "onboard"
+      },
+      {
+        "course": 51,
+        "section": 23,
+        "kind": "onboard"
+      },
+      {
+        "course": 52,
+        "section": 18,
+        "kind": "onboard"
+      },
+      {
+        "course": 53,
+        "section": 13,
+        "kind": "onboard"
+      },
+      {
+        "course": 53,
+        "section": 24,
+        "kind": "onboard"
+      }
+    ],
+    [
+      {
+        "course": 31,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 33,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 35,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 39,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 41,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 43,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 45,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 47,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 49,
+        "section": 13,
+        "kind": "lift"
+      },
+      {
+        "course": 50,
+        "section": 8,
+        "kind": "lift"
+      },
+      {
+        "course": 51,
+        "section": 3,
+        "kind": "lift"
+      },
+      {
+        "course": 52,
+        "section": 19,
+        "kind": "lift"
+      },
+      {
+        "course": 53,
+        "section": 14,
+        "kind": "lift"
+      },
+      {
+        "course": 53,
+        "section": 25,
+        "kind": "lift"
+      }
+    ],
+    [
+      {
+        "course": 33,
+        "section": 14,
+        "kind": "slider"
+      },
+      {
+        "course": 35,
+        "section": 14,
+        "kind": "slider"
+      },
+      {
+        "course": 39,
+        "section": 14,
+        "kind": "slider"
+      },
+      {
+        "course": 41,
+        "section": 14,
+        "kind": "slider"
+      },
+      {
+        "course": 43,
+        "section": 14,
+        "kind": "slider"
+      },
+      {
+        "course": 45,
+        "section": 14,
+        "kind": "slider"
+      },
+      {
+        "course": 47,
+        "section": 14,
+        "kind": "slider"
+      },
+      {
+        "course": 49,
+        "section": 14,
+        "kind": "slider"
+      },
+      {
+        "course": 50,
+        "section": 9,
+        "kind": "slider"
+      },
+      {
+        "course": 51,
+        "section": 4,
+        "kind": "slider"
+      },
+      {
+        "course": 52,
+        "section": 20,
+        "kind": "slider"
+      },
+      {
+        "course": 52,
+        "section": 24,
+        "kind": "slider"
+      },
+      {
+        "course": 53,
+        "section": 15,
+        "kind": "slider"
+      }
+    ],
+    [
+      {
+        "course": 35,
+        "section": 15,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 39,
+        "section": 15,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 41,
+        "section": 15,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 43,
+        "section": 15,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 45,
+        "section": 15,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 47,
+        "section": 15,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 49,
+        "section": 15,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 50,
+        "section": 10,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 51,
+        "section": 5,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 52,
+        "section": 21,
+        "kind": "windcontrol"
+      },
+      {
+        "course": 53,
+        "section": 16,
+        "kind": "windcontrol"
+      }
+    ],
+    [
+      {
+        "course": 39,
+        "section": 16,
+        "kind": "cannon"
+      },
+      {
+        "course": 41,
+        "section": 16,
+        "kind": "cannon"
+      },
+      {
+        "course": 43,
+        "section": 16,
+        "kind": "cannon"
+      },
+      {
+        "course": 45,
+        "section": 16,
+        "kind": "cannon"
+      },
+      {
+        "course": 47,
+        "section": 16,
+        "kind": "cannon"
+      },
+      {
+        "course": 49,
+        "section": 16,
+        "kind": "cannon"
+      },
+      {
+        "course": 50,
+        "section": 11,
+        "kind": "cannon"
+      },
+      {
+        "course": 51,
+        "section": 6,
+        "kind": "cannon"
+      },
+      {
+        "course": 52,
+        "section": 1,
+        "kind": "cannon"
+      },
+      {
+        "course": 52,
+        "section": 23,
+        "kind": "cannon"
+      },
+      {
+        "course": 53,
+        "section": 17,
+        "kind": "cannon"
+      },
+      {
+        "course": 53,
+        "section": 26,
+        "kind": "cannon"
+      }
+    ],
+    [
+      {
+        "course": 41,
+        "section": 17,
+        "kind": "conveyor"
+      },
+      {
+        "course": 43,
+        "section": 17,
+        "kind": "conveyor"
+      },
+      {
+        "course": 45,
+        "section": 17,
+        "kind": "conveyor"
+      },
+      {
+        "course": 47,
+        "section": 17,
+        "kind": "conveyor"
+      },
+      {
+        "course": 49,
+        "section": 17,
+        "kind": "conveyor"
+      },
+      {
+        "course": 50,
+        "section": 12,
+        "kind": "conveyor"
+      },
+      {
+        "course": 51,
+        "section": 7,
+        "kind": "conveyor"
+      },
+      {
+        "course": 52,
+        "section": 2,
+        "kind": "conveyor"
+      },
+      {
+        "course": 53,
+        "section": 18,
+        "kind": "conveyor"
+      }
+    ],
+    [
+      {
+        "course": 43,
+        "section": 18,
+        "kind": "jet"
+      },
+      {
+        "course": 45,
+        "section": 18,
+        "kind": "jet"
+      },
+      {
+        "course": 47,
+        "section": 18,
+        "kind": "jet"
+      },
+      {
+        "course": 49,
+        "section": 18,
+        "kind": "jet"
+      },
+      {
+        "course": 50,
+        "section": 13,
+        "kind": "jet"
+      },
+      {
+        "course": 51,
+        "section": 8,
+        "kind": "jet"
+      },
+      {
+        "course": 52,
+        "section": 3,
+        "kind": "jet"
+      },
+      {
+        "course": 53,
+        "section": 19,
+        "kind": "jet"
+      }
+    ],
+    [
+      {
+        "course": 45,
+        "section": 19,
+        "kind": "extend"
+      },
+      {
+        "course": 47,
+        "section": 19,
+        "kind": "extend"
+      },
+      {
+        "course": 49,
+        "section": 19,
+        "kind": "extend"
+      },
+      {
+        "course": 50,
+        "section": 14,
+        "kind": "extend"
+      },
+      {
+        "course": 51,
+        "section": 9,
+        "kind": "extend"
+      },
+      {
+        "course": 52,
+        "section": 4,
+        "kind": "extend"
+      },
+      {
+        "course": 53,
+        "section": 20,
+        "kind": "extend"
+      }
+    ],
+    [
+      {
+        "course": 47,
+        "section": 20,
+        "kind": "switch"
+      },
+      {
+        "course": 49,
+        "section": 20,
+        "kind": "switch"
+      },
+      {
+        "course": 50,
+        "section": 15,
+        "kind": "switch"
+      },
+      {
+        "course": 51,
+        "section": 10,
+        "kind": "switch"
+      },
+      {
+        "course": 52,
+        "section": 5,
+        "kind": "switch"
+      },
+      {
+        "course": 53,
+        "section": 21,
+        "kind": "switch"
+      },
+      {
+        "course": 53,
+        "section": 27,
+        "kind": "switch"
+      }
+    ],
+    [
+      {
+        "course": 49,
+        "section": 21,
+        "kind": "magnet"
+      },
+      {
+        "course": 50,
+        "section": 16,
+        "kind": "magnet"
+      },
+      {
+        "course": 51,
+        "section": 11,
+        "kind": "magnet"
+      },
+      {
+        "course": 52,
+        "section": 6,
+        "kind": "magnet"
+      },
+      {
+        "course": 53,
+        "section": 1,
+        "kind": "magnet"
+      }
+    ]
+  ]
+}

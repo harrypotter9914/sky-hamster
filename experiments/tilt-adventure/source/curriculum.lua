@@ -1,17 +1,19 @@
--- Revision 3: teach, practise, revisit; four complete expeditions end the campaign.
+-- Revision 4: stable campaign identities, redesigned finale layouts and records.
 -- Geometry is built from short, separated encounters, never a pile of all machines.
-Curriculum={revision=3,chapters={}}
+Curriculum={revision=4,chapters={}}
 local C=Curriculum
 local previous={};local byId={}
 for i,c in ipairs(Courses) do previous[i]=c.id;byId[c.id]=c end
 C.previousIds=previous
+LessonRevisions.apply(byId)
 local function buildCourse(id,name,keys,variant)
  local c=Courses.create(name,'',{}, {48,80},{48,80});table.remove(Courses)
- c.id=id;c.shortName=name;c.jump=false;c.mechanisms={};c.pads={};c.checkpoints={};c.sections={};c.features={};c.layoutRevision=3;c.preparedChunkLimit=128
- local x,z=0,0
+ c.id=id;c.shortName=name;c.jump=false;c.mechanisms={};c.pads={};c.checkpoints={};c.sections={};c.features={};c.layoutRevision=4;c.preparedChunkLimit=128
+ local x,z=0,0;local visits={}
  local function machine(m) c.mechanisms[#c.mechanisms+1]=m;return m end
  local function pad(p) c.pads[#c.pads+1]=p;return p end
  for order,key in ipairs(keys) do
+  visits[key]=(visits[key] or 0)+1
   local ox,oz=x,z;local width=384;local raised=0;local profile
   local first=#c.mechanisms+1;local firstPad=#c.pads+1
   local function rect(a,b,d,e) c:rect(math.floor(a+ox/32),math.floor(b+ox/32),d,e) end
@@ -24,7 +26,9 @@ local function buildCourse(id,name,keys,variant)
    local v=m('fan',160,16,40,40,{angle=math.pi/2,initialAngle=math.pi/2,force=55,region={ox+304,80,192,96}})
    if controlled then pad({kind='fan',x=ox+112,y=48,target=v,initialAngle=math.pi/2}) end
   end
-  if key=='terrain' then
+  local design=ReviewDesign.build(c,key,variant,ox,oz) or FinaleDesign.build(c,key,visits[key],variant,ox,oz)
+  if design then width=design.width;profile=design.profile;raised=design.raised or 0
+  elseif key=='terrain' then
    width=544
    rect(0,4,1,3);rect(5,8,2,2);rect(8,8,3,6);rect(9,12,6,6);rect(12,12,2,5);rect(13,16,1,3)
    profile={{0,0},{64,0},{192,56},{256,56},{416,0},{544,0}}
@@ -86,7 +90,7 @@ local function buildCourse(id,name,keys,variant)
   elseif key=='magnet' then
    width=384;rect(0,11,0,4);m('magnet',208,16,32,32,{angle=0,period=5})
   else error('unknown curriculum encounter '..key) end
-  if variant>=100 then
+  if variant>=100 and not design then
    local difficulty=variant-100
    -- Recombine learned skills inside encounters, while keeping controls and
    -- checkpoints on quiet ground and limiting simultaneous visible machinery.
@@ -102,11 +106,13 @@ local function buildCourse(id,name,keys,variant)
   for _,p in ipairs(profile) do c.profile[#c.profile+1]={ox+p[1],oz+p[2]} end
   -- Checkpoints are on quiet approach stone, before the first moving contact.
   local section={kind=key,x=ox,width=width,z=oz,start={ox+48,80},finish={ox+width-48,80},first=first,last=#c.mechanisms,firstPad=firstPad,lastPad=#c.pads}
+  if design then section.route=design.route;section.turns=design.turns;section.alternative=design.alternative;section.style=design.style end
   c.sections[#c.sections+1]=section
   if order>1 then c.checkpoints[#c.checkpoints+1]={ox+48,80} end
   x=ox+width;z=oz+raised
   if order<#keys then
-   rect(width/32,width/32+3,1,3);c.profile[#c.profile+1]={x+128,z};x=x+128
+   local link=variant<100 and 64 or 128
+   rect(width/32,width/32+link/32-1,1,3);c.profile[#c.profile+1]={x+link,z};x=x+link
   end
   if Loading then Loading.checkpoint(.04*order/#keys,'PLANNING THE ROUTE') end
  end
@@ -117,7 +123,7 @@ local function buildCourse(id,name,keys,variant)
 end
 local function compose(id,name,keys,variant)
  local c=Courses.create(name,'',{{0,0},{1,0}},{48,80},{48,80});table.remove(Courses)
- c.id=id;c.shortName=name;c.jump=true;c.layoutRevision=3
+ c.id=id;c.shortName=name;c.jump=true;c.layoutRevision=4
  c.blueprint={keys=keys,variant=variant};c.encounters=#keys
  c.mechanisms={};c.pads={};c.checkpoints={};c.features={}
  return c
@@ -163,13 +169,28 @@ local chapters={
  {'Magnetism',{'magnet-school','magnet-relay'},'magnet','magnet-relay'}
 }
 local order={};local learned={'valley'}
+local pairings={jump={'terrain'},gate={'jump'},trap={'gate','jump'},ferry={'trap','gate'},
+ rotor={'ferry','jump'},sweeper={'rotor','gate'},bumper={'sweeper','terrain'},fan={'bumper','valley'},
+ bridge={'fan','rotor'},onboard={'bridge','ferry'},lift={'onboard','terrain'},slider={'lift','ferry'},
+ windcontrol={'slider','bumper'},cannon={'lift','jump'},conveyor={'cannon','terrain'},
+ jet={'conveyor','gate'},extend={'jet','trap'},switch={'extend','conveyor'},magnet={'switch','windcontrol'}}
+local function reviewOrder(new,chapter)
+ local keys,used={},{}
+ local function add(key)
+  if not used[key] then for _,known in ipairs(learned) do if known==key then keys[#keys+1]=key;used[key]=true;break end end end
+ end
+ add(new)
+ for _,key in ipairs(pairings[new] or {}) do add(key) end
+ for j=1,#learned do add(learned[(j+chapter*3-1)%#learned+1]) end
+ return keys
+end
 for chapter,spec in ipairs(chapters) do
  learned[#learned+1]=spec[3]
  local info={name=spec[1],first=#order+1,new=spec[3]};C.chapters[#C.chapters+1]=info
  for _,id in ipairs(spec[2]) do
   local c=byId[id]
   if id==spec[4] then
-   local keys={};for _,key in ipairs(learned) do keys[#keys+1]=key end
+   local keys=reviewOrder(spec[3],chapter)
    local names={['gate-revisit']='Gate and leap',['trap-revisit']='Floor memory',['sweep-revisit']='Moving maze',
     ['legacy-17']='Flight review',['lift-towers']='Elevation relay'}
    local name=names[id] or (c and c.shortName)
@@ -191,7 +212,7 @@ for i,spec in ipairs(finals) do
  -- Different encounter orders change where elevation, wind and timing occur.
  local count=#learned
  for j=1,count do keys[j]=learned[(j-1+i*5)%count+1] end
- local encore={{},{'jump','onboard'},{'valley','cannon','slider','terrain'},{'bridge','jump','onboard','lift','cannon','switch','terrain'}}
+ local encore={{},{'cannon','cannon'},{'cannon','switch','terrain','cannon'},{'cannon','terrain','switch','cannon','jump','cannon','terrain'}}
  for _,key in ipairs(encore[i]) do keys[#keys+1]=key end
  local c=compose(spec[1],spec[2],keys,100+i);c.finale=true;c.chapter=#chapters+1;c.chapterName='Final expeditions'
  c.note={'Every mechanism returns in this expedition.','A checkpoint protects each new encounter.'}
@@ -205,7 +226,13 @@ for i,c in ipairs(Courses) do
  if c.legacyIndex then Courses.legacyIndex[c.legacyIndex]=i end
 end
 function Courses.migrate(saved)
- if saved.campaignRevision==3 then return saved end
+ if saved.campaignRevision==4 then return saved end
+ if saved.campaignRevision==3 then
+  for n,c in ipairs(Courses) do if c.blueprint or c.revisedLesson then
+   if saved.best then saved.best[tostring(n)]=nil;saved.best[n]=nil end
+  end end
+  saved.campaignRevision=4;return saved
+ end
  local completed,best={},{}
  local function mapped(n)
   local id=saved.campaignRevision==2 and previous[tonumber(n)] or ('legacy-'..tostring(n))
@@ -216,6 +243,6 @@ function Courses.migrate(saved)
   -- Keep wins, but an old short-course time is not a record for a rebuilt voyage.
   if n and not Courses[n].layoutRevision then best[tostring(n)]=v end
  end
- saved.level=mapped(saved.level or 1) or 1;saved.completed=completed;saved.best=best;saved.campaignRevision=3
+ saved.level=mapped(saved.level or 1) or 1;saved.completed=completed;saved.best=best;saved.campaignRevision=4
  return saved
 end

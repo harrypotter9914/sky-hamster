@@ -5,6 +5,15 @@ $repo=[IO.Path]::GetFullPath((Join-Path $root '../..'))
 $qa=Join-Path $repo 'builds/tilt-bake-source'
 New-Item -ItemType Directory -Force $qa | Out-Null
 Copy-Item "$root/source/*" $qa -Recurse -Force
+$bakeHashes=@{}
+$bakeSha=[Security.Cryptography.SHA256]::Create()
+try {
+ foreach($inputFile in Get-ChildItem "$root/source" -Filter '*.lua'){
+  $bytes=[Text.Encoding]::UTF8.GetBytes([IO.File]::ReadAllText($inputFile.FullName).Replace("`r`n","`n"))
+  $bakeHashes[$inputFile.Name]=[Convert]::ToHexString($bakeSha.ComputeHash($bytes)).ToLowerInvariant()
+ }
+} finally {$bakeSha.Dispose()}
+$bakeHashes | ConvertTo-Json | Set-Content "$qa/bake-source-hashes.json" -Encoding utf8
 Copy-Item "$root/source/engine.lua" "$qa/game.lua"
 'Build.baking=true' | Add-Content "$qa/build.lua"
 @'

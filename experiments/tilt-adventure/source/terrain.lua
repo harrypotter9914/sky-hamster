@@ -5,16 +5,15 @@ function T.new(course,render)
  local cache={buckets={},images={},render=render,tick=0,misses=0,count=0,preparedLimit=course.preparedChunkLimit or 64,stream=course.blueprint~=nil,jobs={}}
  -- Index static geometry once; images are created only around the camera.
  for index,tile in ipairs(course.tiles) do
-  local minX,minY,maxX,maxY=1e9,1e9,-1e9,-1e9
   local height,slope,sy=course:height(tile.x*32+16,tile.y*32+16)
-  for dx=0,1 do for dy=0,1 do
-   local x,y=(tile.x+dx)*32,(tile.y+dy)*32
-   local z=height+(dx*32-16)*slope+(dy*32-16)*(sy or 0)
-   local sx,sy=200+(x-y)*0.9,124+(x+y)*0.45-z*0.65
-   local depth=course.terrainDepth and course.terrainDepth[tile.x..','..tile.y]
-   minX,minY=math.min(minX,sx),math.min(minY,sy);maxX,maxY=math.max(maxX,sx),math.max(maxY,sy+(depth and depth*.65 or 12))
-  end end
-  for x=math.floor((minX-1)/size),math.floor((maxX+1)/size) do for y=math.floor((minY-1)/size),math.floor((maxY+1)/size) do
+  -- Exact affine half-extents replace four corner projections per tile. The
+  -- 0.01px margin makes floating-point boundary rounding conservative.
+  local cx=200+(tile.x-tile.y)*32*.9
+  local cy=124+(tile.x+tile.y+1)*32*.45-height*.65
+  local ey=(math.abs(.45-.65*slope)+math.abs(.45-.65*(sy or 0)))*16
+  local depth=course.terrainDepth and course.terrainDepth[tile.x..','..tile.y]
+  local minX,maxX,minY,maxY=cx-28.8,cx+28.8,cy-ey,cy+ey+(depth and depth*.65 or 12)
+  for x=math.floor((minX-1.01)/size),math.floor((maxX+1.01)/size) do for y=math.floor((minY-1.01)/size),math.floor((maxY+1.01)/size) do
    local key=x..','..y;local bucket=cache.buckets[key]
    if not bucket then bucket={x=x,y=y,tiles={}};cache.buckets[key]=bucket end
    bucket.tiles[#bucket.tiles+1]=tile

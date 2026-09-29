@@ -1,5 +1,5 @@
 # Same installation folder as the release; restore the release after measuring.
-param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[switch]$Travel,[int[]]$Routes=@(),[int[]]$MechanismIndices=@())
+param([switch]$Smooth,[switch]$Profile,[switch]$AudioAudit,[switch]$Joins,[switch]$All,[switch]$Travel,[switch]$Survey,[int[]]$Routes=@(),[int[]]$MechanismIndices=@())
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 & "$root/art/check-bake.ps1"
@@ -19,7 +19,8 @@ if($Smooth){'Bench.smooth=true' | Add-Content "$qa/game.lua"}
 if($Routes.Count){("Bench.routes={"+($Routes -join ',')+"}") | Add-Content "$qa/game.lua"}
 if($MechanismIndices.Count){("Bench.mechanismIndices={"+($MechanismIndices -join ',')+"}") | Add-Content "$qa/game.lua"}
 if($Travel){'Bench.travel=true' | Add-Content "$qa/game.lua"}
-if($All -or $Travel){
+if($Survey){'Bench.survey=true' | Add-Content "$qa/game.lua"}
+if($All -or $Travel -or $Survey){
  @'
 Bench.all=true
 Bench.sample=function(spec,frame)

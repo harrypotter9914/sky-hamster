@@ -1,0 +1,59 @@
+{
+  "complete": true,
+  "frames": 767,
+  "unchangedReferenceRepeat": [
+    {
+      "file": "curr12-33-section-6.gif",
+      "pixels": 2,
+      "bounds": [
+        200,
+        142,
+        202,
+        143
+      ]
+    },
+    {
+      "file": "curr12-53-9-sweeper.gif",
+      "pixels": 1,
+      "bounds": [
+        174,
+        125,
+        175,
+        126
+      ]
+    },
+    {
+      "file": "curr12-53-21-switch.gif",
+      "pixels": 2,
+      "bounds": [
+        131,
+        122,
+        133,
+        123
+      ]
+    },
+    {
+      "file": "curr12-53-23-terrain.gif",
+      "pixels": 2,
+      "bounds": [
+        232,
+        153,
+        234,
+        154
+      ]
+    }
+  ],
+  "optimizedAgainstReference": [
+    {
+      "file": "curr12-53-21-switch.gif",
+      "pixels": 2,
+      "bounds": [
+        131,
+        122,
+        133,
+        123
+      ]
+    }
+  ],
+  "note": "Native line intersections vary by 1-2 pixels even on repeated unchanged reference runs. This is not a claim of bit-exact equality. No larger layout differences detected."
+}

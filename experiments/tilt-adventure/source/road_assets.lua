@@ -8,10 +8,17 @@ function RoadAssets.apply(course)
  atlas=atlas or playdate.graphics.imagetable.new('road-cache/surfaces')
  if not atlas then return false end
  course.roadBaked=true
- local grid={}
- for _,t in ipairs(course.tiles) do grid[t.x..','..t.y]=t end
+ -- Exported rows normally have the same deterministic tile order. Avoid a
+ -- second string-keyed copy of every tile; retain lookup fallback for ties.
+ local grid
  for i,row in ipairs(data) do
-  local t=grid[row[1]..','..row[2]]
+  local t=course.tiles[i]
+  if not t or t.x~=row[1] or t.y~=row[2] then
+   if not grid then
+    grid={};for _,tile in ipairs(course.tiles) do grid[tile.x..','..tile.y]=tile end
+   end
+   t=grid[row[1]..','..row[2]]
+  end
   assert(t,'stale road raster data: '..course.id)
   t.surface={image=atlas:getImage(row[3]),x=row[4],y=row[5]}
   if Loading and i%64==0 then Loading.checkpoint(.3+.35*i/#data,'UNPACKING STONE ROAD') end

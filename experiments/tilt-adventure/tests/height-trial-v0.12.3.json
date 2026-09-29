@@ -1,0 +1,7 @@
+{
+  "shipped": false,
+  "reason": "Focused instrumented hardware scenario improved only 21.73 to 21.82 FPS; no material improvement established. Original query restored.",
+  "equivalentSamples": 53400,
+  "beforeLog": "device-focus-v0.12.3.log",
+  "trialLog": "device-focus-indexed-v0.12.3.log"
+}

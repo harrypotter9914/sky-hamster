@@ -1,4 +1,6 @@
-# Sky Hamster — 0.12.2
+# Sky Hamster — 0.12.3
+
+0.12.3 audits all 53 courses and revises 19 cumulative reviews, five teaching courses and four expeditions. Angled cannon chains have braking terraces; elevated hairpins have level turning areas. Stable progress survives; best times for redesigned courses reset. See [per-course dispositions](CAMPAIGN-v0.12.3.md), [validation](VALIDATION-v0.12.3.md) and [hardware measurements](tests/PERFORMANCE-v0.12.3.md). Added checks: `check_campaign_routes.py`, `check_finale_variety.py`, `check_lesson_controls.py`, `check_road_assets.py`, `check_terrain_index.py`.
 
 0.12.2 packages exact native road/cannon/fan rasters, prepares only the starting neighbourhood of long-course terrain images, and incrementally prepares upcoming chunks. Full collision geometry is ready before play. Indexed landing/foreground queries and culled station/audio work reduce repeated CPU work. See [validation](VALIDATION-v0.12.2.md) and [asset rebuild instructions](art/RUNTIME-v0.12.2.md). Checks include `tests/check_runtime_assets.py` and `tests/check_streaming.py`.
 

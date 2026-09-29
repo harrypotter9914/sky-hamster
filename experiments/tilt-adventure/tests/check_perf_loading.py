@@ -1,6 +1,6 @@
 """Check the generated benchmark's cooperative loader with mocked device I/O.
 
-Build with build-perf.ps1 -All -Routes 50,51,52,53 first. This verifies control
+Build with build-perf.ps1 -All -Routes 50,51,52,53 or -Survey first. This verifies control
 flow and report completeness only; its synthetic clock cannot measure FPS.
 """
 from pathlib import Path
@@ -25,12 +25,23 @@ for i=1,40000 do
  if store.saved and store.saved.complete then break end
 end
 assert(store.saved and store.saved.complete,'benchmark never completed')
-assert(#store.saved.stages==156,'a scene was omitted')
+local expected=0;expectedLoads=0
+for n,c in ipairs(Courses) do
+ local included=not Bench.routes
+ for _,route in ipairs(Bench.routes or {}) do if route==n then included=true end end
+ if included then
+  expectedLoads=expectedLoads+1;Curriculum.ensure(c)
+  if Bench.survey then expected=expected+3+((#(c.mechanisms or {})>0 or #(c.pads or {})>0) and 1 or 0)
+  else expected=expected+4+#(c.mechanisms or {})+#(c.pads or {}) end
+  Curriculum.release(c)
+ end
+end
+assert(#store.saved.stages==expected,'a scene was omitted')
 assert(loadingFrames>8,'long-course loading did not yield across frames')
 for _,stage in ipairs(store.saved.stages) do
  assert(stage.frames==stage.scenario.frames-1,'loading contaminated measured frame count')
 end
 ''')
-assert sum(message.startswith('BENCH BEGIN ') for message in messages) == 156
-assert sum(message.startswith('LOAD READY ') for message in messages) == 4
-print('PASS: four course loads yield across frames; all 156 scenes complete; loading frames excluded from measurements (synthetic clock, not FPS evidence)')
+assert sum(message.startswith('BENCH BEGIN ') for message in messages) == len(lua.globals().store.saved.stages)
+assert sum(message.startswith('LOAD READY ') for message in messages) == lua.globals().expectedLoads
+print(f'PASS: {lua.globals().expectedLoads} course loads yield across frames; all {len(lua.globals().store.saved.stages)} scenes complete; loading frames excluded from measurements (synthetic clock, not FPS evidence)')

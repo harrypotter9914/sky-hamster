@@ -1,0 +1,10 @@
+{
+  "version": "0.12.3",
+  "build": 53,
+  "installedMainSHA256": "13746c643aa620481acdc758e717030f58b3ed987d6d4582becab803e3e22054",
+  "saveSHA256": "cb23c79f6748c6c6ece386bc59165dbd3e6eb034e79d01a83627e144c0b5b6e7",
+  "errorLogSHA256": "6a155bd522e71950fc0b8fd74d34cb40353e39314bf1078e6aa35796fb627f2b",
+  "saveUnchanged": true,
+  "errorLogUnchangedSincePreinstall": true,
+  "note": "Error log gained a different game gelato-street entry since v0.12.2; no new Sky Hamster crash. Normal release entered saved course 53 and ran 15 seconds."
+}

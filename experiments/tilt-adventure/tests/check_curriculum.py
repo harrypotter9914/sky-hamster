@@ -52,12 +52,15 @@ end
 for old=1,48 do
  local s={campaignRevision=2,level=old,completed={[old]=true},best={[tostring(old)]=42},options={music=false},guides={jump=true}}
  local got=Courses.migrate(s);local n=Courses.indexById[Curriculum.previousIds[old]]
- assert(got.level==n and got.completed[n] and got.campaignRevision==3)
+ assert(got.level==n and got.completed[n] and got.campaignRevision==4)
  assert(got.options.music==false and got.guides.jump)
  assert((got.best[tostring(n)]~=nil)==(not Courses[n].layoutRevision))
  assert(Courses.migrate(got)==got)
 end
 for old=1,17 do assert(Courses.migrate({level=old}).level==Courses.indexById['legacy-'..old]) end
+local prior={campaignRevision=3,level=53,completed={[51]=true},best={['2']=12,['49']=16,['50']=13,['51']=14,['53']=15},guides={cannon=true}}
+assert(Courses.migrate(prior)==prior and prior.level==53 and prior.completed[51] and prior.guides.cannon)
+assert(prior.best['2']==12 and prior.best['49']==nil and prior.best['50']==nil and prior.best['51']==nil and prior.best['53']==nil)
 print('PASS: 53 stable identities, 20 teaching chapters, cumulative reviews, four 21/23/25/28-encounter finales, 48+17 save migrations; '..tileCount..' tiles')
 -- Exact joins at every moving landing, using current production support.
 local joins=0
@@ -122,7 +125,27 @@ for n=50,53 do
  for index,s in ipairs(c.sections) do
   local x=s.x;local key=s.kind;context=n..'/'..index..'/'..key
   walk(x+48,80)
-  if key=='terrain' then
+  if s.route then
+   for _,step in ipairs(s.route) do
+    if step.kind=='walk' then walk(step.x,step.y,75)
+    elseif step.kind=='hop' then
+     local dx,dy=step.x-get('x'),step.y-get('y')
+     Tilt.cooldown=0;put('vx',dx);put('vy',dy);frame({a=true})
+     assert(get('airborne'),context..' diagonal hop failed')
+     for i=1,90 do alive();if not get('airborne') then break end;frame() end
+     assert(not get('airborne'),context..' diagonal hop missed')
+    elseif step.kind=='clock' then put('worldTime',step.value)
+    elseif step.kind=='dock' then dock(step.pad,step.crank)
+    elseif step.kind=='fire' then
+     local p=step.pad;walk(p.x,p.y,60,p)
+     frame(nil,nil,math.deg(step.angle-(p.angle or 0)));frame({a=true})
+     assert(get('airborne'),context..' angled cannon did not fire')
+     for i=1,90 do alive();if not get('airborne') then break end;frame() end
+     assert(not get('airborne'),context..' angled cannon did not land')
+     assert((get('x')-step.landing[1])^2+(get('y')-step.landing[2])^2<48^2,context..' wrong landing island')
+    end
+   end
+  elseif key=='terrain' then
    for _,p in ipairs({{144,80},{272,80},{272,208},{400,208},{400,80}}) do walk(x+p[1],p[2]) end
   elseif key=='jump' then walk(x+112,80);hop(105);walk(x+240,80);hop(105)
   elseif key=='gate' then walk(x+128,80);put('worldTime',3);walk(x+224,80,130)

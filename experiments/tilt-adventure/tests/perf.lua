@@ -41,6 +41,15 @@ local function planAll()
   if Curriculum then Curriculum.ensure(c) end
   if Bench.travel then
    specs[#specs+1]={route=n,kind='stream',frames=math.ceil((c.goal[1]-c.start[1])/8)*2,name='240-units-per-second'}
+  elseif Bench.survey then
+   for _,fraction in ipairs({.1,.5,.9}) do specs[#specs+1]={route=n,kind='normal',fraction=fraction,frames=60} end
+   local count=#(c.mechanisms or {})
+   if count>0 then
+    local i=math.max(1,math.ceil(count/2));local m=c.mechanisms[i]
+    specs[#specs+1]={route=n,kind='mechanism',index=i,name=m.kind,frames=90}
+   elseif #(c.pads or {})>0 then
+    specs[#specs+1]={route=n,kind='pad',index=1,name=c.pads[1].kind,frames=90}
+   end
   else
   specs[#specs+1]={route=n,kind='road',frames=180}
   for _,fraction in ipairs({.1,.5,.9}) do specs[#specs+1]={route=n,kind='normal',fraction=fraction,frames=120} end
