@@ -1,4 +1,6 @@
-# Sky Hamster — 0.12.5
+# Sky Hamster — 0.12.6
+
+0.12.6 restores acceleration close to 0.12.4, with only a slight low-angle response curve. Full thrust is available at the original lean angle again. Neutral settling no longer drags against normal forward input; stronger reverse braking and SCREEN/ROAD choices remain. See [validation](VALIDATION-v0.12.6.md).
 
 0.12.5 responds to public playtesting: softer small-angle tilt response, stronger counter-tilt braking, faster neutral settling and gentle high-speed propulsion easing. Settings → Steering chooses SCREEN or ROAD; tutorial and pointer follow the selected mapping. Cached distant clouds add depth. See [validation](VALIDATION-v0.12.5.md) and [hardware sample](tests/PERFORMANCE-v0.12.5.md).
 

@@ -27,7 +27,9 @@ function Physics.steer(vx,vy,dx,dy,p,sx,sy,dt)
  vx,vy=Physics.step(vx,vy,dx,dy,drivePower,sx,sy,dt)
  speed=math.sqrt(vx*vx+vy*vy)
  if speed>0 then
-  local remain=math.max(0,speed-(6+.24*speed)*(1-p)*dt)/speed
+  -- Neutral settling should not keep dragging against intentional forward input.
+  local settling=opposing and (1-p) or math.max(0,1-p/.12)
+  local remain=math.max(0,speed-(6+.24*speed)*settling*dt)/speed
   vx,vy=vx*remain,vy*remain
  end
  return vx,vy,opposing

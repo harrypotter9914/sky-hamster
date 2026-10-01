@@ -1,7 +1,7 @@
 -- Neutral follows a steady grip; players choose screen or road steering axes.
 Tilt={mode='screen',ready=false,cooldown=0,armed=false,quiet=0,fx=0,fy=0,fz=1,nx=0,ny=0,nz=1,power=0,jump=false,seeded=false}
 local T=Tilt
-function T.response(n) return math.min(1,math.max(0,(n-.05)/.50))^1.5 end
+function T.response(n) return math.min(1,math.max(0,(n-.045)/.40))^1.05 end
 function T.direction(x,y)
  if T.mode=='screen' then x,y=x+2*y,-x+2*y end
  local n=math.sqrt(x*x+y*y)
@@ -68,7 +68,7 @@ function T.update(dt)
  local sy=(T.fx*T.ux+T.fy*T.uy+T.fz*T.uz)/mag
  local n=math.sqrt(sx*sx+sy*sy)
  T.power=T.response(n)
- if n>.05 then T.dx,T.dy=T.direction(sx,sy) else T.dx,T.dy=0,0 end
+ if n>.045 then T.dx,T.dy=T.direction(sx,sy) else T.dx,T.dy=0,0 end
 end
 function T.consumeJump() local j=T.jump;T.jump=false;return j end
 Tilt.init()

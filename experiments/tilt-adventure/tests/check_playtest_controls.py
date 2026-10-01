@@ -30,10 +30,18 @@ local function stopping(v,p,old,dt)
 end
 for _,angle in ipairs({5,10,15,20,30}) do
  local n=math.sin(math.rad(angle));local old=math.min(1,math.max(0,(n-.045)/.4));local new=Tilt.response(n)
- if angle<=20 then assert(new<old*.7,'small lean still too sensitive') end
+ if angle<=20 then assert(new<old and new>old*.88,'response should be only slightly softer than 0.12.4') end
  local ot,od=stopping(120,old,true,1/1200);local nt,nd=stopping(120,new,false,1/1200)
  assert(nd<od*.8 and nt<ot*.85,'counter-tilt did not improve at the same physical angle')
  print(string.format('LEAN %d oldPower=%.3f newPower=%.3f stopTime=%.3f->%.3f stopDistance=%.2f->%.2f',angle,old,new,ot,nt,od,nd))
+end
+assert(Tilt.response(math.sin(math.rad(27)))==1,'full power requires excessive screen tilt')
+for _,angle in ipairs({10,15,20}) do
+ local n=math.sin(math.rad(angle));local oldPower=math.min(1,(n-.045)/.4);local p=Tilt.response(n)
+ local before,after=0,0
+ for i=1,120 do before=Physics.step(before,0,1,0,oldPower,0,0,1/120);after=Physics.steer(after,0,1,0,p,0,0,1/120) end
+ assert(after>before*.92 and after<before,'forward acceleration should stay close to original')
+ print(string.format('ACCEL %d speedAfter1s=%.2f->%.2f',angle,before,after))
 end
 local ot,od=stopping(120,0,true,1/1200);local nt,nd=stopping(120,0,false,1/1200)
 assert(nd<od*.6 and nt<ot*.6,'neutral coasting remains too long')

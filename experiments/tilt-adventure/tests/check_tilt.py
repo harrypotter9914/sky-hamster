@@ -72,15 +72,15 @@ function sensorForForce(ax,ay,power)
  if n<.00001 or power<=0 then return {0,0,1} end
  local sx,sy=ax/n,ay/n
  if Tilt.mode=='screen' then sx,sy=(sx-sy)*.9,(sx+sy)*.45;local q=math.sqrt(sx*sx+sy*sy);sx,sy=sx/q,sy/q end
- local magnitude=.05+.5*math.min(1,power)^(2/3)
+ local magnitude=.045+.4*math.min(1,power)^(1/1.05)
  return {sx*magnitude,sy*magnitude,math.sqrt(1-magnitude*magnitude)}
 end
 for i=1,40 do frame() end
 assert(Tilt.ready and Tilt.power==0)
 accel={.25,0,.968};for i=1,20 do frame() end
-assert(Tilt.power>.2 and Tilt.power<.3 and Tilt.dx>0 and math.abs(Tilt.dy)<.0001 and not Tilt.jump)
+assert(Tilt.power>.49 and Tilt.power<.52 and Tilt.dx>0 and math.abs(Tilt.dy)<.0001 and not Tilt.jump)
 accel={.42,0,.907};for i=1,20 do frame() end
-assert(Tilt.power>.6 and Tilt.power<.7)
+assert(Tilt.power>.92 and Tilt.power<.95)
 accel={0,0,1};for i=1,40 do frame() end
 accel={0,0,1.9};Tilt.update(1/30);assert(Tilt.consumeJump())
 Tilt.update(1/30);assert(not Tilt.consumeJump())
@@ -175,7 +175,7 @@ for _,pose in ipairs({{0,0,1},{0,1,0},{1,0,0},{0,0,-1},{.3,.4,.866}}) do
  assert(math.abs(nx*rx+ny*ry+nz*rz)<.00001 and math.abs(nx*ux+ny*uy+nz*uz)<.00001)
  for _,d in ipairs({{1,0},{-1,0},{0,1},{0,-1}}) do
   settle({nx*.954+.3*(d[1]*rx+d[2]*ux),ny*.954+.3*(d[1]*ry+d[2]*uy),nz*.954+.3*(d[1]*rz+d[2]*uz)})
-  assert(Tilt.power>.3 and Tilt.power<.4 and math.abs(Tilt.dx-d[1])<.001 and math.abs(Tilt.dy-d[2])<.001)
+  assert(Tilt.power>.61 and Tilt.power<.64 and math.abs(Tilt.dx-d[1])<.001 and math.abs(Tilt.dy-d[2])<.001)
   local px,py=(Tilt.dx-Tilt.dy)*.9,(Tilt.dx+Tilt.dy)*.45
   assert(px*(d[1]-d[2])>0 and py*(d[1]+d[2])>0)
  end

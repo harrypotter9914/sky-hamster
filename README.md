@@ -1,8 +1,10 @@
-# Sky Hamster — v0.12.5
+# Sky Hamster — v0.12.6
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
 当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.x → 0.11.0 → 0.12.x**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
+
+0.12.6 将加速恢复到接近 0.12.4，只保留轻微的小角度细化；满推力不再需要过度倾斜。增强反向刹车、两种方向模式及中立收速保留。见 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.12.6.md)。
 
 0.12.5 根据陌生人试玩反馈调整倾斜手感：小幅度输入更细腻、反向倾斜辅助刹车、中立后更快收速；设置新增 Screen／Road 两种方向模式，并同步箭头和教学。增加低对比远景云层。见 [试玩反馈与验证](experiments/tilt-adventure/VALIDATION-v0.12.5.md)。
 
@@ -32,7 +34,7 @@ Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 ./experiments/tilt-adventure/build.ps1
 ```
 
-输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。修改地图或相关绘制代码后，按 [预生成流程](experiments/tilt-adventure/art/RUNTIME-v0.12.2.md) 更新资源。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.12.5 继续。
+输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。修改地图或相关绘制代码后，按 [预生成流程](experiments/tilt-adventure/art/RUNTIME-v0.12.2.md) 更新资源。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.12.6 继续。
 
 ## 0.6.7 及课堂版归档
 

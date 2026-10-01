@@ -1,0 +1,13 @@
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+LEAN 5 oldPower=0.105 newPower=0.094 stopTime=3.758->1.118 stopDistance=203.05->62.40
+LEAN 10 oldPower=0.322 newPower=0.304 stopTime=1.823->0.654 stopDistance=104.08->37.84
+LEAN 15 oldPower=0.535 newPower=0.518 stopTime=1.214->0.490 stopDistance=70.47->28.72
+LEAN 20 oldPower=0.743 newPower=0.732 stopTime=0.916->0.400 stopDistance=53.59->23.64
+LEAN 30 oldPower=1.000 newPower=1.000 stopTime=0.703->0.330 stopDistance=41.34->19.60
+ACCEL 10 speedAfter1s=39.41->36.88
+ACCEL 15 speedAfter1s=69.79->67.44
+ACCEL 20 speedAfter1s=99.47->97.90
+NEUTRAL stopTime=8.248->3.864 stopDistance=389.08->174.38
+PASS: 160 grip/direction cases, same-angle braking, micro-control, continuous momentum, gravity, propulsion-only speed easing and saved steering choices
