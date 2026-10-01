@@ -67,6 +67,7 @@ local n=Courses.indexById['wind-dial'];selectReady(n);put('lesson',false);put('t
 Tilt.startCalibration();for i=1,40 do frame() end
 local c=Courses[n];local p=c.pads[1]
 local function steer(tx,ty,want)
+ local trimX,trimY=0,0
  for i=1,1800 do
   if get('state')=='win' then return end
   if want and Dock.active==want then return end
@@ -74,13 +75,15 @@ local function steer(tx,ty,want)
   if d<3 and vx*vx+vy*vy<64 then return end
   local speed=math.min(want and 24 or 55,d*1.8)
   local _,sx,sy=c:height(x,y);local fx,fy=Mechanisms.wind(c,x,y,0,0,0,.01,get('worldTime'))
-  local ax=(dx/math.max(d,.01)*speed-vx)*5+sx*Physics.tuning.gravity-fx*100
-  local ay=(dy/math.max(d,.01)*speed-vy)*5+sy*Physics.tuning.gravity-fy*100
-  local f=(ax*ax+ay*ay)^.5;local mag=math.min(.98,f/Physics.tuning.drive)*.4+.045
-  accel={ax/math.max(f,.01)*mag,ay/math.max(f,.01)*mag,math.sqrt(1-mag*mag)};frame()
+  -- Integral trim counters steady wind with the nonlinear reverse assistance.
+  if d<30 then trimX=math.max(-60,math.min(60,trimX+dx/15));trimY=math.max(-60,math.min(60,trimY+dy/15)) end
+  local ax=(dx/math.max(d,.01)*speed-vx)*5+sx*Physics.tuning.gravity-fx*100+trimX
+  local ay=(dy/math.max(d,.01)*speed-vy)*5+sy*Physics.tuning.gravity-fy*100+trimY
+  local f=(ax*ax+ay*ay)^.5
+  accel=sensorForForce(ax,ay,math.min(.98,f/Physics.tuning.drive));frame()
   assert((get('state')=='play' or get('state')=='win') and not get('airborne'),'wind lesson fell or jumped')
  end
- error('wind lesson cannot reach '..tx..','..ty)
+ error('wind lesson cannot reach '..tx..','..ty..' actual '..get('x')..','..get('y')..' velocity '..get('vx')..','..get('vy'))
 end
 steer(p.x,p.y,p);assert(Dock.active==p)
 accel={0,0,1};frame(nil,nil,-math.deg(p.angle));frame({b=true})

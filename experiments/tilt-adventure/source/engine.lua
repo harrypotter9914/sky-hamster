@@ -78,6 +78,8 @@ saved=Courses.migrate(saved or {})
 Guide.seen=saved.guideRevision==3 and (saved.guides or {}) or {}
 if saved.jumpGuideRevision~=1 then Guide.seen.jump=nil end
 local options=saved.options or {}
+Tilt.mode=options.steering=='road' and 'road' or 'screen'
+if saved.controlRevision~=1 then Guide.seen.roll=nil end
 UI.motion=options.motion~=false
 gesture=options.gesture~=false
 if options.effects==false then Audio.toggleEffects() end
@@ -87,7 +89,7 @@ for k,v in pairs(saved.completed or {}) do if tonumber(k) then completed[tonumbe
 local best=saved.best or {}
 local ending=false
 local function saveProgress()
- if pd.datastore then pd.datastore.write({campaignRevision=Curriculum and Curriculum.revision or 2,completed=completed,best=best,level=level,guideRevision=3,jumpGuideRevision=1,guides=Guide.seen,options={effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
+ if pd.datastore then pd.datastore.write({controlRevision=1,campaignRevision=Curriculum and Curriculum.revision or 2,completed=completed,best=best,level=level,guideRevision=3,jumpGuideRevision=1,guides=Guide.seen,options={steering=Tilt.mode,effects=Audio.effects,music=Audio.musicEnabled,motion=UI.motion,gesture=gesture}},'tilt-progress') end
 end
 level=math.max(1,math.min(#Courses,tonumber(saved.level) or 1));course=Courses[level];selected=level
 -- Generated saved courses are materialized by selectLevel inside the loader,
@@ -327,6 +329,7 @@ local function renderWorld()
  g.clear(g.kColorWhite)
  -- Opaque HUD panels replace these rows; do not rasterize the world behind them.
  g.setClipRect(0,43,400,160)
+ UI.sky(camX,camY,worldTime)
  Pose.begin(worldTime)
  local maskZ=(airborne or state=='fall') and jumpZ or ballHeight
  if state=='play' and not airborne then maskZ=maskZ-controls.charge*4/.65 end
@@ -434,11 +437,12 @@ function pd.update()
   Audio.quiet();pd.getCrankChange()
   local previousChoice=settingsChoice
   if pd.buttonJustPressed(pd.kButtonUp) then settingsChoice=math.max(1,settingsChoice-1) end
-  if pd.buttonJustPressed(pd.kButtonDown) then settingsChoice=math.min(4,settingsChoice+1) end
+  if pd.buttonJustPressed(pd.kButtonDown) then settingsChoice=math.min(5,settingsChoice+1) end
   if settingsChoice~=previousChoice then Audio.ui('move') end
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonLeft) or pd.buttonJustPressed(pd.kButtonRight) then
    if settingsChoice==1 then Audio.toggleEffects() elseif settingsChoice==2 then Audio.toggleMusic()
-   elseif settingsChoice==3 then UI.motion=not UI.motion else gesture=not gesture end
+   elseif settingsChoice==3 then UI.motion=not UI.motion elseif settingsChoice==4 then gesture=not gesture
+   else Tilt.mode=Tilt.mode=='screen' and 'road' or 'screen' end
    saveProgress();Audio.ui('toggle')
   end
   if pd.buttonJustPressed(pd.kButtonB) then settings=false;saveProgress();Audio.ui("back") end
@@ -563,7 +567,7 @@ function pd.update()
     elseif jumpZ < -140 then beginFall(jumpZ,jumpV);break end
    else
     local _,sx,sy=course:height(x,y)
-    local b;vx,vy,b=Physics.step(vx,vy,dx,dy,throttle,sx,sy,step);braking=braking or b
+    local b;vx,vy,b=Physics.steer(vx,vy,dx,dy,throttle,sx,sy,step);braking=braking or b
     x,y=x+vx*step,y+vy*step
     local oldVX,oldVY=vx,vy
     x,y,vx,vy=Mechanisms.collide(course,x,y,vx,vy,0,worldTime,step)

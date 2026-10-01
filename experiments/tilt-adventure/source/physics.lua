@@ -11,6 +11,27 @@ function Physics.step(vx,vy,dx,dy,p,sx,sy,dt)
  return vx,vy,opposing
 end
 function Physics.newControls() return {power=0,charge=0,powerIdle=0,jumpIdle=0,lastX=0,lastY=0,flash=0} end
+-- Grounded tilt assistance. Ballistic flight and the historical crank model stay separate.
+function Physics.steer(vx,vy,dx,dy,p,sx,sy,dt)
+ local speed=math.sqrt(vx*vx+vy*vy);local n=math.sqrt(dx*dx+dy*dy)
+ if n>0 then dx,dy=dx/n,dy/n end
+ local along=vx*dx+vy*dy;local opposing=speed>0 and n>0 and along<0 and p>0
+ if opposing then
+  local strength=Physics.tuning.drive*1.25*math.sqrt(p)*(-along/speed)
+  local remain=math.max(0,speed-strength*dt)/speed
+  vx,vy=vx*remain,vy*remain
+ end
+ -- Only reduce self-propulsion at high forward speed; do not clamp slopes or launches.
+ local excess=math.max(0,along-120)/55
+ local drivePower=p/(1+excess*excess)
+ vx,vy=Physics.step(vx,vy,dx,dy,drivePower,sx,sy,dt)
+ speed=math.sqrt(vx*vx+vy*vy)
+ if speed>0 then
+  local remain=math.max(0,speed-(6+.24*speed)*(1-p)*dt)/speed
+  vx,vy=vx*remain,vy*remain
+ end
+ return vx,vy,opposing
+end
 function Physics.controls(c,crank,dx,dy,dt)
  local n=math.sqrt(dx*dx+dy*dy)
  c.flash=math.max(0,c.flash-dt)

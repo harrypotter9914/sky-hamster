@@ -1,0 +1,12 @@
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+READY: course 1 loading complete
+READY: course 4 loading complete
+READY: course 30 loading complete
+READY: course 36 loading complete
+READY: course 1 loading complete
+READY: course 4 loading complete
+READY: course 30 loading complete
+READY: course 36 loading complete
+PASS: first course, brake bend, terrace switchback and cannon lesson completed in BOTH steering modes with accelerometer input and real inertia; no forced velocities

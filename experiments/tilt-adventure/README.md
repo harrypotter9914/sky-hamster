@@ -1,4 +1,6 @@
-# Sky Hamster — 0.12.4
+# Sky Hamster — 0.12.5
+
+0.12.5 responds to public playtesting: softer small-angle tilt response, stronger counter-tilt braking, faster neutral settling and gentle high-speed propulsion easing. Settings → Steering chooses SCREEN or ROAD; tutorial and pointer follow the selected mapping. Cached distant clouds add depth. See [validation](VALIDATION-v0.12.5.md) and [hardware sample](tests/PERFORMANCE-v0.12.5.md).
 
 0.12.4 gives crank-controlled fans an uphill-assist role, widens wind coverage to the road edges, and strengthens swept magnetic contact with a soft boundary. Ground arrows and GO/WAIT clarify direction. See [validation](VALIDATION-v0.12.4.md) and [targeted hardware measurements](tests/PERFORMANCE-v0.12.4.md).
 

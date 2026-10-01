@@ -46,7 +46,7 @@ local function crankDevice(x,y,angle)
 end
 local info={
  arrival={'FOLLOW THE SKY ROAD','Roll along the road to reach the flag.'},
- roll={'TIP TO ROLL','Tip from your grip. Follow the road arrow.'},
+ roll={'TIP GENTLY TO ROLL','Tip back to brake. Level to settle.'},
  jump={'LIFT AND LEAP','Push out from the screen, at its current angle.'},
  control={'CRANK THE BRIDGE','Dock first. Turn the crank. B releases.'},
  cannon={'READY, AIM, ROLL!','Dock. Aim with the crank. A fires; B exits.'},
@@ -112,10 +112,14 @@ function UI.lesson(kind,time)
    local v=ease(q/1.1);local wx,wy=-15,15
    if direction==0 then wx=-15+v*30 elseif direction==1 then wx=15-v*30 elseif direction==2 then wy=15-v*30 else wy=-15+v*30 end
    local bx,by=286+(wx-wy)*.9,129+(wx+wy)*.45
+   if Tilt.mode=='screen' then
+    local sign=direction%2==0 and 1 or -1
+    if direction<2 then bx,by=286+sign*(v*40-20),129 else bx,by=286,129-sign*(v*32-16) end
+   end
    ball(bx,by)
    local dx,dy=({1,-1,0,0})[direction+1],({0,0,-1,1})[direction+1]
-   arrow(346,89,(dx-dy)*15,(dx+dy)*7.5)
-   right=({'RIGHT / DOWN','LEFT / UP','RIGHT / UP','LEFT / DOWN'})[direction+1]
+   if Tilt.mode=='screen' then arrow(346,89,dx*17,dy*17);right=({'SCREEN RIGHT','SCREEN LEFT','SCREEN UP','SCREEN DOWN'})[direction+1]
+   else arrow(346,89,(dx-dy)*15,(dx+dy)*7.5);right=({'RIGHT / DOWN','LEFT / UP','RIGHT / UP','LEFT / DOWN'})[direction+1] end
   elseif kind=='jump' then
    local f=ease((t-1.6)/1.4)
    if t>=1.6 and t<1.85 then lift=-18*ease((t-1.6)/.25) elseif t>=1.85 and t<3 then lift=-18 elseif t>=3 then lift=-18*(1-ease((t-3)/1.2)) end

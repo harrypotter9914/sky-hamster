@@ -1,0 +1,31 @@
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+READY: course 1 loading complete
+READY: course 4 loading complete
+READY: course 30 loading complete
+READY: course 36 loading complete
+PASS: revised first course, brake bend, terrace switchback and cannon lesson completed with accelerometer input and real inertia; no forced velocities
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+PASS: 44 wind zones, 10 magnets, 176 road samples; fast sweep and immediate edge forces, bounded acceleration, counter-steering, purposeful ramp and save migration
+READY: course 34 loading complete
+PASS: actual tilt, crank dial and B release complete the wind-climb lesson without forced velocity or jumping
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+PASS: no repeated room silhouettes within finales; 22 angled shots; level turns with ball-width clearance
+READY: course 51 loading complete
+READY: course 52 loading complete
+READY: course 53 loading complete
+PASS: 66 physical ballistic landings, +/-3 degree tolerance, real tilt braking on receiving terraces
+READY: course 51 loading complete
+READY: course 52 loading complete
+READY: course 53 loading complete
+PASS: 10 fork choices reach the reunion terrace through real gate/support checks
+READY: course 50 loading complete
+READY: course 51 loading complete
+READY: course 52 loading complete
+READY: course 53 loading complete
+PASS: 7 complete raised doglegs navigated with accelerometer input, no jumps or velocity overrides

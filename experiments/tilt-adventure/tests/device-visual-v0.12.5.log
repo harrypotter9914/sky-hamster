@@ -1,0 +1,26 @@
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+REVIEW 1 settings screen
+REVIEW 2 settings road
+REVIEW 3 guide screen
+REVIEW 4 guide screen
+REVIEW 5 guide screen
+REVIEW 6 guide screen
+REVIEW 7 guide road
+REVIEW 8 guide road
+REVIEW 9 guide road
+REVIEW 10 guide road
+READY: course 1 loading complete
+REVIEW 11 world 1
+READY: course 4 loading complete
+REVIEW 12 world 4
+READY: course 6 loading complete
+REVIEW 13 world 6
+READY: course 34 loading complete
+REVIEW 14 world 34
+READY: course 53 loading complete
+REVIEW 15 world 53
+BENCH COMPLETE

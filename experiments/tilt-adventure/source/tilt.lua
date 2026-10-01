@@ -1,6 +1,13 @@
--- Neutral follows a steady grip. Thrust axes belong to the world, not the screen projection.
-Tilt={ready=false,cooldown=0,armed=false,quiet=0,fx=0,fy=0,fz=1,nx=0,ny=0,nz=1,power=0,jump=false,seeded=false}
+-- Neutral follows a steady grip; players choose screen or road steering axes.
+Tilt={mode='screen',ready=false,cooldown=0,armed=false,quiet=0,fx=0,fy=0,fz=1,nx=0,ny=0,nz=1,power=0,jump=false,seeded=false}
 local T=Tilt
+function T.response(n) return math.min(1,math.max(0,(n-.05)/.50))^1.5 end
+function T.direction(x,y)
+ if T.mode=='screen' then x,y=x+2*y,-x+2*y end
+ local n=math.sqrt(x*x+y*y)
+ if n>0 then return x/n,y/n end
+ return 0,0
+end
 -- Residual acceleration in g, along the current screen normal, not the saved grip.
 local liftThreshold,lateralLimit=.48,.25
 local function norm(x,y,z) local m=math.sqrt(x*x+y*y+z*z);return x/m,y/m,z/m end
@@ -31,7 +38,7 @@ function T.update(dt)
  T.rawX,T.rawY,T.rawZ=x,y,z;T.cooldown=math.max(0,T.cooldown-dt);T.jump=false
  if not T.seeded then T.fx,T.fy,T.fz=x,y,z;T.seeded=true end
  local ix,iy,iz=x-T.fx,y-T.fy,z-T.fz
- local alpha=1-math.exp(-dt*9)
+ local alpha=1-math.exp(-dt*12)
  T.inputHold=math.max(0,(T.inputHold or 0)-dt)
  -- Sensor Z is attached to the device: it tracks the current screen normal automatically.
  local impulse,lateral=iz,ix*ix+iy*iy
@@ -60,8 +67,8 @@ function T.update(dt)
  local sx=(T.fx*T.rx+T.fy*T.ry+T.fz*T.rz)/mag
  local sy=(T.fx*T.ux+T.fy*T.uy+T.fz*T.uz)/mag
  local n=math.sqrt(sx*sx+sy*sy)
- T.power=math.min(1,math.max(0,(n-.045)/.40))
- if n>.045 then T.dx,T.dy=sx/n,sy/n else T.dx,T.dy=0,0 end
+ T.power=T.response(n)
+ if n>.05 then T.dx,T.dy=T.direction(sx,sy) else T.dx,T.dy=0,0 end
 end
 function T.consumeJump() local j=T.jump;T.jump=false;return j end
 Tilt.init()

@@ -56,7 +56,7 @@ for _,hz in ipairs({20,30,50}) do
 end
 print('PASS: '..count..' moderate lift/grip/rate combinations; pulse shapes, sideways shake rejection, quiet rearm, cooldown, steering isolation')
 
--- Compare the actual integrator against the previous release's drive force.
+-- Historical base integrator check. Current tilt assistance is tested by check_playtest_controls.py.
 local tuning=Physics.tuning
 local drive=tuning.drive
 local function stop(initial,power,old)
@@ -90,5 +90,5 @@ local v=Physics.step(200,0,-1,0,1,0,0,1/30)
 assert(v>190,'counter-tilt must not abruptly stop or reverse a fast ball')
 local coast=Physics.step(120,0,0,0,0,0,0,1/30)
 assert(coast>119,'release must retain almost all short-term momentum')
-print('PASS: modest stopping-distance change, continuous inertia; existing four-direction landing/cannon/slope regressions also passed')
+print('PASS: historical base integrator remains unchanged; current assisted steering is covered separately by check_playtest_controls.py')
 ''')

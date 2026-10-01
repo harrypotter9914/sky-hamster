@@ -55,7 +55,7 @@ for n=51,53 do
    for i=1,120 do
     local vx,vy=get('vx'),get('vy');local speed=math.sqrt(vx*vx+vy*vy)
     if speed<18 then stopped=true;break end
-    accel={-vx/speed*.405,-vy/speed*.405,math.sqrt(1-.405^2)};frame()
+    accel=sensorForForce(-vx,-vy,.9);frame()
     assert(get('state')=='play' and not get('airborne'),'receiving terrace too short for real braking '..n)
    end
    assert(stopped,'cannot brake after landing')
@@ -117,8 +117,7 @@ for n=50,53 do
     local ax=(dx/math.max(dist,.01)*speed-vx)*5+sx*Physics.tuning.gravity
     local ay=(dy/math.max(dist,.01)*speed-vy)*5+sy*Physics.tuning.gravity
     local force=math.sqrt(ax*ax+ay*ay);local power=math.min(.92,force/Physics.tuning.drive)
-    local magnitude=power*.40+.045
-    accel={ax/math.max(force,.01)*magnitude,ay/math.max(force,.01)*magnitude,math.sqrt(1-magnitude*magnitude)}
+    accel=sensorForForce(ax,ay,power)
     frame()
     assert((get('state')=='play' or get('state')=='win') and not get('airborne'),'tilt-only bend fell or required jumping '..n..':'..x..','..y)
    end
