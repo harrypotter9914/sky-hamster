@@ -1,4 +1,6 @@
-# Sky Hamster — 0.12.6
+# Sky Hamster — 0.12.7
+
+Settings → Start New Game restores the fresh-playtest flow previously installed from Mac. Confirmation defaults to Cancel. Starting again resets course progress, best times and seen tutorials, while preserving sound and control preferences. Installation alone never resets progress. See [validation](VALIDATION-v0.12.7.md).
 
 0.12.6 restores acceleration close to 0.12.4, with only a slight low-angle response curve. Full thrust is available at the original lean angle again. Neutral settling no longer drags against normal forward input; stronger reverse braking and SCREEN/ROAD choices remain. See [validation](VALIDATION-v0.12.6.md).
 

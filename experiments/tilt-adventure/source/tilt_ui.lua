@@ -191,19 +191,33 @@ local function meter(x,y,w,value)
 end
 function UI.settings(choice,effects,music,gesture)
  page('FLIGHT SETTINGS','crank','Make yourself comfortable.')
- local labels={'Sound effects','Music','Scene animation','Lift to jump','Steering'}
+ local labels={'Sound effects','Music','Scene animation','Lift to jump','Steering','Start New Game'}
  local values={effects,music,UI.motion,gesture};local symbols={'sound','music','tilt','jump'}
- for i=1,5 do local y=69+(i-1)*25
-  if i==choice then g.drawRoundRect(19,y-2,361,24,4);ball(31,y+9,7) end
+ for i=1,6 do local y=68+(i-1)*22
+  if i==choice then g.drawRoundRect(19,y-1,361,22,4);ball(31,y+9,7) end
   icon(symbols[i] or 'tilt',48,y+1);text(labels[i],77,y+2)
-  if i==5 then
-   ink();g.drawRoundRect(275,y+1,91,22,5);center(Tilt.mode=='screen' and 'SCREEN' or 'ROAD',321,y+3)
+  if i==6 then
+   key('A',306,y+1,'')
+  elseif i==5 then
+   ink();g.drawRoundRect(275,y+1,91,20,5);center(Tilt.mode=='screen' and 'SCREEN' or 'ROAD',321,y+2)
   else
   ink();g.drawRoundRect(307,y+4,59,19,7);g.fillCircleAtPoint(values[i] and 355 or 317,y+13,6)
   text(values[i] and 'ON' or 'OFF',values[i] and 312 or 331,y+5)
   end
  end
- footer('change','back')
+ footer(choice==6 and 'open' or 'change','back')
+end
+function UI.newGame(choice)
+ page('START NEW GAME','flag','Begin again from Course 1.')
+ text('Clears progress, best times and tutorials.',23,77)
+ text('Tutorials will appear again.',23,98)
+ text('Sound and control settings are kept.',23,119)
+ for i,label in ipairs({'Cancel','Start New Game'}) do
+  local y=148+(i-1)*25
+  if choice==i then ink();g.drawRoundRect(19,y-2,361,24,4);ball(31,y+9,7) end
+  text(label,49,y+2)
+ end
+ footer('select','cancel')
 end
 function UI.calibration()
  page('HOLD STILL TO CENTER','tilt','Hold comfortably. This grip becomes neutral.')

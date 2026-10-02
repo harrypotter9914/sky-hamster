@@ -71,6 +71,8 @@ local title=not Build.classroom
 local titleChoice=1
 local settings=false
 local settingsChoice=1
+local newGameConfirm=false
+local newGameChoice=1
 local gesture=true
 local selectorReturn
 local saved=pd.datastore and pd.datastore.read('tilt-progress') or {}
@@ -138,6 +140,17 @@ local function openSelector()
  if choosing or settings or title or briefing or (lesson and Guide.manual) then return end
  selectorReturn={title=title,overview=overview,lesson=lesson}
  title=false;overview=false;choosing=true;selected=level;Audio.quiet()
+end
+local function startNewGame()
+ -- Reset campaign progress only after the explicit confirmation. Preferences
+ -- remain live so a new tester keeps the chosen audio and steering settings.
+ completed={};best={};Guide.seen={}
+ level=1;selected=1;selectorReturn=nil
+ newGameConfirm=false;settings=false;briefing=false;ending=false
+ overview=false;choosing=false;title=false
+ Tilt.jump=false;Tilt.cooldown=.75
+ saveProgress()
+ selectLevel(1)
 end
 local function closeSelector()
  choosing=false
@@ -435,18 +448,35 @@ function pd.update()
  needsPower=false
  if settings then
   Audio.quiet();pd.getCrankChange()
+  if newGameConfirm then
+   if pd.buttonJustPressed(pd.kButtonUp) then newGameChoice=1;Audio.ui('move') end
+   if pd.buttonJustPressed(pd.kButtonDown) then newGameChoice=2;Audio.ui('move') end
+   if pd.buttonJustPressed(pd.kButtonB) then newGameConfirm=false;Audio.ui('back')
+   elseif pd.buttonJustPressed(pd.kButtonA) then
+    if newGameChoice==2 then Audio.ui('confirm');startNewGame();return
+    else newGameConfirm=false;Audio.ui('back') end
+   end
+   if newGameConfirm then UI.newGame(newGameChoice)
+   else UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture) end
+   return
+  end
   local previousChoice=settingsChoice
   if pd.buttonJustPressed(pd.kButtonUp) then settingsChoice=math.max(1,settingsChoice-1) end
-  if pd.buttonJustPressed(pd.kButtonDown) then settingsChoice=math.min(5,settingsChoice+1) end
+  if pd.buttonJustPressed(pd.kButtonDown) then settingsChoice=math.min(6,settingsChoice+1) end
   if settingsChoice~=previousChoice then Audio.ui('move') end
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonLeft) or pd.buttonJustPressed(pd.kButtonRight) then
+   if settingsChoice==6 then
+    if pd.buttonJustPressed(pd.kButtonA) then newGameConfirm=true;newGameChoice=1;Audio.ui('confirm') end
+   else
    if settingsChoice==1 then Audio.toggleEffects() elseif settingsChoice==2 then Audio.toggleMusic()
    elseif settingsChoice==3 then UI.motion=not UI.motion elseif settingsChoice==4 then gesture=not gesture
    else Tilt.mode=Tilt.mode=='screen' and 'road' or 'screen' end
    saveProgress();Audio.ui('toggle')
+   end
   end
   if pd.buttonJustPressed(pd.kButtonB) then settings=false;saveProgress();Audio.ui("back") end
-  UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture);return
+  if newGameConfirm then UI.newGame(newGameChoice)
+  else UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture) end;return
  end
  if title then
   if pd.buttonJustPressed(pd.kButtonUp) then titleChoice=math.max(1,titleChoice-1);Audio.ui('move') end
@@ -454,7 +484,7 @@ function pd.update()
   if pd.buttonJustPressed(pd.kButtonA) then
    Audio.ui('confirm')
    if titleChoice==1 then Tilt.startCalibration();selectLevel(level)
-   else settings=true;settingsChoice=1 end
+   else settings=true;settingsChoice=1;newGameConfirm=false end
   end
   pd.getCrankChange();Audio.quiet();UI.title(titleChoice,Audio.effects,Audio.musicEnabled);return
  end
