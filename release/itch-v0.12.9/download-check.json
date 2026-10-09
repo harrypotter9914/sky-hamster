@@ -1,0 +1,11 @@
+{
+  "version": "0.12.9",
+  "bytes": 2607749,
+  "sha256": "7c372cce523601ad862130a39224b73f66da1c31c78d2949dcab935bf683c297",
+  "matches_shipping_package": true,
+  "zip_files": 229,
+  "pdxinfo": "name=Sky Hamster\nauthor=Wang Yibo\ndescription=Tilt to roll. Lift to leap. Crank the sky.\nbundleID=com.wangyibo.skyhamster.tilt\nversion=0.12.9\nbuildNumber=59\nimagePath=launcher\npdxversion=30101\nbuildtime=844880683\n",
+  "route": "Download Now -> No thanks, just take me to the downloads -> Download",
+  "payment_performed": false,
+  "hardware_tested_this_turn": false
+}

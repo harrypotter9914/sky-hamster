@@ -2,7 +2,7 @@
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
-公开测试版已发布：[itch.io — Sky Hamster](https://hajimi9914.itch.io/sky-hamster)，免费，可自愿打赏。首次发布素材和下载校验见 [发布记录](release/itch-v0.12.8/PUBLICATION.md)。
+公开测试版已发布：[itch.io — Sky Hamster](https://hajimi9914.itch.io/sky-hamster)，免费，可自愿打赏。当前下载为 0.12.9；页面包含五张截图、四段玩法／操控 GIF、操作及侧载指南和来源说明。见 [发布记录](release/itch-v0.12.9/PUBLICATION.md)、[课程要求核对](docs/PUBLIC-RELEASE-CHECKS-v0.12.9.md) 与 [Credits](CREDITS.md)。最新包的最终真机复测仍待完成。
 
 0.12.9 将关卡背景的淡线云换成三种生成的立体像素云，保留缓慢漂移和道路后方的绘制顺序。原图、提示词及固定尺寸转换保留在 art/sky-v0.12.9；运行时只绘制已加载贴图。关卡、手感、首页与网页横幅不变。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.9.md)。
 

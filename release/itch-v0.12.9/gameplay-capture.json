@@ -1,0 +1,543 @@
+{
+  "capture": {
+    "complete": true,
+    "fps": 30,
+    "scenes": [
+      {
+        "frames": 90,
+        "id": "legacy-5",
+        "kind": "jump",
+        "samples": [
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 76.215766906738,
+            "vy": 0,
+            "x": 82.525352478027,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 86.870574951172,
+            "vy": 0,
+            "x": 107.04547119141,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": true,
+            "state": "play",
+            "vx": 91.444236755371,
+            "vy": 0,
+            "x": 137.24212646484,
+            "y": 80,
+            "z": 23.999988555908
+          },
+          {
+            "airborne": true,
+            "state": "play",
+            "vx": 91.444236755371,
+            "vy": 0,
+            "x": 167.72369384766,
+            "y": 80,
+            "z": 37.333290100098
+          },
+          {
+            "airborne": true,
+            "state": "play",
+            "vx": 91.444236755371,
+            "vy": 0,
+            "x": 198.20526123047,
+            "y": 80,
+            "z": 17.333206176758
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 78.519195556641,
+            "vy": 0,
+            "x": 228.64912414551,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": -1.2968266010284,
+            "vy": 0,
+            "x": 240.55867004395,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": -11.070737838745,
+            "vy": 0,
+            "x": 237.13926696777,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": -5.6286730766296,
+            "vy": 0,
+            "x": 234.39892578125,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": -0.8664727807045,
+            "vy": 0,
+            "x": 233.35388183594,
+            "y": 80,
+            "z": 0
+          }
+        ]
+      },
+      {
+        "frames": 110,
+        "id": "legacy-16",
+        "kind": "cannon",
+        "samples": [
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 112,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 112,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 112,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 112,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 112,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": true,
+            "state": "play",
+            "vx": 210,
+            "vy": 2.2687017917633e-05,
+            "x": 194.60043334961,
+            "y": 80,
+            "z": 35.793361663818
+          },
+          {
+            "airborne": true,
+            "state": "play",
+            "vx": 210,
+            "vy": 2.2687017917633e-05,
+            "x": 264.60098266602,
+            "y": 80,
+            "z": 29.793087005615
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 204.40252685547,
+            "vy": 2.2082303985371e-05,
+            "x": 334.41384887695,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 133.47398376465,
+            "vy": 1.6187221262953e-05,
+            "x": 393.05035400391,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 42.215293884277,
+            "vy": 7.6052756412537e-06,
+            "x": 421.73559570312,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": -1.4035257101059,
+            "vy": 6.0196754247954e-08,
+            "x": 424.62805175781,
+            "y": 80,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 424.56018066406,
+            "y": 80,
+            "z": 0
+          }
+        ]
+      },
+      {
+        "frames": 140,
+        "id": "onboard-turn",
+        "kind": "turn",
+        "samples": [
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "UNLOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 320,
+            "y": 224,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "UNLOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": -21.782007217407,
+            "x": 320,
+            "y": 220.24668884277,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "UNLOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": -42.431987762451,
+            "x": 320,
+            "y": 209.42781066895,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "UNLOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": -62.0087890625,
+            "x": 320,
+            "y": 191.91061401367,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 0,
+            "vy": -27.40353012085,
+            "x": 320,
+            "y": 172.72448730469,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 0,
+            "vy": 18.976987838745,
+            "x": 320,
+            "y": 173.60484313965,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "state": "play",
+            "vx": 0,
+            "vy": 15.587381362915,
+            "x": 320,
+            "y": 179.84716796875,
+            "z": 0
+          }
+        ]
+      },
+      {
+        "frames": 135,
+        "id": "lift-school",
+        "kind": "lift",
+        "samples": [
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "LOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 0
+          },
+          {
+            "airborne": false,
+            "locked": "UNLOCKED",
+            "state": "play",
+            "vx": 0,
+            "vy": 0,
+            "x": 224,
+            "y": 96,
+            "z": 96
+          },
+          {
+            "airborne": false,
+            "locked": "UNLOCKED",
+            "state": "play",
+            "vx": 20.278516769409,
+            "vy": 0,
+            "x": 227.49426269531,
+            "y": 96,
+            "z": 96
+          },
+          {
+            "airborne": false,
+            "locked": "UNLOCKED",
+            "state": "play",
+            "vx": 39.503147125244,
+            "vy": 0,
+            "x": 237.56639099121,
+            "y": 96,
+            "z": 96
+          },
+          {
+            "airborne": false,
+            "locked": "UNLOCKED",
+            "state": "play",
+            "vx": 57.728687286377,
+            "vy": 0,
+            "x": 253.87449645996,
+            "y": 96,
+            "z": 96
+          },
+          {
+            "airborne": false,
+            "state": "fall",
+            "vx": 67.345855712891,
+            "vy": 0,
+            "x": 274.36349487305,
+            "y": 96,
+            "z": 93.333267211914
+          },
+          {
+            "airborne": false,
+            "state": "fall",
+            "vx": 67.345855712891,
+            "vy": 0,
+            "x": 296.8122253418,
+            "y": 96,
+            "z": 63.332214355469
+          }
+        ]
+      }
+    ],
+    "scriptedInput": true
+  },
+  "exports": [
+    {
+      "file": "gameplay-jump.gif",
+      "frames": 90,
+      "bytes": 571866
+    },
+    {
+      "file": "gameplay-cannon.gif",
+      "frames": 92,
+      "bytes": 478110
+    },
+    {
+      "file": "gameplay-turn.gif",
+      "frames": 62,
+      "bytes": 234134
+    }
+  ],
+  "notes": "Production engine with scripted tilt/button/crank input, isolated save ID; not hardware or human playtesting. Lift departure used an incorrect exit direction and fell; not published as a success demonstration. Some native turn GIFs after frame 75 fail strict Pillow decoding; the published turn clip ends at frame 75 and includes only correctly decoded source frames."
+}
