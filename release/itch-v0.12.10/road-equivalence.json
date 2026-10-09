@@ -1,0 +1,6 @@
+{
+  "courses": 53,
+  "tiles": 28436,
+  "nativeImageBytesAndOffsetsUnchanged": true,
+  "note": "Native bake can enumerate equivalent surface images in a different order; original stable numbering is retained."
+}

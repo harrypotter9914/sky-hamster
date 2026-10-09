@@ -1,0 +1,11 @@
+{
+  "version": "0.12.10",
+  "physicalDevice": true,
+  "nativeAssertionsPassed": true,
+  "nativeScreenshots": 17,
+  "temporaryFilesRemoved": 19,
+  "userSaveUnchanged": true,
+  "userSaveSha256": "ea09a03bb4a235f2be1ee99d93f00a12b29c526b0dbbe8f157ab43787b67e5e6",
+  "deviceErrorLogUnchanged": true,
+  "deviceErrorLogSha256": "6a155bd522e71950fc0b8fd74d34cb40353e39314bf1078e6aa35796fb627f2b"
+}

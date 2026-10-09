@@ -1,8 +1,10 @@
-# Sky Hamster — v0.12.9
+# Sky Hamster — v0.12.10
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
-公开测试版已发布：[itch.io — Sky Hamster](https://hajimi9914.itch.io/sky-hamster)，免费，可自愿打赏。当前下载为 0.12.9；页面包含五张截图、四段玩法／操控 GIF、操作及侧载指南和来源说明。见 [发布记录](release/itch-v0.12.9/PUBLICATION.md)、[课程要求核对](docs/PUBLIC-RELEASE-CHECKS-v0.12.9.md) 与 [Credits](CREDITS.md)。最新包的最终真机复测仍待完成。
+公开测试版已发布：[itch.io — Sky Hamster](https://hajimi9914.itch.io/sky-hamster)，免费，可自愿打赏。公开下载目前为 0.12.9，已完成最终真机自动复测；页面包含五张截图、四段玩法／操控 GIF、操作及侧载指南和来源说明。见 [发布记录](release/itch-v0.12.9/PUBLICATION.md)、[课程要求核对](docs/PUBLIC-RELEASE-CHECKS-v0.12.9.md) 与 [Credits](CREDITS.md)。
+
+当前开发／真机版本 0.12.10 在首次教学加入 Map、Help、Go、Recenter 的生成图示，说明用途并允许试用真实页面；返回后保留教学位置，旧存档补看且保留进度。跳跃动画加入 A 备用方式并明确炮台 A 为发射。模拟器与真机新流程、两端各 17 张画面检查完成，关卡和手感不变。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.10.md)。
 
 0.12.9 将关卡背景的淡线云换成三种生成的立体像素云，保留缓慢漂移和道路后方的绘制顺序。原图、提示词及固定尺寸转换保留在 art/sky-v0.12.9；运行时只绘制已加载贴图。关卡、手感、首页与网页横幅不变。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.9.md)。
 

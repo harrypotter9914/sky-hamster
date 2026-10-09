@@ -1,0 +1,28 @@
+{
+	"captures": [
+		"map-card",
+		"map-real",
+		"help-real",
+		"goal-real",
+		"recenter-real",
+		"map-intro",
+		"map-tried",
+		"help-intro",
+		"help-tried",
+		"goal-intro",
+		"goal-tried",
+		"recenter-intro",
+		"recenter-tried",
+		"jump-0.4",
+		"jump-1.4",
+		"jump-3.4",
+		"jump-4.4"
+	],
+	"complete":true,
+	"cpuMax":7,
+	"device":false,
+	"frames":425,
+	"practiceAssertions":true,
+	"scriptedInputs":true,
+	"version":"0.12.10"
+}

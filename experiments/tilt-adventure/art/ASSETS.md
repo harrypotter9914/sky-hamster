@@ -1,5 +1,7 @@
 # 0.7.2 asset notes
 
+0.12.10 shortcut illustrations: [original atlas, prompt and conversion notes](tutorial-v0.12.10/README.md), exported to `../source/tutorial-tools/` by `prepare-shortcuts.py`. Four fixed one-bit images are reused by the new Map / Help / Go / Recenter teaching cards.
+
 The title road and oversized cannon were produced with the built-in image generation tool. Runtime exports use deterministic resizing, one-bit thresholding and alpha preservation, with no per-frame image scaling in gameplay.
 
 - Title master: `title-v3-original.png`; export: `../source/title-scene.png`; script: `prepare-title.ps1`.

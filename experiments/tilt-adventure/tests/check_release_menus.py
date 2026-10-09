@@ -66,7 +66,9 @@ assert(get('steeringNotice') and get('lesson') and Guide.key()=='roll')
 for i=1,30 do frame() end
 assert(get('x')==x and get('y')==y and get('elapsed')==elapsed,'setup must not move the ball')
 frame({a=true});assert(not get('steeringNotice') and Guide.key()=='roll')
-frame({a=true});assert(not get('lesson') and not get('steeringMenu'))
+frame({a=true});assert(Guide.key()=='map' and not get('steeringMenu'))
+for _,key in ipairs({'map','help','goal','recenter'}) do assert(Guide.key()==key);frame({a=true}) end
+assert(not get('lesson') and not get('steeringMenu'))
 frame({left=true});assert(Guide.manual and get('lesson'))
 frame({b=true});assert(not get('steeringMenu'),'manual help does not restart onboarding')
 -- The hidden settings chord is one-shot while held, and never triggers an item.

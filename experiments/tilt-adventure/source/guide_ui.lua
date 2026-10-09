@@ -3,6 +3,10 @@ local g=playdate.graphics
 local function ink() g.setColor(g.kColorBlack);g.setImageDrawMode(g.kDrawModeCopy) end
 local function white() g.setColor(g.kColorWhite) end
 local function center(s,x,y) ink();g.drawTextAligned(s,x,y,kTextAlignment.center) end
+local hintFont=g.font.new('fonts/Roobert-9-Mono-Condensed')
+local function hint(s)
+ g.setFont(hintFont);center(s,200,191);g.setFont(UI.bodyFont)
+end
 local function image(w,h,draw)
  local im=g.image.new(w,h,g.kColorClear);g.pushContext(im);draw();g.popContext();return im
 end
@@ -79,12 +83,36 @@ local function smallCannon(x,y,n)
  end
  cannons[n]:draw(x,y)
 end
+local tools={
+ map={button='up',name='Map',title='MAP: SEE YOUR ROUTE',when='Lost? Pause and look ahead.',lines={'Pause the action.','Find docks, saves','and the finish flag.'}},
+ help={button='left',name='Help',title='HELP: REPLAY THE CONTROLS',when='Forgot a move or a new mechanism?',lines={'Replay this course\'s','control animations.','Use B to return.'}},
+ goal={button='right',name='Go',title='GO: READ THE ROUTE NOTES',when='Not sure what to do next?',lines={'Read the goal and tips.','Go is a guide,','not an accelerator.'}},
+ recenter={button='down',name='Recenter',title='RECENTER: RESET YOUR GRIP',when='Changed grip? Center it again.',lines={'Hold a comfy grip.','Keep still until ready.','This becomes neutral.'}}
+}
+for key,data in pairs(tools) do data.art=assert(g.image.new('tutorial-tools/'..key),'Missing shortcut art '..key) end
+local function toolLesson(kind,time)
+ local data=tools[kind];local done=Guide.done and Guide.done[kind]
+ UI.panel(8,8,384,224);center(data.title,200,20)
+ ink();g.drawLine(23,43,377,43);center(data.when,200,49)
+ data.art:draw(25,79)
+ ink();g.drawLine(193,78,193,168)
+ for i,line in ipairs(data.lines) do center(line,286,83+(i-1)*22) end
+ -- Generated art is cached; the real keycap gently pulses instead of drifting text.
+ UI.key(data.button,31,175,'Try '..data.name)
+ if math.floor((time or 0)*2)%2==0 then ink();g.drawRoundRect(28,172,23,23,4) end
+ if kind=='recenter' then center('Hold still',287,176) else UI.key('B',244,175,'Return') end
+ hint(done and 'Tried! A continues the lesson.' or 'Try the key, or press A to continue.')
+ ink();g.drawLine(23,205,377,205)
+ UI.key('A',25,210,Guide.index==#Guide.queue and (Guide.manual and 'Resume' or 'Play') or 'Next')
+ UI.key('B',282,210,Guide.manual and 'Back' or 'Replay')
+end
 function UI.lesson(kind,time)
+ if tools[kind] then toolLesson(kind,time);return end
  kind=info[kind] and kind or 'roll';local data=info[kind];local t=(time or 0)%6
  if kind=='windcontrol' then kind='fan' end
  UI.panel(8,8,384,224);center(data[1],200,20)
  ink();g.drawLine(23,43,377,43)
- center(data[2],200,49)
+ center(kind=='jump' and 'Lift screenward, or press A during play.' or data[2],200,49)
  -- Demonstration lives only inside y=76..169; captions occupy their own rows.
  local left,right='YOUR PLAYDATE','ON THE ROAD'
  if kind=='arrival' then
@@ -121,13 +149,16 @@ function UI.lesson(kind,time)
    if Tilt.mode=='screen' then arrow(346,89,dx*17,dy*17);right=({'SCREEN RIGHT','SCREEN LEFT','SCREEN UP','SCREEN DOWN'})[direction+1]
    else arrow(346,89,(dx-dy)*15,(dx+dy)*7.5);right=({'RIGHT / DOWN','LEFT / UP','RIGHT / UP','LEFT / DOWN'})[direction+1] end
   elseif kind=='jump' then
-   local f=ease((t-1.6)/1.4)
-   if t>=1.6 and t<1.85 then lift=-18*ease((t-1.6)/.25) elseif t>=1.85 and t<3 then lift=-18 elseif t>=3 then lift=-18*(1-ease((t-3)/1.2)) end
+   -- Show the same leap twice: first a screenward lift, then its A fallback.
+   local q=t%3;local f=ease((q-.6)/1.4)
+   if t<3 then
+    if q>=.6 and q<.85 then lift=-18*ease((q-.6)/.25) elseif q>=.85 and q<2 then lift=-18 elseif q>=2 then lift=-18*(1-ease((q-2)/.8)) end
+   end
    slab(207,151,53,13);slab(315,151,57,13)
    ball(235+105*f,138-42*math.sin(f*math.pi))
-   arrow(146,141,-10,-31)
-   left=t<1.6 and 'KEEP YOUR GRIP' or t<3 and 'LIFT SCREENWARD' or 'RETURN GENTLY'
-   right=t<1.6 and 'READY AT THE GAP' or t<3 and 'CLEAR THE GAP' or 'LAND SAFELY'
+   if t<3 then arrow(146,141,-10,-31) end
+   left=t<3 and 'LIFT SCREENWARD' or 'A: JUMP IN PLAY'
+   right=q<.6 and 'READY AT THE GAP' or q<2 and 'CLEAR THE GAP' or 'LAND SAFELY'
   elseif kind=='onboard' then
    local u=ease((t-1.5)/2)
    local bx,by,map=Structures.demo(kind,281,133,t,u)
@@ -242,13 +273,17 @@ function UI.lesson(kind,time)
   elseif kind=='control' then turn=-ease((t-1)/2)*90
   elseif kind=='cannon' then turn=ease((t-1)/2)*60 end
   if kind=='jump' then
-   liftDevice:draw(48+lift*.31,85+lift*.95)
+   if t<3 then liftDevice:draw(48+lift*.31,85+lift*.95)
+   else poses.right[0]:draw(48,85);UI.keycap('A',116,146)
+    if t%3>=.6 and t%3<1.4 then ink();g.drawRoundRect(112,142,25,25,4) end
+   end
   elseif manual then crankDevice(48,85,turn)
   else poses[dir][pose]:draw(48,85) end
-  if left=='PRESS A TO FIRE' then UI.key('A',58,175,'Fire') elseif left=='B: RELEASE' then UI.key('B',49,175,'Release') else center(left,96,177) end
+  if left=='PRESS A TO FIRE' then UI.key('A',58,175,'Fire') elseif left=='A: JUMP IN PLAY' then UI.key('A',40,175,'Jump in play') elseif left=='B: RELEASE' then UI.key('B',49,175,'Release') else center(left,96,177) end
   if right=='B: RELEASE' then UI.key('B',233,175,'Release') else center(right,281,177) end
   -- Progress dots stay clear of device and game examples.
-  for i=0,2 do ink();if math.floor(t/2)==i then g.fillCircleAtPoint(186+i*14,197,2) else g.drawCircleAtPoint(186+i*14,197,2) end end
+  if kind=='jump' then hint('Missed the lift? Use A. In a cannon: Fire.')
+  else for i=0,2 do ink();if math.floor(t/2)==i then g.fillCircleAtPoint(186+i*14,197,2) else g.drawCircleAtPoint(186+i*14,197,2) end end end
  end
  ink();g.drawLine(23,205,377,205)
  UI.key('A',25,210,Guide and Guide.queue and Guide.index==#Guide.queue and (Guide.manual and 'Resume' or 'Play') or 'Next')
