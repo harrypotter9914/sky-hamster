@@ -1,0 +1,15 @@
+{
+  "version": "0.12.9",
+  "build": 59,
+  "productionLuaFilesUnchanged": 49,
+  "functionalGroups": 28,
+  "sceneSamples": 761,
+  "audioPlaybackChecks": 47,
+  "installedFilesVerified": 229,
+  "deviceErrorLogUnchanged": true,
+  "deviceErrorLogSha256": "6a155bd522e71950fc0b8fd74d34cb40353e39314bf1078e6aa35796fb627f2b",
+  "originalSaveRestored": true,
+  "finalNormalTitleReady": true,
+  "temporaryDiagnosticFilesRemoved": 100,
+  "manualMotionAndListening": "pending player confirmation"
+}

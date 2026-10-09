@@ -1,0 +1,80 @@
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+READY: startup loading complete
+FUNCTION PASS 84-native-tutorial-animation-frames
+READY: course 1 loading complete
+READY: course 2 loading complete
+READY: course 1 loading complete
+READY: course 1 loading complete
+READY: course 53 loading complete
+PASS: paired steering commit/cancel, home continue/new-game confirmation, next-route unlock, locked launch rejection, save migration, one-shot hidden chord and isolated developer progress/tutorials
+FUNCTION PASS paired-steering-save-cancel-new-game-unlocks-developer-isolation
+FUNCTION PASS four-settings-toggle-roundtrips-native-save-and-music-state
+READY: course 1 loading complete
+READY: course 1 loading complete
+READY: course 4 loading complete
+READY: course 30 loading complete
+READY: course 36 loading complete
+READY: course 1 loading complete
+READY: course 4 loading complete
+READY: course 30 loading complete
+READY: course 36 loading complete
+PASS: first course, brake bend, terrace switchback and cannon lesson completed in BOTH steering modes with accelerometer input and real inertia; no forced velocities
+FUNCTION PASS eight-tilt-driven-teaching-runs-in-both-steering-modes
+READY: course 34 loading complete
+PASS: actual tilt, crank dial and B release complete the wind-climb lesson without forced velocity or jumping
+FUNCTION PASS tilt-crank-release-wind-assist-climb
+READY: course 23 loading complete
+FUNCTION PASS station-forward-stop-reverse-B-exclusion-reentry/legacy-15
+READY: course 25 loading complete
+FUNCTION PASS station-forward-stop-reverse-B-exclusion-reentry/onboard-turn
+READY: course 29 loading complete
+FUNCTION PASS station-forward-stop-reverse-B-exclusion-reentry/lift-school
+FUNCTION PASS station-endpoint-clamps/lift-school
+READY: course 32 loading complete
+FUNCTION PASS station-forward-stop-reverse-B-exclusion-reentry/crank-ferry
+FUNCTION PASS station-endpoint-clamps/crank-ferry
+READY: course 34 loading complete
+FUNCTION PASS station-forward-stop-reverse-B-exclusion-reentry/wind-dial
+READY: course 36 loading complete
+FUNCTION PASS station-forward-stop-reverse-B-exclusion-reentry/legacy-16
+READY: course 44 loading complete
+FUNCTION PASS station-forward-stop-reverse-B-exclusion-reentry/extend-school
+FUNCTION PASS station-endpoint-clamps/extend-school
+READY: course 46 loading complete
+FUNCTION PASS station-forward-stop-reverse-B-exclusion-reentry/switch-school
+READY: course 13 loading complete
+FUNCTION PASS automatic-platform-relative-roll/legacy-10
+READY: course 15 loading complete
+FUNCTION PASS automatic-platform-relative-roll/legacy-11
+FUNCTION PASS seam-diameter-gate-air-clearance-trap-conveyor-steam-fast-wind-magnet-boundaries
+READY: course 5 loading complete
+FUNCTION PASS real-update-jump-land/screen/lift
+READY: course 5 loading complete
+FUNCTION PASS real-update-jump-land/screen/button
+READY: course 5 loading complete
+FUNCTION PASS real-update-jump-land/road/lift
+READY: course 5 loading complete
+FUNCTION PASS real-update-jump-land/road/button
+READY: course 1 loading complete
+READY: course 1 loading complete
+READY: course 2 loading complete
+READY: course 4 loading complete
+READY: course 53 loading complete
+FUNCTION PASS 5760-ring-boundaries-360-clear-lanes-1440-air-passes
+FUNCTION PASS startup-onboarding-map-help-selector-win-retry-fall-checkpoint-ending
+FUNCTION PASS native-datastore-write-readback
+FUNCTION PASS 21-grip-rate-lift-debounce-lateral-rejection-combinations
+FUNCTION RESTART READY
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+READY: startup loading complete
+READY: course 53 loading complete
+FUNCTION PASS native-datastore-fresh-process-continuation
+FUNCTION COMPLETE

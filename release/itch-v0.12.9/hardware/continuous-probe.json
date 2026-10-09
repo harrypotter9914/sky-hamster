@@ -1,0 +1,63 @@
+{
+	"complete":true,
+	"device":true,
+	"mode":"continuous camera and repeated live bridge control; instrumented diagnostic",
+	"stages": [
+		 {
+			"cacheMiss":2,
+			"chunks":23,
+			"cpu95":41,
+			"cpuMax":57,
+			"fps":27.673238754272,
+			"frame95":44,
+			"frameMax":66,
+			"frames":6015,
+			"luaKB":3681.814453125,
+			"route":53,
+			"scenario": {
+				"frames":6016,
+				"kind":"stream",
+				"name":"continuous-full-finale",
+				"route":53
+			}
+		},
+		 {
+			"cacheMiss":5,
+			"chunks":36,
+			"cpu95":33,
+			"cpuMax":48,
+			"fps":29.361179351807,
+			"frame95":36,
+			"frameMax":50,
+			"frames":239,
+			"luaKB":3739.740234375,
+			"route":53,
+			"scenario": {
+				"frames":240,
+				"index":1,
+				"kind":"pad",
+				"name":"bridge-after-continuous-travel",
+				"route":53
+			}
+		},
+		 {
+			"cacheMiss":5,
+			"chunks":36,
+			"cpu95":32,
+			"cpuMax":34,
+			"fps":29.81164932251,
+			"frame95":35,
+			"frameMax":42,
+			"frames":239,
+			"luaKB":4038.771484375,
+			"route":53,
+			"scenario": {
+				"frames":240,
+				"index":1,
+				"kind":"pad",
+				"name":"bridge-warm-repeat",
+				"route":53
+			}
+		}
+	]
+}
