@@ -4,7 +4,7 @@ f=Path(__file__).with_name('check_tilt.py');s=f.read_text(encoding='utf-8');env=
 exec(compile(s.split("load('engine')")[0]+"load('engine')",str(f),'exec'),env)
 lua=env['lua'];lua.execute('function get(name)'+s.split('function get(name)',1)[1].split('for i=1,40 do frame() end',1)[0])
 lua.execute('''
-assert(Tilt.mode=='screen','new players default to screen axes')
+assert(Tilt.mode=='road','new players default to road axes')
 local function settle(a) accel=a;for i=1,90 do Tilt.update(1/30) end end
 for _,grip in ipairs({{0,0,1},{0,1,0},{1,0,0},{0,0,-1},{.3,.4,.866}}) do
  Tilt.startCalibration();settle(grip);assert(Tilt.ready and Tilt.power==0)
@@ -58,12 +58,14 @@ local down=0;for i=1,120 do down=Physics.steer(down,0,0,0,0,-.5,0,1/120) end
 assert(down>90,'neutral assistance erased gravity')
 local fast=Physics.steer(300,0,1,0,1,-.5,0,1/120)
 assert(fast>300,'soft propulsion limit clamped downhill energy')
--- Real menu events: five rows, mode round-trip, persistence, other choices unchanged.
+-- Real menu events: graphical subpage, mode round-trip and persisted choice.
 put('title',false);put('settings',true);put('settingsChoice',1);Tilt.mode='screen'
 for i=1,4 do frame({down=true}) end
 assert(get('settingsChoice')==5);frame({a=true})
+assert(get('steeringMenu') and Tilt.mode=='screen')
+frame({right=true});frame({a=true})
 assert(Tilt.mode=='road' and store.saved.options.steering=='road')
-frame({right=true});assert(Tilt.mode=='screen' and store.saved.options.steering=='screen')
+frame({a=true});frame({left=true});frame({a=true});assert(Tilt.mode=='screen' and store.saved.options.steering=='screen')
 frame({b=true});assert(not get('settings') and store.saved.controlRevision==1)
 print('PASS: 160 grip/direction cases, same-angle braking, micro-control, continuous momentum, gravity, propulsion-only speed easing and saved steering choices')
 ''')

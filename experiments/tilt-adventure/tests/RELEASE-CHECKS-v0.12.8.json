@@ -1,0 +1,128 @@
+[
+  {
+    "test": "check_curriculum.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 2.75,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nPASS: 53 stable identities, 20 teaching chapters, cumulative reviews, four 21/23/25/28-encounter finales, 48+17 save migrations; 28436 tiles\nPASS: 222 production landing ports meet their road at the correct height\nPASS: sequential teaching introduces at most one new lesson per course; final four introduce none\nREADY: course 50 loading complete\nPASS: production finale 50 traverses 21 encounters, 20 checkpoints, reaches win with zero falls\nREADY: course 51 loading complete\nPASS: production finale 51 traverses 23 encounters, 22 checkpoints, reaches win with zero falls\nREADY: course 52 loading complete\nPASS: production finale 52 traverses 25 encounters, 24 checkpoints, reaches win with zero falls\nREADY: course 53 loading complete\nPASS: production finale 53 traverses 28 encounters, 27 checkpoints, reaches win with zero falls\nPASS: lazy geometry release/re-entry; four streamed long maps, zero visible chunk misses at 150 units/sec, maximum 40 chunks; section navigation clamps\n"
+  },
+  {
+    "test": "check_campaign_routes.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.47,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nPASS: all 53 goals/checkpoints connected through road, taught jumps, actual landing ports and reachable cannon arcs; does not prove timing or hand-held control\n"
+  },
+  {
+    "test": "check_finale_variety.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 1.42,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nPASS: no repeated room silhouettes within finales; 22 angled shots; level turns with ball-width clearance\nREADY: course 51 loading complete\nREADY: course 52 loading complete\nREADY: course 53 loading complete\nPASS: 66 physical ballistic landings, +/-3 degree tolerance, real tilt braking on receiving terraces\nREADY: course 51 loading complete\nREADY: course 52 loading complete\nREADY: course 53 loading complete\nPASS: 10 fork choices reach the reunion terrace through real gate/support checks\nREADY: course 50 loading complete\nREADY: course 51 loading complete\nREADY: course 52 loading complete\nREADY: course 53 loading complete\nPASS: 7 complete raised doglegs navigated with accelerometer input, no jumps or velocity overrides\n"
+  },
+  {
+    "test": "check_lesson_controls.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.33,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: course 1 loading complete\nREADY: course 4 loading complete\nREADY: course 30 loading complete\nREADY: course 36 loading complete\nREADY: course 1 loading complete\nREADY: course 4 loading complete\nREADY: course 30 loading complete\nREADY: course 36 loading complete\nPASS: first course, brake bend, terrace switchback and cannon lesson completed in BOTH steering modes with accelerometer input and real inertia; no forced velocities\n"
+  },
+  {
+    "test": "check_playtest_controls.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.06,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nLEAN 5 oldPower=0.105 newPower=0.094 stopTime=3.758->1.118 stopDistance=203.05->62.40\nLEAN 10 oldPower=0.322 newPower=0.304 stopTime=1.823->0.654 stopDistance=104.08->37.84\nLEAN 15 oldPower=0.535 newPower=0.518 stopTime=1.214->0.490 stopDistance=70.47->28.72\nLEAN 20 oldPower=0.743 newPower=0.732 stopTime=0.916->0.400 stopDistance=53.59->23.64\nLEAN 30 oldPower=1.000 newPower=1.000 stopTime=0.703->0.330 stopDistance=41.34->19.60\nACCEL 10 speedAfter1s=39.41->36.88\nACCEL 15 speedAfter1s=69.79->67.44\nACCEL 20 speedAfter1s=99.47->97.90\nNEUTRAL stopTime=8.248->3.864 stopDistance=389.08->174.38\nPASS: 160 grip/direction cases, same-angle braking, micro-control, continuous momentum, gravity, propulsion-only speed easing and saved steering choices\n"
+  },
+  {
+    "test": "check_fields.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.17,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nPASS: 44 wind zones, 10 magnets, 176 road samples; fast sweep and immediate edge forces, bounded acceleration, counter-steering, purposeful ramp and save migration\nREADY: course 34 loading complete\nPASS: actual tilt, crank dial and B release complete the wind-climb lesson without forced velocity or jumping\n"
+  },
+  {
+    "test": "check_new_game.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.08,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: course 1 loading complete\nPASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: course 1 loading complete\nPASS: six settings rows; A-only reset entry; default cancel; B cancel; no idle reset; explicit reset; preferences retained; first/later tutorials restored; fresh-boot persistence\n"
+  },
+  {
+    "test": "check_loading_watchdog.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.08,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: startup loading complete\nREADY: course 53 loading complete\nPASS: saved level 53 defers geometry until Start; route, landing and shadow preparation yield over 16 loading frames; complete occlusion cache\nPASS: measured loading budget returns after 24 ms, preserves first frame and completes all work\n"
+  },
+  {
+    "test": "check_streaming.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.08,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nPASS: 240 units/sec forward/reverse road preparation, complete visible images, checkpoint teleport fallback; initial 9, peak 40 chunks, 23249 complete draws\n"
+  },
+  {
+    "test": "check_runtime_assets.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.33,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nPASS: native bake source hashes, 53 road footprints, 3286 surfaces and 134 cannon/fan frames\n"
+  },
+  {
+    "test": "check_terrain_index.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.14,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nPASS: 28436 terrain tiles retain every original corner-projection chunk after analytic indexing\n"
+  },
+  {
+    "test": "check_release_menus.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.08,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: course 1 loading complete\nREADY: course 2 loading complete\nREADY: course 1 loading complete\nREADY: course 1 loading complete\nREADY: course 53 loading complete\nPASS: paired steering commit/cancel, home continue/new-game confirmation, next-route unlock, locked launch rejection, save migration, one-shot hidden chord and isolated developer progress/tutorials\n"
+  },
+  {
+    "test": "check_player_loop.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.14,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: startup loading complete\nREADY: course 1 loading complete\nREADY: course 2 loading complete\nREADY: course 4 loading complete\nREADY: course 53 loading complete\nPASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: startup loading complete\nREADY: course 53 loading complete\nPASS: real main startup, first tutorials, map/help/goal/cancel, win/next/retry, actual falling/death, checkpoint retry, ending routes/title, pause-save and fresh boot continuation\n"
+  },
+  {
+    "test": "check_onboarding.py",
+    "legacy": false,
+    "exitCode": 0,
+    "seconds": 0.11,
+    "summary": "PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: startup loading complete\nREADY: course 1 loading complete\nPASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: startup loading complete\nREADY: course 1 loading complete\nPASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: startup loading complete\nREADY: course 1 loading complete\nPASS: slopes, equal reverse force, meters, latch, and ballistic gap tests\nPASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints\nPASS: front/back occlusion, platform lip contact and clear jump passage\nREADY: startup loading complete\nPASS: fresh Road default, settings-before-start, goal-before-choice, interrupted setup resume, committed choice reload and legacy preference preservation\n"
+  },
+  {
+    "test": "check_audio_bounds.py",
+    "legacy": true,
+    "exitCode": 0,
+    "seconds": 0.5,
+    "summary": "ex includes original visible mechanisms across 48 courses, camera cells and movement phases\nPASS: direct and render-cached poses equal the original wrapper chain exactly\nPASS: lift-only height queries equal full support-based heights across machinery, boundaries and raised lifts\nPASS: 63 moderate lift/grip/rate combinations; pulse shapes, sideways shake rejection, quiet rearm, cooldown, steering isolation\nBRAKING speed=60 input=0.0 time=5.3967->5.3967 distance=138.8795->138.8795 reduction=0.00%\nBRAKING speed=60 input=0.5 time=0.6920->0.6745 distance=20.3765->19.8701 reduction=2.49%\nBRAKING speed=60 input=1.0 time=0.3710->0.3609 distance=11.0187->10.7232 reduction=2.68%\nBRAKING speed=120 input=0.0 time=8.2492->8.2492 distance=389.0778->389.0778 reduction=0.00%\nBRAKING speed=120 input=0.5 time=1.3150->1.2833 distance=76.1311->74.3580 reduction=2.33%\nBRAKING speed=120 input=1.0 time=0.7212->0.7022 distance=42.4356->41.3385 reduction=2.59%\nBRAKING speed=200 input=0.0 time=10.7350->10.7350 distance=780.2776->780.2776 reduction=0.00%\nBRAKING speed=200 input=0.5 time=2.0594->2.0124 distance=194.6430->190.4489 reduction=2.15%\nBRAKING speed=200 input=1.0 time=1.1595->1.1300 distance=112.3610->109.5856 reduction=2.47%\nPASS: historical base integrator remains unchanged; current assisted steering is covered separately by check_playtest_controls.py\nPASS: every mechanism/control-pad sound, actual spring event, transition pairs, attenuation, voice limits, pause/effects/reset and six UI cues\nREADY: course 44 loading complete\nPASS: cooperative loading frames, real monotonic progress, completion callback and frozen course entry\nPASS: 6936 swept hearing-bound checks; 48 course audio traces match unculled reference, including distant exit/re-entry\nPASS: 35 distinct mono machine/UI samples\n"
+  },
+  {
+    "test": "check_bumper_ring.py",
+    "legacy": true,
+    "exitCode": 0,
+    "seconds": 1.0,
+    "summary": "y and rotor move the ball without false rolling; motion relative to both surfaces still rolls\nPASS: long bridge remains inside its raster bounds through 73 rotation samples\nPASS: prepared gate, hatch and belt run 36-second animation cycles without new raster allocations\nPASS: 4887 moving poses without road intersections; 486 flush seam samples; 6 lift side-exits; 121 muzzle/tangent samples\nPASS: 2142 cached terrain covers match uncached tile selection and painter order\nPASS: 67 near-bank samples, 12 mechanism types indexed; open lift supports; 121 exact muzzle/trajectory/spawn and preserved landing checks; cannon foreshortening\nPASS: 74826 indexed height samples exactly match original slopes, step boundaries and lift lips\nREADY: course 20 loading complete\nPASS: repeated floor queries retain live lift elevation and reset invalidation\nREADY: course 24 loading complete\nPASS: prepared lift supports and every fan heading allocate no new images during motion; old course supports released\nPASS: 4955 prepared terrain views match streaming; zero visible misses; maximum 39 chunks; larger-map fallback retained\nREADY: course 33 loading complete\nREADY: course 1 loading complete\nREADY: course 33 loading complete\nPASS: leaving releases derived course caches; returning rebuilds them without losing level data\nPASS: 8064 spring hits across every campaign spring, 72 angles, slow/fast/head-on/grazing; outgoing and jump clearance; solid deck skirts; depth and height rejection\nPASS: static masks reuse rasters without allocation; relative depth and animation changes invalidate\nPASS: 2880 exact footprint boundary checks, 360 passing lanes, 1440 clear-air passes, top-entry exclusion, one synchronized impact sound/pulse and no animation image allocation\nPASS: 35 distinct mono machine/UI samples\n"
+  },
+  {
+    "test": "check_passage_layout.py",
+    "legacy": true,
+    "exitCode": 0,
+    "seconds": 1.14,
+    "summary": "nvalidation\nREADY: course 24 loading complete\nPASS: prepared lift supports and every fan heading allocate no new images during motion; old course supports released\nPASS: 4955 prepared terrain views match streaming; zero visible misses; maximum 39 chunks; larger-map fallback retained\nREADY: course 33 loading complete\nREADY: course 1 loading complete\nREADY: course 33 loading complete\nPASS: leaving releases derived course caches; returning rebuilds them without losing level data\nPASS: 8064 spring hits across every campaign spring, 72 angles, slow/fast/head-on/grazing; outgoing and jump clearance; solid deck skirts; depth and height rejection\nPASS: static masks reuse rasters without allocation; relative depth and animation changes invalidate\nPASS: 2880 exact footprint boundary checks, 360 passing lanes, 1440 clear-air passes, top-entry exclusion, one synchronized impact sound/pulse and no animation image allocation\nREADY: course 45 loading complete\nPASS: circular edge support, diameter gap boundary, 74 real landing signals, four onboard routes, no snap, release/re-entry, gates/traps/jets, fast wind crossing and +8% force\nREADY: course 45 loading complete\nPASS: scripted route 45 reaches win through real dock, collision, support and checkpoint logic\nREADY: course 46 loading complete\nPASS: scripted route 46 reaches win through real dock, collision, support and checkpoint logic\nREADY: course 47 loading complete\nPASS: scripted route 47 reaches win through real dock, collision, support and checkpoint logic\nREADY: course 48 loading complete\nPASS: scripted route 48 reaches win through real dock, collision, support and checkpoint logic\nPASS: 405 crowded layouts protect ball/compass, 212 compact indicators, independent dual gates in 40/41/44\nPASS: 35 distinct mono machine/UI samples\n"
+  },
+  {
+    "test": "check_awake.py",
+    "legacy": true,
+    "exitCode": 0,
+    "seconds": 0.05,
+    "summary": "POWER: USB connected; auto-lock disabled\nPOWER: USB disconnected; auto-lock restored\nPOWER: USB connected; auto-lock disabled\nPASS: full battery on USB, unplug, stable timer, throttled polling, resume and unavailable API\n"
+  }
+]

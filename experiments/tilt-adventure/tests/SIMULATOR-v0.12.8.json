@@ -1,0 +1,3705 @@
+{
+  "complete": true,
+  "device": false,
+  "mode": "all courses: road traversal stress plus each machinery and control station; production update and audio",
+  "stages": [
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1405.4326171875,
+      "route": 1,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 1
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1408.1904296875,
+      "route": 1,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 1
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.318601608276,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1411.1279296875,
+      "route": 1,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 1
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1417.51171875,
+      "route": 2,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 2
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1421.17578125,
+      "route": 2,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 2
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1424.94921875,
+      "route": 2,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 2
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1439.00390625,
+      "route": 3,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 3
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1442.98046875,
+      "route": 3,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 3
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.163599014282,
+      "frame95": 33,
+      "frameMax": 44,
+      "frames": 59,
+      "luaKB": 1446.84765625,
+      "route": 3,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 3
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1460.392578125,
+      "route": 4,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 4
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1463.119140625,
+      "route": 4,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 4
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1466.955078125,
+      "route": 4,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 4
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1452.30859375,
+      "route": 5,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 5
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1455.01953125,
+      "route": 5,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 5
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1458.873046875,
+      "route": 5,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 5
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1458.341796875,
+      "route": 6,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 6
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1462.427734375,
+      "route": 6,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 6
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1465.646484375,
+      "route": 6,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 6
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1492.076171875,
+      "route": 7,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 7
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1494.724609375,
+      "route": 7,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 7
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1497.373046875,
+      "route": 7,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 7
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 10,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.163599014282,
+      "frame95": 35,
+      "frameMax": 37,
+      "frames": 59,
+      "luaKB": 1719.015625,
+      "route": 8,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 8
+      }
+    },
+    {
+      "cacheMiss": 1,
+      "chunks": 18,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.318601608276,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1724.099609375,
+      "route": 8,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 8
+      }
+    },
+    {
+      "cacheMiss": 2,
+      "chunks": 20,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.318601608276,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1729.357421875,
+      "route": 8,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 8
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1544.5556640625,
+      "route": 9,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 9
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1547.8916015625,
+      "route": 9,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 9
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1551.6494140625,
+      "route": 9,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 9
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1556.4150390625,
+      "route": 9,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "gate",
+        "route": 9
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 9,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1831.1923828125,
+      "route": 10,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 10
+      }
+    },
+    {
+      "cacheMiss": 2,
+      "chunks": 18,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1837.333984375,
+      "route": 10,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 10
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 21,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1840.7998046875,
+      "route": 10,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 10
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 21,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1845.6884765625,
+      "route": 10,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "gate",
+        "route": 10
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1571.2958984375,
+      "route": 11,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 11
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1575.4365234375,
+      "route": 11,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 11
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 35,
+      "frames": 59,
+      "luaKB": 1578.2333984375,
+      "route": 11,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 11
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1582.5380859375,
+      "route": 11,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "trap",
+        "route": 11
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 11,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1929.5234375,
+      "route": 12,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 12
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 21,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1935.171875,
+      "route": 12,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 12
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 26,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1938.9375,
+      "route": 12,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 12
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 26,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1943.5546875,
+      "route": 12,
+      "scenario": {
+        "frames": 90,
+        "index": 2,
+        "kind": "mechanism",
+        "name": "trap",
+        "route": 12
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1573.259765625,
+      "route": 13,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 13
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1576.0458984375,
+      "route": 13,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 13
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1580.099609375,
+      "route": 13,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 13
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1584.412109375,
+      "route": 13,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "ferry",
+        "route": 13
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 9,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2036.2373046875,
+      "route": 14,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 14
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 21,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.318601608276,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2042.69140625,
+      "route": 14,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 14
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 31,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2047.60546875,
+      "route": 14,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 14
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 31,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 2054.37109375,
+      "route": 14,
+      "scenario": {
+        "frames": 90,
+        "index": 3,
+        "kind": "mechanism",
+        "name": "trap",
+        "route": 14
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1621.380859375,
+      "route": 15,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 15
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1628.748046875,
+      "route": 15,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 15
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1637.544921875,
+      "route": 15,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 15
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1646.037109375,
+      "route": 15,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 15
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2080.7880859375,
+      "route": 16,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 16
+      }
+    },
+    {
+      "cacheMiss": 2,
+      "chunks": 19,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2087.6533203125,
+      "route": 16,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 16
+      }
+    },
+    {
+      "cacheMiss": 7,
+      "chunks": 27,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2095.3251953125,
+      "route": 16,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 16
+      }
+    },
+    {
+      "cacheMiss": 9,
+      "chunks": 31,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 2102.8173828125,
+      "route": 16,
+      "scenario": {
+        "frames": 90,
+        "index": 3,
+        "kind": "mechanism",
+        "name": "trap",
+        "route": 16
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1718.9716796875,
+      "route": 17,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 17
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1725.3203125,
+      "route": 17,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 17
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1728.0234375,
+      "route": 17,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 17
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 1732.234375,
+      "route": 17,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "sweeper",
+        "route": 17
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 10,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2299.634765625,
+      "route": 18,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 18
+      }
+    },
+    {
+      "cacheMiss": 4,
+      "chunks": 22,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2307.087890625,
+      "route": 18,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 18
+      }
+    },
+    {
+      "cacheMiss": 9,
+      "chunks": 34,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2316.095703125,
+      "route": 18,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 18
+      }
+    },
+    {
+      "cacheMiss": 11,
+      "chunks": 36,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 2324.0888671875,
+      "route": 18,
+      "scenario": {
+        "frames": 90,
+        "index": 4,
+        "kind": "mechanism",
+        "name": "gate",
+        "route": 18
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1730.919921875,
+      "route": 19,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 19
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1738.466796875,
+      "route": 19,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 19
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1741.3369140625,
+      "route": 19,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 19
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 1743.9306640625,
+      "route": 19,
+      "scenario": {
+        "frames": 90,
+        "index": 2,
+        "kind": "mechanism",
+        "name": "bumper",
+        "route": 19
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 10,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2508.345703125,
+      "route": 20,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 20
+      }
+    },
+    {
+      "cacheMiss": 4,
+      "chunks": 23,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2518.775390625,
+      "route": 20,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 20
+      }
+    },
+    {
+      "cacheMiss": 9,
+      "chunks": 37,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2529.9599609375,
+      "route": 20,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 20
+      }
+    },
+    {
+      "cacheMiss": 9,
+      "chunks": 39,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 2545.7802734375,
+      "route": 20,
+      "scenario": {
+        "frames": 90,
+        "index": 6,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 20
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1783.5517578125,
+      "route": 21,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 21
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.318601608276,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1786.2939453125,
+      "route": 21,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 21
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.117406845093,
+      "frame95": 35,
+      "frameMax": 43,
+      "frames": 59,
+      "luaKB": 1789.0361328125,
+      "route": 21,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 21
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1793.9638671875,
+      "route": 21,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "fan",
+        "route": 21
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 10,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2535.5380859375,
+      "route": 22,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 22
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 23,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 35,
+      "frames": 59,
+      "luaKB": 2546.8310546875,
+      "route": 22,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 22
+      }
+    },
+    {
+      "cacheMiss": 7,
+      "chunks": 36,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2564.1142578125,
+      "route": 22,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 22
+      }
+    },
+    {
+      "cacheMiss": 7,
+      "chunks": 36,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 2569.7392578125,
+      "route": 22,
+      "scenario": {
+        "frames": 90,
+        "index": 7,
+        "kind": "mechanism",
+        "name": "sweeper",
+        "route": 22
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1772.853515625,
+      "route": 23,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 23
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1775.962890625,
+      "route": 23,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 23
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1778.673828125,
+      "route": 23,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 23
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1789.306640625,
+      "route": 23,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 23
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 12,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.271934509277,
+      "frame95": 33,
+      "frameMax": 35,
+      "frames": 59,
+      "luaKB": 2697.8837890625,
+      "route": 24,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 24
+      }
+    },
+    {
+      "cacheMiss": 3,
+      "chunks": 26,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2705.6259765625,
+      "route": 24,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 24
+      }
+    },
+    {
+      "cacheMiss": 7,
+      "chunks": 34,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2714.732421875,
+      "route": 24,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 24
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 40,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 2725.451171875,
+      "route": 24,
+      "scenario": {
+        "frames": 90,
+        "index": 7,
+        "kind": "mechanism",
+        "name": "fan",
+        "route": 24
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1774.6494140625,
+      "route": 25,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 25
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1777.4619140625,
+      "route": 25,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 25
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1780.4306640625,
+      "route": 25,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 25
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 1791.0244140625,
+      "route": 25,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 25
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1807.771484375,
+      "route": 26,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 26
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1814.107421875,
+      "route": 26,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 26
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1817.357421875,
+      "route": 26,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 26
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1821.044921875,
+      "route": 26,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 26
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1804.25,
+      "route": 27,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 27
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1805.7734375,
+      "route": 27,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 27
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1809.4296875,
+      "route": 27,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 27
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 4,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1813.0390625,
+      "route": 27,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 27
+      }
+    },
+    {
+      "cacheMiss": 2,
+      "chunks": 17,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2879.7724609375,
+      "route": 28,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 28
+      }
+    },
+    {
+      "cacheMiss": 6,
+      "chunks": 31,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2885.8662109375,
+      "route": 28,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 28
+      }
+    },
+    {
+      "cacheMiss": 11,
+      "chunks": 26,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2894.3671875,
+      "route": 28,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 28
+      }
+    },
+    {
+      "cacheMiss": 15,
+      "chunks": 36,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 2904.5283203125,
+      "route": 28,
+      "scenario": {
+        "frames": 90,
+        "index": 8,
+        "kind": "mechanism",
+        "name": "trap",
+        "route": 28
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 6,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.194473266602,
+      "frame95": 33,
+      "frameMax": 38,
+      "frames": 59,
+      "luaKB": 1835.708984375,
+      "route": 29,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 29
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 6,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.194473266602,
+      "frame95": 34,
+      "frameMax": 36,
+      "frames": 59,
+      "luaKB": 1838.3388671875,
+      "route": 29,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 29
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 6,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1841.1748046875,
+      "route": 29,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 29
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 6,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 1844.8291015625,
+      "route": 29,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "lift",
+        "route": 29
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.14818572998,
+      "frame95": 33,
+      "frameMax": 43,
+      "frames": 59,
+      "luaKB": 1933.5625,
+      "route": 30,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 30
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1937.2421875,
+      "route": 30,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 30
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1939.890625,
+      "route": 30,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 30
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 13,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2915.720703125,
+      "route": 31,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 31
+      }
+    },
+    {
+      "cacheMiss": 3,
+      "chunks": 24,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2928.298828125,
+      "route": 31,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 31
+      }
+    },
+    {
+      "cacheMiss": 9,
+      "chunks": 39,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2941.3583984375,
+      "route": 31,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 31
+      }
+    },
+    {
+      "cacheMiss": 10,
+      "chunks": 25,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.354705810547,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 2944.609375,
+      "route": 31,
+      "scenario": {
+        "frames": 90,
+        "index": 8,
+        "kind": "mechanism",
+        "name": "ferry",
+        "route": 31
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 6,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 1941.58203125,
+      "route": 32,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 32
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 6,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1943.1962890625,
+      "route": 32,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 32
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 6,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 1946.1181640625,
+      "route": 32,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 32
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 6,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 1954.5634765625,
+      "route": 32,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "ferry",
+        "route": 32
+      }
+    },
+    {
+      "cacheMiss": 2,
+      "chunks": 14,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 3066.1630859375,
+      "route": 33,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 33
+      }
+    },
+    {
+      "cacheMiss": 6,
+      "chunks": 24,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3075.86328125,
+      "route": 33,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 33
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 39,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3085.5869140625,
+      "route": 33,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 33
+      }
+    },
+    {
+      "cacheMiss": 12,
+      "chunks": 30,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 3097.6787109375,
+      "route": 33,
+      "scenario": {
+        "frames": 90,
+        "index": 9,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 33
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 9,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2017.3466796875,
+      "route": 34,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 34
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 9,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2021.3232421875,
+      "route": 34,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 34
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 9,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2024.8779296875,
+      "route": 34,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 34
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 9,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.230978012085,
+      "frame95": 33,
+      "frameMax": 38,
+      "frames": 89,
+      "luaKB": 2029.8525390625,
+      "route": 34,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "fan",
+        "route": 34
+      }
+    },
+    {
+      "cacheMiss": 2,
+      "chunks": 14,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3331.38671875,
+      "route": 35,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 35
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 29,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3341.1103515625,
+      "route": 35,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 35
+      }
+    },
+    {
+      "cacheMiss": 7,
+      "chunks": 28,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 3349.42578125,
+      "route": 35,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 35
+      }
+    },
+    {
+      "cacheMiss": 7,
+      "chunks": 29,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 3355.2978515625,
+      "route": 35,
+      "scenario": {
+        "frames": 90,
+        "index": 9,
+        "kind": "mechanism",
+        "name": "gate",
+        "route": 35
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2008.953125,
+      "route": 36,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 36
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2012.4453125,
+      "route": 36,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 36
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2015.1875,
+      "route": 36,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 36
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 2017.7421875,
+      "route": 36,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "pad",
+        "name": "cannon",
+        "route": 36
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 10,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2101.0087890625,
+      "route": 37,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 37
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 10,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2105.876953125,
+      "route": 37,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 37
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 10,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2108.322265625,
+      "route": 37,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 37
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 10,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 2110.900390625,
+      "route": 37,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "pad",
+        "name": "cannon",
+        "route": 37
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 12,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2142.013671875,
+      "route": 38,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 38
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 12,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2145.951171875,
+      "route": 38,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 38
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 12,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2150.8837890625,
+      "route": 38,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 38
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 12,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 2154.5947265625,
+      "route": 38,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "lift",
+        "route": 38
+      }
+    },
+    {
+      "cacheMiss": 1,
+      "chunks": 16,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3510.603515625,
+      "route": 39,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 39
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 29,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3517.4599609375,
+      "route": 39,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 39
+      }
+    },
+    {
+      "cacheMiss": 7,
+      "chunks": 25,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3523.0166015625,
+      "route": 39,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 39
+      }
+    },
+    {
+      "cacheMiss": 12,
+      "chunks": 39,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 3536.5146484375,
+      "route": 39,
+      "scenario": {
+        "frames": 90,
+        "index": 9,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 39
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2182.806640625,
+      "route": 40,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 40
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2186.970703125,
+      "route": 40,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 40
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2189.5830078125,
+      "route": 40,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 40
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.31335067749,
+      "frame95": 33,
+      "frameMax": 35,
+      "frames": 89,
+      "luaKB": 2193.1845703125,
+      "route": 40,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "conveyor",
+        "route": 40
+      }
+    },
+    {
+      "cacheMiss": 2,
+      "chunks": 17,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3724.720703125,
+      "route": 41,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 41
+      }
+    },
+    {
+      "cacheMiss": 4,
+      "chunks": 29,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 3734.353515625,
+      "route": 41,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 41
+      }
+    },
+    {
+      "cacheMiss": 10,
+      "chunks": 28,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 3741.4814453125,
+      "route": 41,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 41
+      }
+    },
+    {
+      "cacheMiss": 14,
+      "chunks": 14,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 3749.236328125,
+      "route": 41,
+      "scenario": {
+        "frames": 90,
+        "index": 10,
+        "kind": "mechanism",
+        "name": "sweeper",
+        "route": 41
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2218.8486328125,
+      "route": 42,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 42
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2222.6376953125,
+      "route": 42,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 42
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.240901947021,
+      "frame95": 34,
+      "frameMax": 40,
+      "frames": 59,
+      "luaKB": 2225.4580078125,
+      "route": 42,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 42
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 7,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.251529693604,
+      "frame95": 34,
+      "frameMax": 35,
+      "frames": 89,
+      "luaKB": 2230.2626953125,
+      "route": 42,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "jet",
+        "route": 42
+      }
+    },
+    {
+      "cacheMiss": 1,
+      "chunks": 17,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.194473266602,
+      "frame95": 34,
+      "frameMax": 36,
+      "frames": 59,
+      "luaKB": 3974.20703125,
+      "route": 43,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 43
+      }
+    },
+    {
+      "cacheMiss": 6,
+      "chunks": 31,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 3982.8837890625,
+      "route": 43,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 43
+      }
+    },
+    {
+      "cacheMiss": 12,
+      "chunks": 29,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 3989.03515625,
+      "route": 43,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 43
+      }
+    },
+    {
+      "cacheMiss": 14,
+      "chunks": 37,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 4001.3212890625,
+      "route": 43,
+      "scenario": {
+        "frames": 90,
+        "index": 11,
+        "kind": "mechanism",
+        "name": "sweeper",
+        "route": 43
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2228.21484375,
+      "route": 44,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 44
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2232.40234375,
+      "route": 44,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 44
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2236.06640625,
+      "route": 44,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 44
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 5,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 2239.54296875,
+      "route": 44,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 44
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 19,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 3911.546875,
+      "route": 45,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 45
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 31,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 3924.4736328125,
+      "route": 45,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 45
+      }
+    },
+    {
+      "cacheMiss": 13,
+      "chunks": 29,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 3929.279296875,
+      "route": 45,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 45
+      }
+    },
+    {
+      "cacheMiss": 13,
+      "chunks": 33,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.344356536865,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 3944.58203125,
+      "route": 45,
+      "scenario": {
+        "frames": 90,
+        "index": 12,
+        "kind": "mechanism",
+        "name": "sweeper",
+        "route": 45
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2301.482421875,
+      "route": 46,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 46
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2306.19140625,
+      "route": 46,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 46
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2308.98046875,
+      "route": 46,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 46
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 2312.78515625,
+      "route": 46,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "gate",
+        "route": 46
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 19,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 4164.0087890625,
+      "route": 47,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 47
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 34,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 4174.6259765625,
+      "route": 47,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 47
+      }
+    },
+    {
+      "cacheMiss": 14,
+      "chunks": 29,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 4179.3662109375,
+      "route": 47,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 47
+      }
+    },
+    {
+      "cacheMiss": 17,
+      "chunks": 39,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.31335067749,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 4189.1708984375,
+      "route": 47,
+      "scenario": {
+        "frames": 90,
+        "index": 14,
+        "kind": "mechanism",
+        "name": "ferry",
+        "route": 47
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 2322.1962890625,
+      "route": 48,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 48
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2324.8447265625,
+      "route": 48,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 48
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 0,
+      "fps": 30.365413665771,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 2327.59765625,
+      "route": 48,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 48
+      }
+    },
+    {
+      "cacheMiss": 0,
+      "chunks": 8,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.344356536865,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 2331.35546875,
+      "route": 48,
+      "scenario": {
+        "frames": 90,
+        "index": 1,
+        "kind": "mechanism",
+        "name": "magnet",
+        "route": 48
+      }
+    },
+    {
+      "cacheMiss": 1,
+      "chunks": 15,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.303030014038,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 4459.2509765625,
+      "route": 49,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 49
+      }
+    },
+    {
+      "cacheMiss": 6,
+      "chunks": 29,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 4469.615234375,
+      "route": 49,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 49
+      }
+    },
+    {
+      "cacheMiss": 10,
+      "chunks": 27,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 4474.9033203125,
+      "route": 49,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 49
+      }
+    },
+    {
+      "cacheMiss": 11,
+      "chunks": 35,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.344356536865,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 89,
+      "luaKB": 4494.103515625,
+      "route": 49,
+      "scenario": {
+        "frames": 90,
+        "index": 15,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 49
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 17,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.132787704468,
+      "frame95": 34,
+      "frameMax": 39,
+      "frames": 59,
+      "luaKB": 3747.15625,
+      "route": 50,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 50
+      }
+    },
+    {
+      "cacheMiss": 10,
+      "chunks": 32,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.271934509277,
+      "frame95": 34,
+      "frameMax": 35,
+      "frames": 59,
+      "luaKB": 3754.490234375,
+      "route": 50,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 50
+      }
+    },
+    {
+      "cacheMiss": 15,
+      "chunks": 28,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 35,
+      "frames": 59,
+      "luaKB": 3757.0107421875,
+      "route": 50,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 50
+      }
+    },
+    {
+      "cacheMiss": 19,
+      "chunks": 40,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 3771.8623046875,
+      "route": 50,
+      "scenario": {
+        "frames": 90,
+        "index": 10,
+        "kind": "mechanism",
+        "name": "ferry",
+        "route": 50
+      }
+    },
+    {
+      "cacheMiss": 5,
+      "chunks": 20,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 4759.6923828125,
+      "route": 51,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 51
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 33,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.365413665771,
+      "frame95": 34,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 4770.1552734375,
+      "route": 51,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 51
+      }
+    },
+    {
+      "cacheMiss": 13,
+      "chunks": 30,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 4774.55078125,
+      "route": 51,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 51
+      }
+    },
+    {
+      "cacheMiss": 15,
+      "chunks": 31,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 4785.7744140625,
+      "route": 51,
+      "scenario": {
+        "frames": 90,
+        "index": 14,
+        "kind": "mechanism",
+        "name": "jet",
+        "route": 51
+      }
+    },
+    {
+      "cacheMiss": 2,
+      "chunks": 19,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 5075.556640625,
+      "route": 52,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 52
+      }
+    },
+    {
+      "cacheMiss": 8,
+      "chunks": 34,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 5087.984375,
+      "route": 52,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 52
+      }
+    },
+    {
+      "cacheMiss": 13,
+      "chunks": 32,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 5090.5087890625,
+      "route": 52,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 52
+      }
+    },
+    {
+      "cacheMiss": 17,
+      "chunks": 39,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.323678970337,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 5099.0244140625,
+      "route": 52,
+      "scenario": {
+        "frames": 90,
+        "index": 16,
+        "kind": "mechanism",
+        "name": "rotor",
+        "route": 52
+      }
+    },
+    {
+      "cacheMiss": 3,
+      "chunks": 23,
+      "cpu95": 0,
+      "cpuMax": 1,
+      "fps": 30.287473678589,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 5721.9169921875,
+      "route": 53,
+      "scenario": {
+        "fraction": 0.10000000149012,
+        "frames": 60,
+        "kind": "normal",
+        "route": 53
+      }
+    },
+    {
+      "cacheMiss": 6,
+      "chunks": 38,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334190368652,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 59,
+      "luaKB": 5731.8837890625,
+      "route": 53,
+      "scenario": {
+        "fraction": 0.5,
+        "frames": 60,
+        "kind": "normal",
+        "route": 53
+      }
+    },
+    {
+      "cacheMiss": 10,
+      "chunks": 31,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.349794387817,
+      "frame95": 33,
+      "frameMax": 33,
+      "frames": 59,
+      "luaKB": 5734.896484375,
+      "route": 53,
+      "scenario": {
+        "fraction": 0.89999997615814,
+        "frames": 60,
+        "kind": "normal",
+        "route": 53
+      }
+    },
+    {
+      "cacheMiss": 13,
+      "chunks": 30,
+      "cpu95": 1,
+      "cpuMax": 1,
+      "fps": 30.334014892578,
+      "frame95": 33,
+      "frameMax": 34,
+      "frames": 89,
+      "luaKB": 5745.9189453125,
+      "route": 53,
+      "scenario": {
+        "frames": 90,
+        "index": 16,
+        "kind": "mechanism",
+        "name": "gate",
+        "route": 53
+      }
+    }
+  ]
+}

@@ -183,14 +183,14 @@ local function page(title,symbol,subtitle)
 end
 local function footer(a,b)
  g.setColor(g.kColorWhite);g.fillRect(15,204,370,22);ink();g.drawLine(20,201,380,201)
- key('A',24,208,a);key('B',231,208,b)
+ key('A',24,208,a);if b~=nil then key('B',231,208,b) end
 end
 local function meter(x,y,w,value)
  ink();g.drawRect(x,y,w,8)
  for i=0,math.floor(math.max(0,math.min(1,value))*(w-4)/5)-1 do g.fillRect(x+2+i*5,y+2,3,4) end
 end
 function UI.settings(choice,effects,music,gesture)
- page('FLIGHT SETTINGS','crank','Make yourself comfortable.')
+ page('FLIGHT SETTINGS','crank',CampaignAccess and CampaignAccess.developer and 'DEVELOPER / all routes open this session' or 'Make yourself comfortable.')
  local labels={'Sound effects','Music','Scene animation','Lift to jump','Steering','Start New Game'}
  local values={effects,music,UI.motion,gesture};local symbols={'sound','music','tilt','jump'}
  for i=1,6 do local y=68+(i-1)*22
@@ -205,13 +205,85 @@ function UI.settings(choice,effects,music,gesture)
   text(values[i] and 'ON' or 'OFF',values[i] and 312 or 331,y+5)
   end
  end
- footer(choice==6 and 'open' or 'change','back')
+ footer(choice>=5 and 'open' or 'change','back')
+end
+-- Generated art is loaded once. The paired demonstrations use the same input.
+local steeringCard=g.image.new('menu-art/card')
+local startCard=g.image.new('menu-art/start-card')
+local steeringSmall=g.font.new('fonts/Roobert-9-Mono-Condensed')
+local steeringRoad=g.image.new('menu-art/road')
+local routeLock=g.image.new('menu-art/lock')
+local steeringDevices,steeringBalls={},{}
+for i=1,9 do steeringDevices[i]=g.image.new('menu-art/device-'..i) end
+for i=1,3 do steeringBalls[i]=g.image.new('menu-art/ball-'..i) end
+local controlLabels={'RIGHT EDGE DOWN','LEFT EDGE DOWN','TOP EDGE DOWN','BOTTOM EDGE DOWN'}
+local modeVectors={{1,0},{-1,0},{0,-1},{0,1}}
+function UI.steering(choice,t,current,onboarding)
+ page('CHOOSE YOUR STEERING','tilt')
+ -- Every direction returns to neutral before the next demonstration.
+ local phase=math.floor(t/2)%4+1;local within=t%2
+ local travel=math.sin(math.min(1,within/1.4)*math.pi/2)
+ local pose=1
+ if within<.2 or within>1.8 then pose=1
+ elseif within<.45 or within>1.55 then pose=({2,4,6,8})[phase]
+ else pose=({3,4,7,9})[phase] end
+ local dx,dy=table.unpack(modeVectors[phase])
+ for i,mode in ipairs({'screen','road'}) do
+  local x=12+(i-1)*196;local y=58-(i==choice and 3 or 0)
+  ink();if i==choice then g.fillRect(x+3,y+5,180,140) end
+  steeringCard:draw(x,y)
+  if i==choice then g.drawRoundRect(x-1,y-1,182,142,3) end
+  if i==choice then g.fillRoundRect(x+14,y+15,152,21,3);g.setImageDrawMode(g.kDrawModeFillWhite) end
+  g.drawTextAligned(i==1 and 'SCREEN' or 'ROAD',x+90,y+17,kTextAlignment.center)
+  ink()
+  if current==mode then g.setColor(i==choice and g.kColorWhite or g.kColorBlack);g.fillCircleAtPoint(x+154,y+25,2);ink() end
+  g.setFont(steeringSmall)
+  center(controlLabels[phase],x+90,y+39)
+  g.setFont(regular)
+  steeringDevices[pose]:draw(x+17,y+53)
+  steeringRoad:draw(x+75,y+62)
+  local sx,sy=dx,dy
+  if mode=='road' then sx,sy=(dx-dy)*.9,(dx+dy)*.45;local n=math.sqrt(sx*sx+sy*sy);sx,sy=sx/n,sy/n end
+  local mx,my=x+118+sx*17*travel,y+78+sy*17*travel
+  local rolling=within>.2 and within<1.4
+  steeringBalls[rolling and math.floor(within*9)%3+1 or 1]:draw(math.floor(mx)-12,math.floor(my)-12)
+  local names=mode=='screen' and {'Screen right','Screen left','Screen up','Screen down'} or {'Right + down','Left + up','Right + up','Left + down'}
+  center(names[phase],x+90,y+107)
+ end
+ g.setColor(g.kColorWhite);g.fillRect(15,204,370,23);ink()
+ UI.keycap('left',21,208);UI.keycap('right',41,208);text('choose',64,208)
+ key('A',160,208,'save');key('B',269,208,onboarding and 'intro' or 'cancel')
+end
+function UI.steeringSaved(mode)
+ page('STEERING SAVED','tilt','Ready for your first roll.')
+ steeringDevices[1]:draw(56,78)
+ steeringRoad:draw(146,86);steeringBalls[1]:draw(178,88)
+ center(mode=='road' and 'ROAD DIRECTIONS' or 'SCREEN DIRECTIONS',200,137)
+ center('Change this anytime in Settings.',200,159)
+ center('Open Steering, choose, then A to save.',200,180)
+ footer('continue',nil)
+end
+function UI.startMenu(choice,level)
+ page('READY TO ROLL?','flag','Continue your journey, or start fresh.')
+ for i,label in ipairs({'Continue','New Game'}) do
+  local y=78+(i-1)*59
+  startCard:draw(20,y)
+  -- Fixed frame export keeps this menu within the existing page grid.
+  if i==choice then ink();g.drawRoundRect(18,y-2,364,52,4) end
+  steeringBalls[1]:draw(40,y+13)
+  if i==choice then ink();g.fillRoundRect(74,y+8,148,20,3);g.setImageDrawMode(g.kDrawModeFillWhite) end
+  g.drawText(label,80,y+9);ink()
+  g.setFont(steeringSmall)
+  text(i==1 and string.format('Course %02d / resume',level) or 'Course 01 / replay tutorials',76,y+29)
+  g.setFont(regular)
+ end
+ footer('select','title')
 end
 function UI.newGame(choice)
  page('START NEW GAME','flag','Begin again from Course 1.')
  text('Clears progress, best times and tutorials.',23,77)
  text('Tutorials will appear again.',23,98)
- text('Sound and control settings are kept.',23,119)
+ text('Keep sound settings; choose steering again.',23,119)
  for i,label in ipairs({'Cancel','Start New Game'}) do
   local y=148+(i-1)*25
   if choice==i then ink();g.drawRoundRect(19,y-2,361,24,4);ball(31,y+9,7) end
@@ -241,9 +313,11 @@ local function route(course,x,y,w,h,px,py,t)
   if px then ball(ox+px/32*s,oy+py/32*s,5) end
  end
 end
-function UI.selector(selected,completed)
+function UI.selector(selected,completed,allowed,developer)
+ allowed=allowed or function(n) return not CampaignAccess or CampaignAccess.allowed(n,completed) end
  local p=math.floor((selected-1)/6);local first=p*6+1
- page('CHOOSE YOUR ROUTE','map',string.format('%02d  %s',selected,Courses[selected].shortName))
+ local unlocked=allowed(selected)
+ page('CHOOSE YOUR ROUTE','map',developer and 'DEVELOPER / all routes open' or (unlocked and string.format('%02d  %s',selected,Courses[selected].shortName) or string.format('Clear Course %02d to unlock this route.',selected-1)))
  text(string.format('%d/%d',p+1,math.ceil(#Courses/6)),346,50)
  for n=first,math.min(first+5,#Courses) do
   local c=Courses[n];local x=20+math.floor((n-first)/3)*186;local y=75+(n-first)%3*41
@@ -253,11 +327,14 @@ function UI.selector(selected,completed)
     ink();g.drawRoundRect(1,2,36,20,3);g.drawTextAligned(tostring(c.encounters),19,4,kTextAlignment.center)
    else route(c,1,2,36,20) end
   end) end
-  g.setImageDrawMode(n==selected and g.kDrawModeFillWhite or g.kDrawModeCopy);previews[n]:draw(x+7,y+6)
+  g.setImageDrawMode(g.kDrawModeCopy)
+  if not allowed(n) then routeLock:draw(x+14,y+5)
+  else g.setImageDrawMode(n==selected and g.kDrawModeFillWhite or g.kDrawModeCopy);previews[n]:draw(x+7,y+6) end
+  g.setImageDrawMode(n==selected and g.kDrawModeFillWhite or g.kDrawModeCopy)
   g.drawText(fit(string.format('%02d %s',n,c.shortName),120),x+49,y+3)
-  g.drawText(completed[n] and 'CLEARED' or (c.finale and 'EXPEDITION' or c.review and 'SKILL REVIEW' or (c.jump and 'LEAP ROUTE' or 'ROLL ROUTE')),x+49,y+18);g.setImageDrawMode(g.kDrawModeCopy)
+  g.drawText(not allowed(n) and 'LOCKED' or completed[n] and 'CLEARED' or (c.finale and 'EXPEDITION' or c.review and 'SKILL REVIEW' or (c.jump and 'LEAP ROUTE' or 'ROLL ROUTE')),x+49,y+18);g.setImageDrawMode(g.kDrawModeCopy)
  end
- footer('play','back')
+ footer(unlocked and 'play' or 'locked','back')
 end
 function UI.map(course,x,y,t)
  page('ROUTE CHART','map',course.shortName..' / PAUSED')

@@ -16,7 +16,9 @@ assert(not Courses[53].materialized,'saved expedition built during import')
 for i=1,300 do clock=clock+1000/30;playdate.update();if not Loading.busy then break end end
 assert(not Loading.busy and not Courses[53].materialized,'title boot generated the saved expedition')
 pressed={a=true};playdate.update();pressed={}
-assert(Loading.busy,'Start did not schedule loading')
+assert(not Loading.busy and not Courses[53].materialized,'home choice loaded before Continue')
+playdate.update();pressed={a=true};playdate.update();pressed={}
+assert(Loading.busy,'Continue did not schedule loading')
 local phases={};local frames=0
 local checkpoint=Loading.checkpoint
 Loading.checkpoint=function(progress,label)

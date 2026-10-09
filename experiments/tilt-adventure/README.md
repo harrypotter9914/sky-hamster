@@ -1,4 +1,6 @@
-# Sky Hamster — 0.12.7
+# Sky Hamster — 0.12.8
+
+Steering opens a two-card animated comparison: left/right choose, A saves, B cancels. Returning players see Continue / New Game after Start Game; a new campaign unlocks routes as they are cleared. Old progress is retained. The developer override is temporary and never writes test clears, times or tutorials into player progress. See [validation](VALIDATION-v0.12.8.md) and [release readiness](../../docs/RELEASE-READINESS-v0.12.8.md).
 
 Settings → Start New Game restores the fresh-playtest flow previously installed from Mac. Confirmation defaults to Cancel. Starting again resets course progress, best times and seen tutorials, while preserving sound and control preferences. Installation alone never resets progress. See [validation](VALIDATION-v0.12.7.md).
 
@@ -150,3 +152,5 @@ Jump detection now uses a screen-normal pulse at the current pose rather than ca
 Descending top-surface crossings are handled before platform side collision. This fixes the reproduced case where a slightly penetrating landing was incorrectly resolved as a side impact and lost horizontal momentum. Normal ground friction, slopes and real side collisions remain.
 
 All actionable A/B prompts and arrow controls now use the same 17×17 keycaps. Fixed pixel glyphs replace font letters with uneven bearings. Native Simulator checks assert that each of the six white glyph bounds centers on (8,8). Tutorial, footer, results and HUD use the same helper. A fire/jump and B release behavior is preserved. A black/white LOCKED banner appears while docked; B release switches it to UNLOCKED until the ball leaves the 32-unit re-entry exclusion radius. Returning can dock again.
+
+0.12.8 新游戏：目标介绍 → 操控对照（默认 Road）→ 保存与设置提醒 → 移动教学。设置里仍可随时确认切换。Continue／New Game 使用专用横版按钮，保持比例。

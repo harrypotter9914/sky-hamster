@@ -126,7 +126,7 @@ frame({down=true});frame({a=true});assert(not get('gesture') and not store.saved
 for i=1,10 do frame() end
 assert(get('elapsed')==elapsed and get('x')==pos)
 frame({b=true});assert(not get('settings') and get('title'))
-frame({up=true});frame({a=true});assert(not get('title'))
+frame({up=true});frame({a=true});if get('startMenu') then frame({a=true}) end;assert(not get('title'))
 put('lesson',false);for i=1,40 do frame() end
 local level=get('level');local before=get('elapsed');local xx=get('x')
 menu['Level select']();assert(get('choosing'));frame({right=true});frame({b=true})
@@ -147,6 +147,9 @@ for i=1,40 do frame() end
 assert(get('x')==xx and get('y')==yy and get('elapsed')==tt)
 frame({b=true});assert(Guide.time==0 and not Guide.seen.arrival)
 frame({a=true});assert(Guide.key()=='roll' and store.saved.guides.arrival)
+assert(get('steeringMenu') and get('steeringChoice')==2)
+frame({a=true});assert(get('steeringNotice') and store.saved.steeringChosen)
+frame({a=true});assert(not get('steeringNotice') and get('lesson'))
 frame({a=true});assert(not get('lesson') and Guide.seen.roll)
 select(Courses.legacyIndex[1]);assert(not get('lesson'))
 select(Courses.legacyIndex[5]);assert(Guide.key()=='jump');frame({a=true});assert(not get('lesson') and store.saved.guides.jump)
