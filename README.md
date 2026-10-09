@@ -2,6 +2,8 @@
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
+公开测试版已发布：[itch.io — Sky Hamster](https://hajimi9914.itch.io/sky-hamster)，免费，可自愿打赏。当前下载版本为 0.12.8；页面素材、说明和下载校验见 [发布记录](release/itch-v0.12.8/PUBLICATION.md)。
+
 当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.x → 0.11.0 → 0.12.x**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
 
 0.12.8 新游戏在目标介绍后选择操控，默认 Road，确认后提示可随时在设置更改；继续／新游戏使用独立生成的横版按钮。加入生成素材的操控对照动画页、首页继续／新游戏选择和按通关解锁的选关；临时开发入口与普通进度隔离。仍为完整 53 关，适合公开测试，复杂关加载及掉帧限制见 [发布核查](docs/RELEASE-READINESS-v0.12.8.md) 和 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.12.8.md)。
