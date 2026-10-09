@@ -112,19 +112,16 @@ local island=bitmap(32,23,function()
  g.setColor(g.kColorWhite);g.fillPolygon(1,5,16,0,30,5,24,15,16,22,7,15);ink();g.drawPolygon(1,5,16,0,30,5,24,15,16,22,7,15)
  g.drawLine(2,6,17,10);g.drawLine(17,10,29,6);g.drawLine(17,10,16,20);g.drawLine(8,10,11,15);g.drawLine(22,10,20,15)
 end)
--- Reuse the title's sky vocabulary behind the opaque road, without per-frame images.
-local skyCloudOutline=bitmap(82,31,function()
- g.setColor(g.kColorBlack)
- g.drawArc(23,21,9,260,350);g.drawArc(40,18,14,275,90);g.drawArc(59,22,10,310,105)
- g.drawLine(10,28,73,28);g.drawLine(18,30,60,30)
-end)
-local skyCloud=bitmap(82,31,function() skyCloudOutline:drawFaded(0,0,.25,g.image.kDitherTypeBayer4x4) end)
+-- Generated one-bit cloud banks. Size, transparency and distant contrast are
+-- baked into these three sprites: no per-frame scaling, fading or allocation.
+local skyClouds={}
+for i=1,3 do skyClouds[i]=assert(g.image.new('sky-art/cloud-'..i),'Missing sky cloud '..i) end
 function UI.sky(cx,cy,t)
  local drift=UI.motion and t*1.1 or 0
  for i=1,5 do
   local px=((i*137-cx*.12+drift)%540)-90
   local py=48+((i*61-cy*.07)%150)
-  skyCloud:draw(math.floor(px),math.floor(py))
+  skyClouds[(i-1)%3+1]:draw(math.floor(px),math.floor(py))
  end
 end
 local flags={}

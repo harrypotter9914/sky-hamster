@@ -1,0 +1,52 @@
+{
+  "complete": true,
+  "frames": [
+    {
+      "file": "itch-1.gif",
+      "id": "legacy-4",
+      "kind": "balance",
+      "hudAndControlsUnchanged": true
+    },
+    {
+      "file": "itch-2.gif",
+      "id": "legacy-5",
+      "kind": "jump",
+      "hudAndControlsUnchanged": true
+    },
+    {
+      "file": "itch-3.gif",
+      "id": "legacy-16",
+      "kind": "cannon",
+      "hudAndControlsUnchanged": true
+    },
+    {
+      "file": "itch-4.gif",
+      "id": "lift-towers",
+      "kind": "lift",
+      "hudAndControlsUnchanged": true
+    },
+    {
+      "file": "itch-5.gif",
+      "id": "onboard-turn",
+      "kind": "onboard",
+      "hudAndControlsUnchanged": true
+    }
+  ],
+  "skyBenchmark": {
+    "iterations": 1000,
+    "newMs": [
+      6,
+      6,
+      5,
+      5,
+      6
+    ],
+    "oldMs": [
+      5,
+      4,
+      5,
+      5,
+      5
+    ]
+  }
+}
