@@ -74,7 +74,6 @@ local settings=false
 local settingsChoice=1
 local newGameConfirm=false
 local newGameChoice=1
-local newGameReturn='settings'
 local startMenu=false
 local startChoice=1
 local steeringMenu=false
@@ -84,6 +83,7 @@ local steeringReturn='settings'
 local steeringNotice=false
 local gesture=true
 local selectorReturn
+local syncSystemMenu
 local saved=pd.datastore and pd.datastore.read('tilt-progress') or {}
 saved=Courses.migrate(saved or {})
 Guide.seen=saved.guideRevision==3 and (saved.guides or {}) or {}
@@ -153,12 +153,30 @@ local function selectLevel(n)
  Loading.checkpoint(.08,'PREPARING COURSE')
  if prepareTerrain then prepareTerrain() end
  Loading.checkpoint(1,'READY')
+ if syncSystemMenu then syncSystemMenu() end
+end
+local function canSelect()
+ if Loading.busy or choosing or startMenu or newGameConfirm or steeringMenu or steeringNotice then return false end
+ if title or settings then return CampaignAccess.developer end
+ return not briefing and not (lesson and Guide.manual)
 end
 local function openSelector()
- if Loading.busy then return end
- if choosing or settings or startMenu or newGameConfirm or steeringMenu or steeringNotice or title or briefing or (lesson and Guide.manual) then return end
- selectorReturn={title=title,overview=overview,lesson=lesson}
- title=false;overview=false;choosing=true;selected=level;Audio.quiet()
+ if not canSelect() then return end
+ selectorReturn={title=title,settings=settings,overview=overview,lesson=lesson,ending=ending}
+ title=false;settings=false;ending=false;overview=false;choosing=true;selected=level;Audio.quiet()
+ if syncSystemMenu then syncSystemMenu() end
+end
+local function toggleDeveloper()
+ CampaignAccess.developer=not CampaignAccess.developer
+ if CampaignAccess.developer then
+  normalResume=level;normalGuides=Guide.seen;Guide.seen={}
+  for k,v in pairs(normalGuides) do Guide.seen[k]=v end
+ else
+  level=normalResume;selected=level;course=Courses[level]
+  Guide.seen=normalGuides or Guide.seen;normalGuides=nil;settingsChoice=math.min(5,settingsChoice)
+ end
+ Audio.ui('unlock')
+ if syncSystemMenu then syncSystemMenu() end
 end
 local function startNewGame()
  -- Reset only after confirmation. Sound preferences remain; steering is chosen
@@ -176,9 +194,10 @@ end
 local function closeSelector()
  choosing=false
  if selectorReturn then
-  title=selectorReturn.title;overview=selectorReturn.overview;lesson=selectorReturn.lesson
+  title=selectorReturn.title;settings=selectorReturn.settings;overview=selectorReturn.overview;lesson=selectorReturn.lesson;ending=selectorReturn.ending
  end
  selectorReturn=nil
+ if syncSystemMenu then syncSystemMenu() end
 end
 reset(true)
 local camX,camY=0,0
@@ -454,7 +473,7 @@ local last=pd.getCurrentTimeMilliseconds()
 function pd.update()
  Awake.update()
  local now=pd.getCurrentTimeMilliseconds();local dt=math.min((now-last)/1000,0.05);last=now
- if Loading.busy then Loading.step(dt);pd.getCrankChange();return end
+ if Loading.busy then Loading.step(dt);pd.getCrankChange();syncSystemMenu();return end
  MachineArt.time=worldTime
  local wasCalibrating=Tilt.calibrating
  Tilt.update(dt)
@@ -463,7 +482,7 @@ function pd.update()
   Audio.quiet();pd.getCrankChange()
   if pd.buttonJustPressed(pd.kButtonA) then ending=false;title=true
   elseif pd.buttonJustPressed(pd.kButtonB) then ending=false;openSelector() end
-  UI.ending(completed);return
+  UI.ending(completed);syncSystemMenu();return
  end
  local started=false
  needsPower=false
@@ -473,11 +492,10 @@ function pd.update()
   if pd.buttonJustPressed(pd.kButtonDown) then newGameChoice=2;Audio.ui('move') end
   if pd.buttonJustPressed(pd.kButtonB) or (pd.buttonJustPressed(pd.kButtonA) and newGameChoice==1) then
    newGameConfirm=false;Audio.ui('back')
-  elseif pd.buttonJustPressed(pd.kButtonA) then Audio.ui('confirm');startNewGame();return end
+  elseif pd.buttonJustPressed(pd.kButtonA) then Audio.ui('confirm');startNewGame();syncSystemMenu();return end
   if newGameConfirm then UI.newGame(newGameChoice)
-  elseif newGameReturn=='start' then UI.startMenu(startChoice,level)
-  else UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture) end
-  return
+  else UI.startMenu(startChoice,level) end
+  syncSystemMenu();return
  end
  if steeringMenu then
   Audio.quiet();pd.getCrankChange();steeringTime=steeringTime+dt
@@ -498,7 +516,7 @@ function pd.update()
   elseif steeringNotice then UI.steeringSaved(Tilt.mode)
   elseif steeringReturn=='game' then renderWorld();if lesson then UI.lesson(Guide.key(),Guide.time) end
   else UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture) end
-  return
+  syncSystemMenu();return
  end
  if steeringNotice then
   Audio.quiet();pd.getCrankChange();Tilt.jump=false
@@ -506,31 +524,22 @@ function pd.update()
    steeringNotice=false;Tilt.cooldown=.75;Tilt.armed=false;Audio.ui('confirm')
    renderWorld();if lesson then UI.lesson(Guide.key(),Guide.time) end
   else UI.steeringSaved(Tilt.mode) end
-  return
+  syncSystemMenu();return
  end
  if settings then
   Audio.quiet();pd.getCrankChange()
   local chord=pd.buttonIsPressed(pd.kButtonA) and pd.buttonIsPressed(pd.kButtonB)
-  if CampaignAccess.secret(dt,chord) then
-   CampaignAccess.developer=not CampaignAccess.developer
-   if CampaignAccess.developer then
-    normalResume=level;normalGuides=Guide.seen;Guide.seen={}
-    for k,v in pairs(normalGuides) do Guide.seen[k]=v end
-   else level=normalResume;selected=level;course=Courses[level];Guide.seen=normalGuides or Guide.seen;normalGuides=nil end
-   Audio.ui('unlock')
-  end
+  if CampaignAccess.secret(dt,chord) then toggleDeveloper() end
   if chord then
    UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture)
-   return
+   syncSystemMenu();return
   end
   local previousChoice=settingsChoice
   if pd.buttonJustPressed(pd.kButtonUp) then settingsChoice=math.max(1,settingsChoice-1) end
-  if pd.buttonJustPressed(pd.kButtonDown) then settingsChoice=math.min(6,settingsChoice+1) end
+  if pd.buttonJustPressed(pd.kButtonDown) then settingsChoice=math.min(5,settingsChoice+1) end
   if settingsChoice~=previousChoice then Audio.ui('move') end
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonLeft) or pd.buttonJustPressed(pd.kButtonRight) then
-   if settingsChoice==6 then
-    if pd.buttonJustPressed(pd.kButtonA) then newGameConfirm=true;newGameChoice=1;newGameReturn='settings';Audio.ui('confirm') end
-   elseif settingsChoice==5 then
+   if settingsChoice==5 then
     if pd.buttonJustPressed(pd.kButtonA) then steeringMenu=true;steeringReturn='settings';steeringChoice=Tilt.mode=='screen' and 1 or 2;steeringTime=0;Audio.ui('confirm') end
    else
    if settingsChoice==1 then Audio.toggleEffects() elseif settingsChoice==2 then Audio.toggleMusic()
@@ -542,7 +551,7 @@ function pd.update()
   if pd.buttonJustPressed(pd.kButtonB) then settings=false;saveProgress();Audio.ui("back") end
   if newGameConfirm then UI.newGame(newGameChoice)
   elseif steeringMenu then UI.steering(steeringChoice,steeringTime,Tilt.mode)
-  else UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture) end;return
+  else UI.settings(settingsChoice,Audio.effects,Audio.musicEnabled,gesture) end;syncSystemMenu();return
  end
  if startMenu then
   Audio.quiet();pd.getCrankChange()
@@ -551,12 +560,12 @@ function pd.update()
   if pd.buttonJustPressed(pd.kButtonB) then startMenu=false;Audio.ui('back')
   elseif pd.buttonJustPressed(pd.kButtonA) then
    Audio.ui('confirm')
-   if startChoice==1 then startMenu=false;selectLevel(level);return
-   else newGameConfirm=true;newGameChoice=1;newGameReturn='start' end
+   if startChoice==1 then startMenu=false;selectLevel(level);syncSystemMenu();return
+   else newGameConfirm=true;newGameChoice=1 end
   end
   if newGameConfirm then UI.newGame(newGameChoice)
   elseif startMenu then UI.startMenu(startChoice,level) else UI.title(titleChoice) end
-  return
+  syncSystemMenu();return
  end
  if title then
   if pd.buttonJustPressed(pd.kButtonUp) then titleChoice=math.max(1,titleChoice-1);Audio.ui('move') end
@@ -569,14 +578,14 @@ function pd.update()
    else settings=true;settingsChoice=1;newGameConfirm=false end
   end
   pd.getCrankChange();Audio.quiet()
-  if startMenu then UI.startMenu(startChoice,level) else UI.title(titleChoice,Audio.effects,Audio.musicEnabled) end;return
+  if startMenu then UI.startMenu(startChoice,level) else UI.title(titleChoice,Audio.effects,Audio.musicEnabled) end;syncSystemMenu();return
  end
  if state=='dead' and not choosing then
   Audio.quiet()
-  if pd.buttonJustPressed(pd.kButtonA) then Audio.ui('confirm');Loading.begin(function() reset(false);Loading.checkpoint(1,'READY') end,'BACK TO THE TRACK');return
+  if pd.buttonJustPressed(pd.kButtonA) then Audio.ui('confirm');Loading.begin(function() reset(false);Loading.checkpoint(1,'READY') end,'BACK TO THE TRACK');syncSystemMenu();return
   else
    if pd.buttonJustPressed(pd.kButtonB) then Audio.ui('confirm');openSelector() end
-   pd.getCrankChange();UI.failure(falls,checkpoint);return
+   pd.getCrankChange();UI.failure(falls,checkpoint);syncSystemMenu();return
   end
  end
  if choosing then
@@ -590,7 +599,7 @@ function pd.update()
    if CampaignAccess.allowed(selected,completed) then Audio.ui('confirm');selectLevel(selected)
    else Audio.ui('back') end
   elseif pd.buttonJustPressed(pd.kButtonB) then Audio.ui('back');closeSelector() end
-  pd.getCrankChange();UI.selector(selected,completed,function(n) return CampaignAccess.allowed(n,completed) end,CampaignAccess.developer);return
+  pd.getCrankChange();UI.selector(selected,completed,function(n) return CampaignAccess.allowed(n,completed) end,CampaignAccess.developer);syncSystemMenu();return
  end
  if briefing then
   Audio.quiet();pd.getCrankChange();Tilt.jump=false
@@ -598,20 +607,20 @@ function pd.update()
   if pd.buttonJustPressed(pd.kButtonB) then Audio.ui("back");briefing=false;Tilt.cooldown=.75;Tilt.armed=false;Guide.finishTry()
   elseif pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonRight) then Audio.ui("move");infoPage=infoPage%#pages+1
   elseif pd.buttonJustPressed(pd.kButtonLeft) then Audio.ui("move");infoPage=(infoPage-2)%#pages+1 end
-  UI.goal(course,level,infoPage);return
+  UI.goal(course,level,infoPage);syncSystemMenu();return
  end
  if overview then
   if pd.buttonJustPressed(pd.kButtonLeft) then UI.mapMove(course,x,-1) end
   if pd.buttonJustPressed(pd.kButtonRight) then UI.mapMove(course,x,1) end
   Audio.quiet()
   if pd.buttonJustPressed(pd.kButtonA) or pd.buttonJustPressed(pd.kButtonB) then Audio.ui("back");overview=false;Guide.finishTry() end
-  pd.getCrankChange();UI.map(course,x,y,worldTime);return
+  pd.getCrankChange();UI.map(course,x,y,worldTime);syncSystemMenu();return
  end
- if Tilt.calibrating then Audio.quiet();pd.getCrankChange();UI.calibration();return end
+ if Tilt.calibrating then Audio.quiet();pd.getCrankChange();UI.calibration();syncSystemMenu();return end
  if Guide.trying=='recenter' then Guide.finishTry() end
  if lesson and not Guide.manual and Guide.seen.arrival and Guide.key()=='roll' and not steeringChosen and not CampaignAccess.developer then
   steeringMenu=true;steeringReturn='game';steeringChoice=2;steeringTime=0
-  Audio.quiet();pd.getCrankChange();UI.steering(2,0,Tilt.mode,true);return
+  Audio.quiet();pd.getCrankChange();UI.steering(2,0,Tilt.mode,true);syncSystemMenu();return
  end
  if lesson then
   Audio.quiet();if Guide.time==0 and not Guide.manual then Audio.ui("unlock") end;Guide.time=Guide.time+dt
@@ -622,7 +631,7 @@ function pd.update()
    elseif tool=='goal' then briefing=true;infoPage=1;UI.goal(course,level,infoPage)
    elseif tool=='recenter' then Tilt.startCalibration();UI.calibration()
    else UI.lesson(Guide.key(),0) end
-   return
+   syncSystemMenu();return
   end
   if pd.buttonJustPressed(pd.kButtonA) then Audio.ui("confirm");lesson=Guide.advance();saveProgress();started=true;Tilt.jump=false;Tilt.cooldown=.75
    if not lesson and Guide.trying=='help' then Guide.finishTry();lesson=true end
@@ -636,18 +645,18 @@ function pd.update()
     steeringMenu=true;steeringReturn='game';steeringChoice=2;steeringTime=0;UI.steering(2,0,Tilt.mode,true)
    else UI.lesson(Guide.key(),Guide.time) end
   end
-  return
+  syncSystemMenu();return
  end
 
- if state=='play' and pd.buttonJustPressed(pd.kButtonLeft) then lesson=Guide.enter(course,true);Audio.quiet();Audio.ui('confirm');pd.getCrankChange();UI.lesson(Guide.key(),0);return end
- if state=='play' and pd.buttonJustPressed(pd.kButtonRight) then briefing=true;infoPage=1;Audio.quiet();Audio.ui('confirm');pd.getCrankChange();UI.goal(course,level,infoPage);return end
- if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonDown) then Audio.ui('confirm');Tilt.startCalibration();return end
- if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonUp) then overview=true;UI.mapSection=nil;Audio.quiet();Audio.ui('confirm');return end
+ if state=='play' and pd.buttonJustPressed(pd.kButtonLeft) then lesson=Guide.enter(course,true);Audio.quiet();Audio.ui('confirm');pd.getCrankChange();UI.lesson(Guide.key(),0);syncSystemMenu();return end
+ if state=='play' and pd.buttonJustPressed(pd.kButtonRight) then briefing=true;infoPage=1;Audio.quiet();Audio.ui('confirm');pd.getCrankChange();UI.goal(course,level,infoPage);syncSystemMenu();return end
+ if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonDown) then Audio.ui('confirm');Tilt.startCalibration();syncSystemMenu();return end
+ if state=='play' and not Dock.active and pd.buttonJustPressed(pd.kButtonUp) then overview=true;UI.mapSection=nil;Audio.quiet();Audio.ui('confirm');syncSystemMenu();return end
  local lifted=Tilt.consumeJump() and gesture
  if not started and not Dock.active and (pd.buttonJustPressed(pd.kButtonA) or lifted) then
   if state=='win' and pd.buttonJustPressed(pd.kButtonA) then
    if level==#Courses then ending=true else selectLevel(level+1) end
-   return
+   syncSystemMenu();return
   elseif jumpEnabled and state=='play' and not airborne and (lifted or Tilt.cooldown<=0) then
    local _,riding=support(x,y)
    if riding and (riding.kind=='ferry' or riding.kind=='rotor') then
@@ -658,7 +667,7 @@ function pd.update()
    Audio.play('jump')
   end
  end
- if pd.buttonJustPressed(pd.kButtonB) and state=='win' then Audio.ui('confirm');Loading.begin(function() reset(true);Loading.checkpoint(1,'READY') end,'TRYING AGAIN');return end local crank=pd.getCrankChange()
+ if pd.buttonJustPressed(pd.kButtonB) and state=='win' then Audio.ui('confirm');Loading.begin(function() reset(true);Loading.checkpoint(1,'READY') end,'TRYING AGAIN');syncSystemMenu();return end local crank=pd.getCrankChange()
  if state=='play' and not overview then
   elapsed=elapsed+dt
   -- Control meters are updated after reading direction.
@@ -742,18 +751,48 @@ function pd.update()
  end
  MechanismAudio.update(course,x,y,worldTime,dt,state=='play',airborne,(airborne and jumpZ or ballHeight)-course:height(x,y))
  Audio.update(dt,state=='play' and not airborne,math.sqrt(vx*vx+vy*vy),controls.charge)
- if state=='dead' then UI.failure(falls,checkpoint);return end
+ if state=='dead' then UI.failure(falls,checkpoint);syncSystemMenu();return end
  renderWorld()
+ syncSystemMenu()
 end
-pd.getSystemMenu():addMenuItem('Level select',openSelector)
-pd.getSystemMenu():addMenuItem('Map / pause',function() overview=not overview end)
-pd.getSystemMenu():addMenuItem('Restart level',function() choosing=false;overview=false;reset(true) end)
-if not Build.classroom then
- -- Playdate permits three custom system menu entries: replace restart with home.
- pd.getSystemMenu():removeAllMenuItems()
- pd.getSystemMenu():addMenuItem('Level select',openSelector)
- pd.getSystemMenu():addMenuItem('Map / pause',function() if Loading.busy then return end;if not title and not briefing and not (lesson and Guide.manual) then overview=not overview;if overview then UI.mapSection=nil end end;Audio.quiet() end)
- pd.getSystemMenu():addMenuItem('Title / settings',function() if Loading.busy then return end;Guide.finishTry(true);briefing=false;settings=false;ending=false;title=true;choosing=false;overview=false;titleChoice=1;startMenu=false;steeringMenu=false;steeringNotice=false;newGameConfirm=false;CampaignAccess.hold=0;CampaignAccess.latched=false;Audio.quiet() end)
+-- Rebuild only when the available actions change, never allocate menu items
+-- each frame. Opening the system menu also refreshes from the current state.
+local menuKey
+local function canMap()
+ return not Loading.busy and not title and not settings and not choosing and not startMenu and not newGameConfirm and not steeringMenu and not steeringNotice and not ending and not briefing and (overview or (not lesson and not Tilt.calibrating and state=='play'))
 end
-pd.gameWillPause=function() Audio.pause();saveProgress() end
+local function toggleMap()
+ if not canMap() then return end
+ overview=not overview
+ if overview then UI.mapSection=nil else Guide.finishTry() end
+ Audio.quiet();syncSystemMenu()
+end
+local function goTitle()
+ if Loading.busy then return end
+ Guide.finishTry(true)
+ briefing=false;settings=false;ending=false;title=true;choosing=false;overview=false
+ titleChoice=1;startMenu=false;steeringMenu=false;steeringNotice=false;newGameConfirm=false;selectorReturn=nil
+ CampaignAccess.hold=0;CampaignAccess.latched=false;Audio.quiet();syncSystemMenu()
+end
+syncSystemMenu=function()
+ local select=canSelect()
+ local map=canMap()
+ local home=not Loading.busy and (not title or settings or startMenu or newGameConfirm or steeringMenu or steeringNotice)
+ if Build.classroom and (choosing or briefing or lesson) then home=false end
+ local key=(select and 'S' or '')..(map and (overview and 'R' or 'M') or '')..(home and 'H' or '')
+ if key==menuKey then return end
+ menuKey=key
+ local menu=pd.getSystemMenu();menu:removeAllMenuItems()
+ if select then menu:addMenuItem('Level select',openSelector) end
+ if map then menu:addMenuItem(overview and 'Resume game' or 'Map / pause',toggleMap) end
+ if home then
+  if Build.classroom then menu:addMenuItem('Restart level',function()
+   if Loading.busy or choosing then return end
+   overview=false;reset(true);syncSystemMenu()
+  end)
+  else menu:addMenuItem('Title / settings',goTitle) end
+ end
+end
+syncSystemMenu()
+pd.gameWillPause=function() syncSystemMenu();Audio.pause();saveProgress() end
 pd.gameWillResume=function() Awake.update(true);last=pd.getCurrentTimeMilliseconds();Tilt.cooldown=.75;Tilt.armed=false;Audio.resume() end

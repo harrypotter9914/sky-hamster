@@ -1,0 +1,9 @@
+run /Games/sky-hamster-tilt.pdx
+POWER: USB connected; auto-lock disabled
+PASS: slopes, equal reverse force, meters, latch, and ballistic gap tests
+PASS: gates, trap floors, dock overlap, ferry transport, rotation and checkpoints
+PASS: front/back occlusion, platform lip contact and clear jump passage
+READY: startup loading complete
+READY: course 53 loading complete
+PASS: context-specific menus, maximum three actions, stable-item reuse, hidden developer access, both selector returns, course 53 launch, map resume, loading/death/help/goal/ending states and protected normal progress
+MENU REVIEW COMPLETE

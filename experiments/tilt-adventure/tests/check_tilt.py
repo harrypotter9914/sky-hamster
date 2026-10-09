@@ -39,7 +39,9 @@ playdate={graphics=gfx,display={setRefreshRate=noop},kButtonA='a',kButtonB='b',k
  getCrankChange=function() local c=crank;crank=0;return c end,
  getSystemMenu=function() return {addMenuItem=function(self,k,f) menu[k]=f end,removeAllMenuItems=function() menu={} end} end}
 function drainLoading()
- while Loading and Loading.busy do clock=clock+1000/30;Loading.step(1/30) end
+ while Loading and Loading.busy do
+  clock=clock+1000/30;local previous=pressed;pressed={};playdate.update();pressed=previous
+ end
 end
 function frame(keys,down,angle)
  clock=clock+1000/30;pressed=keys or {};held=down or {};crank=angle or 0;playdate.update();drainLoading();pressed={}

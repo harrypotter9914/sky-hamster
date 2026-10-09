@@ -16,16 +16,16 @@ env['load']('engine')
 lua.execute('function get(name)' + source.split('function get(name)', 1)[1].split('for i=1,40 do frame() end', 1)[0])
 lua.execute('''
 local original=store.saved
-frame({down=true});frame({a=true})
-assert(get('settings'))
+-- Settings contains preferences only. New Game belongs to home Start.
+frame({down=true});frame({a=true});assert(get('settings'))
 for i=1,8 do frame({down=true}) end
-assert(get('settingsChoice')==6)
-frame({left=true});frame({right=true})
-assert(not get('newGameConfirm') and store.saved==original and Tilt.mode=='road')
+assert(get('settingsChoice')==5)
+frame({b=true});original=store.saved;frame({up=true});frame({a=true});assert(get('startMenu'))
+frame({down=true});assert(get('startChoice')==2)
 frame({a=true});assert(get('newGameConfirm') and get('newGameChoice')==1)
 frame({a=true});assert(not get('newGameConfirm') and store.saved==original)
 frame({a=true});frame({down=true});frame({b=true})
-assert(not get('newGameConfirm') and get('settings') and store.saved==original)
+assert(not get('newGameConfirm') and get('startMenu') and store.saved==original)
 frame({a=true});assert(get('newGameChoice')==1)
 for i=1,20 do frame() end
 assert(store.saved==original and get('level')==12 and get('elapsed')==0)
@@ -64,4 +64,4 @@ assert(next(Guide.seen)==nil and Tilt.mode=='road' and not get('gesture'))
 frame({a=true});assert(get('lesson') and Guide.key()=='arrival')
 assert(not get('newGameConfirm'))
 ''')
-print('PASS: six settings rows; A-only reset entry; default cancel; B cancel; no idle reset; explicit reset; preferences retained; first/later tutorials restored; fresh-boot persistence')
+print('PASS: five preference rows; home-only reset entry; default cancel; B cancel; no idle reset; explicit reset; preferences retained; first/later tutorials restored; fresh-boot persistence')

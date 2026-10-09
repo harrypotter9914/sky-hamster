@@ -188,14 +188,12 @@ local function meter(x,y,w,value)
 end
 function UI.settings(choice,effects,music,gesture)
  page('FLIGHT SETTINGS','crank',CampaignAccess and CampaignAccess.developer and 'DEVELOPER / all routes open this session' or 'Make yourself comfortable.')
- local labels={'Sound effects','Music','Scene animation','Lift to jump','Steering','Start New Game'}
- local values={effects,music,UI.motion,gesture};local symbols={'sound','music','tilt','jump'}
- for i=1,6 do local y=68+(i-1)*22
+ local labels={'Sound effects','Music','Scene animation','Lift to jump','Steering'}
+ local values={effects,music,UI.motion,gesture};local symbols={'sound','music','tilt','jump','tilt'}
+ for i=1,5 do local y=68+(i-1)*22
   if i==choice then g.drawRoundRect(19,y-1,361,22,4);ball(31,y+9,7) end
   icon(symbols[i] or 'tilt',48,y+1);text(labels[i],77,y+2)
-  if i==6 then
-   key('A',306,y+1,'')
-  elseif i==5 then
+  if i==5 then
    ink();g.drawRoundRect(275,y+1,91,20,5);center(Tilt.mode=='screen' and 'SCREEN' or 'ROAD',321,y+2)
   else
   ink();g.drawRoundRect(307,y+4,59,19,7);g.fillCircleAtPoint(values[i] and 355 or 317,y+13,6)

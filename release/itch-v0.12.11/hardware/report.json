@@ -1,0 +1,17 @@
+{
+	"captures": [
+		"title-ordinary",
+		"settings-ordinary",
+		"settings-developer",
+		"developer-selector",
+		"playing",
+		"map"
+	],
+	"complete":true,
+	"contextAssertions":true,
+	"cpuMax":855,
+	"device":true,
+	"frames":696,
+	"scriptedInputs":true,
+	"version":"0.12.11"
+}

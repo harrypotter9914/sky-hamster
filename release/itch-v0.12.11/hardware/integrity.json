@@ -1,0 +1,13 @@
+{
+  "version": "0.12.11",
+  "physicalDevice": true,
+  "nativeAssertionsPassed": true,
+  "nativeScreenshots": 6,
+  "temporaryFilesRemoved": 8,
+  "userSaveUnchanged": true,
+  "userSaveSha256": "cef7a91bf018c125dacac06cfafafa7f231339bc01c88e113684244f43cd21ef",
+  "deviceErrorLogMatchesPreviousRelease": true,
+  "deviceErrorLogSha256": "6a155bd522e71950fc0b8fd74d34cb40353e39314bf1078e6aa35796fb627f2b",
+  "qaInstalledMainMatches": true,
+  "qaMainSha256": "0c7aaf6e5097f46e4dc82b3ff43519ab1e25cfa6758fb7b633524167fa3d32cf"
+}

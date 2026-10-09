@@ -9,7 +9,7 @@ lua=env['lua'];env['load']('engine')
 lua.execute('function get(name)'+source.split('function get(name)',1)[1].split('for i=1,40 do frame() end',1)[0])
 lua.execute('''
 function settingsPage()
- menu['Title / settings']();frame({down=true});frame({a=true});assert(get('settings'))
+ if not get('title') then menu['Title / settings']() end;frame({down=true});frame({a=true});assert(get('settings'))
 end
 function hiddenChord()
  frame({a=true,b=true},{a=true,b=true})

@@ -1,0 +1,25 @@
+{
+	"best": [
+	],
+	"campaignRevision":5,
+	"completed": [
+	],
+	"controlRevision":1,
+	"guideRevision":3,
+	"guides": {
+		"roll":true
+	},
+	"jumpGuideRevision":2,
+	"level":1,
+	"options": {
+		"effects":true,
+		"gesture":true,
+		"motion":true,
+		"music":true,
+		"steering":"road"
+	},
+	"progressRevision":1,
+	"shortcutGuideRevision":1,
+	"steeringChosen":false,
+	"unlockedThrough":1
+}
