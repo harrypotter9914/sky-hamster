@@ -43,4 +43,3 @@ SHA-256：7c372cce523601ad862130a39224b73f66da1c31c78d2949dcab935bf683c297。
 通过 Download Now → No thanks, just take me to the downloads → Download 实际取得 ZIP。下载为 2,607,749 字节、229 文件，与本地正式包 SHA-256 完全一致；pdxinfo 确认为 0.12.9／build 59。未执行支付。证据：download-check.json、public-page-gameplay.png、public-download.png。
 
 页面管理状态为 Published／Public。独立网页读取工具本次无法访问该地址，所以不声称完成本轮无账号浏览复测。较早版本的浏览器无账号查看已经成功；这次新增内容通过已登录浏览器的公开页与下载页核验。
-
