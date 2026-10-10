@@ -1,0 +1,10 @@
+{
+  "version": "0.12.12",
+  "hardwareFrames": 12,
+  "allSettingsRowsMatchSimulatorPixels": true,
+  "threePixelRowGapsClearInEveryFrame": true,
+  "originalSaveUnchanged": true,
+  "saveSha256": "cef7a91bf018c125dacac06cfafafa7f231339bc01c88e113684244f43cd21ef",
+  "errorLogUnchanged": true,
+  "qaMainMatches": true
+}

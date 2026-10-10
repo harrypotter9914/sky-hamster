@@ -1,0 +1,19 @@
+{
+	"captures": [
+		"01-on",
+		"02-on",
+		"03-on",
+		"04-on",
+		"05-on",
+		"01-off",
+		"02-off",
+		"03-off",
+		"04-off",
+		"05-off",
+		"05-screen",
+		"05-developer"
+	],
+	"complete":true,
+	"device":false,
+	"version":"0.12.12"
+}

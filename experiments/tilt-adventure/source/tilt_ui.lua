@@ -190,14 +190,17 @@ function UI.settings(choice,effects,music,gesture)
  page('FLIGHT SETTINGS','crank',CampaignAccess and CampaignAccess.developer and 'DEVELOPER / all routes open this session' or 'Make yourself comfortable.')
  local labels={'Sound effects','Music','Scene animation','Lift to jump','Steering'}
  local values={effects,music,UI.motion,gesture};local symbols={'sound','music','tilt','jump','tilt'}
- for i=1,5 do local y=68+(i-1)*22
-  if i==choice then g.drawRoundRect(19,y-1,361,22,4);ball(31,y+9,7) end
-  icon(symbols[i] or 'tilt',48,y+1);text(labels[i],77,y+2)
+ -- All row parts share one centerline. A 23px selection with 26px
+ -- spacing leaves room for the 19px value capsule without touching neighbors.
+ for i=1,5 do local cy=82+(i-1)*26
+  if i==choice then g.drawRoundRect(19,cy-11,361,23,4);ball(31,cy,7) end
+  icon(symbols[i],48,cy-10);text(labels[i],77,cy-8)
+  ink();g.drawRoundRect(275,cy-9,91,19,i==5 and 5 or 7)
   if i==5 then
-   ink();g.drawRoundRect(275,y+1,91,20,5);center(Tilt.mode=='screen' and 'SCREEN' or 'ROAD',321,y+2)
+   center(Tilt.mode=='screen' and 'SCREEN' or 'ROAD',321,cy-8)
   else
-  ink();g.drawRoundRect(307,y+4,59,19,7);g.fillCircleAtPoint(values[i] and 355 or 317,y+13,6)
-  text(values[i] and 'ON' or 'OFF',values[i] and 312 or 331,y+5)
+   g.fillCircleAtPoint(values[i] and 355 or 286,cy,6)
+   center(values[i] and 'ON' or 'OFF',values[i] and 310 or 331,cy-8)
   end
  end
  footer(choice>=5 and 'open' or 'change','back')

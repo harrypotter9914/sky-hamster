@@ -1,10 +1,12 @@
-# Sky Hamster — v0.12.11
+# Sky Hamster — v0.12.12
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
 公开测试版已发布：[itch.io — Sky Hamster](https://hajimi9914.itch.io/sky-hamster)，免费，可自愿打赏。公开下载目前为 0.12.9，已完成最终真机自动复测；页面包含五张截图、四段玩法／操控 GIF、操作及侧载指南和来源说明。见 [发布记录](release/itch-v0.12.9/PUBLICATION.md)、[课程要求核对](docs/PUBLIC-RELEASE-CHECKS-v0.12.9.md) 与 [Credits](CREDITS.md)。
 
-当前开发／真机版本 **0.12.11** 清理菜单：新游戏只从首页 Start Game 进入，设置页仅保留五项偏好。开发入口仍隐藏：在设置页长按 A+B 约 2.5 秒切换，开启后通过系统菜单自由选关，普通玩家按进度解锁。快捷菜单随页面显示有效操作，取消选关回原页面。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.11.md)。
+当前开发／真机版本 **0.12.12** 修正设置页布局：选择框、图标、文字和右侧开关共享行中心，ON／OFF 和 ROAD／SCREEN 使用一致的按钮高度与宽度，增加行距避免相邻边框相碰。隐藏 A+B 开发入口、菜单行为与正常进度保留。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.12.md)。
+
+0.12.11 清理菜单：新游戏只从首页 Start Game 进入，设置页仅保留五项偏好。开发入口仍隐藏：在设置页长按 A+B 约 2.5 秒切换，开启后通过系统菜单自由选关，普通玩家按进度解锁。快捷菜单随页面显示有效操作，取消选关回原页面。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.11.md)。
 
 0.12.10 在首次教学加入 Map、Help、Go、Recenter 图示与真实试用，补充 A 备用跳跃及炮台 Fire 区别。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.10.md)。
 
