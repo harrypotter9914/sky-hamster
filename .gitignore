@@ -3,3 +3,10 @@ builds/
 *.bak
 .DS_Store
 __pycache__/
+.env
+.env.*
+*.private.json
+output/
+portfolio/*
+!portfolio/Selected.pdf
+!portfolio/Complete.pdf

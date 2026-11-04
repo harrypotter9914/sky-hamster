@@ -1,80 +1,170 @@
+[← Project home](../README.md) · [Journal index / 日志目录](JOURNAL.md)
+
+# Full-game version table
+
 # 完整版版本总表
+
+The full game had reached 0.6.7. Tilt controls, later courses, and artwork continue that game from 0.7.0 rather than restarting numbering. The current version is **0.12.12**.
 
 完整版原先已经更新到 0.6.7。倾斜操控、后续关卡与美术更新都属于同一游戏的继续迭代，因此统一从 0.7.0 顺延。当前版本为 **0.12.12**。
 
+0.12.12: Centered Settings switches, steering buttons, and selection frames; unified sizes/spacing remove downward offset and neighboring overlaps. Hidden developer access/menu behavior remains. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.12.md).
+
 0.12.12：设置页开关、操控模式按钮与选择框居中，统一按钮尺寸和行距，消除下偏与相邻行重叠；隐藏开发入口与菜单行为保留。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.12.md)。
+
+0.12.11: Removed duplicate Settings New Game, retained hidden held A+B developer access and free system-menu selection when enabled. Contextual menus show valid actions and selection cancel restores origin. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.11.md).
 
 0.12.11：Settings 移除重复 New Game；保留隐藏 A+B 长按开发入口，启用后可从系统菜单自由选关；按当前场景显示有效快捷菜单，选关取消回原页面。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.11.md)。
 
+0.12.10: Generated Map/Help/Go/Recenter instruction and real trials retain tutorial return position. Jump lessons explain fallback A versus cannon Fire. Old saves keep progress and see new lessons. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.10.md).
+
 0.12.10：首次教学加入 Map / Help / Go / Recenter 的生成图示与真实试用，保留教学返回位置；跳跃补充 A 备用和炮台 Fire 区别，旧存档保留进度并补看新说明。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.10.md)。
+
+0.12.9: Three generated volumetric pixel-cloud forms retain parallax; presized shading limits runtime cost. Courses/gameplay stay. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.9.md).
 
 0.12.9：关卡背景改成三种生成的立体像素云，保留视差漂移，预处理尺寸和阴影降低实时负担；关卡与玩法不变。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.9.md)。
 
+0.12.8: Road default; onboarding selects/saves steering after goal instruction. Purpose-made horizontal buttons, animated comparison, Continue/New Game, sequential unlocks, isolated temporary developer selection, and generated cards/device/ball/lock art. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.8.md).
+
 0.12.8：默认 Road，新游戏目标介绍后选择并保存操控；独立生成横版按钮、操控对照动画页、首页继续／新游戏选择、普通模式按通关解锁、临时开发选关与进度隔离；生成配套卡片、设备姿态、球体和锁图标。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.8.md)。
+
+0.12.7: Restored Mac Settings → Start New Game into main, resetting confirmed progress/bests/tutorials from Course 1 while preserving audio/control preferences. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.7.md).
 
 0.12.7：将 Mac 试玩版中的 Settings → Start New Game 正式补进主线：确认后重置进度、最佳成绩与教程记录，从第一关重看指引；保留音效、音乐和操作偏好。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.7.md)。
 
+0.12.6: Acceleration returns near 0.12.4 with slight fine control, avoiding excessive tilt for full force. Stronger reverse braking, both mappings, and neutral settling stay. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.6.md).
+
 0.12.6：将加速恢复到接近 0.12.4，只保留轻微的小角度细化；满推力不再需要过度倾斜。增强反向刹车、两种方向模式及中立收速保留。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.6.md)。
+
+0.12.5: Stranger feedback prompted finer small inputs, reverse-brake help, neutral settling, Screen/Road options, synchronized arrows/tutorials, and low-contrast clouds. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.5.md).
 
 0.12.5：根据陌生人试玩反馈调整倾斜手感：小幅度输入更细腻、反向倾斜辅助刹车、中立后更快收速；设置新增 Screen／Road 两种方向模式，并同步箭头和教学。增加低对比远景云层。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.5.md)。
 
+0.12.4: Full-width wind, stronger magnetic edges, continuous fast-contact checks, adjustable uphill-assist wind, GO/WAIT and ground arrows; gradual force/countertilt remain. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.4.md).
+
 0.12.4：风场覆盖整段路宽，磁场扩大有效边缘、连续检测高速穿越；旋转风机改为顺风爬坡，增加 GO／WAIT 与地面方向提示。保留渐进加速和反向倾斜控制。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.4.md)。
+
+0.12.3: Reviewed all 53 courses; reworked 19 reviews, five lessons, and four finales with angled cannon shots, rollable switchbacks, and clearer hints. Optimized image matching/indexes, export snapshots, and all-course hardware samples. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.3.md).
 
 0.12.3：全 53 关审查，19 个累计复习关重组、5 个教学关调整、四个终局路线变化；斜向炮击、可滚动折返、清晰机关提示。道路匹配与区块索引优化，资源导出快照校验及全关卡真机抽测。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.3.md)。
 
+0.12.2: Prebaked roads/cannon/fan images; camera-near incremental imagery with collision ready first. Reduced repeated docking/occlusion/control/audio queries; time-budget loading replaces one-step frames. See [validation](../experiments/tilt-adventure/VALIDATION-v0.12.2.md).
+
 0.12.2：固定道路／大炮／风机图片预生成，长关道路图像按相机分批准备；完整碰撞地图先就绪。接岸、遮挡候选、控制点与音效状态减少重复查询，时间预算替代每帧仅一步的加载。见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.2.md)。
+
+0.12.1: Fixed ten-second long-course watchdog loading stalls by yielding generation, docking, occlusion, and test planning. Long-course saves do not generate maps at title entry. See [hardware validation](../experiments/tilt-adventure/VALIDATION-v0.12.1.md).
 
 0.12.1：修复长关运行循环超过 10 秒的加载崩溃；路线、接岸、遮挡准备和测试规划分帧执行。长关存档进入首页时不立即生成整图。真机结果见 [验证记录](../experiments/tilt-adventure/VALIDATION-v0.12.1.md)。
 
+0.12.0: 53 courses, 20 teaching stages, cumulative reviews, four all-mechanism finales, stable-ID saves, on-demand geometry/release, road preparation, and segmented maps. Later hardware loading timeouts continue into the 0.12.1 fix/acceptance.
+
 0.12.0：53 关、20 阶段的渐进教学和累计复习，四个全机制最终长关，稳定 ID 存档迁移，长关按需生成／释放、道路预备及分段地图。后续真机发现加载超时，修复及验收延续到 0.12.1。
+
+0.11.0: Circular seam support, per-exit GO/WAIT, four onboard-turntable/dual-control courses, modest wind adjustment, and road clipping. A new group increments the middle number; patches would continue from 0.11.1.
 
 0.11.0：圆形接缝支撑、逐出口 GO／WAIT 提示、四关板上转台与双点控制、轻微风力调整及道路顶面裁切。新增一组机制关卡，递增中间版本号；后续小修从 0.11.1 继续。
 
+Versions use three integers: 0.10 is stage ten, after 0.9. Patches increment the last number; substantial groups increment the middle. A control change does not restart at 0.1.
+
 版本由三个整数构成，0.10 表示第十个阶段，排在 0.9 后面。小修复递增末位，新增成组玩法或主要内容递增中间一位；不因操控方案改变重新从 0.1 开始。
 
-| 原先的独立编号 | 统一编号 | 更新内容 | 原始源码提交 |
+|Former separate number<br>原先的独立编号|Unified number<br>统一编号|Change<br>更新内容|Original source commit<br>原始源码提交|
 | --- | --- | --- | --- |
+| tilt-v0.1.0 | **v0.7.0** | Tilt control and complete loop | `29b0ade` |
 | tilt-v0.1.0 | **v0.7.0** | 倾斜控球与完整游戏循环 | `29b0ade` |
+| tilt-v0.1.1 | **v0.7.1** | Integrated title, Settings, pixel UI | `961f16d` |
 | tilt-v0.1.1 | **v0.7.1** | 整合标题、设置与像素界面 | `961f16d` |
+| tilt-v0.1.2 | **v0.7.2** | Road materials and first lessons | `a5bbdb0` |
 | tilt-v0.1.2 | **v0.7.2** | 道路材质与首次机制教学 | `a5bbdb0` |
+| tilt-v0.1.3 | **v0.7.3** | Flat-neutral calibration | `7c51095` |
 | tilt-v0.1.3 | **v0.7.3** | 平放操控校准 | `7c51095` |
+| tilt-v0.1.4 | **v0.7.4** | Overhead direction | `6f08f38` |
 | tilt-v0.1.4 | **v0.7.4** | 球顶方向指示 | `6f08f38` |
+| tilt-v0.1.5 | **v0.7.5** | Tutorial animation and UI | `de66ee4` |
 | tilt-v0.1.5 | **v0.7.5** | 教学动画与界面细化 | `de66ee4` |
+| tilt-v0.1.6 | **v0.7.6** | Anytime Help and goals | `5748f26` |
 | tilt-v0.1.6 | **v0.7.6** | 随时查看帮助与关卡目标 | `5748f26` |
+| tilt-v0.1.7 | **v0.7.7** | Arbitrary-grip calibration and road axes | `bfe2b5a` |
 | tilt-v0.1.7 | **v0.7.7** | 任意握姿校准与道路方向映射 | `bfe2b5a` |
+| tilt-v0.1.8 | **v0.7.8** | Lower icons/alignment | `0b6173b` |
 | tilt-v0.1.8 | **v0.7.8** | 底栏按键图标与对齐 | `0b6173b` |
+| tilt-v0.1.9 | **v0.7.9** | Current-pose jump and landing momentum | `57b2927` |
 | tilt-v0.1.9 | **v0.7.9** | 当前朝向跳跃与落地动量修复 | `57b2927` |
+| tilt-v0.2.0 | **v0.8.0** | 33 courses, lift/shuttle/fan/spring | `8a4d809` |
 | tilt-v0.2.0 | **v0.8.0** | 33 关与升降台、横移台、风机、弹簧 | `8a4d809` |
+| tilt-v0.3.0 | **v0.9.0** | 44 courses and five new mechanisms | `41d40c7` |
 | tilt-v0.3.0 | **v0.9.0** | 44 关与五类新机关 | `41d40c7` |
+| tilt-v0.4.0 | **v0.10.0** | Dedicated mechanism art/animation/roads | `376f332` |
 | tilt-v0.4.0 | **v0.10.0** | 机关专用美术、动画与道路细化 | `376f332` |
+| tilt-v0.4.1 | **v0.10.1** | Hardware optimization preserving visuals | `1b2d4c1` |
 | tilt-v0.4.1 | **v0.10.1** | 保留效果的真机性能优化 | `1b2d4c1` |
+| tilt-v0.4.2 | **v0.10.2** | Jump sensitivity and slight handling | `1b1cc71` |
 | tilt-v0.4.2 | **v0.10.2** | 跳跃灵敏度与轻微操控调整 | `1b1cc71` |
+
+0.10.12: Low circular bumper, base contact, outward animation, and synchronized collision sound.
 
 0.10.12：低矮圆形弹力护圈、底座接触范围、外扩回弹动画与同步碰撞音效。
 
+0.10.11: Active 360° springs, transparent-art occlusion, full platform sides, and foreground signs.
+
 0.10.11：360° 主动弹簧、实体图像透明轮廓遮挡、完整平台侧面及机关标签前景。
+
+0.10.10: Upper mechanical HUD, consistent pixel icons, monospaced values, segmented bars; lower controls stay.
 
 0.10.10：顶部机械仪表板、统一像素图标、等宽读数与分段条；底部操作栏保持不变。
 
+0.10.9: All-course hardware sampling, physics/render caches, and USB wake.
+
 0.10.9：全关卡真机复测、物理与绘制缓存优化、USB 供电保持唤醒。
+
+0.10.8: Near-road occlusion, open lift supports, projected barrels/muzzle paths, fan orientation, and all-type review.
 
 0.10.8：近端道路遮挡、留空升降支撑、立体炮管与统一炮口轨迹、风机转向，审查全部机关类型。
 
+0.10.7: Cannon aiming rotation, edge docking, rear lift exits, actual crank instruction; final hardware retest awaited connection.
+
 0.10.7：炮台瞄准旋转、平台贴边接合、升降台后侧出口与实体摇柄教学；最终真机复测待连接。
+
+0.10.6: Solid structures, round cannon cradle, tutorial consistency, and platform-relative rolling.
 
 0.10.6：机关实体结构、圆形炮台承座、教学素材一致性与平台相对滚动修复。
 
+0.10.5: Hardware audio checks, audible bounds, and player-call optimization.
+
 0.10.5：真机音效验证与听觉范围筛选、播放器调用优化。
+
+0.10.4: Distinct machine sounds, UI cues, illustrated loader frames, and staged preparation.
 
 0.10.4：各机关独立音效、界面反馈、逐帧插画加载动画及分帧资源准备。
 
+0.10.3: Launcher cover/icon, fixed-directory overwrite installation, and old hardware-package cleanup.
+
 0.10.3：新增启动器封面、图标与固定目录覆盖安装；真机清理旧包。
+
+## History and packages
 
 ## 历史与安装包
 
+- Tags/releases v0.1.0–v0.6.7 remain. At the time of this numbering record, nine variants retained separate numbers rather than formal release numbers; the current experiment index documents later retirements.
+
 - 原有 v0.1.0 至 v0.6.7 的标签和发布不变。九个控制变体保留其变体编号，不与正式版本号混用。
+
+- Unified 0.7.0–0.10.1 tags point to original commits. Historical messages/source metadata are not rewritten; the table explicitly maps numbers.
+
 - 0.7.0 至 0.10.1 的统一标签指向对应原始源码提交；历史提交信息及当时的源码版本字段不改写，避免伪造开发记录。此表明确记录新旧对应关系。
+
+- Renumbered packages rebuild matching source with metadata-only changes; the then-current 0.10.2 tag points to the numbering commit.
+
 - 后续统一编号的下载包从对应源码重新构建，只更新版本元数据；当前 0.10.2 标签指向完成编号整理的提交。
+
+- Original measurement logs, images, baselines, and archive filenames remain for verification. Current headings, links, tags, downloads, and metadata use unified numbers.
+
 - 原始测量日志、图片、测试基线与旧本地归档的文件名保留，供核对真实记录；当前说明标题、文档链接、发布标签、下载包和最新游戏版本使用统一编号。
+
+- The build number at this historical cleanup was 48, separate from public version. Directory/bundle ID stay to preserve saves; the current release uses build 62.
+
 - 当前构建号为 48；它是安装构建标识，与对外版本号分开。游戏目录和 bundle ID 保持不变，以保留现有存档。
+
+- Numbering/release cleanup adds no courses or handling changes and is not another gameplay update.
+
 - 这次只整理编号及发布记录，没有新增关卡或改变操作手感，不另外算一次玩法更新。

@@ -1,79 +1,75 @@
-# Sky Hamster — v0.12.12
+# Sky Hamster
 
-Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
+**A tilt-and-crank rolling adventure for Playdate.** Guide a hamster in a glass ball along suspended stone roads, build momentum to cross gaps, and operate machinery to reach the finish without falling.
 
-[观看英文玩法与操控介绍（2:59）](https://www.youtube.com/watch?v=iNOELVQz9kg)：倾斜、重新校准中心、摇柄机关与关卡流程。视频含英文旁白及字幕，画面录制于 Playdate Simulator。
+**v0.12.12 · 53 courses · Single player · Playdate**
+**Designed by Yibo Wang / 王奕博** — game design, gameplay systems, interaction design, course progression, and creative direction.
 
-公开测试版已发布：[itch.io — Sky Hamster](https://hajimi9914.itch.io/sky-hamster)，免费，可自愿打赏。公开下载目前为 0.12.9，已完成最终真机自动复测；页面包含五张截图、四段玩法／操控 GIF、操作及侧载指南和来源说明。见 [发布记录](release/itch-v0.12.9/PUBLICATION.md)、[课程要求核对](docs/PUBLIC-RELEASE-CHECKS-v0.12.9.md) 与 [Credits](CREDITS.md)。
+> **Playdate hardware is required for the intended released experience.** Steering and lift-to-jump use its accelerometer; the physical crank operates machinery. The `.pdx` download is not a browser game or native Windows executable. The SDK Simulator is a development preview, not a replacement for testing handheld controls.
 
-当前开发／真机版本 **0.12.12** 修正设置页布局：选择框、图标、文字和右侧开关共享行中心，ON／OFF 和 ROAD／SCREEN 使用一致的按钮高度与宽度，增加行距避免相邻边框相碰。隐藏 A+B 开发入口、菜单行为与正常进度保留。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.12.md)。
+**[Download the Playdate version on itch.io](https://hajimi9914.itch.io/sky-hamster)** · **[Install / sideload](docs/PLAY.md)** · **[Design film · 2:59](https://www.youtube.com/watch?v=iNOELVQz9kg)** · **[Selected portfolio · 8 pages](portfolio/Selected.pdf)**
 
-0.12.11 清理菜单：新游戏只从首页 Start Game 进入，设置页仅保留五项偏好。开发入口仍隐藏：在设置页长按 A+B 约 2.5 秒切换，开启后通过系统菜单自由选关，普通玩家按进度解锁。快捷菜单随页面显示有效操作，取消选关回原页面。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.11.md)。
+[![Official Sky Hamster film artwork: monochrome hamster-ball title, clouds, and moon. Watch the English design film.](media/film-cover.png)](https://www.youtube.com/watch?v=iNOELVQz9kg)
 
-0.12.10 在首次教学加入 Map、Help、Go、Recenter 图示与真实试用，补充 A 备用跳跃及炮台 Fire 区别。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.10.md)。
+*Illustrated promotional cover. The film uses Simulator capture, English narration, and captions.*
 
-0.12.9 将关卡背景的淡线云换成三种生成的立体像素云，保留缓慢漂移和道路后方的绘制顺序。原图、提示词及固定尺寸转换保留在 art/sky-v0.12.9；运行时只绘制已加载贴图。关卡、手感、首页与网页横幅不变。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.9.md)。
+## Tilt to roll. Counter-tilt to recover.
 
-当前完整版延续原有版本序列：**0.6.7 → 0.7.x → 0.8.0 → 0.9.0 → 0.10.x → 0.11.0 → 0.12.x**。倾斜操控是同一款游戏的后续迭代，不再单独从 0.1 编号。完整对应表见 [版本总表](docs/VERSIONS.md)。
+Tilting applies force, not a position or fixed speed. A bend asks for anticipation: ease input, lean against your motion, then build speed toward the next opening. The overhead arrow shows **applied input**, not velocity, so a correction becomes visible before the ball finishes slowing.
 
-0.12.8 新游戏在目标介绍后选择操控，默认 Road，确认后提示可随时在设置更改；继续／新游戏使用独立生成的横版按钮。加入生成素材的操控对照动画页、首页继续／新游戏选择和按通关解锁的选关；临时开发入口与普通进度隔离。仍为完整 53 关，适合公开测试，复杂关加载及掉帧限制见 [发布核查](docs/RELEASE-READINESS-v0.12.8.md) 和 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.12.8.md)。
+Hold comfortably and still to calibrate each course. **Down / Recenter** makes the current stable grip neutral; it does not erase velocity. **Road** steering (the default) follows the isometric axes; **Screen** follows screen directions. This choice answers a real playtest problem: newcomers differed in whether they expected rightward tilt to mean screen-right or along the diagonal road.
 
-0.12.7 将 Mac 试玩版中的 Settings → Start New Game 正式补进主线：确认后重置进度、最佳成绩与教程记录，从第一关重看指引；保留音效、音乐和操作偏好。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.7.md)。
+### A gap tests the approach, not just the jump button
 
-0.12.6 将加速恢复到接近 0.12.4，只保留轻微的小角度细化；满推力不再需要过度倾斜。增强反向刹车、两种方向模式及中立收速保留。见 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.12.6.md)。
+![Simulator gameplay: approach, jump across the gap, and land on the receiving road.](media/jump.gif)
 
-0.12.5 根据陌生人试玩反馈调整倾斜手感：小幅度输入更细腻、反向倾斜辅助刹车、中立后更快收速；设置新增 Screen／Road 两种方向模式，并同步箭头和教学。增加低对比远景云层。见 [试玩反馈与验证](experiments/tilt-adventure/VALIDATION-v0.12.5.md)。
+Build enough speed, trigger a quick lift along the device's current screen normal—or use **A**—and correct the landing. Momentum continues in air and on landing; recovery prevents immediate repeated jumps. Early courses establish rolling first; later gaps change the run-up and exit.
 
-0.12.4 风场覆盖整段路宽，磁场扩大有效边缘、连续检测高速穿越；旋转风机改为顺风爬坡，增加 GO／WAIT 与地面方向提示。保留渐进加速和反向倾斜控制。见 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.12.4.md)。
+### The crank changes the route beneath you
 
-0.12.3 审查全部 53 关，重做 19 个累计复习关、调整 5 个专项教学关和四个终局关。最终三关分别有 6／6／10 门大炮，加入斜向落点、可刹车的接收台、水平折返平台及分路组合；保留稳定关卡身份与已有进度，改图关卡的旧最佳时间清除。见 [关卡检查与处置表](experiments/tilt-adventure/CAMPAIGN-v0.12.3.md) 和 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.12.3.md)。
+![Simulator gameplay: dock onboard, rotate the platform continuously, and watch each exit change GO or WAIT.](media/turntable.gif)
 
-0.12.x 将关卡重排为 20 个教学阶段与四个全机制远征，共 53 关。每阶段先教学，再累计复习此前机制；最后四关有 21、23、25、28 段挑战。0.12.2 提前打包固定道路、大炮和风机图片，并按相机位置逐步准备长关道路区块，缩短进关等待；碰撞地图先完整就绪。接岸、遮挡候选、远处控制点与声音查询使用索引，保留原有画面和玩法。见 [完整顺序表](experiments/tilt-adventure/CAMPAIGN-v0.12.0.md) 和 [0.12.2 验证](experiments/tilt-adventure/VALIDATION-v0.12.2.md)。
+Enter a control point slowly to **LOCK** the ball. Crank movement raises a lift, moves a shuttle, rotates a bridge, extends a crossing, redirects wind, or selects a gate route. Accumulated rotation changes the machine directly; this is not a speed-charging gesture. **GO / WAIT** reports each actual connection separately, preserving continuous rotation instead of snapping to an answer.
 
-0.11.0 增加按小球圆形占地判断的接缝容错，以及接岸口、闸门、消失地板、移动挡板和喷气口的 GO／WAIT 提示。增加四关板上转台与双控制点路线；风力增加 8%，快速穿越风区也受到作用。见 [设计与验证](experiments/tilt-adventure/VALIDATION-v0.11.0.md)。
+**B** releases; leave the control area before returning to dock again. The locked/free distinction lets players adjust machinery without simultaneously balancing. Automatic ferries and platforms instead demand timing; they are not crank-controlled.
 
-0.10.12 将竖直弹簧替换为低矮圆形弹力护圈，统一底座、碰撞与遮挡，增加触碰后外扩回弹动画。见 [接触位置与动画验证](experiments/tilt-adventure/VALIDATION-v0.10.12.md)。
+### A cannon commits you to a landing
 
-0.10.11 修复弹簧擦边时反弹不明显及背面遮挡缺失，补充风机、炮台等实体轮廓和平台侧面遮挡。见 [方向／动画审查与验证](experiments/tilt-adventure/VALIDATION-v0.10.11.md)。
+![Simulator gameplay: crank to aim, press A to fire, then roll onto the receiver.](media/cannon.gif)
 
-0.10.10 将顶部状态栏整理为机械仪表板，增加统一像素图标、关卡牌、分段刻度和等宽数字。所有信息保留，底部操作栏与游戏画面尺寸不变。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.10.10.md)。
+Dock, aim within the horizontal arc, read the trajectory from the muzzle, then press **A / Fire**. Offset receivers and later relays make aiming matter and leave braking space. A successful shot still leaves a moving ball to control. **B** exits before firing if the setup is wrong.
 
-0.10.9 增加 USB 供电时保持唤醒，并针对全关卡真机复测优化物理查询、固定支撑和操作提示缓存。复测数据与范围见 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.10.9.md)。
+*These GIFs are actual v0.12.9 Simulator rendering with scripted inputs and an isolated save. The interactions remain in v0.12.12. They are not handheld footage or synthetic gameplay art.*
 
-0.10.8 修正机关近端与前景道路的绘制顺序，升降台改用留空支撑。炮管按立体圆筒投影，炮口、预瞄线和发射位置统一，风机机头也随风向转动。详见 [本轮验证](experiments/tilt-adventure/VALIDATION-v0.10.8.md)。
+## Learn a rule, then meet it in a different situation
 
-当前包含 53 关：倾斜控球、抬机跳跃、摇柄操控机关、炮台、板上转台及综合长关，包含标题、设置、教学、选关、检查点和结算循环。最新源码位于 [experiments/tilt-adventure](experiments/tilt-adventure/README.md)，保留原目录和存档标识，按关卡 ID 迁移已有进度。
+The campaign has **20 teaching chapters followed by four expeditions, across 53 courses**. Short introductions isolate decisions; cumulative reviews change context. Each finale revisits all mechanism families, rather than ending with the latest feature developed.
 
-构建当前完整版：
+Conveyors change grounded motion; intermittent jets create timing windows; magnets require early correction; low circular bumpers rebound on real side contact. Slopes, narrow roads, waiting islands, height changes, and angled receivers change how controls are used. Checkpoints shorten recovery; saved progress and best times support replay.
 
-```powershell
-./experiments/tilt-adventure/build.ps1
-```
+For a quick visit, **Settings → hold A+B about 2.5 seconds** enables temporary developer access. Use Playdate **Menu → Level select** to explore all courses. Repeat the chord or restart to leave; test clears/times stay separate from normal progress. [Controls and exploration](docs/PLAY.md#explore-without-unlocking-every-course).
 
-输出为 `builds/sky-hamster-tilt.pdx`。真机更新执行 `./experiments/tilt-adventure/install.ps1`，始终覆盖同一个安装目录；历史 ZIP 只放在电脑和 GitHub。修改地图或相关绘制代码后，按 [预生成流程](experiments/tilt-adventure/art/RUNTIME-v0.12.2.md) 更新资源。当前设计记录见 [完整版设计心路历程](experiments/tilt-adventure/REFLECTION.md)。后续修复从 0.12.9 继续。
+## Design work and its evidence
 
-## 0.6.7 及课堂版归档
+My focus was input mapping, momentum/recovery, mechanism rules, course sequencing, tutorials, feedback, and visual direction. Implementation, art production, recording, and testing used tool assistance; [credits](CREDITS.md) distinguish those contributions.
 
-以下为旧操控版本的说明；根目录 `source/` 和 `build.ps1` 保留用于复现这一历史版本。
+- **Learnable controls:** stranger playtests led to stronger opposing braking; I then restored most acceleration when softer input required an uncomfortable lean. [Decision](experiments/tilt-adventure/REFLECTION.md#entry-08).
+- **Readable contact:** an upright spring became a low elastic ring matching lateral rebound to its visible surface; expansion stays visual-only. [Decision](experiments/tilt-adventure/REFLECTION.md#entry-16).
+- **Hardware trade-offs:** prebaked fixed art and camera-near road images reduce runtime work, with collision ready first. Measurements and remaining slow scenes are retained. [Decision](experiments/tilt-adventure/REFLECTION.md#entry-12).
 
-9 月 10 日课堂请使用已安装的 **Sky Hamster Core Test 0.5.8-core**，包含边缘掉落修复，只测试推进与惯性。完整版 0.6.0 新增声音、独立开始画面和失败重试界面。`./build.ps1 -Classroom` 仍可生成关闭这些功能、排除音频资产的课堂配置。见 [课堂试玩计划](docs/classroom-playtest.md)。
+## Read the process or the source
 
-当前共 14 关：前四关练习滚动，第五关引入跳跃，第八关起介绍定时挡板、开合地板、移动平台和旋转地板，最后两关组合多种机制。方向键控制推进方向，顺摇增加 POWER，逆摇增加 JUMP，A 跳跃，B 重试；系统菜单提供分页选关和暂停地图。
+| Explore | Inside |
+| --- | --- |
+| [Development Journal / 开发日志](docs/JOURNAL.md) | English-first / Chinese-below reflections, version notes, and performance retrospectives. |
+| [Design Iterations / 设计迭代](DESIGN_LOG.md) | Early speed, force, latch, and jump decisions, with reconstructions labeled. |
+| [Eight control experiments](experiments/control-variants/README.md) | Alternatives and comparison questions, not eight current-game editions or fabricated test results. |
+| [Guided source tour](docs/CODE.md) | Trace tilt, docking, passage feedback, and persistent course identity. |
+| [Build the current game](docs/BUILD.md) | SDK, structure, compilation, optional checks, and installation. |
+| [Complete portfolio · 10 pages](portfolio/Complete.pdf) | Expanded visual breakdown alongside the selected edition above. |
 
-完整版从独立标题菜单进入；音效和音乐可分别开关，系统菜单的 Title / sound 可返回设置。掉落失败后 A 从起点或检查点重试，B 选关。课堂配置没有声音、标题菜单或失败面板，继续自动重试。
+**Current source:** [`experiments/tilt-adventure/source`](experiments/tilt-adventure/source). Root `source/` and root build tasks preserve the earlier crank-propulsion game. [Version mapping](docs/VERSIONS.md) keeps both histories traceable.
 
-## 构建
-安装 Playdate SDK，并配置 PLAYDATE_SDK_PATH。使用 SDK 的 pdc 编译：
+Physical-device verification is recorded with separate scopes for the v0.12.9 campaign sweep and later targeted release checks—not manual completion of every route. [Release evidence](docs/RELEASE.md). Desktop adaptation is a possible future direction, not an included platform.
 
-```powershell
-& "$env:PLAYDATE_SDK_PATH/bin/pdc.exe" source builds/sky-hamster.pdx
-```
-
-用 Playdate Simulator 打开构建的 .pdx。
-
-## 版本记录的真实性
-这些 Git 提交是在归档时建立的，提交时间不是原始开发时间。0.1 与 0.4 有原始源码快照；0.2 与 0.3 是依据代码与对话记录重建的可运行比较版本。不能把重建版本当作当时逐字保留的代码。
-
-## 设计心路历程
-
-每个版本的设计思考、方案取舍和修改原因见 [心路历程目录](docs/reflections/README.md)。
+Source is public for inspection. No new blanket open-source license is granted; third-party terms remain in [Credits](CREDITS.md) and retained license files.

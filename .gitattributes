@@ -1,0 +1,7 @@
+# Keep public portfolio files byte-identical; override global PDF text diff filters.
+*.pdf binary
+*.png binary
+*.gif binary
+*.wav binary
+*.mp3 binary
+*.zip binary

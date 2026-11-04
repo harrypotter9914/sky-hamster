@@ -1,489 +1,1392 @@
+[← Project home](../../README.md) · [Journal index / 日志目录](../../docs/JOURNAL.md)
+
+> Archive metadata: first recorded Git author timestamp `2026-09-26T14:36:20-04:00`. This dates the surviving record, not necessarily the original design work. Version identifiers in the headings are retained.
+>
+> 归档元数据：最早记录的 Git 作者时间为 `2026-09-26T14:36:20-04:00`。这是现存记录的时间，不一定是原始设计发生时间；保留标题中的版本编号。
+
+# Full-game design journal / 完整版设计日志
+
+Current release: **Sky Hamster v0.12.12**. The entries below retain their original order and historical rules. Later corrections do not retroactively change an earlier decision.
+
+当前版本：**Sky Hamster v0.12.12**。下文保留原有顺序与当时规则；后续修正不会反向改写早期决定。
+
+These first-person reflections record Yibo Wang’s design decisions and observations, retrospectively organized from conversations and project files with tool assistance. Code, capture, and automated measurements were also tool-assisted. Automated results are not human playtest claims. See [credits](../../CREDITS.md).
+
+这些第一人称心得记录王奕博的设计决定与观察，由开发对话和工程文件回顾整理，整理过程使用工具协助。代码、录制与自动测量也有工具协助；自动结果不等于真人试玩。见 [来源说明](../../CREDITS.md)。
+
+## Contents / 目录
+
+- [2026-10-21: Let players with limited time reach the later mechanisms](#entry-00) / 2026-10-21：让时间有限的玩家也能体验后期机制
+- [0.12.12: Controls in one row need a shared center](#entry-01) / 0.12.12：同一行里的控件要有共同的中心
+- [0.12.11: Menus should work in context; developer access should stay hidden](#entry-02) / 0.12.11：菜单要在当前场景能用，开发入口仍要隐藏
+- [0.12.10: Shortcut names alone do not teach when to use them](#entry-03) / 0.12.10：快捷键不能只给名字，不告诉玩家什么时候用
+- [0.12.9: The public download must withstand a hardware check](#entry-04) / 0.12.9：公开下载的文件也必须经得起真机检查
+- [0.12.9: The background should look finished, too](#entry-05) / 0.12.9：背景也应该像完成的游戏
+- [0.12.8: Make the choice legible, then turn progress into a journey](#entry-06) / 0.12.8：先让玩家看懂选择，再让进度形成旅程
+- [0.12.7: Updating on another device must not lose the playtest entry point](#entry-07) / 0.12.7：换设备更新，不能把新试玩入口弄丢
+- [0.12.6: A small adjustment should not make the screen hard to see](#entry-08) / 0.12.6：微调应该是一点点，不能让人看不清屏幕
+- [0.12.5: Let unfamiliar players control the ball before challenging the machinery](#entry-09) / 0.12.5：让陌生玩家先控制住球，再挑战机关
+- [0.12.4: Wind direction should shape route decisions, not just decorate them](#entry-10) / 0.12.4：风向应该影响路线选择，而不只是摆设
+- [0.12.3: Reviews should combine skills, not repeat the same road](#entry-11) / 0.12.3：复习应该组合技能，而不是重复同一条路
+- [0.12.2: Avoiding crashes must not mean a long wait](#entry-12) / 0.12.2：不能把避免崩溃变成长时间等待
+- [0.12.1: A restart error must be treated as a crash](#entry-13) / 0.12.1：报错重启必须按崩溃来处理
+- [0.12.0: The ending should test everything learned along the way](#entry-14) / 0.12.0：结尾应该考验一路学过的全部玩法
+- [0.11.0: I need to know when I can cross, not guess at a tiny seam](#entry-15) / 0.11.0：我要知道什么时候能走，而不是猜那条细缝
+- [0.10.12: The rebound contact must be readable](#entry-16) / 0.10.12：反弹的位置必须能看懂
+- [0.10.11: The spring must work from every approach](#entry-17) / 0.10.11：弹簧必须从任何方向都成立
+- [0.10.10: The upper HUD should belong to the game](#entry-18) / 0.10.10：顶部也要像游戏的一部分
+- [0.10.9: Simple courses cannot represent the whole game](#entry-19) / 0.10.9：不能只拿简单关卡代表整款游戏
+- [0.10.8: Spatial relationships must hold up on screen](#entry-20) / 0.10.8：空间关系要在画面里成立
+- [0.10.7: Machinery must actually meet the roads](#entry-21) / 0.10.7：机关必须真正接得上道路
+- [0.10.6: Moving machinery should look mechanical](#entry-22) / 0.10.6：移动机关也应该像真正的机械
+- [0.10.5: Check the sounds individually on hardware](#entry-23) / 0.10.5：把声音放到真机上逐个检查
+- [0.10.4: Machinery should sound distinct, and waiting should belong to this game](#entry-24) / 0.10.4：机关要听得出区别，等待也要属于这个游戏
+- [0.10.3: A complete game begins in the device launcher](#entry-25) / 0.10.3：从真机菜单开始就像一个完整游戏
+- [Version-number cleanup](#entry-26) / 版本编号整理
+- [0.10.2: Easier jump activation, slightly more forgiving control](#entry-27) / 0.10.2：跳跃更容易触发，控球只放宽一点点
+- [0.10.1: Keep the effect, remove repeated work](#entry-28) / 0.10.1：保留效果，把重复工作减掉
+- [0.10.0: Make machinery look like machinery](#entry-29) / 0.10.0：让机关看起来像真正的机关
+- [0.9.0: Lifts are only one example; keep adding gameplay differences](#entry-30) / 0.9.0：升降台只是其中一种，继续增加玩法差异
+- [0.8.0: Connect individual interactions into a complete journey](#entry-31) / 0.8.0：把单个玩法串成一段完整旅程
+- [0.7.0: Let the whole Playdate participate in control](#entry-32) / 0.7.0：让整台 Playdate 参与控球
+- [0.7.1: Make the artwork and interface one game](#entry-33) / 0.7.1：让画面和界面成为同一个游戏
+- [0.7.2: Road materials, wooden menus, and animated instruction](#entry-34) / 0.7.2：道路材质、木牌菜单与动画教学
+- [0.7.9: Jump relative to the current device, retain landing momentum](#entry-35) / 0.7.9：跳跃跟随当前设备方向，落地保留惯性
+- [0.7.8: Align keys separately from their functions](#entry-36) / 0.7.8：让底栏的按键与功能分别对齐
+- [0.7.7: Road-coordinate steering, with the current grip as neutral](#entry-37) / 0.7.7：按道路坐标控球，并用当前握姿作为中心
+- [0.7.6: Use Left and Right as accessible help](#entry-38) / 0.7.6：把左右键变成随时可用的帮助入口
+- [0.7.5: Explain the action accurately, then polish the interface](#entry-39) / 0.7.5：让教学准确表达动作，再打磨界面
+- [0.7.4: Make tilt direction visible](#entry-40) / 0.7.4：让倾斜方向直接可见
+- [0.7.3: Flat should be neutral](#entry-41) / 0.7.3：平放才是控球的零点
+
+<a name="entry-00"></a>
+
+# 2026-10-21: Let players with limited time reach the later mechanisms
+
 # 2026-10-21：让时间有限的玩家也能体验后期机制
+
+I found that following the normal course order takes a long time before every mechanism appears. I still wanted players to learn gradually and discover new rules, so I left that order alone and gave people downloading the public build a clear way to explore freely.
 
 我发现，按正常顺序逐关游玩，要花较长时间才能看到所有机关。逐步学习和发现新机制仍然是我希望保留的体验，因此这次先不改关卡出现顺序，而是给公开下载的玩家一个明确的自由体验入口。
 
+I asked for instructions near the beginning of the itch.io description explaining how to enable the built-in developer mode and select any course. Players wanting the full progression can continue normally; those with less time, or an interest in later machines and combined challenges, can jump to a course they want to try.
+
 我要求在 itch.io 简介最开始写清楚如何开启内置开发模式、自由选关。愿意体验完整递进的玩家可以继续正常通关；时间有限、想看后期机关或综合大关的玩家可以直接选想玩的关卡。
+
+The instructions must match the actual download. In public v0.12.9, players must enter a course before choosing Level select from the device menu; the page should not direct them to an unresponsive title-screen option. I also wanted to make clear that this is temporary access, with normal progress and best times retained, rather than a permanent unlock.
 
 说明需要对应实际下载版本。公开 0.12.9 开启后要先进入关卡，再从机器菜单选择 Level select，不能让玩家在标题页点一个没有反应的入口。我也要求说清这只是临时访问全部关卡，普通通关进度与最佳成绩保留，不把试玩误写成永久解锁。
 
+This update changes the public instructions only, not the courses or mechanics. After saving, I revisited the public page to verify it and retained screenshots and the before/after content.
+
 这次只调整公开说明，不修改游戏关卡或机制；保存后重新访问公开页核实，保留截图与前后内容。
+
+---
+
+<a name="entry-01"></a>
+
+# 0.12.12: Controls in one row need a shared center
 
 # 0.12.12：同一行里的控件要有共同的中心
 
+I noticed that the Settings ON switches sat too low within the selection outline. Their bottom edges also pressed into the next ROAD row, making the page look crowded. I asked for every row to be checked rather than moving a single button.
+
 我发现设置页的 ON 开关整体向下偏，没在选择框中间；开关底边还压到下一行 ROAD 的边框，视觉上显得拥挤。我要求仔细检查每一行，不只调整一个按钮。
+
+The selection outline, ball cursor, icon, label and right-hand control now share a row centerline. Switches and ROAD/SCREEN buttons use consistent dimensions, with slightly wider row spacing so each control sits centrally and neighboring outlines remain separate. Moving one button upward would leave the conflicting offsets in place and allow the problem to return.
 
 这次把选择框、球形光标、图标、标签和右侧控件都按同一条行中心线定位。右侧开关与 ROAD／SCREEN 统一尺寸，把行距稍微放宽，使按钮在选中框内居中，也让相邻行保留间隔。不能只把某个按钮往上挪，因为不同控件沿用不同偏移，后续仍会出问题。
 
+The review covered selecting each row, ON and OFF states, both steering labels and Settings with hidden developer mode enabled. This is visual refinement only: the hidden entry, five preferences, progression rules and handling remain intact. I recorded it as patch v0.12.12.
+
 复查覆盖逐行选中、ON 和 OFF、两种操控文字，以及隐藏开发模式开启后的设置页。此次只做视觉细化，保留隐藏入口、五项设置、通关规则与手感，记录为 0.12.12 小版本。
+
+---
+
+<a name="entry-02"></a>
+
+# 0.12.11: Menus should work in context; developer access should stay hidden
 
 # 0.12.11：菜单要在当前场景能用，开发入口仍要隐藏
 
+The title screen already offered New Game, so another copy in Settings added repetition and opportunities for mistakes. I asked to keep it in the Continue/New Game choice after Start Game, retain reset confirmation, and leave Settings for control and audio preferences.
+
 我发现首页已经能开始新游戏，设置里还留着同样入口，只会增加重复和误操作的机会。因此我要求把新游戏统一放在 Start Game 后的继续／重新开始选择中，重置仍需确认，设置只保留操作与声音等偏好。
+
+I initially thought developer mode had disappeared because I had not been told about holding A+B. I explicitly wanted the entry hidden, without a visible developer option: people I tell, or people who discover it, can use it. Holding A+B in Settings for about 2.5 seconds toggles it, displays its state and enables level selection through the system menu. Holding again or restarting disables it. Test courses must not alter normal unlocks, scores or tutorial progress.
 
 我一度以为开发模式不见了，原因是没有得到长按 A+B 的操作说明。我明确要求入口保持隐藏，不放一个公开的开发者选项：只有我告知的人或自行发现的人才会使用。设置页同时长按 A+B 约 2.5 秒切换，开启后显示状态，并从系统菜单选关；再长按或重启后关闭。测试关卡不应改变普通存档的解锁、成绩和教程状态。
 
+Some system-menu options did nothing on the title screen. The menu should follow the current context rather than always filling three slots. Normal title screens have no level-selection shortcut; play offers level selection and Map, while an open map offers Resume. Developer mode allows selection from the title/Settings screens. Cancel must return to the page that opened the selector, not another menu.
+
 我还发现系统菜单在主页有些选项没有作用。菜单不能为了凑满三项而一直显示，必须跟随当前场景。普通主页没有选关捷径，游玩中才有选关和地图；地图打开后提供恢复游戏。开发模式则允许主页／设置打开选关。取消时回打开前的页面，不能被送到另一个菜单。
+
+Checks covered title, Settings, tutorials, objectives, Map, failure, results, ending and loading states, with verification records retained. Menu items rebuild only when the set changes, avoiding per-frame allocation. No mechanism, road or handling change was added; this is patch-level refinement.
 
 检查覆盖了主页、设置、教学、目标说明、地图、失败、结算、结局和加载状态，并保留验证记录。菜单集合只在变化时重建，避免每帧重新分配。此次没有新增机制，也没有更改道路和控球手感，属于小版本细化。
 
+---
+
+<a name="entry-03"></a>
+
+# 0.12.10: Shortcut names alone do not teach when to use them
+
 # 0.12.10：快捷键不能只给名字，不告诉玩家什么时候用
+
+Map, Help, Go and Recenter were visible along the bottom, but a first-time player did not know their purpose or when to press them. English labels alone were insufficient teaching, especially when Go could suggest acceleration. I asked to explain them at the beginning with illustrations and actual opportunities to try them.
 
 我发现 Map、Help、Go、Recenter 虽然放在底部，但第一次拿到游戏的人不知道它们分别做什么，也不知道遇到什么情况该按。仅有英文标签不足以构成教学，尤其 Go 容易被误解成加速。因此我要求在最开始补全这些用途，用图示说明，也让玩家实际试用。
 
+I kept the order of learning the finish goal, choosing steering and practicing movement before introducing the four shortcuts. Map pauses to show the route when lost; Help replays the current course's animations; Go opens its objective and route notes; Recenter asks the player to hold still after changing grip and treats that position as neutral. Each page permits a trial or continuing, so familiar players are not trapped in a mandatory sequence. A trial returns to the same tutorial page with position and timer unchanged.
+
 我决定仍先介绍终点目标、选择操控并学移动，然后再介绍四个快捷键。Map 是迷路时暂停看路线；Help 是忘记操作时重看当前关动画；Go 是查看本关目标和路线说明；Recenter 是换了握姿后保持不动，把新位置当成中立。每页可以试按，也能继续，避免让熟悉的玩家被强制流程拖住。试用结束要回到当前教学页，位置和计时不变。
+
+Help uses the tutorial queue itself, so its trial must temporarily preserve the onboarding sequence or the replay overwrites it. Checks covered returning with B, finishing the replay, repeated trials, nested inputs and returning to title. Existing saves receive the new guidance without losing progress or scores.
 
 Help 本身也使用教学队列，所以试用它时必须暂存新手流程；否则重播会把初次教学覆盖。检查了按 B 返回、完整读完返回、重复试用、嵌套按键和回首页的情况，再让已有存档补看新内容而保留进度与成绩。
 
+I also wanted the jump tutorial to state the alternative: press A during play if a quick device lift does not work; inside a cannon, A fires instead. The animation has a lift segment and an A segment showing the same gap crossing and landing, rather than burying the alternative in a sentence. A advances a tutorial panel, which must be distinguished from its gameplay function.
+
 我还要求跳跃教学明确备用键：快速抬机不成功时，游玩中可以按 A；进入炮台时 A 则是发射。动画分成抬机与 A 两段，展示同样的越过缝隙和落地，不只在说明里藏一句话。教学面板内的 A 是继续，这与游玩时的 A 必须说清楚。
+
+The four illustrations for Map, the control book, the goal route and the neutral grip were regenerated, proportionally converted to fixed monochrome images and integrated with the game's fonts and panels. Initial captures showed a small note touching the lower divider; after adjustment, both ends of the animation were checked again. Automated hardware trials and 17 new images passed review; the release package was restored with the original save retained. This is v0.12.10 onboarding refinement, with courses and feel unchanged, and not a claim that the previous full-course performance audit was repeated.
 
 四页的地图、操作书、终点路线和中立握姿插图重新生成，按比例转成固定黑白图，沿用游戏字体与面板。第一轮实际截图中，小说明碰到了底部分隔线，调整后再次检查两端画面。真机自动试用与 17 张新画面检查通过；恢复正式包并保留原存档。此次是 0.12.10 的教学细化，关卡和手感不变，不把上次全关性能结果说成这次又测了一遍。
 
+---
+
+<a name="entry-04"></a>
+
+# 0.12.9: The public download must withstand a hardware check
+
 # 0.12.9：公开下载的文件也必须经得起真机检查
+
+I asked for the latest build to be installed on the device and its new features retested under different conditions. A successful build, computer captures or older hardware records do not establish that the actual download runs. This round therefore used the ZIP downloaded again from itch.io and checked all 229 device files. It stayed at v0.12.9 / build 59; testing alone did not create a new version.
 
 我要求把最新版本放进真机，连同新功能在不同条件下复测。仅凭构建成功、电脑截图或较早的真机记录，不足以说明别人实际下载的包能运行。因此这次直接使用从 itch.io 重新下载的 ZIP，最终逐一核对设备上的 229 个文件，保持 0.12.9 / build 59，不因为做测试而另起版本。
 
+The requested scope covered 53 courses, 761 device scenarios and 28 feature groups. Steering selection, New Game/Continue, tutorials, locked/unlocked selection, checkpoints, failure and ending needed to form a complete loop. New machines required checks of forward/reverse cranking, release, redocking, travel limits and rolling while carried, not just their appearance. Tilt handling used different neutral poses and sampling rates; bumper checks covered contact around the rim, gaps and airborne crossings. The 47 native sound start/stop cases were checked separately.
+
 我的检查范围包括 53 关、761 个设备场景和 28 组功能。操控选择、新游戏与继续、教学、选关锁定和解锁、检查点、失败与结局都要能串成完整循环；新机关不能只看外形，还要检查顺转、逆转、释放、重新吸附、行程限位与载球滚动。倾斜处理使用不同中立姿态和采样率，护圈检查四周接触、空隙与空中跨过。原生声音的 47 项播放／停止也分别检查。
+
+Several failures came from test assumptions: title selection had not reset; Continue after saving needed confirmation; cannons had actual aiming limits; a capture read the previous frame; a force-field fixture reused an old index. The tools were corrected and rerun rather than turning incorrect expectations into new game rules. No release game source changed this round. Native SDK results and injected-input coverage were recorded separately; this was not a person manually clearing every course.
 
 检查里发现的几处失败来自工具假设：首页选项没有重置、保存后出现 Continue 需要确认、大炮实际有限位、截图取了上一帧、力场夹具复用了旧索引。修正这些检查工具后再运行，而不是把错误预期改成游戏新规则。这一轮没有改正式游戏源码。真实 SDK 的运行结果与注入输入的范围分开记录，不能把它写成人工逐关通关。
 
+Performance retained real limits. The lowest complex-scene average was about 20.66 FPS, and forced-position stress produced 797 ms and 972 ms stalls. Rather than keep only attractive averages, I continued with continuous travel and bridge rotation in the longest course. Across 6,015 timed intervals, the average was 27.67 FPS and the longest interval 66 ms; later bridge passes peaked at 50 ms, then 42 ms on repeat. The near-second stall did not recur, but visible-area cache fallback remained, so this cannot promise no future stutter. Finale cold loading still took about 12 seconds and was retained in the record.
+
 性能结果仍有需要面对的限制。复杂场景均帧最低约 20.66 FPS，强制定位压力出现 797 ms 和 972 ms 的停顿。我决定继续复查最长关的连续往返与转桥，而不是只留下好看的平均数。6015 个连续计时间隔平均 27.67 FPS、最长 66 ms，转桥随后最长 50 ms、重复最长 42 ms，没有复现近一秒的停顿；但有可见区缓存回退，不能说以后绝对不会卡。终局冷启动继续约 12 秒，也应如实保留。
+
+I also checked the device's normal title, Settings, steering cards, first-course loading and movement tutorial, and archived tutorial and machine captures. Test and player saves were isolated; progress produced by normal-menu checks was backed up before restoring the original file. The temporary program was replaced with the public release and the device error log gained no new entries. Actual hand tilting, quick lifting, the physical crank and speaker timbre still require personal experience; automation cannot judge their comfort for me. The device was left on the normal title screen for that next step.
 
 我还检查了设备上的正式首页、设置、操控卡片、第一关加载与移动教学，归档教学和机关截图。测试存档与玩家存档隔离，普通菜单检查产生的进度备份后恢复原文件，临时程序最后替换回公开正式包，设备错误日志没有新增记录。亲手倾斜、快速抬机、实体摇柄和扬声器音色仍需要实际体验，自动化不能替我判断它们是否舒服。真机最后停在正式首页，方便继续这一步。
 
+---
+
+<a name="entry-05"></a>
+
+# 0.12.9: The background should look finished, too
+
 # 0.12.9：背景也应该像完成的游戏
+
+Before publishing, I checked the course requirements again so that someone unfamiliar with the project could understand it quickly. I placed an actual jump animation beside the introduction, followed by crank-controlled cannon aiming and an onboard turntable. The game's own comparison animations explain the steering options. I clarified sequential unlocking, replaying for better times, initial calibration, and each button's purpose instead of relying on screenshots and long explanations.
 
 发布时我再次对照课程要求，想让不认识这个项目的人也能迅速理解游戏。我决定在短简介旁放实际跳跃动画，再展示摇柄瞄准大炮和旋转板上道路；操作方式的区别继续用游戏自身的对照动画解释。正常通关解锁、重玩刷成绩、首次校准和各按钮的不同用途写得更明确，不再只依赖截图和大段文字。
 
+The first webpage reduced GIF widths but kept fixed heights, distorting the image. I made them scale proportionally and checked the approximately 553 × 332 display, preserving Playdate's 5:3 ratio. Some original turntable GIF frames failed strict decoding, so the published clip uses only the correctly decodable rotation segment. The lift recording script exited in the wrong direction and fell; I did not present that as a successful demonstration. Every published GIF was decoded frame by frame before upload. I also downloaded the public ZIP again and confirmed its hash matched the release ZIP.
+
 网页初次把 GIF 宽度缩小但保留固定高度，画面变形；我改为按比例自适应，复查正文为约 553×332，保持 Playdate 的 5:3。录制检查中发现部分转台原始 GIF 帧严格解码失败，发布片段只保留可正确解码的旋转阶段；升降台录制脚本选错离台方向而掉落，所以不把这段当作成功示例。全部发布 GIF 逐帧解码后再上传。公开下载也实际重新取得，与正式 ZIP 的哈希一致。
+
+This update mainly improved release communication and asset archiving. It added no mechanics and did not jump to 1.0. The course explicitly requires attribution for third-party and generated material, so I kept brief Credits. Earlier hardware records do not replace testing the final 0.12.9 package; unfinished hardware checks remain separately recorded.
 
 这次主要是发布表达和素材归档，不增加机制，也不把版本跳到 1.0。课程要求对第三方与生成材料来源有明确说明，因此页面保留简短 Credits；以前的真机记录不能代替最终 0.12.9 包复测，未完成的硬件检查继续单独记录。
 
+The clouds in the courses still looked like children's sketches. Their faint outlines did not match the more detailed roads and machinery. I requested generated artwork for the in-game course backgrounds, rather than the website header or title screen.
+
 我发现关卡里的云仍像儿童简笔画，几条很淡的轮廓线与已经细化的道路、机关不协调。我要求这部分也使用生成的美术，重点修改游戏关卡背景，而不是网页顶部或首页。
+
+I chose three distant cloud forms with low contrast and drift, using layered volume and pixel shading without competing with the road, ball, or signs. They are converted beforehand into transparent monochrome images at native size and reused after loading. Only five clouds are drawn each frame, with no runtime generation, scaling, or fading calculations. They stop drifting when animation is disabled.
 
 我选择三种不同的远景云团，保留低对比和漂移，让云有层叠体积与像素阴影，但不抢道路、球和提示的注意力。素材提前转换为原生尺寸的透明黑白图片，加载后复用；每帧仍只画五朵云，不实时生成、缩放或计算淡化。动画关闭时不继续漂移。
 
+Simulator views covered steering, jumping, cannons, lifts, and onboard turntables. The upper and lower HUDs matched the original pixel for pixel. An isolated Simulator package compared the old and new cloud functions in five sets of 1,000 draws: 5–6 ms for the new version versus 4–5 ms for the old. This only establishes a small desktop-side cost, not hardware frame rate.
+
 检查了控球、跳跃、大炮、升降台与板上转台的模拟器画面，上下状态栏与原版逐像素一致。性能对比使用隔离模拟器包中的原云函数与新云函数：五组各一千次绘制，新版 5–6 ms，旧版 4–5 ms，只说明电脑端这部分开销很小，不能当作真机帧率结论。
+
+The first check package lacked a local bitmap helper and could not finish. After adding it and rebuilding, all five images and the timing report completed. This affected only the isolated check tool; the production build worked. Gameplay, courses, saves, and audio were unchanged.
 
 测试工具初次启动时缺少局部 bitmap 辅助函数，导致检查包没完成；补齐检查包后重新构建，最终五张图和计时报告完整。这个问题仅在隔离检查工具中，生产构建正常。玩法、关卡、存档和声音没有改动。
 
+---
+
+<a name="entry-06"></a>
+
+# 0.12.8: Make the choice legible, then turn progress into a journey
+
 # 0.12.8：先让玩家看懂选择，再让进度形成旅程
+
+Before release, I reconsidered how to present steering. The labels Screen and Road alone did not explain the difference to new players. On an isometric map, the same rightward tilt can move the ball screen-right or diagonally down-right along a road axis. I wanted two large side-by-side cards with synchronized device and ball animations, letting players choose by preference rather than memorize text.
 
 发布前我重新考虑了操控选择的表达。Screen 和 Road 两个英文状态不足以告诉陌生玩家区别，尤其游戏使用斜视地图，同样向右倾斜的动作可能表现为屏幕正右，也可能表现为道路的右下方向。我希望把设置拆成左右两张大卡片，用同步的机器姿态和球体运动直接对照，让玩家按自己的习惯选择，而不是先背文字。
 
+The new cards, device, ball, and lock icons needed to match the game's pixel style and fit its 400 × 240 display. The first cards covered the upper explanation and their lower labels touched the borders. I moved the explanation, restored padding, and added a prominent black selected heading and raised state. A very small ball lost its glass outline, so I used a fixed 24 × 24 image, preserving the white interior and removing only the exterior background. Rolling stops when the animation returns to neutral, keeping rotation consistent with displacement.
+
 我要求新的卡片、机器、球和锁图标保持游戏已有的像素风格，并且实际能放进 400×240 屏幕。画面检查发现第一轮卡片压住上方说明，下方标签也碰到了边框；因此移开说明、重新留出文字边距，加上明显的黑底选中标题和抬升。小球缩得太小会失去玻璃轮廓，最终用 24×24 的固定图片，并保留圈内的白色，只去掉外部背景。动画回到中立时停止原地滚动，避免让人误解动作和位移的关系。
+
+New Game also needed to be discoverable. With existing progress, Start Game opens Continue or New Game; a first launch enters Course 1 without an unnecessary question. Resetting still requires confirmation, with Cancel selected by default. The Settings entry remained available at this stage.
 
 新游戏也需要让玩家找得到。已有进度时，点 Start Game 后再选择继续或新游戏；第一次开始直接进入第一关，不增加无用的问题。开始新游戏依然经过默认取消的确认页，避免误清进度。设置里的入口继续保留。
 
+The Continue and New Game frames looked like flattened steering cards. I rejected that distortion and requested purpose-made horizontal buttons with preserved proportions and room for two lines.
+
 我看到继续和新游戏按钮的边框像是把操控卡片直接压扁，这种变形不能接受。因此要求重新生成专用横版按钮，保持比例，给两行文字留下空间。
+
+Steering selection should not be hidden only in Settings. After explaining the goal of following the road to the finish, the introduction compares both animations and defaults to Road. Confirmation says the choice is saved and can be changed anytime in Settings → Steering, then continues into movement practice. New Game asks again; updating an old save preserves its preference. Leaving and returning partway through cannot skip this step.
 
 操控选择不能只藏在设置中。我的要求是先让新玩家明白沿道路到达终点的目标，再用两种动画对照选择自己的操控，默认先选 Road。确认后明确告诉玩家已经保存，以后可以随时在 Settings → Steering 更改，然后继续实际移动教学。新游戏要重新选择，旧存档更新保留已有偏好；中途退出再回来也不能跳过这一步。
 
+Normal play should teach courses sequentially rather than expose the final challenges immediately. New saves unlock only the beginning, then the next course on completion; completed courses remain replayable. Lock icons and button hints explain unavailable entries. Existing progress and completions survive updates. A hidden Settings entry temporarily enables free selection for checking machinery, but test completions, best times, tutorial reads, and selected positions must not affect normal saves. Restarting restores normal mode.
+
 我希望正常游玩是逐关学习，而不是第一次进入就随便跳到复杂终局。因此新存档只开放起点，通关再解锁下一关，完成过的路线可以重玩；锁图标和按键提示同时说明不能进入。旧存档的当前进度和已完成记录保留，不能因为更新把已有成绩丢掉。需要自由检查机关时，通过设置中的隐藏入口临时开放选关，但测试通关、最佳时间、教程阅读和跳关位置不能污染正常存档，重新打开游戏后回到普通模式。
+
+Two older tests failed because they assumed one press immediately changed Steering or loaded Start. I updated them to confirm the steering cards and Continue through the real flow, retaining checks for cancellation, saving, pausing, and loading rather than weakening assertions.
 
 检查中有两个旧测试失败，是因为它们仍假定 Steering 按一下立即切换、Start 按一下立即加载。这次分别更新为确认操控卡片和确认 Continue 的真实流程，继续检查取消、存档、暂停和加载，而不是放宽断言。
 
+This round added no machinery; it made the existing loop more understandable. Release checks distinguish automated tests, Simulator views, and earlier hardware evidence. Complex courses still have loading waits and frame-rate variation. Desktop execution alone cannot justify calling the release completely smooth.
+
 这轮不再加新机关，而是把现有完整循环变得更可理解。发布核查将自动测试、模拟器画面和已有真机记录分开列出；复杂关仍有加载等待和帧率波动，不能只凭电脑端运行就写成已经完全流畅的正式版。
+
+---
+
+<a name="entry-07"></a>
+
+# 0.12.7: Updating on another device must not lose the playtest entry point
 
 # 0.12.7：换设备更新，不能把新试玩入口弄丢
 
+For stranger playtests, each person needed to restart at Course 1 and see the basic and later mechanism tutorials again. I had therefore requested New Game in Settings on the Mac. It disappeared after this update, disrupting that playtest flow.
+
 我给陌生人试玩时，需要让每个人从第一关重新开始，而且重新看到基础操作和后续机关教学。因此之前在 Mac 上提出了在设置里加入“开始新游戏”。这次更新后入口不见了，妨碍了同样的试玩流程。
+
+The records showed that the feature had been changed locally on the Mac and installed on hardware, but never reached GitHub main. I wanted it restored to the same complete game with a formal version record, so changing computers would not lose features or require another local-only version.
 
 核对记录后发现，那次功能只改在 Mac 本地并安装到真机，没有进入 GitHub 主线。我的要求是将它补回同一款完整游戏，并留下正式版本记录，之后换设备也能拿到完整功能，而不是再装一个仅本地存在的版本。
 
+New Game requires explicit confirmation: Cancel is selected by default, and B returns. Confirming resets progress, scores, and tutorial reads from Course 1 while preserving sound, music, animation, jump-gesture, and steering preferences. It occupied the sixth Settings row at this stage; feel and courses were unchanged. Installing an update itself does not reset progress.
+
 新游戏必须由玩家明确确认：默认选择取消，按 B 也可以返回。确认后从第一关重置进度、成绩和已读教程；音效、音乐、动画、跳跃手势及方向映射偏好保留。入口放在设置的第六项，现有手感和关卡不变。安装新版本身不执行清档。
+
+Checks covered cancellation versus confirmation, reopening the saved state, replaying basic and later tutorials, and the actual six-row Settings and confirmation layouts. These results are recorded separately, not presented as a new human playtest.
 
 本轮检查取消与确认的区别、保存后重新打开的状态、基础与后续教学重现，并检查六行设置和确认页的实际显示。测试结果单独记录，不把自动测试当作新一轮真人试玩。
 
+---
+
+<a name="entry-08"></a>
+
+# 0.12.6: A small adjustment should not make the screen hard to see
+
 # 0.12.6：微调应该是一点点，不能让人看不清屏幕
+
+After trying the previous version, I felt acceleration had been reduced too much. Moving forward sometimes required a tilt that made the screen difficult to see. That was not the fine control I wanted: acceleration should remain close to the original, with slightly more room for small corrections and the improved reverse braking retained.
 
 我试过上一版之后，觉得加速度削弱得太多。有时为了前进，需要把机器倾斜到不方便看屏幕的位置。这不是我想要的细腻：我需要的是基本保持原来的加速，只给小幅度操作多一点余量，同时留下已经改善的反向刹车。
 
+I brought the response curve back close to linear, restored the original full-force angle, and kept only a slight curve. Checks also found that neutral settling still slowed ordinary forward input. I restricted it to near-neutral input and kept the opposing-brake coefficient unchanged, so propulsion and stopping adjustments would not cancel each other out.
+
 因此这次把输入曲线拉回接近原来的线性，恢复原来的满推力角度，仅保留很轻的曲线。检查也发现上一版的中立收速辅助在正常向前倾斜时仍然拖慢球，于是把这部分限制到中立附近；反向刹车的辅助系数不变。这样推进和停球的调整不会彼此抵消。
+
+On flat ground with fixed input, speeds after one second at 10°, 15°, and 20° were approximately 94%, 97%, and 98% of the original. That was closer to my intent than the previous large reduction. Screen/Road selection, tutorials, arrows, and backgrounds remained. Verification still proceeds through Simulator before hardware; these numbers describe fixed conditions, while feel still needs further playtesting.
 
 平地固定输入下，10°、15°、20° 一秒后的速度分别接近原版的 94%、97%、98%。这比上一版大幅降低推进更接近我的要求。Screen／Road 的选择、教学、箭头与背景继续保留。验证仍先用模拟器，再到真机；数值比较是固定条件下的结果，最终是否顺手还要继续试玩。
 
+---
+
+<a name="entry-09"></a>
+
+# 0.12.5: Let unfamiliar players control the ball before challenging the machinery
+
 # 0.12.5：让陌生玩家先控制住球，再挑战机关
+
+I spent a day asking strangers to play. They appreciated the completeness of the machinery, but many found the ball hard to stop: a slightly larger lean produced sudden acceleration, and fine corrections required tiny hand movements. Familiarity during development does not mean a first-time player will understand the controls naturally. More machinery cannot help if players are constantly fighting the controls.
 
 我花了一天找陌生人试玩。大家认可机关的完整度，但很多人觉得球难停、轻微多倾一点就突然加速，细调时手必须动得非常小。这个反馈让我意识到：熟悉开发过程的人能适应的控制，不等于第一次拿到游戏的人也能自然掌握。机关再多，玩家如果一直在和操控较劲，也难以享受它们。
 
+I reserved small angles for fine adjustments instead of delivering substantial acceleration immediately. Larger angles still needed climbing force, so I did not reduce all input equally. Neutral input gained settling assistance and opposing tilt gained noticeable braking, while preserving momentum rather than stopping or reversing instantly. Same-direction propulsion eases at high speed, but no hard speed cap should truncate downhill gravity, jumps, or cannon flight.
+
 我决定把小角度区间留给微调，而不是一开始就给很多加速度。大角度仍要能提供爬坡推力，所以没有把所有力度一起压低。中立后增加收速，反向倾斜给明显的刹车帮助；同时保留连续动量，不把反向输入做成瞬间停住或倒车。过快的同向主动推进逐渐减弱，但下坡重力、跳跃和炮台飞行不应该被一个硬速度上限切掉。
+
+Steering also imposed a learning cost. Previously, tilting the device right followed an isometric map axis, appearing down-right on screen. Some players instinctively thought in screen directions. I offered Screen, which maps tilt to screen direction, and Road, which retains the map axes. At this stage Screen was the default; Settings saved the choice, and arrows and tutorials had to agree with the physics.
 
 方向也是试玩暴露出的学习成本。旧方案向机器右侧倾斜，对应斜视地图的一条轴，屏幕上看起来是右下。有些人会本能地按照屏幕左右去动。我希望把这件事交给玩家选择：Screen 让倾斜方向对应屏幕方向，Road 保留沿斜地图轴的方式；先默认 Screen，设置中可以切换并保存，箭头和教学也要一致，不能只改物理不改说明。
 
+The empty-background feedback was reasonable, but filling it could make distant scenery resemble walkable platforms. I first added low-contrast, slowly parallaxing clouds behind the roads using cached images. Rather than adding dense patterns everywhere, I wanted to assess clarity on the small physical display before expanding the scenery.
+
 背景空旷的反馈也合理，但装满东西容易让远景像能走的平台。这次先加入低对比、慢速视差的云层，放在道路后面，使用缓存图片控制性能。没有把场景一口气变成密集花纹；先看真实设备的小屏幕是否清楚，再决定后续是否需要更多远景。
+
+During verification, an older wind-slope navigation script stopped about eight units before its target. Its linear wind compensation developed a steady error under the new opposing assistance. I added accumulated-error correction to the test controller, then completed the slope using actual tilt, crank, and B-release inputs, without relaxing the endpoint or directly changing ball velocity. Both steering modes completed starting, braking bends, switchbacks, and cannon instruction.
 
 验证中，旧的风坡导航脚本停在目标前约 8 个单位。它原本按线性推力抵消风，新的反向辅助让这种固定补偿产生了静态误差。检查后在测试控制器中加了持续误差修正，再用真正的倾斜、摇柄与 B 解除输入完成风坡，没有放宽终点标准或直接修改球速。两种方向模式都完成起步、刹车弯、折返和炮台教学。
 
+Windows application control briefly blocked the Simulator. After restoring it, I repeated Simulator checks before hardware performance sampling. Fifteen Settings, tutorial, and course views matched across both passes. Fixed-condition physics tests recorded improved stopping distance; subjective feel still requires another human playtest. Easier control should leave the challenge in routes and machinery rather than remove it from the game.
+
 这次模拟器一度被 Windows 应用控制阻止；恢复后重新执行模拟器检查，再继续真机性能抽测。15 张设置、教学和关卡画面在两端一致。刹车距离的改善由固定条件下的物理测试记录，主观手感仍要靠下一轮真人试玩判断。我希望更容易控制不等于所有关卡失去挑战，而是把挑战留给路线和机关。
+
+---
+
+<a name="entry-10"></a>
+
+# 0.12.4: Wind direction should shape route decisions, not just decorate them
 
 # 0.12.4：风向应该影响路线选择，而不只是摆设
 
+When crossing fans or magnets quickly, I often felt the speed change only well afterward; hugging the edge could almost avoid it. Simply raising force too far would throw players off before they could correct. I wanted coverage across the full road width, immediate influence on contact, and enough room for opposing tilt.
+
 我发现快速经过风机或磁体时，往往要离开很远才感觉速度变化，贴路边甚至可以几乎不受影响。我不想简单地把力度开到很大，否则玩家还没修正就被推下去。我的要求是覆盖整段路宽、接触范围就开始起作用，同时留下反向倾斜的控制余地。
+
+Inspection found no deliberate activation-delay timer. Fans already checked fast swept movement, but their influence band did not always cover the entire road. Magnets checked only a single point and were weak at the edge. Brief contact plus inertia felt like delay. I addressed coverage and continuous contact separately, then modestly increased force instead of instantly overwriting velocity on entry.
 
 检查时没有发现人为等待再生效的计时器。原风机已经检查快速扫过的路径，但作用带没有总是覆盖全部路宽；磁体原先只检查单点，外缘的力度也很低。短暂经过加上惯性，让效果听起来像延迟。因此我决定分别修覆盖范围和连续接触，再适度提高力度，不在进入范围那一刻直接改掉球速。
 
+An adjustable fan has no purpose if players can rush past it like fixed crosswind. I made it useful for assistance: aim the wind uphill, leave the control point, and use it to climb a slope ordinary tilt cannot ascend alone. Rotation remains continuous, with GO/WAIT feedback rather than angle snapping or a hidden gate forcing use. This structure appears in its introduction, reviews, and finales with different heights and initial wind directions.
+
 旋转风机如果和固定侧风一样，只要冲过去就行，就没有转动的意义。我希望把它变成助力：先把风向调到上坡方向，再离开控制点，借风爬过普通倾斜推力难以登上的坡。保持无级转动，增加 GO／WAIT 提示，不自动卡角度，也不用隐藏的门来强迫操作。这个结构加入首次教学及后续复习和终局，后续有不同高度和初始风向。
+
+Checks revealed an overly abrupt descent after a taller wind slope. I extended it so reaching the crest did not immediately produce an unreasonable drop. The tutorial shows real crank rotation, B release, and climbing with the wind. Ground arrows indicate wind and magnetic force; the ball draws above them so they cannot hide it.
 
 制作检查中发现较高风坡的下降太急，于是延长下坡，避免借风登顶后马上遇到不合理的落差。教学同步展示真实摇柄转动、B 解除和顺风登坡。风与磁力的地面箭头展示施力方向，球绘制在箭头上方，避免把它遮住。
 
+Road-width scans run during course preparation. Magnets use analytic path intersections and retain a spatial index, avoiding road traversal in every physics substep. Verification covered edge crossings, fast entry/exit, out-of-range motion, opposing input, climbing with real tilt, and save migration, plus native views and hardware samples. Complex courses still drop frames and take time to load; Simulator smoothness alone is not completion.
+
 我把路宽扫描放在关卡准备阶段，磁力用解析路径相交并保留空间索引，避免在每个物理小步遍历道路。验证分别覆盖路边、快速进出、范围外、反向抵抗、真实倾斜登坡和存档迁移；另外查看原生画面并在真机采样。复杂关仍有掉帧和加载等待，这些限制照实记录，不能只凭模拟器顺畅就算完成。
+
+---
+
+<a name="entry-11"></a>
+
+# 0.12.3: Reviews should combine skills, not repeat the same road
 
 # 0.12.3：复习应该组合技能，而不是重复同一条路
 
+I found two nearly identical stretches in the last course. Repeating an earlier route added no new decision. I expanded the review to all 53 courses, including tutorials and reviews as well as finales. Practice should remain, but each reuse should change a mechanism's relationship to terrain, speed, or the next mechanism.
+
 我在最后一关发现了两段几乎相同的路线：前面已经走过一次，后面再走一遍并没有新的判断。这让我决定把检查范围扩大到全部 53 关，既看最后的综合大关，也看前面的教学和复习关。保留必要的练习，但每次再次使用机关都应该改变它与地形、速度或下一个机关的关系。
+
+Cannons needed meaningful aiming. Straight-ahead launches offered little crank choice. I increased the final three courses to 6, 6, and 10 cannons, with offset receivers and some successive adjustments. The first receivers caught the ball but left insufficient stopping distance, so I enlarged them for actual inertia rather than automatically stopping the ball on landing. I also recorded 66 landing-and-braking checks with ±3° aiming error.
 
 我首先希望大炮有真正的瞄准价值。直着发射就能过去，摇柄几乎没有选择。这次把最终三关的大炮增至 6、6、10 门，落点向两侧偏移；有的需要连续调整方向。第一轮落点虽然能接住球，但落地后刹不住，因此把接收台扩大，留出实际惯性下的减速距离，没有用落地自动停球来掩盖问题。角度误差 ±3° 的 66 次落地与刹车检查也纳入记录。
 
+A descent into a sharp turn could imply that jumping across a shortcut was the only solution. I made elevated switchbacks level turning platforms before their slopes, so normal rolling could pass, and widened braking bends in several early practices. The teaching cannon now requires aiming first; later onboard turntables change exit direction. They should teach judgment, not merely add distance.
+
 我还发现下坡接急转弯会让人误以为只能抄近路跳过去。于是把高处的折返做成水平转弯平台，再接上下坡，让正常滚动也能通行。几个早期练习关也放宽了需要刹车的弯道。教学炮台改成先转方向，板上转台的后续关改变出口方向；它们应该教会判断，而不是只增加路程。
+
+Reviews no longer all begin with the same valley and order. Nineteen cumulative reviews begin with their newest mechanism and then related earlier skills. Connecting roads shrink to 64 units while retaining checkpoints. Offset double gates, disappearing roads with waiting islands, diagonal ferries, zigzags after turning bridges, and differently directed belts vary the combinations. All 53 courses have review and disposition records. Focused tutorials without a reason to change remain intact rather than becoming confusing for novelty's sake.
 
 复习关不再每次都按同一谷地开头、相同顺序继续。19 个累计复习关从本阶段的新机制开始，再接相关的旧技能；接续路缩短到 64 单位，仍留检查点。错开的双闸门、带中间等待台的消失路、斜向渡板、转桥后的折线和不同方向的传送带，都用来改变组合。所有 53 关都列了检查和处置记录；没有理由改动的专项教学保留，不为了求新让教学变得混乱。
 
+Players confused conveyors, jets, and magnets, so their hints now distinguish continuous transport, intermittent jets, and attraction toward a magnet. A nozzle's appearance does not make it a cannon. The two branches after a double gate need not demand the same solution.
+
 我注意到玩家会把传送带、喷气和磁力混在一起，所以提示分别明确为持续输送、间歇喷气、向磁体吸引。喷口的外形不代表大炮。双路闸门后的两条路线也不需要相同的处理方法。
+
+Larger maps still required optimization. Collision maps are prepared completely, while road imagery is prepared near the camera; fixed visuals remain prebaked. Road-image matching first uses existing order, creating a coordinate lookup only if needed. Analytic tile boundaries replace repeated corner calculations. Export also checks a source snapshot so editing a map during export cannot label old assets with a new fingerprint.
 
 这次地图更大，优化仍然必须跟上。我保留完整碰撞地图先准备好、道路画面只准备相机附近的方式；固定画面继续提前打包。道路图片匹配优先使用已有顺序，只有顺序不一致才创建坐标查找表；地块索引用解析边界减少逐角计算。资源导出还增加了源文件快照检查，防止在导出过程中改了地图却给旧资源标上新指纹。
 
+Hardware sampling found a Course 53 mechanism scene near 21 FPS. I timed its parts and tried binary search for terrain-height sections. Across 53,400 points, heights and slopes were unchanged, but the hardware scene improved only from 21.73 to 21.82 FPS. That was insufficient evidence of benefit, so I reverted the additional change and retained its record. An attempted optimization is not necessarily an effective one.
+
 全关卡真机抽测又发现第 53 关一处机关场景只有约 21 FPS，于是继续分项计时。我尝试把地形高度区段查找改成二分查找，53,400 个采样点证明高度／坡度没变；但同一场景真机仅从 21.73 到 21.82 FPS，没有足够提升证据。因此撤回这项追加改动，保留测试记录，不把尝试过的方案都当成有效优化。
+
+Passing tests was not enough. Four native screenshots initially differed slightly; repeating unchanged reference code also produced 1–2-pixel line-junction differences. I recorded the actual differences rather than claiming universal pixel identity. Route checks, continuous scripted engine completions, native images, and hardware samples are separate evidence, none equivalent to manually playing every course. Larger-course loading can increase and frame rate is not always 30; measured values and remaining limits are in this version's validation and performance records.
 
 验证中不能只看“测试通过”。原生截图最初有四处细小差异，重复运行未改动的参考代码也发现了线条交界处的 1–2 像素变化，所以记录实际差异，不把它写成全部逐像素相同。自动路线检查、连续引擎脚本通关、原生画面和真机采样分别记录，它们都不能替代所有关卡的人工试玩。更大的关卡加载可能增加，帧率也不保证始终 30；实际数字和还存在的限制放在本版验证与性能记录中。
 
+---
+
+<a name="entry-12"></a>
+
+# 0.12.2: Avoiding crashes must not mean a long wait
+
 # 0.12.2：不能把避免崩溃变成长时间等待
+
+Hearing that final courses loaded for over twenty seconds, I first asked whether players really had to wait that long to act. It was too long. I wanted to start them near the beginning while later content prepared ahead, while reducing frame variation rather than moving loading-screen waits into gameplay stutters.
 
 我听到最终大关要加载二十多秒，首先想确认这是不是意味着玩家要等这么久才能操作。这个等待太长了。我的想法是先让玩家进入起点附近，后面的内容逐步准备，争取在走到之前就完成；同时继续处理帧率波动，不能把加载画面里的等待挪成游玩中的卡顿。
 
+I measured each stage. Combining small loading steps alone still took about 23 seconds on hardware; raising the loading time budget brought it to about 15. More timing showed that road surfaces, cannon-angle images, and some mechanism preparation were still redrawn on-device. I prebaked fixed results while retaining actual rotation, wind, and blade animation. I did not want speed gained by cutting courses or artwork, so pixel comparisons accompanied the work.
+
 这次先测清每个阶段的耗时。只合并小加载步骤还不够，真机仍需要约二十三秒；提高加载时间预算后约十五秒。进一步的计时指出，道路表面、大炮角度图像和部分机关准备仍在真机上重复绘制，因此把固定结果提前打包，继续保留机关真实转动、风和叶片动画。不能为了更快而把关卡或美术删掉，所以图片逐像素对照也一起做。
+
+Background preparation had to be reliable. The full collision map is prepared first; only road imagery is assembled incrementally, with two chunks of margin around the start, further chunks following the camera, and distant extras released. Returning abruptly to a checkpoint fills the current view. An unfinished texture must never turn solid road into a hole. Tests covered fast forward motion, reversing, and checkpoint jumps.
 
 我希望后台准备是可靠的。当前方案先准备完整碰撞地图，只分批组合道路图片：起点附近带两块余量，远处随着相机移动准备，走远后释放多余区块。即使突然回到检查点，也会把当前画面补齐，不会因为贴图还没好就把实心路当成洞。测试检查了高速前进、倒退和检查点跳转。
 
+Some checks required correction. The first tighter drawing bounds triggered a conservative visibility warning for a historical ferry scene, so I restored its full margin. After cooperative loading changed from one step per frame to a time budget, checks measured actual time rather than insisting on one tiny action per frame. Sound filtering retains nearby mechanism state across grid crossings and resynchronizes only after leaving and returning, preventing erroneous replay.
+
 检查中也出现了需要纠正的地方。第一次收紧绘制范围时，历史渡板场景被保守可见范围检查指出可能遗漏，随后恢复完整边距；合作式加载由“一帧一步”改为按时间预算后，旧检查也改为验证实际耗时，而不是要求每帧只能做一件小事。声音范围筛选要保留跨网格时仍在附近的机关状态，离开后重返才重新对齐时间，避免错误重播。
+
+All 156 hardware scenes across the four finales completed. Loading fell to about six to eight seconds, and the median scene frame-rate improvement was approximately 16%. Fast camera round trips in the largest course averaged about 28.3 FPS, with no recorded visible chunks left unprepared. Some complex scenes still ran around 22 FPS, and Course 50 had a longer single frame than before, so this did not eliminate stutter. The normal game was reinstalled over the existing build, saves were unchanged, no new crashes appeared in the error log, and the device returned to the title screen.
 
 这次四个最终大关的 156 个真机场景全部完成，加载缩短至约六到八秒，场景帧率提升的中位数约为 16%。最大关卡的高速相机往返也完成了，平均约 28.3 帧，没有可见区块准备不及的记录。我希望用完整数据说明改善幅度：部分复杂场景仍只有二十二帧左右，第五十关还出现了比旧版更长的单帧，因此不能写成彻底消除了卡顿。最后正常游戏覆盖安装，原存档未变，错误日志没有新增崩溃，设备回到正常首页。
 
+---
+
+<a name="entry-13"></a>
+
+# 0.12.1: A restart error must be treated as a crash
+
 # 0.12.1：报错重启必须按崩溃来处理
+
+Playdate repeatedly reported a crash and requested a restart. I wanted the running-game problem diagnosed rather than continually treating it as USB disconnection and reconnecting the cable.
 
 我反复看到 Playdate 提示程序崩溃并要求重启，因此提出不能一直把它当成 USB 没有连上。我需要的是查出游戏运行出了什么问题，而不是不断重新插线。
 
+Hardware logs explicitly reported the run loop stalled for over ten seconds, once in landing-connection calculation and once in terrain-occlusion preparation. The first priority was keeping the system responsive. Long courses can load, but whole-map preparation cannot be one uninterruptible operation.
+
 读取真机错误日志后，记录明确写着运行循环停顿超过 10 秒，两次分别发生在接岸计算和地形遮挡准备。我的判断是先保证系统能够持续响应：长关可以有加载过程，但不能把整张地图的准备工作塞进一个不能返回的长步骤。
+
+I spread route generation, connection scans, and occlusion preparation over multiple loading frames. Even with a save on the last course, startup first shows the title and prepares the map only after Start. The test tool had loaded everything in one call, unlike normal play. It now uses frame-by-frame loading and records stage timings, keeping the test procedure consistent with the game.
 
 这次把路线生成、接岸扫描和遮挡准备拆到多个加载帧；存档停在最后一关时，也先进入首页，按 Start 后再准备地图。测试工具原先一次执行完加载，与实际游戏流程不同，现统一使用分帧加载，同时记录各阶段耗时，避免再把测试工具的运行方式和正常游戏混为一谈。
 
+All 156 hardware scenes across four finales completed normally with no new error-log entries. All 118 native images matched the pre-fix images pixel for pixel. The normal game was reinstalled and entered the saved course without changing save data, then returned to the title. Limits remain explicit: complex scenes were about 18–30 FPS with brief pauses, and long courses loaded for about 20–25 seconds. This check neither proves crashes impossible in every condition nor establishes uninterrupted smoothness.
+
 这轮真机复测完成四个终局关卡的 156 个场景，全部正常结束，错误日志没有新增记录。118 张原生画面与修复前逐像素一致，说明这次调整没有改变这些画面的表现。正常游戏随后覆盖安装并进入原存档对应的关卡，存档内容未变，最后回到首页。我希望记录也保留实际限制：复杂场景约 18–30 FPS，仍有短暂停顿，长关加载约 20–25 秒；通过这次测试不能写成所有情况下都不会崩溃，也不能写成已经全程流畅。
+
+---
+
+<a name="entry-14"></a>
+
+# 0.12.0: The ending should test everything learned along the way
 
 # 0.12.0：结尾应该考验一路学过的全部玩法
 
+As courses accumulated, the newest onboard turning mechanic had become the ending. I wanted learning order, not development order: introduce a mechanism every few courses, practice it, then combine it with earlier skills. The final three or four courses should be complete challenges rather than tutorials for the latest addition.
+
 我发现关卡不断增加以后，最新加入的板上转向反而成了结尾。我的本意不是按开发时间排列关卡，而是让玩家每隔几关学会一个新机制，练习它，再把它和之前学过的机制结合。最后三四关应当是完整的综合挑战，不能只是最新机关的教学。
+
+I kept the clear goals of short introductions and made practice cumulative. The journey now has 20 stages and 53 courses, starting with steering and jumping, then automatic obstacles, manual machinery, and more complex routes. Onboard turning follows shore-controlled bridges; lifts, ferries, fans, cannons, and later mechanisms continue the progression. Three missing independent reviews were added, followed by four full expeditions.
 
 我希望保留短教学关的清楚目标，同时把练习做成累积复习。现在流程分成 20 个阶段、53 关：先学习控球和跳跃，再逐步加入自动障碍、手动机关和更复杂的路线。板上转向安排在岸边转桥之后，升降、渡板、风机、炮台和后续机关继续递进。缺少独立复习的阶段补入三关，结尾保留四条完整远征。
 
+Each finale must include every mechanism and terrain type individually, not merely across the four combined. Their 21, 23, 25, and 28 encounters vary order and add combinations such as belts with bumpers, bumpers with wind, and double gates with jets. Checkpoints and safe footing before each segment limit repetition after mistakes. The map can browse segments rather than shrinking a long course into an unreadable line.
+
 我要求每条终局路线都包含全部机关和全部地形，而不是四关合起来才凑齐。四关分别有 21、23、25、28 段遭遇，改变顺序并逐步加入传送带与护圈、护圈与风区、双闸门与喷气等组合。长关需要检查点，否则失误一次重走全部流程只会增加重复；每段前安排安全落脚处，地图也改为可逐段浏览，避免整张长地图缩成看不清的一条线。
+
+Optimization accompanied the redesign. Preparing all review routes at startup held too much geometry, so each course now generates on entry and releases on exit, with road caches prepared during loading. Composed ferry endpoints had failed to convert local coordinates to global ones and moved to the wrong place. After fixing that, every docking point was checked and all four expeditions traversed segment by segment through the real engine. Grid keys containing decimals were also normalized to integers.
 
 我也要求同步优化。检查长关时记录到，一次准备所有复习路线会让启动承担过多几何数据；改为进入当前关卡才生成，离开释放，道路缓存放在加载阶段准备。渡板的终点在组合路线中还出现了局部坐标未换成全图坐标的问题，导致它驶向错误位置；修正后继续检查每一处接岸，并用真实引擎逐段穿过四条终局路线。另一个检查发现网格坐标生成了带小数的键，现统一为整数网格。
 
+Reordering must preserve progress. Completion records follow their courses; unchanged layouts retain best times, while redesigned long routes are not compared with old short-course times.
+
 重新排序不应丢掉之前的进度。我希望通关记录跟随关卡本身移动；未改布局的最佳时间保留，重新设计的长路线不拿旧短关的时间作比较。
+
+Scripted checks continuously completed all four expeditions, triggering every checkpoint without falling. This is not handheld playtesting. USB stopped responding when hardware testing began, so final frame rates and restoration of the normal installation remained pending rather than reported as passed.
 
 这轮程序检查已经完成四条终局路线的连续通关，检查点全部触发且没有掉落，但这不能代替真机手持试玩。USB 在真机测试启动时停止响应，因此这次记录保留“最终帧率和正常游戏恢复安装待完成”的状态，不把未测到的性能写成已通过。
 
+Later update: native review produced 118 finale, map, and selection images. A second hardware attempt installed and listed 156 sample scenes but stopped responding before the first began. Inspection found the test tool loaded an entire course in one frame whereas the game loaded incrementally. I aligned their loading procedures and added stage logs. Simulated-clock checks confirmed full execution of the scenes; the actual disconnection cause and hardware frame rates still awaited device recovery.
+
 后续检查补充：原生审查完成了 118 张终局、地图和选关画面。真机第二次能够安装并列出 156 个采样场景，但第一场开始前又停止回应。我希望记录能分清是游戏问题还是测试方式问题：检查发现测试工具把整关加载塞进同一帧，而游戏本身会逐帧加载，因此先统一两者的加载方式，并加入阶段日志。模拟时钟检查确认各个场景完整执行，真正的断连原因和帧率仍留待设备恢复后确认。
+
+---
+
+<a name="entry-15"></a>
+
+# 0.11.0: I need to know when I can cross, not guess at a tiny seam
 
 # 0.11.0：我要知道什么时候能走，而不是猜那条细缝
 
+A slightly misaligned rotating board was difficult to judge on the small screen, yet a tiny seam could drop the ball. I did not want angle snapping: continuous crank rotation is part of the interaction, and players must be able to keep turning after alignment. I wanted more forgiving passage geometry and visible results, not automatic angle control.
+
 我发现旋转板只差一点点角度时，很难从小屏幕看清是否接上，但球却可能因为一丝缝直接掉下去。我不想用自动吸附解决它：摇柄能连续转动才有操作的乐趣，转到位后也应该可以继续转。因此我希望放宽的是通行判定，同时让结果可见，而不是替玩家固定角度。
 
+- I used the ball's width to interpret seams. Its radius is 9, so support now checks a circular footprint: the center can slightly overhang, and equal-height gaps up to the diameter can be crossed. Diagonal corners use circular distance rather than counting empty square corners as ground. Height checks remain, so tolerance cannot bypass a lift.
+
 - 我提出按球本身的宽度理解接缝。球半径是 9，所以边缘支撑改看圆形足迹，球心略微越出边缘仍可通过，小于等于直径的同高度窄缝允许跨越。对角要按圆形距离判断，不能把四角的空白也算成地面。高低台之间仍然检查高度，不能用容错跳过升降过程。
+
+- I extended guidance beyond rotating bridges to every mechanism whose passability is hard to read. Entrances and exits get separate GO/WAIT states; lifts assess each landing independently, and gates assess each lane. Real geometry and opening state drive feedback. Automatic machinery reports the current state, so timing still matters.
+
 - 我进一步要求：不只旋转桥，所有容易看不清是否可通行的机关都应有提示。入口和出口分别显示 GO／WAIT，升降台上下站分别判断；挡板的两条通道也各看各的。提示用实际几何和开合状态判断，不用装饰性亮灯代替结果。自动机关的提示表达当下状态，仍然需要把握时机。
+
+- Lift platforms must actually meet the upper landing. I rechecked all six exits for height and seams. Upper labels were squeezed by the HUD and status signs overlapped nameplates, so placement now avoids the ball and other labels, falling back to a small check/cross when crowded.
+
 - 我要求最高处的升降台真正接岸。现有六处出口重新检查高度与接缝，不为了好看偷偷留空。检查画面时还记录到上层提示被顶栏挤掉、状态牌压住名称牌的问题；提示位置改为避开球、名称及其他提示，拥挤时保留小型对勾／叉号。
+
+- I wanted slightly quicker wind influence, so force increased only 8% and checks include the swept movement through a wind zone, preventing fast crossings from missing it between sample points. This improves reliability rather than sharply increasing difficulty.
+
 - 我希望风的影响及时一些，只加强一点。决定只增加 8%，同时检查一步运动扫过的风区，避免高速经过时两个采样点恰好都在区外。这样调整的是反馈可靠性，而不是突然增加很多难度。
+
+- I moved turning control onboard: board the horizontal platform, operate its control post, then align another route. Courses progress from onboard operation to repeated turns, shore recall plus onboard control, then ferries, wind, and bumpers. Shore and onboard controls share the current angle instead of resetting it when control changes location.
+
 - 我提出把旋转操作搬到板上：先登上横板，再在板上控制柱转到另一条路。关卡先只教板上操作，再安排连续换向，之后加入岸边召回与板上转向配合，最后与渡板、风区、护圈组合。岸边和板上的控制共享当前角度，换位置操作不应突然把平台转回去。
+
+- I checked corner occlusion and texture overflow. Initial top-surface clipping lost texture in native images; applying a transparent mask after drawing restored the stone texture while limiting its bounds. New boards reuse the structural materials and cache rotation views in advance to protect hardware performance.
+
 - 我关注拐角的遮挡和贴图越界。道路顶面加裁切后，原生画面检查暴露了纹理丢失；改成绘制完成后附加透明遮罩，恢复石材纹路，同时限制贴图范围。新板沿用同一组结构材质，转动视图提前缓存，避免为了更多关卡牺牲真机表现。
+
+- The tutorial shows boarding, an actually rotating crank, the exit becoming GO, and B release before leaving. New courses followed the old 44, preserving saves and numbers. This group of new mechanics justified 0.10.12 → 0.11.0; later small fixes continue the patch number.
+
 - 我希望教学也说明完整过程：先上板，摇柄真正转动，看到出口 GO，按 B 解除后离开。新增内容接在旧 44 关后，保留旧存档与编号。本次包含成组的新机制关卡，所以版本从 0.10.12 升到 0.11.0，后续小修继续递增末位。
+
+Further findings during this round:
 
 本轮测试中的进一步发现：
 
+- New turntables connect perpendicular exits; the old left/right straight-bridge seam test was insufficient. I checked each explicit entrance and exit and validated that all four courses reached the actual completion state.
+
 - 新转台连接的是垂直出口，原来的左右直桥接缝检查不再足够。我要求沿每个明确的入口／出口分别检查，并用完整路线检查验证四关能够进入真正的通关状态。
+
+- WAIT is longer than GO, and the first label bounds were too small. I fixed the plate width and centered text independently so state changes do not change its width.
+
 - WAIT 比 GO 长，第一版标识边界不够。我希望状态切换时牌子的宽度不跳动，所以统一牌面宽度并让文字独立居中。
+
+- Many first hardware samples approached 30 FPS, but a dense triple-gate area dropped to about 17–18. Profiling found complex support queries repeated even on ordinary flat ground.
+
 - 首轮真机采样虽然许多地方接近 30 帧，但三闸门密集处降到约 17–18 帧。我不希望新增提示让操作变得更难，因此继续分项计时，记录到普通平地也重复做了复杂的支撑查询。
+
+- Full circular checks remain at edges, while ordinary ground uses fast height lookup. Connection geometry is reused until position, angle, width, or lift height changes. All 74 native comparison images matched; optimization must not sacrifice feedback or visuals.
+
 - 优化保留边缘处完整的圆形判断，普通地面改走快速高度查询；接岸几何没变化时复用结果，位置、角度、伸缩宽度或升降高度一变化就更新。74 张原生画面对照完全相同，不能以牺牲提示或画面换取性能。
+
+The validation documents separately record the procedure and hardware measurements. Automated geometry checks and frame-rate samples are not manual completions of every course.
 
 本轮测试过程和实际真机数据分别记录在验证文档中；自动几何检查与帧率采样不等同于人工完成全部关卡。
 
+I also wanted double gates to avoid implying that a GO on the left applies to the right. Each lane has its own number and entrance marker. The fixed divider does not need another WAIT sign, which would make two routes look like three.
+
 提示增加后，我又提出：不能因为左边显示可以走，就让玩家以为右边也能走。我要求双闸门按通道分别编号、分别提示，并把标记放在各自入口附近。中间固定隔墙不需要再占一块 WAIT，否则反而让两条路看起来像三条路。
+
+Avoiding the ball with the plate alone was insufficient: leader lines and fallback icons could still cover it, and older mechanism nameplates could hide a jumping ball. Placement now considers the ball, overhead compass, lock status, names, and status signs together. Leader lines break around the ball and crowded fallbacks cannot arbitrarily cover it. Both double-gate lanes must remain WAIT while their openings are still obstructed during a transition.
 
 我还要求检查提示和球的遮挡。检查发现，仅让牌面避开球还不够，引线和拥挤时的小图标也可能盖上来；跳跃时原来的机关名称牌也会挡住球。于是把球、头顶罗盘、锁定提示、名称牌和状态牌一起纳入占位，引线经过球时断开，拥挤回退也不能随意压在球上。双闸门在切换途中尚未清空时必须同时显示 WAIT，不能提前告诉玩家可以通过。
 
+---
+
+<a name="entry-16"></a>
+
+# 0.10.12: The rebound contact must be readable
+
 # 0.10.12：反弹的位置必须能看懂
+
+Further play revealed that the previous 360° rebound still seemed to trigger before the ball reached the base when passing sideways, making narrow routes hard to judge. A vertical spring suggests an upward launch, not lateral rebound in every direction.
 
 我继续试玩后发现，虽然上一版能从四周反弹，但侧面经过时仍像是还没碰到底座就被弹走，窄路因此很难判断能不能通过。我还意识到，竖直朝上的弹簧本来更像向上弹跳的装置，用它解释四面八方的横向反弹并不直观。
 
+- I retained 360° rebound but changed the object to a low circular elastic bumper. Its whole perimeter is an elastic sidewall: hit a side and rebound outward from it. A tall cap and vertical coil no longer represent this function.
+
 - 我确定保留 360° 反弹玩法，外观改成贴地的圆形弹力护圈。四周都是可撞击的弹性侧壁，撞哪侧就朝那侧外面弹，不再用高高的顶盖和竖直线圈表达这个功能。
+
+- Collision must match the visible base. I changed its radius to 14 and height to 10, updating course dimensions, asset anchors, and occlusion. Removing the separate square decorative base avoids two competing boundaries. Contact accounts for ball radius and its smaller contact cross-section when airborne.
+
 - 我要求碰撞对应真正的底座。底座半径改为 14、高度改为 10，同时更新关卡中的尺寸、素材锚点和遮挡；移除独立的方形装饰底座，避免看到两套边界。球与侧壁的接触还要考虑球本身的半径，以及离地时接触截面的缩小。
+
+- Passing over the top must not cause lateral force. Top crossings are separate from side collisions, and slope checks compare the ball's and mechanism's actual ground heights rather than using one broad airborne trigger.
+
 - 我不希望球只是从顶部越过就受到横向推力，所以把跳过顶面的情况与侧壁碰撞分开。上坡、下坡经过时要核对球与机关各自的地面高度，不能用统一的高空触发范围代替实际接触。
+
+- I specifically requested impact animation: the whole ring bulges outward and elastically returns. Eight prepared frames form a 0.36-second animation, triggered with sound by the same real collision. The expansion is visual only and cannot enlarge collision to block the route again.
+
 - 我特别补充了触发动画：撞击后整个护圈向外鼓一下，再弹性收回。八个预备画面组成 0.36 秒动画，声音和动画由同一次真实碰撞启动；外扩只用于视觉反馈，不能把碰撞也放大，再次封住通路。
+
+- Regression checks cover positions inside the old range but outside the new ring, boundary contact around every side, airborne crossings, top entry, one sound per impact, and no runtime image creation. Fifty-four native frames confirm the expansion is not cropped and returns fully to its original form. Hardware samples are recorded separately, not represented as all-course completions.
+
 - 回归检查确认旧范围内、新护圈外的通行位置不会触发；还检查四周临界接触、空中越过、顶部进入、声音只响一次和动画不在游玩时创建图片。原生导出的 54 张画面确认外扩没有裁边，并能完整恢复原形。真机抽测另外记录，不将局部抽测写成全关卡通关。
+
+---
+
+<a name="entry-17"></a>
+
+# 0.10.11: The spring must work from every approach
 
 # 0.10.11：弹簧必须从任何方向都成立
 
+The spring looked mostly correct from below and the sides, but approaching from screen-top let the ball cover its cap as though standing on it. Some side approaches also failed to rebound sideways. My intended circular spring should push outward from any approach, not only head-on collisions.
+
 我发现从弹簧下方、侧方经过时画面基本正常，但从屏幕上方经过，小球会盖在弹簧帽上，看起来像站在上面。我也注意到有时从侧面接近并没有向侧面弹开。我的设定一直是圆形弹簧，360° 接近都应该朝外弹，不能只有正撞才有明显效果。
 
+- The old logic reflected only the collision-normal component, which is small during slow or glancing contact. I made it an active outward spring with minimum and maximum impulses. A departing ball does not retrigger it, and jumping over remains possible.
+
 - 检查发现，原逻辑只反射碰撞法线分量，慢速、擦边时这个分量很小。我决定把它做成主动弹簧，根据接触点向外弹出，保留最低弹力、限制最高弹力；已经离开的球不再次触发，跳跃越过仍然可行。
+
+- Rear occlusion failed because the spring was absent from the ball's occluder list. Occlusion now follows the actual image and compression frame, not a rectangular cutout. Transparent gaps stay transparent, a foreground ball stays intact, and only overlapping parts behind the spring are hidden.
+
 - 背面遮挡错误来自弹簧不在小球遮挡列表中。我要求遮挡随真实图像和压缩动画变化，不能用矩形把球整块挖掉。透明空隙保持透明，球在前方时保持完整，只有处于后方并重叠的部分才被遮住。
+
+- I checked beyond the reported object. Fans and cannons also lacked ball masks; magnets, jet nozzles, and consoles joined the same system. Wind lines and magnetic effects are not solid objects. Platform-side masks were restored to their actual thickness.
+
 - 我不希望只修我指出的一个机关。检查还发现风机、炮台等立体图像缺少对应的球遮罩，于是将磁铁、喷气嘴和控制台也纳入同一方式；风线和磁场效果不当作实体。平台侧面原来的遮罩太薄，也恢复到实际厚度。
+
+- Native testing revealed SDK masks must be at least 32 pixels wide, a constraint absent from host stubs. After changing the buffer to 32 × 32, hollow-image checks confirmed transparent centers do not erase the ball.
+
 - 原生检查中发现 SDK 遮罩宽度不能小于 32 像素，主机桩测试没有反映这个限制。缓冲改为 32×32 后，再做空心图像检查，确认透明中心不会抹掉小球。
+
+- Directional console views showed the ball could still cover mechanism nameplates. I moved them into the final foreground layer, consistent with checkpoint labels.
+
 - 查看控制台各方向截图时，我发现机关文字牌仍可能被球盖住，于是将这些牌子移到最后的前景层，与检查点文字牌统一。
+
+- Tests covered all 13 springs at 72 angles, four speeds, and head-on/glancing approaches: 7,488 contacts. I also reviewed 408 directional and animation images. Hardware sampling separately covered spring, cannon, and final courses without claiming perfection in every condition.
+
 - 对所有 13 个弹簧测试 72 个角度、4 种速度及正撞／擦边，共 7,488 次接触；再查看 408 张各机关方向与动画截图。真机性能另外抽测弹簧关、炮台关和最终综合关，保留真实结果，不把这次采样说成所有情况都完美。
+
+- Initial hardware samples showed repeated local-mask generation slowed dense scenes. I cached masks with identical relative positions and frames. Comparisons exposed small magnet and winch edge differences in the fast path, so those retained precise clipping. All 408 images then matched.
+
 - 第一轮真机采样发现，反复生成局部遮挡形状使密集场景变慢。我决定缓存相对位置和动画帧相同的遮罩，只在变化时重算。快速路径的截图对照又暴露了磁铁、卷扬机少量边缘差异，于是保留它们的精确裁切，再次对照 408 张图，确认优化前后完全一致。
+
+- Forty-one hardware scenes completed. Spring courses were around 30 FPS, final-course roads around 26, and the densest area around 20, still slightly below the older build. I retained these limits rather than claiming the visual fix solved performance. The normal game replaced the test installation and preserved saves.
+
 - 最终真机抽测完成 41 个场景，弹簧关约 30 帧，但最终关道路约 26 帧、最密集处约 20 帧，仍略低于旧版。我保留这些限制和对照结果，没有把视觉修正说成性能也完全解决。正常游戏已覆盖回原安装位置，保留存档。
+
+- A final check found platform sides had grown thicker but broad-phase filtering still used the old one-pixel margin. Long rotating boards could skip lower-edge occlusion before precise testing. I matched the filter to actual thickness, added lower-edge-only regressions, rechecked 408 native images, and repeated hardware samples.
+
 - 最后核对时还发现，平台侧面虽然加厚了，但前置范围筛选仍沿用旧的一像素余量。这样长条旋转板下沿的遮挡可能在精确计算前就被跳过。我将筛选范围同步到真实厚度，补上仅与下沿相交的回归样本，再次核对 408 张原生画面并重跑真机采样。
+
+---
+
+<a name="entry-18"></a>
+
+# 0.10.10: The upper HUD should belong to the game
 
 # 0.10.10：顶部也要像游戏的一部分
 
+The course name, speed, force, jump state, time, and death count were present but looked like plain text laid out on top. Speed labels and values especially needed fixed positions so changing numbers would not look misaligned. I refined only the upper HUD; I was already satisfied with the lower arrows and controls.
+
 我发现顶部的关卡名、速度、力度、跳跃状态、时间和死亡次数虽然齐全，但外观比较简陋，像把文字直接排上去。尤其是速度区域，我希望标签与读数有各自固定的位置，数字变化也不要显得错位。我决定只细化顶部，底部箭头和操作提示已经满意，保持原样。
 
+- I used bold monochrome pixel emblems, an inverted course plate, and separate readout areas. Flags and icons had to work at their actual 18 × 18 size, not merely look attractive enlarged.
+
 - 我希望旗帜和小图标有统一的游戏风格，因此采用厚轮廓的黑白像素徽记，配合反白关卡牌和独立读数区。素材必须落到实际 18×18 像素去看，不能只看大图漂亮。
+
+- All existing information stays, including time, deaths, and the jump bar. Both rows still occupy 43 pixels so decoration does not cover more road. The jump bar indicates recovery, not the historical charge mechanic.
+
 - 我希望所有原有信息都保留，不能为了装饰删掉计时、死亡数或跳跃条。上下两排仍占 43 像素，避免遮住更多道路。当前跳跃条继续表达恢复状态，不把旧版蓄力玩法混回来。
+
+- Segmented ticks remain, with baseline marks for empty cells to clarify input strength and recovery. Speed, time, and counts use monospaced digits right-aligned in fixed cells.
+
 - 我保留一格一格的刻度，为空格留下底部刻线，让当前力度和剩余恢复过程更明确。速度、计时和次数改用等宽数字，各自在固定单元内右对齐。
+
+- Screenshot comparison showed large course text too close to the lower border. I moved it up one pixel and rechecked 44 names, three-digit speed, long times, and four-digit fall counts.
+
 - 对照截图时，我发现关卡牌大字下缘过于贴近边框，于是将关卡名上移一个像素，重新核对 44 个名称、三位数速度、长计时和四位掉落数。
+
+- Static frames and all tick states are cached in advance; the number layer updates only when integer readings change. Across 55 native samples, the world below the HUD and the lower controls matched pixel for pixel.
+
 - 我不希望美术更新损害已经优化过的性能，因此静态框架和所有刻度状态预先缓存，只有整数读数变化才更新数字层。用原生截图逐像素比较，55 个样本中，顶部以下的世界和底部操作栏完全一致。
+
+The version's validation separately records hardware scope and results; local samples are not represented as a fresh test of all 44 courses.
 
 真机抽测范围与结果单独记录在本版验证文档中；不把局部抽测描述成重新完成全 44 关测试。
 
+---
+
+<a name="entry-19"></a>
+
+# 0.10.9: Simple courses cannot represent the whole game
+
 # 0.10.9：不能只拿简单关卡代表整款游戏
+
+I requested hardware retesting across the complete game. Smooth desktop play does not establish hardware smoothness, and early courses do not represent the finales. This round recorded road traversal, local movement, every mechanism, and every control point across 44 courses: 303 scenes. These are repeatable hardware samples, not claims of manually completing every course.
 
 我要求在真机上把完整游戏的每一关都复测一遍。电脑上流畅不能说明真机也流畅，前几关流畅也不能说明最终大关没有问题。这次保留全部 44 关的道路遍历、局部移动、每个机关和每个控制点的记录，合计 303 个场景；这是可重复的硬件采样，不冒充人工把所有关卡完整通关。
 
+- Automatic locking interrupted USB tests. I wanted wakefulness whenever connected, including title, loading, and gameplay, not only in test builds, with normal locking restored after unplugging. The game checks USB status; firmware also offers automatic locking only on battery power.
+
 - 我发现测试中设备会自行锁屏，USB 随之断开，不能靠我一直守着按键。我的要求是只要连着 USB 就保持唤醒，包括首页、加载和游戏，不能只在测试包里生效；拔线后应恢复正常自动锁屏。正式游戏增加 USB 状态检查，固件也提供了只在电池供电时自动锁屏的设置命令。
+
+- Baseline tests found final-course machinery around 19 FPS. Rather than reporting only near-30 results, I profiled Courses 15, 20, 33, and 44 before retesting the full set.
+
 - 全关卡基线发现，最后一关的部分密集机关只有约 19 帧。我不能只保留前面接近 30 帧的结果，因此把第 15、20、33、44 关列为重点定位场景，记录模块耗时，再回到完整关卡复测。
+
+- Dense-area physics repeatedly checked irrelevant machinery. I organized nearby objects separately for support, solid collision, and force fields, retaining order and comparing every result with the old full query. Speed must not come from changed collision rules.
+
 - 密集障碍区的物理查询反复检查不相关机关。按支撑、实体碰撞和力场分别组织附近对象，保留每类的原有顺序，和完整旧查询逐项对照，不能靠改变碰撞规则来提速。
+
+- Fixed lift columns repeatedly projected and drew textures; fan direction changes could allocate images. I cached fixed parts and prepared fan orientations during loading, retaining live lift, blade, and airflow animation.
+
 - 固定升降支柱每帧重复投影和画材质，风机转到新方向也可能临时生成图片。因此固定部分缓存起来，风机现有朝向在加载时准备；升降、叶片和气流动画继续实时更新。
+
+- Control-mode changes regenerated key icons and lower hints. I cached and prewarmed those modes; a ball hidden inside a cannon no longer needs drawing or masking.
+
 - 切换机关操作状态时，按键图标和底部提示条会重复生成。把这些界面按模式缓存并提前准备，炮内已经看不见的球也不必继续绘制和计算遮罩。
+
+- Fast road motion still missed texture caches and sometimes exceeded 100 ms per frame. Sparse map chunks are prepared during loading; the largest map's 94 small chunks became 39 larger chunks to reduce draws, while rendering remains viewport-limited. Future oversized maps retain a bounded cache rather than unlimited memory.
+
 - 道路快速移动时仍出现贴图缓存缺失，个别帧超过 100 毫秒。先将当前地图的稀疏块在加载阶段准备，再将最大地图的 94 个小块合成 39 个大块，减少绘制调用；每帧仍只画屏幕范围。将来地图超过预算时继续走有限缓存，不能无限占用内存。
+
+- Switching courses left old geometry and query caches behind. Exit now releases derived data while keeping definitions, progress, and checkpoints; re-entry prepares it again.
+
 - 连续切关还会留下旧关卡的几何和查询缓存。退出时释放派生数据，保留关卡定义、进度和检查点，再进入时重新准备，避免玩得越久越积累。
+
+- Repeated ground-height queries traversed slope tables, and content behind the HUD was drawn needlessly. A height index and HUD clipping preserve results across 72,154 height/slope samples.
+
 - 继续定位时发现，相同地面高度反复遍历坡度表，HUD 背后也在画注定看不到的内容。增加高度索引并裁剪被 HUD 完全盖住的区域，72,154 个高度和坡度样本与旧计算一致。
+
+- The final consecutive-gate area remained slow. I reused same-position ground queries and directly searched lifts, moving boards, and terrain in the original priority order. Lift height remains live, not cached as stationary.
+
 - 最后大关的连续闸门区仍然偏慢，所以继续复用同一位置的地面查询，并直接按原来的优先顺序查找升降台、移动板和地面支撑；升降台当前高度仍实时读取，不能把升降也缓存成不动的。
+
+- A successful command is not proof of a system setting. I exited the test game, verified Auto Lock showed Off while charging in hardware Settings, and checked idle connectivity.
+
 - 不能只凭命令返回成功就认为系统设置生效。因此退出测试游戏，到真机系统设置里检查，确认 Auto Lock 已显示 Off while charging，再检查不操作时能否保持连接。
+
+- Of 211 native images, 210 matched exactly. The highest lift pose differed at eight column-edge pixels due to cache rounding. Visual inspection confirmed material, space, and occlusion were not simplified.
+
 - 画面比较覆盖 211 张原生导出：210 张完全一致，最高升降台姿态有 8 个支柱边缘像素因缓存取整不同。检查实际画面确认材质、空间关系和遮挡没有被简化。
+
+- All 44 courses and 303 hardware samples completed without runtime errors. Scenes averaging at least 29 FPS increased from 261 to 286; all 132 local-movement samples were around 29.1–30.4. The slowest road traversal improved from 24.84 to 27.35, road-cache misses reached zero, and sampled peak Lua memory fell from about 5.5 MB to 3.0 MB.
+
 - 最后完整跑完 44 关、303 个真机采样，没有运行错误。平均达到 29 帧的场景从 261 个增加到 286 个，132 个局部移动样本都在约 29.1～30.4 帧。道路遍历最慢由 24.84 提高到 27.35 帧，道路缓存缺失全部为零，采样 Lua 内存峰值由约 5.5 MB 降到约 3.0 MB。
+
+- Limits remain: dense final-course belts and consecutive gates were about 20.8–21.1 FPS, Course 33's heaviest gate about 24.6, with occasional long frames. This is neither stable 30 FPS everywhere nor manual all-course completion. The normal game replaced the test build in the same directory and passed title/startup checks.
+
 - 我也保留没完全解决的结果：最终大关的密集传送带和连续闸门仍约 20.8～21.1 帧，第 33 关最重闸门约 24.6 帧，偶发长帧还存在。这次改善不能写成全场景稳定 30 帧，更不能把自动采样写成人工全部通关。正常游戏已经覆盖回同一个安装目录，标题界面和启动检查确认成功。
+
+Final hardware data, installation state, and remaining limits are in the [0.10.9 validation record](VALIDATION-v0.10.9.md). This performance and connection-stability patch continues the existing sequence as 0.10.9.
 
 最终真机数据、正常游戏安装状态和仍存在的限制记录在 [0.10.9 验证记录](VALIDATION-v0.10.9.md)。这轮属于现有功能的性能和连接稳定性修正，继续沿原来的版本顺序记为 0.10.9。
 
+---
+
+<a name="entry-20"></a>
+
+# 0.10.8: Spatial relationships must hold up on screen
+
 # 0.10.8：空间关系要在画面里成立
+
+The turning bridge's far end was correct, but its near, lower-right end still covered the road. Non-overlapping collision bounds do not guarantee correct visual occlusion. I wanted the whole game's spatial relationships checked, not only the photographed location.
 
 我发现上一版转桥的远端已经正确，靠近镜头的右下端却仍盖住道路。这说明碰撞范围没有交叠，不代表画面的遮挡就正确。我希望检查整个游戏的空间关系，而不是只处理我截图指出的位置。
 
+- I separated road/mechanism depth: distant surfaces draw first, machinery next, and genuinely nearer roads cover its lower edge. Supporting surfaces must not become occluders. Twelve mechanism types were checked; automatic ferries, manual shuttles, turning bridges, and telescoping bridges share foreground handling.
+
 - 我再次指出近端的问题。这次把道路与机关的前后绘制关系分开：远处路面先画，机关再画，真正靠近镜头的路面遮住机关下缘。承托机关的路面不能被误当作遮挡物。检查覆盖 12 类机关，自动渡板、手动横移、转桥和伸缩桥都走同一套前景处理。
+
+- The lift looked trapped in a wall. Correct height ordering still left an entire brick wall behind it. I kept the rear upper exit but replaced the thick wall with open platform space and slender outer supports, separating the moving central column from fixed upper-platform supports.
+
 - 我觉得升降台像卡在墙里。虽然上一版高低顺序对了，但整面砖墙贴着背后，让独立升降台像在墙缝中运动。我保留后侧上层出口，拿掉厚墙，改成留空平台和外侧细支撑；中间升降柱与上层平台的固定支柱分开。
+
+- The barrel cannot simply rotate a flat image. Turning toward the viewer should shorten the body and expose the muzzle. Projected cylinders, reinforcing bands, muzzle, and trunnions now form the cannon; its base stays fixed and recoil moves only the barrel.
+
 - 我指出炮管不能只在屏幕上转一张图。转向镜头时，筒身应该变短、炮口更正对玩家。这次采用立体圆筒、加固圈、炮口和支轴的投影，底座固定，后坐只移动炮管。
+
+- The aim guide must originate at the muzzle. Muzzle, guide, smoke, and launch center share coordinates. A former inside-barrel trajectory segment moved into loading animation, preserving landing range. Existing receiver-route regressions still pass.
+
 - 我要求预瞄线从炮口出发。现在炮口、预瞄线、烟雾和球发射时的中心共用一套坐标；把弹道原先在炮内的一小段移到装填阶段后，保留原来的落点范围。原有炮台接收平台的实跑回归也通过，不能为了画面正确让关卡突然接不到球。
+
+- The small tutorial still used the old flat flight path. It now shares the isometric projection and trajectory. A loaded ball disappears into the barrel rather than standing on the cradle.
+
 - 检查教学时发现，小演示仍用旧的平面飞行路径，因此炮台教学也改成同一个斜视投影和弹道。装填之后球收入炮内，不再一直站在承座上。
+
+- Fans also changed only their wind lines while their heads stayed fixed. Head and blade plane now rotate together, narrow in side views, and emit airflow from the outlet. Automatic machinery still gets no crank-control hints.
+
 - 检查其他朝向机关时，又发现风机只改变风向线、机头仍固定朝前。现在机头和叶片所在的面一起转动，侧向时变窄，气流从出口发出。自动机关仍不混入摇柄操作提示。
+
+- Six initial hardware movement tests were around 29–30 FPS, but redrawing foreground road tiles made one complex scene about 15. I cached repeated occlusion combinations and prepared common states during loading rather than judging by simple courses.
+
 - 初稿六段真机动态测试约 29～30 帧，但复杂关卡中，逐块重画前景道路造成明显开销，最重一段只有约 15 帧。我不能只看简单关卡流畅就认为没有问题，因此继续把相同的遮挡组合成可复用画面，并在加载时准备常见状态。
+
+- All 211 native images matched before and after caching, and 1,932 road-selection/order comparisons passed. This removed repetition without omitting near-end occlusion. Final hardware and installation results remain in the validation record.
+
 - 缓存前后 211 张原生导出画面一致，1,932 组道路选择和顺序对照通过。这样优化针对重复工作，没有通过省掉近端遮挡来换帧率。最终硬件复测与安装状态以验证记录为准。
+
+This corrects existing spatial relationships and animation without adding courses, continuing as 0.10.8.
 
 这次是已有空间关系和动画的修正，没有增加关卡，版本继续为 0.10.8。
 
+---
+
+<a name="entry-21"></a>
+
+# 0.10.7: Machinery must actually meet the roads
+
 # 0.10.7：机关必须真正接得上道路
+
+The cannon's guide changed direction more clearly than the cannon itself; ferries docked inside roads, and lift-side heights were unclear. Functional machinery also needs believable space. I wanted the upper exit connected at the rear, not floating beside the lift merely to expose its structure.
 
 我发现炮台只改变了预瞄线，炮本身的朝向却不够明确；移动板停靠时压进道路，升降台两侧也看不清高低。对我来说，机关能用还不够，它必须在画面中符合空间关系。我希望上层出口可以靠后侧接到升降台，而不是为了露出结构让路悬在旁边。
 
+Changes and checks were recorded by issue:
+
 这轮修改和检查按问题分别留下记录：
 
+- The barrel follows firing direction while the base stays fixed. It uses 61 orientations around the rear cradle, with recoil along that direction. Direction checks compare the real trajectory's initial tangent.
+
 - 我要求炮管跟随发射方向转动，而底座不动。现在炮管采用 61 个朝向，围绕后部承座旋转，后坐也沿同一个方向。方向检查对照真实发射轨迹的起始切线。
+
+- Ferry stops now derive from actual shore edges, checking support at the seam's center and both sides. Moving artwork alone must not leave a catching corner.
+
 - 我指出渡板开进路面的问题。停靠位置改成根据两岸的真实边缘计算，并检查接缝两侧与中心都有连续支撑，不能只把贴图挪走却留下卡角。
+
+- Turning bridges must not cut into roads. Their dimensions follow the actual gap; short metal end connectors retract while turning and reconnect on alignment. Across 3,439 poses, no road overlap was found, and 342 seam samples retained support.
+
 - 我要求旋转桥不能切进两侧道路。桥按真实缺口宽度设置，转动时两端短金属接头适当收回，正对道路时重新接合。遍历 3,439 个运动姿态未发现道路交叠，342 个接缝采样都有支撑。
+
+- To show the higher lift exit, foreground placement initially hid too much of the lowered platform. I used my proposed rear exit, moving all six upper exits toward the isometric upper-right edge, deepening brick sides, and updating collision and cache bounds with the visuals.
+
 - 我希望升降台看得出上层路确实更高。先把高台画在前面后，低位平台又被挡住太多；因此采用我提出的后侧出口，把六处升降台的上层出口改到斜视角的右上方。加深砖砌侧壁，并同步修改碰撞和缓存范围，不能只有画面变高。
+
+- Using neighboring tile heights for a tile's corners produced false slopes at height boundaries. Each tile now uses its own center plane to avoid stretching.
+
 - 检查高度交界时发现，拿相邻地块高度计算同一块砖的角点，会产生假的斜面。改成每块砖使用自己的中心平面，避免高低边界处拉伸。
+
+- Tutorial cranks must visibly rotate. The crank is attached to the Playdate side and follows lift, shuttle, bridge, or aiming actions. Automatic ferries and bridges demonstrate waiting and crossing rather than implying manual rotation.
+
 - 我要求教学里的机器摇柄真的旋转。现在摇柄连在 Playdate 侧面，并随升降、横移、转桥或瞄准演示动作。自动渡板和自动转桥只演示等待和通过，不再暗示它们需要手动摇动。
+
+- Initial hardware checks found detailed continuous bridge textures costly, around 23 FPS. I exported their per-degree views through the same renderer beforehand while keeping physics angles continuous, and reduced repeated structural and height traversal.
+
 - 真机专项初稿发现，详细贴图连续转动仍有较大开销，旋转桥约 23 帧。随后将这两种桥的画面提前用同一绘制器导出，运行时读取逐度画面，物理角度继续连续计算。还减少了底层结构的重复遍历和高度查询开销。
+
+- A cannon-course test stopped on an empty mechanism list. I fixed the test script's list check and did not misreport its interruption as a production-game result.
+
 - 测试程序在炮台关遇到空机关列表而中断，已修正测试程序的列表判断。这是测试脚本问题，记录中没有把它冒充成正式游戏运行结果。
+
+Host regressions and native Simulator views passed, but USB disconnected mid-round. Final optimized hardware frame rates and normal-game restoration were not complete. Those remain explicit pending items for reconnection. This patch continues as 0.10.7.
 
 主机回归和原生模拟器画面检查已通过，但 USB 在本轮中途断开。最终优化后的真机帧率及正常游戏覆盖安装还没有完成，不能把初稿数据写成最终验证。保留这些未完成项，下一次接回真机后继续验证。本次沿用小版本序号 0.10.7。
 
+---
+
+<a name="entry-22"></a>
+
+# 0.10.6: Moving machinery should look mechanical
+
 # 0.10.6：移动机关也应该像真正的机械
+
+A moving board still looked like paper; a gear icon on top did not explain its motion. Lifts and cannons likewise had function without convincing support or materials. I wanted equal attention for every mechanism, including small automatic ones.
 
 我发现移动板看起来仍像纸片，上面放一个齿轮图标，并不能说明它靠什么移动。升降台和炮台也存在同样的问题：功能虽然有了，但支撑结构和材质没有跟上。我希望所有机关都受到同样的重视，包括那些不需要我手动操控的小机关。
 
+I set these directions:
+
 这次我明确了几个修改方向：
 
+- Automatic boards need thickness, side beams, carriages, and rails. Gears belong in transmission housings, not floating on walkable floors. Manual shuttles and lifts share materials and construction, with rotating parts tied to actual travel and height.
+
 - 自动移动板需要有厚度、侧梁、滑车和导轨。齿轮如果出现，就应该属于传动箱，不能悬在可站立的地板上当图标。手动横移台与升降台要使用相近的材质和构造，转动的部件跟实际位移、升降高度对应。
+
+- A cannon base cannot be just a block. I wanted a round mounting and curved cradle, with a barrel wide enough to contain the hamster ball. The barrel recoils; the base stays fixed.
+
 - 炮台下面不应该只是方块。我把目标改成圆形承座和弧形托架，炮管也要够粗，视觉上才能容纳仓鼠球。发射时炮管后坐，底座应该固定。
+
+- Disappearing floors need frames, undersides, and folding leaves rather than vanishing white sheets. Turning bridges, telescoping bridges, barriers, belts, and small bases share the metal and light-panel language.
+
 - 消失的地板不能只是白色片子突然不见。它需要边框、下方结构和折叠的门片，关闭和打开都能看出是什么机关。旋转桥、伸缩桥、挡板、传送带和小机关的底座也采用同一套金属和浅色板材。
+
+- A ball riding a moving board is stationary relative to it and should not roll just because world coordinates change. Rolling now uses the ball's own displacement after platform transport. Automatic translation and rotation riding pass, while active rolling remains.
+
 - 我特别指出：球站在移动板上时，相对平台并没有运动，不能因为世界坐标变化就滚起来。现在滚动动画只计算平台搬运之后球自己的位移；自动平移和旋转搭乘测试都通过，主动滚动仍保留。
+
+Further issues found during checks:
 
 在检查中又处理了几个具体问题：
 
+- Old flat tutorial boards no longer matched gameplay. Demonstrations now use formal mechanism rendering. Native views showed a disappearing-floor housing near hint text, so I moved the demonstration upward.
+
 - 教学里的旧平板与新的游戏素材不一致，因此相关演示改用正式机关的绘制方式。原生画面中发现消失地板的传动箱靠近提示文字，又向上调整了演示位置。
+
+- An oblique long board can project wider than its straight view, requiring larger cache bounds. Seventy-three angles across a full turn passed.
+
 - 长旋转板斜过来时，投影宽度可能大于正放时的宽度，因此扩大了它的缓存边界。完整一圈的 73 个角度检查通过。
+
+- First hardware results regressed to about 25–26 FPS in heavy scenes. Timing identified repeated texture projection during gate and floor changes; caching only fixed bases was insufficient.
+
 - 第一轮真机结果出现新的性能回落，较重场景只有约 25～26 帧。细分耗时显示，闸门和消失地板在变化时重复投影材质是主要开销，先缓存固定底座还不够。
+
+- Gate pixel heights, floor states, and belt frames now prepare during loading and are retrieved at runtime. Collision timing keeps its original continuous values. A 36-second animation loop created no new images, and course changes release old structural caches.
+
 - 随后把闸门像素高度、地板开合和传送带动画画面移到加载阶段准备。运行时取用缓存，碰撞时序继续使用原有连续数值。36 秒动画循环检查没有新的图像分配，切关也会释放上一关的结构缓存。
+
+Final eight-scene hardware measurements were about 28.82–30.22 FPS; the heaviest recovered from 25.20 to 28.82. The longest frame was about 49 ms, so occasional stutter remains. Initial results, diagnosis, and final comparisons stay recorded. This improves existing presentation and relative rolling without new mechanics, continuing as 0.10.6.
 
 最终八段真机测量约 28.82～30.22 帧，最重的一段由初稿 25.20 帧回到 28.82 帧；最长单帧约 49 毫秒，仍不能说所有情况下都完全不顿。保留初稿测量、定位记录与最终对照，避免只记录成功结果。这次完善已有机关的表现和相对滚动，不增加新机制，沿原有序列记为 0.10.6。
 
+---
+
+<a name="entry-23"></a>
+
+# 0.10.5: Check the sounds individually on hardware
+
 # 0.10.5：把声音放到真机上逐个检查
+
+I wanted the latest version back on hardware and every sound checked, not just its trigger logic on a computer. After reconnecting, the release started, a temporary checker exercised audio, and the normal game replaced it in the same directory.
 
 我希望最新版装回真机，同时确认所有声音能正常工作，不能只在电脑上看触发逻辑。重新连接后，正式版完成启动，随后用临时检查程序逐项验证声音，再把正常游戏覆盖回同一目录。
 
+Checks and adjustments:
+
 本轮检查与调整：
 
+- All 45 files were valid mono PCM, nonempty and without full-scale clipped samples. Hardware started/stopped each player and checked slow/fast rolling, passing 47 items. File/player checks are not speaker listening tests; timbre and volume still require ears.
+
 - 45 个音频文件均为有效的单声道 PCM，文件不是空音频，也没有满幅削波采样。真机逐个启动和停止播放器，再检查滚动声的慢速与快速两档，共 47 项通过。文件和播放器检查不等于实际扬声器听感，音色与音量仍要亲耳确认。
+
+- Existing trigger checks cover actual spring contacts, lock/release, cannons, seven crank-control types, gate/floor/jet transitions, distance attenuation, pause, and course cleanup.
+
 - 原有触发检查继续覆盖真实弹簧碰撞、锁定／解除、炮台、七类摇柄控制点、闸门／地板／喷气状态变化、距离衰减、暂停及切关清理。
+
+- Complex courses with audio ran about 26.02–29.97 FPS across eight scenes. Profiling found whole-map mechanism traversal and repeated idle-player calls; audio averaged about 4.58 ms in a heavy diagnostic scene.
+
 - 带着声音运行复杂关卡时发现性能回落，八段正常速度场景约 26.02～29.97 帧。进一步定位发现，声音更新仍遍历整张地图的机关，且反复调用空闲播放器；较重场景中这个模块的测量均值约 4.58 毫秒。
+
+- Audible bounds now cover each mechanism's full travel, including fan zones and extending bridges. Distant work is skipped; returning evaluates current world time rather than freezing mechanisms or replaying missed sounds.
+
 - 加入覆盖机关整个移动行程的听觉范围，风机作用区和伸缩桥也包含在内。走远后跳过无关计算，重新靠近时按当前世界时间计算，不能让远处机关停在旧位置，也不能补放离开期间发生的声音。
+
+- Filtering and call optimization reduced that scene's audio average to about 2.70 ms. I then removed more repeated loop-player queries and unchanged parameter writes, retaining all sound assets and trigger rules.
+
 - 第一轮范围筛选与调用优化把同一诊断场景的声音模块测量均值降至约 2.70 毫秒。随后继续减少循环播放器的重复查询与不变参数设置；这一小版本保留全部声音素材和已有触发规则。
+
+- Checks covered 6,256 boundary samples and compared sound demand, fading volume, and event timing across 44 courses, including leaving and re-entering; results matched.
+
 - 新检查覆盖 6,256 个边界样本，并比较 44 关筛选前后的声音需求量、淡入音量和事件时刻，包含远离与重新进入的情况，结果一致。
+
+Final hardware retesting was about 27.70–30.06 FPS, with the heaviest scene improving from 26.02 to 27.70. Brief frames up to about 60 ms remain. The normal game replaced the checker and passed startup in the same directory. Details are in VALIDATION-v0.10.5.md. This audio-efficiency patch is 0.10.5.
 
 最终八段真机复测约 27.70～30.06 帧，最重的一段从 26.02 提高到 27.70 帧，仍有最长约 60 毫秒的短暂停顿。正常游戏已覆盖临时测试程序，启动检查通过，真机保留同一个安装目录。具体记录见 VALIDATION-v0.10.5.md。本轮属于声音运行效率的小修复，记为 0.10.5。
 
+---
+
+<a name="entry-24"></a>
+
+# 0.10.4: Machinery should sound distinct, and waiting should belong to this game
+
 # 0.10.4：机关要听得出区别，等待也要属于这个游戏
+
+I wanted springs, fans, cannons, unlocking, and every mechanism to have distinct sounds rather than reuse one effect. Audio should distinguish starting, stopping, contact, locking, releasing, and firing. Menu, jump, landing, and rolling feedback also needed completeness.
 
 我希望弹簧、风机、炮台、解锁和其他机关都有声音，而且不能只是同一个声音换着用。音效应帮助判断机器正在做什么：开始运转、停止、接触、锁定、解除或发射，各自要有区别。菜单、跳跃、落地、滚动等反馈也要完整。
 
+Checks and adjustments:
+
 本轮检查与调整：
 
+- Timbres follow motion: loaded motors for lifts, rails for shuttles, gears for turning bridges, winches for telescoping bridges, airflow for fans, ratchets for cannon aiming, and a separate firing impulse. Springs have elastic resonance; magnetic zones a quiet electronic flutter. The repeatedly refined glass-ball rolling sound stays.
+
 - 按机关运动方式拆分音色：升降台偏负载电机，横移台偏导轨，转桥偏齿轮，伸缩桥偏卷扬，风机偏气流，炮台转向偏棘轮，发射另有短促冲击。弹簧有弹性回响，磁力区有低量电子颤动。原先反复调整的玻璃球滚动声保留。
+
+- Proximity alone made springs sound before impact. They now follow actual contact, while floors, gates, and jets follow real state changes without duplicate events.
+
 - 检查发现，单纯靠靠近就播放会使弹簧尚未撞上便响。因此弹簧跟随真实碰撞时刻，开合地板、闸门及喷气跟随实际状态变化；同一个事件不重复播放。
+
+- Checks cover residual sound after pause, muting, course changes, and leaving range. At most three sustained mechanism sounds and four short events play, with distance and mix limits so more machinery does not simply mean more noise.
+
 - 检查暂停、关音效、切关及走远时是否还有残留声音。限制最多三个持续机关声和四个短事件声，对距离和混音总量作限制，避免机关多就越叠越吵。
+
+- Resetting course time left old event cooldowns, suppressing early locking sounds. Reset now clears those cooldowns too.
+
 - 检查发现，切关后声音计时从零开始，但上关的事件冷却可能残留，导致开头的锁定声不响。因此重置时同时清掉旧冷却。
+
+- I rejected the first loader's tiled road and inverted hamster. I chose purpose-made stars, moon, clouds, and islands, with an upright hamster stepping inside its ball and a cloud-wing progress bar.
+
 - 我不满意最初加载动画的瓷砖路和整个仓鼠倒转：它显得简陋，也与游戏的气氛不统一。我决定使用专门的星空、月亮、云与空岛画面，仓鼠在球里保持正立迈步，再配合云翼进度条。
+
+- First running frames had cluttered shells resembling fragments and halos. I simplified to a clean double outline, a few highlights, and strong monochrome forms. Eight image frames replace rotation of the entire hamster picture.
+
 - 第一批跑动帧的球壳太杂，像碎片和光晕，缩小后不清楚。因此改成干净的双层圆轮廓、少量反光和大块黑白造型。最终使用八帧图像序列，不再让整张仓鼠图直接旋转。
+
+- Loading dots cycle one, two, three, then none, while the text remains fixed. The illustrated progress frame contains fill driven by actual preparation.
+
 - 我希望 Loading 后的点按一个、两个、三个、消失循环；文字本身保持固定位置，不因点数改变而晃动。进度条边框属于插画，内部填充跟随实际资源准备。
+
+- Native checks found the SDK cannot keep importing modules inside the display loop. Static code loads at startup; launch art matches the first animation frame. Audio/image preparation and course stone, tiles, spatial indexes, and nearby caches prepare in later frames.
+
 - 原生检查发现，SDK 不允许在显示循环内继续导入模块。把代码静态载入留在启动阶段，首张启动图与动画首帧保持一致；音效与图片准备改在后续帧执行。进关的石材、图块、空间索引及附近缓存也分帧准备。
+
+- Native Simulator startup and Course 44 loading completed across 58 and 90 display updates. Regressions passed and game time/physics did not advance while loading. This validates function, not hardware FPS or listening quality.
+
 - 原生模拟器完成启动和第 44 关加载，分别经历 58 与 90 次显示更新。回归检查通过，加载时游戏时间与物理状态不推进。这是功能验证，不能代替真机帧率和亲手听音。
+
+- The final install attempt did not detect hardware, leaving installation, listening, and on-device mix cost unconfirmed. The build is retained for overwrite installation after reconnection, without another old-version copy.
+
 - 本轮最终安装尝试未识别到设备，因此新版真机安装、声音听感和新增混音的真机开销暂未确认。保留构建包，重新接通后覆盖同一目录，不增加旧版本副本。
+
+---
+
+<a name="entry-25"></a>
+
+# 0.10.3: A complete game begins in the device launcher
 
 # 0.10.3：从真机菜单开始就像一个完整游戏
 
+I wanted a recognizable launcher cover instead of just a name, and fewer old versions and variants cluttering the device. Current builds belong on hardware; history belongs on the computer and GitHub.
+
 我希望真机游戏列表也有清楚的封面，而不是只看到名称；同时不想让大量旧版和变体一直占着设备列表。今后真机只保留当前版本，历史版本放在电脑和 GitHub。
+
+Checks and adjustments:
 
 本轮检查与调整：
 
+- The old launcher used a title-screen thumbnail with empty menu boards. I designed a separate large title, hamster ball, floating stone road, and moon, plus a simple list avatar rather than an unreadably tiny full cover.
+
 - 原先启动器资源来自标题界面的缩略图，还带着空白菜单木牌。我把封面单独设计成大标题、仓鼠球、浮空石路与月亮；列表模式另做简洁头像，而不是把整张封面缩成一个看不清的小点。
+
+- The first avatar lacked facial contrast. Solid black features and a clear ball outline survived reduction; final exports were checked at hardware dimensions for monochrome readability.
+
 - 第一张图标候选五官对比度不够，缩小后无法辨认，因此换成实心黑色五官和清楚的球形外轮廓。最终按真机需要的尺寸导出，并检查黑白像素与可读性。
+
+- The title export script still overwrote launcher art, so I separated the exports. The selected cover also uses new art rather than reverting to the old style.
+
 - 检查发现，标题导出脚本还会覆盖启动器资源，因此把这两套导出分开。选中封面也使用新图，避免选中后又变回旧样式。
+
+- Hardware contained eight variants and three older/classroom builds. Those eleven packages were archived to the computer, leaving this project and Seasons, with saves retained. Archive counts and sizes matched.
+
 - 真机实际有 8 个变体和 3 个旧版／课堂包。这 11 个包已移到电脑归档，设备只保留当前项目和自带 Seasons；存档保留。归档数量和文件大小与清理前相符。
+
+- Future updates overwrite one fixed installation directory. Starting immediately after installation briefly preceded USB reconnection, so bounded startup retries were added. Startup passed after reconnecting.
+
 - 固定使用同一个安装目录，后面新版本直接覆盖。安装后马上启动时遇到 USB 尚未重新连上的短暂空档，因此增加有次数限制的启动重试；重连后启动检查通过。
+
+- This cover and installation cleanup is 0.10.3. Game bytecode matches 0.10.2, retaining the latest lift sensitivity and handling.
+
 - 这次属于封面和安装整理的小更新，记为 0.10.3。游戏字节码与 0.10.2 一致，抬机灵敏度和控球手感保持刚才的调整。
+
+---
+
+<a name="entry-26"></a>
+
+# Version-number cleanup
 
 # 版本编号整理
 
+I want this to remain one continuously iterated game. The full game had reached 0.6.7; tilt controls should not restart the number at 0.1. Later records now continue from 0.7.0 through 0.10.2, retaining reasons and historical source. Small fixes increment the final number; groups of new gameplay increment the stage. See the [version table](../../docs/VERSIONS.md).
+
 我希望这始终是同一款游戏的持续迭代。之前完整版已经到 0.6.7，改成倾斜操控不应再从 0.1 开始。因此把后续记录统一接成 0.7.0 至 0.10.2，保留每次修改的原因和历史源码。今后小修复继续增加末位编号，新增成组玩法再增加阶段编号。完整对应关系见 [版本总表](../../docs/VERSIONS.md)。
+
+---
+
+<a name="entry-27"></a>
+
+# 0.10.2: Easier jump activation, slightly more forgiving control
 
 # 0.10.2：跳跃更容易触发，控球只放宽一点点
 
+Lift-to-jump felt insensitive, sometimes requiring a forceful, rapid shake. I wanted a natural lift across grips. Some landings also remained hard to stop despite immediate opposing tilt, but I wanted only a slight handling adjustment to retain challenge.
+
 我玩的时候觉得抬机跳跃不够灵敏，有时需要很用力、很快地甩动才触发。我希望在不同握姿下都能用比较自然的抬起动作跳跃。同时，有些关卡落地后即使立刻反向倾斜也不容易收住，但我不想把挑战性取消，所以控球只调整一点点。
+
+Checks and adjustments:
 
 本轮检查与调整：
 
+- The old threshold was a filtered 0.65g pulse with tight lateral tolerance. I lowered it to 0.48g and allowed slight misalignment. Detection still follows the current screen normal rather than the initial grip. The sensor measures acceleration, not actual hand speed.
+
 - 检查发现，原来的跳跃门槛是滤波后 0.65g 的加速度脉冲，横向容差也偏紧。我把门槛降到 0.48g，略微容许抬起时偏斜；判断仍沿当前机器的屏幕法线，不依赖开始时的握姿。由于传感器提供加速度，这里没有把它误写成实际抬手速度。
+
+- To avoid jumps from arbitrary shaking, cooldown, quiet rearming, and directional isolation remain; the screen-front pulse must exceed lateral components. Synthetic inputs cover flat, face-down, upright, side, and diagonal grips at different update rates.
+
 - 为避免灵敏度提高后随便晃动就跳，我保留冷却、安静后重新准备和抬起期间的方向隔离，并要求向屏幕正面的脉冲大于横向分量。合成输入检查覆盖平放、反面朝上、竖握、两侧握持和斜握，以及不同更新频率。
+
+- Increased rolling resistance broke an existing momentum-climb test, so I reverted it. Instead, ordinary tilt force increased only 3% in both directions. Forward motion is slightly stronger too, while coasting, slope gravity, and landing momentum retain their rules.
+
 - 我原本希望稍微降低惯性。尝试增加滚动阻力后，已有的冲坡检查出现失败，说明这种改动会影响原先依靠动量通过的路段。因此撤回阻力调整，改成将普通倾斜推力只增加 3%，正反方向同样生效。向前也会略微更有力，但松手滑行、坡道重力和落地动量保持原来规则。
+
+- At speeds 60, 120, and 200 with half/full opposing input, stopping distance shortened only about 2–3%. Anticipation is still necessary; one reverse tilt cannot stop instantly.
+
 - 制动对照中，速度 60、120、200，半幅或全幅反向输入时，停止距离只缩短约 2%～3%。我把改动控制在小范围，仍需要提前判断，不能靠一次反倾斜立即停住。
+
+- Existing 44-course mechanism, landing, cannon, and render-index checks plus 63 new grip/update-rate combinations passed. Synthetic sensor input is not human playtesting; real handling still needs hardware confirmation.
+
 - 原有 44 关机制、落地、炮台和绘制索引检查，以及新增的 63 组抬机姿态与更新频率组合通过。真实握持手感仍要上机确认，不能把模拟传感器输入等同于真人试玩。
+
+- The first install could not detect Playdate. After USB reconnection, 0.10.2 replaced the Tilt installation and passed startup. Actual handling remains needed to judge light lifts and false triggers.
+
 - 本轮第一次安装时工具没有检测到 Playdate；重新连接 USB 后，0.10.2 已替换真机里的 Tilt 版本并启动，真机启动检查通过。接下来仍需实际握持试玩，确认轻抬时的触发和误触情况。
+
+---
+
+<a name="entry-28"></a>
+
+# 0.10.1: Keep the effect, remove repeated work
 
 # 0.10.1：保留效果，把重复工作减掉
 
+I wanted smoother hardware play without deleting the new textures, mechanism forms, or animation. The direction was to retain visible effects and gameplay while reducing repeated background work.
+
 我希望继续提高真机的流畅度，但不想为了性能把刚做好的纹理、机关造型和动画删掉。这次的方向是保留可见效果和玩法，把后台重复做的事情减少。
+
+Checks and adjustments:
 
 本轮检查与调整：
 
+- Drawing and occlusion still processed distant machinery. A conservative screen-region index covers full rotation, translation, lift, extension, airflow, and sign margins. Distant motion still uses original time, so returning objects are not frozen where they were left.
+
 - 检查发现，机关绘制和遮挡判断仍会处理距离镜头很远的对象。我为机关的完整运动范围建立保守的屏幕区域索引，包含旋转、横移、升降、伸缩以及风流和路牌的余量。远处机关仍按原来的时间计算运动，进入画面时位置不会停留在离开时的状态。
+
+- Camera movement inside the same tile group repeatedly rebuilt string keys and fetched identical chunks. Visible lists and preload queues now persist until chunk boundaries change. Across 2,400 frames, tiles, order, subpixel position, misses, and evictions matched the old implementation.
+
 - 镜头在同一组地形块内移动时，原先每帧都重新拼接字符串键并查找同一批块。我保留当前可见列表和预加载队列，跨过块边界时才重新整理。对照 2,400 帧，绘制块、顺序、亚像素位置、未命中次数和淘汰数量都与旧实现一致。
+
+- Layers of historical position wrappers were repeatedly called by visuals, gears, and occlusion. I consolidated branches and shared exact same-time positions/angles only during drawing. Physics substeps still calculate their own times; crank and collision rules are unchanged.
+
 - 机关位置计算经过了多层历史包装，同一帧又被外观、齿轮和遮挡重复调用。我把这些分支合并，并只在绘制期间共享同一时刻的精确位置与角度。物理子步仍按自己的时间独立计算，摇柄和碰撞规则没有改动。
+
+- I made unchanged appearance verifiable: 33 prior fixed-scene pixel digests matched native Simulator exports. Tests also cover moving machinery and view boundaries across all courses.
+
 - 我把“不影响效果”作为可以检查的要求，保留上一版 33 张固定场景的像素摘要，再比对原生模拟器导出结果。此次这些画面逐像素一致；测试也覆盖所有关卡中的移动机关和视野边界。
+
+- Ground-height queries unnecessarily included every support mechanism, though only lifts change road height. Restricting them to nearby lifts preserved results at intermediate heights, boundaries, and other mechanisms.
+
 - 后续检查发现，查询地面高度时原先会连带查询所有支撑机关，而真正能改变道路高度的只有升降台。我把高度查询限定到附近升降台，并用中间高度、边界位置和其他机关周围的采样验证结果与原实现一致。
+
+- Diagnostic counts included course preparation. Resetting them after entry avoids reporting loading as steady gameplay frame cost. Hardware FPS still uses the same scenes.
+
 - 分析耗时时发现，诊断计数包含了进关准备工作，因此把诊断统计清零放到进关完成之后，避免把加载时间误算成稳定游玩时的单帧开销。正式帧率仍用同一组真机场景比较。
+
+This patch is 0.10.1; measurements and limits remain in VALIDATION-v0.10.1.md.
 
 这次按小版本记录为 0.10.1，具体硬件测量与限制保留在 VALIDATION-v0.10.1.md。
 
+Final retest: eight normal-speed scenes ran about 29.2–30.0 FPS. The lowest fan/spring/gate combination improved from 26.34 to 29.17; whole-finale stress testing improved from 24.70 to 26.71. All 33 fixed images still matched. Occasional long frames remain, so I did not claim stutter-free play.
+
 最终复测：正常速度八段场景约 29.2～30.0 帧，之前最低的风机、弹簧和闸门组合区域从 26.34 提高到 29.17 帧。最终大关整图压力测试从 24.70 提高到 26.71 帧。固定画面的 33 张像素对照仍然一致；偶发长帧仍存在，因此没有把这次结果写成完全无卡顿。
+
+---
+
+<a name="entry-29"></a>
+
+# 0.10.0: Make machinery look like machinery
 
 # 0.10.0：让机关看起来像真正的机关
 
+Gameplay logic alone was not enough. New mechanisms needed fitting forms, and roads could not remain ordinary grids. I wanted appearance to suggest purpose and to show which part actually moves when the crank turns.
+
 我觉得只有玩法逻辑还不够。新增机关需要有各自匹配的样子，道路也不能一直像普通格子。我的目标是让玩家看见造型就能大致理解用途，并且能看出自己转动摇柄之后，机器的哪一部分真的在动。
+
+Roads became light irregular stone slabs, retaining dark floating sides and edge thickness. Machinery shares substantial monochrome metal: motors and rollers for belts, separate jet nozzles, winches for telescoping bridges, controllers for branching gates, and horseshoe electromagnets. Lifts, shuttles, fans, springs, and cannons continue their established forms.
 
 这次我把道路的方向定为浅色、不规则的石板，保留悬空道路的黑色侧面和边缘厚度。机关统一为厚实的黑白金属结构：传送带配电机和滚轮，喷气配独立喷嘴，伸缩桥配绞盘，分路闸门配控制器，磁力区配马蹄形电磁铁。先前的升降台、横移台、风机、弹簧和炮台继续沿用已经建立的造型。
 
+Animation should express state, not idle wobble. Lift handles and gears follow accumulated crank angle and stop with it. Fan blades rotate continuously; air ripples follow actual direction. Springs compress only on impact; belt texture follows transport. Jets appear only while active, and changing gate height changes collision and occlusion too. Cannons gain brief recoil and smoke rings.
+
 我希望动画表达状态，而不是无意义地一直晃动。升降机的把手和齿轮跟着摇柄累计角度转，停摇就停；风扇叶片持续转动，空气波纹沿实际风向流动；弹簧受到撞击才压缩回弹；传送带纹路沿运输方向移动；喷流只在有效阶段出现；闸门改变高度时，碰撞和遮挡也一起改变。炮台发射增加短暂后坐和烟圈。
+
+Checks and adjustments:
 
 本轮检查与调整：
 
+- Five new mechanism types received dedicated assets plus separate gears and blades, rather than relying on primitive geometry.
+
 - 我不想让新机关只靠原始几何形状区分，因此为五类新机关补齐专用素材，并单独准备齿轮和叶片。
+
+- The first road texture exported black and was unusable. I remade light stone and checked its reduced-size readability.
+
 - 第一张道路材质输出成了黑色，不能使用；重新制作浅色石板，并检查缩小后的纹理可读性。
+
+- A fan sign hid its blades, so I moved it upward while keeping the leader to the control point.
+
 - 画面检查发现风机的路牌遮住叶片，我把路牌向上移动，保留指向控制点的连线。
+
+- Animated gate height now drives collision and occlusion; half-open jump clearance was checked instead of letting collision switch instantly.
+
 - 闸门如果只画升降、碰撞仍瞬间改变，会让视觉与手感不一致，因此把动画高度接入碰撞与遮挡，并检查半开时的跳跃净空。
+
+- Tutorials reuse motors, nozzles, winches, dividers, magnets, blades, and springs from gameplay.
+
 - 我希望教学中的机关和游戏里长得一样，因此让教学动画复用电机、喷口、绞盘、分路器、磁铁、叶片和弹簧素材。
+
+- First hardware stress tests approached 30 FPS in short courses but dropped sharply in complex ones; Simulator results could not substitute.
+
 - 真机第一次压力测试发现短关接近 30 帧，但复杂关卡明显掉帧，不能用电脑模拟器的表现代替真机验证。
+
+- Final-course support queries traversed all machinery and distant controls repeatedly queried too. Nearby filtering and same-position/time reuse now invalidate immediately on crank changes.
+
 - 性能记录显示，最终大关反复遍历全关机关来判断支撑，远处控制点也在重复查询；我改成按附近区域筛选，并复用同一位置和时刻的支撑结果，摇柄改变机关状态时立即失效重算。
+
+- Detailed metal panels were expensive to redraw. Unchanged shapes are cached; moving machinery still changes position and lifting gates still change actual form.
+
 - 细致金属面板每帧重画开销较大，我缓存形状没有变化的机关；运动中的机关仍更新位置，升降闸门仍更新实际外形。
+
+- First-time road-texture transforms caused gameplay stalls. Texture projection and repeated tile styles now prepare on entry, while nearby chunks still assemble during play.
+
 - 新道路材质在游玩途中首次变换会产生停顿，我把纹理投影和重复路块样式准备放到进关时，游玩中仍只组合视野附近的地形块。
+
+- Fast whole-course stress scans and normal-speed samples are recorded separately, neither standing for every play condition.
+
 - 我把快速扫描整关的压力测试和正常滚动速度的场景测试分开记录，避免把一种测试误当成所有游玩情况。
+
+Data, limits, and installation are in VALIDATION-v0.10.0.md. Automated scenes are not handheld all-course completions and do not establish grip or jump feel.
 
 具体测试数据、限制和安装结果记录在 VALIDATION-v0.10.0.md。自动场景测试不等于手持设备完成全部关卡，也不能代替实际握持和跳跃手感的确认。
 
+Final record: in the same fast-scan stress test, Course 30 improved from about 22.2 to 29.0 FPS and the finale from 11.5 to 24.7. The finale's longest frame fell from 156 to 62 ms. Normal-speed samples were about 26.3–30.0 FPS, still variable in dense machinery. Formal 0.10.0 was reinstalled and started afterward, replacing the performance checker.
+
 最终记录：相同的快速扫描压力测试中，第 30 关由约 22.2 帧提高到 29.0 帧，最终大关由约 11.5 帧提高到 24.7 帧；最终大关最慢一帧从 156 毫秒降到 62 毫秒。正常滚动速度的区域抽测约 26.3～30.0 帧，机关密集处仍有波动。完成测试后重新安装正式 0.10.0 并启动，真机不再停留在性能测试包。
+
+---
+
+<a name="entry-30"></a>
+
+# 0.9.0: Lifts are only one example; keep adding gameplay differences
 
 # 0.9.0：升降台只是其中一种，继续增加玩法差异
 
+A lift was one example, not a reason to repeat similar courses around it. I wanted varied roads, machinery, and solutions, giving crank and tilt more kinds of challenges.
+
 我想强调，升降台只是我提出的一个例子，不应该围绕它反复做相似关卡。我希望游戏有更多不同的道路、机关和解法，让摇柄和倾斜控制能参与更多类型的挑战。
+
+Five mechanism types were added. Conveyors require resisting transport or choosing when to jump away; intermittent jets require finding quiet windows; telescoping bridges let players extend a route from safety; double gates offer branches with different risks; magnetic zones require advance correction space. Each has a short introduction and longer practice before a new long course, bringing the total to 44.
 
 这轮增加五类机制。传送带迫使我考虑站在地面上如何抵抗运输、什么时候跳开；间歇喷气需要判断安静的时间窗；伸缩桥让我先在安全处把路铺出来；双路闸门让我在不同风险的分支之间选择；磁力区需要提前留出修正空间。这些机制分别有短教学关和较长练习关，最后接入新的长关，总关数变为 44。
 
+New content follows established controls: dock at a control point, turn the crank, and release with B. A remains Fire in a cannon and fallback Jump during free movement. New machinery should add decisions rather than another button vocabulary.
+
 我希望新内容继续沿用已经建立的操作规律。站在控制点转摇柄，B 解锁离开；炮台的 A 仍然是发射，自由移动时才是备用跳跃。新机关应增加判断，而不是强迫玩家重新记一整套按键。
+
+Checks and adjustments:
 
 本轮检查与调整：
 
+- Conveyors only transport grounded balls. A height limit and jump checks ensure airborne balls are unaffected.
+
 - 传送带只应搬运接触地面的球，因此加入高度限制，并检查跳起后不再受传送带影响。
+
+- Jets have genuine safe intervals: force is zero while off and visual flow stops simultaneously.
+
 - 喷口必须有真正的安全间隔，检查关闭阶段推力为零，画面喷流也同步停止。
+
+- Telescoping bridges change support and side collision with their width, not merely image length. Tests cover retracted holes and fully extended connections.
+
 - 伸缩桥不能只拉长图像，支撑和侧面碰撞也随桥宽改变；测试覆盖缩回后的空洞和完整伸出后的连接。
+
+- Branch gates genuinely alter passability, with mutually exclusive openings and checked collision differences.
+
 - 分路机关需要确实改变能走的路线，两道闸门保持互斥开闭，并检查开放和关闭分支的碰撞差异。
+
+- A final-course inspection found players could bypass both gates through the middle. A fixed divider now requires choosing an open branch.
+
 - 检查最终长关时发现两道闸门中间可以直接绕过，增加固定中间挡板，使玩家需要选择开放的分支。
+
+- Belts and nozzles initially looked like small road dots. Dark moving tracks, white cross-stripes, and grated metal nozzles improve recognition; belt animation follows transport direction.
+
 - 初次画面里传送带和喷口太像路面上的小点，因此增加黑底滚动履带、白色横纹和带格栅的金属喷口；履带动画方向跟随实际运输方向。
+
+- The telescoping bridge duplicated labels on its control point and body. I kept the control sign and removed the duplicate.
+
 - 伸缩桥同时显示控制点标签和桥体标签，显得重复，保留控制点路牌，去掉桥体重复字样。
+
+SDK builds and regressions including older features passed; Simulator exports checked new machinery and tutorials. Hardware installation still reported no device, leaving hardware performance and actual completion difficulty for reconnection.
 
 SDK 构建及包含旧版功能的回归检查通过，模拟器导出检查了新机关与教学。真机安装仍返回未检测到设备，因此新版本的硬件性能和实际通关难度需要在恢复连接后继续验证。
 
+---
+
+<a name="entry-31"></a>
+
+# 0.8.0: Connect individual interactions into a complete journey
+
 # 0.8.0：把单个玩法串成一段完整旅程
+
+Courses felt too short and machinery too limited. Rather than present everything at once, I wanted steering practice, then jumping and timing, then a short introduction and longer practice for each new mechanism before combining earlier content.
 
 我觉得原来的关卡还太短，机关种类也不够。我的目标不是把所有新东西一下子堆到玩家面前，而是先让玩家练好倾斜控球，再学跳跃和时机判断；每加入一种新机关，就先用短关讲清楚，再用较长的关练习，最后把之前的内容组合起来。
 
+I proposed standing on a lift and cranking it upward with the ball. It must work independently, without requiring outside control that becomes inaccessible onboard. Its control point therefore rides the platform: dock, crank to road height, then release with B. Manual shuttles use the same approach for travel. Fan controls connect observing wind, adjusting machinery, and tilting against lateral force. Spring bumpers add bypass or jump choices.
+
 我提出站在升降台上转摇柄，让平台把球一起送到高处。这个操作要能独立完成，不能出现必须站在外面操纵、上台后又无法继续的情况。因此控制点放在平台上，吸附后摇柄升降，达到道路高度后按 B 解锁离开。横移台沿用这个方式，让摇柄控制渡船的行程。风机则增加调整风向的控制点，把观察风向、调整机关和倾斜抵抗侧向推力连起来。弹簧撞块提供新的绕行或跳跃选择。
+
+New lifts, geared shuttles, fans, and spring bumpers received monochrome artwork. Tutorials reuse the same Playdate imagery, with input on the left and mechanism result on the right. A means Jump in ordinary jumping courses and Fire when cannon-locked; B means Release when docked. Crank meaning follows the mechanism and no longer accelerates movement.
 
 我希望机关有正式的造型，因此新增升降台、齿轮横移台、风机和弹簧撞块的黑白素材。教学继续使用同一套 Playdate 图像，左边表现操作，右边表现机关结果。A 在普通跳跃关是 Jump，在炮台锁定时是 Fire；B 在机关锁定时是 Release。摇柄的作用跟随机关变化，不再承担移动加速。
 
+The game expanded from 17 to 33 courses. Later routes add two-stage cannon relays, elevated launches after lifts, inward switchbacks, and combined challenges. Five checkpoints divide a finale connecting lifts, cannons, jumps, manual bridges, shuttles, wind, bumpers, disappearing floors, barriers, automatic ferries, and rotating platforms. The old finale remains as later practice, with scores migrated to its new number.
+
 这次从 17 关扩展到 33 关。后段加入两段炮台接力、升降后高处发射、内绕折返道路和综合挑战。最终关用五个检查点分段，把升降、炮台、跳跃、手动转桥、横移台、风向、撞块、消失地板、挡板、自动渡船和旋转平台串成一条路线。旧终关保留为中后段练习，旧成绩迁移到对应的新编号。
+
+Findings and corrections:
 
 本轮逐项发现与修正：
 
+- Lift height must be physical, not just visual. Dynamic height now drives ball, shadow, side collision, and occlusion, preventing a low ball from rolling directly onto elevated roads.
+
 - 我希望升降是真正改变所处高度，而不是平台图像上下动。检查中把动态平台高度接入球、阴影、侧面碰撞和遮挡，并阻止低处的球直接滚上高处道路。
+
+- A relay's second shot could not reach its receiver. I extended the receiving edge one tile and checked landing through actual flight updates.
+
 - 炮台接力的第二次发射落点够不到接收平台，测试暴露了这个距离问题。我把接收平台前缘向前延长一格，再用实际飞行更新检查落地。
+
+- Reordering invalidated old test numbers. Historical course identities remain for regression and save migration, while all-course checks follow the new order.
+
 - 重新排序后，原来的测试编号不再对应同一机关。我保留旧关卡身份用于回归和存档迁移，同时让全关卡检查遍历新顺序。
+
+- Lift discontinuities cannot use ordinary continuous-slope checks. Earlier baseline regressions run before expansion; new machinery has separate checks, avoiding false startup errors.
+
 - 升降台产生的高差不能再按普通连续坡面检查。原有基础回归在扩展前运行，新增机关由独立检查覆盖，避免启动时误报。
+
+- An inward route intersected its exit, permitting a shortcut. Moving the finish inward removes that crossing.
+
 - 内绕道路原先与出口相交，会让玩家直接抄近路。我把终点放到内侧，使道路不再交叉。
+
+- Fan hazards and adjustable wind are different lessons. Their tutorial records are separate so earlier fan instruction does not skip later crank instruction.
+
 - 风扇作为障碍已经讲过以后，风向控制点仍然是新操作。我把两者的教学记录分开，避免后面的摇柄教学被跳过。
+
+- Longer courses outgrew whole-map caches and occlusion scans. Viewport-near road chunks and spatial occluder indexes replace them, retaining idle-time garbage collection.
+
 - 关卡变长以后，整图缓存和全地图遮挡遍历不再合适。我改为屏幕附近的道路分块缓存，并给遮挡体建立空间索引，保留原来的空闲时间垃圾回收。
+
+Checks passed for the SDK build, all 33 course updates, interactions, cannon landings, five checkpoints, save migration, and UI. Simulator exports covered new machinery, tutorial stages, and maps. Hardware had installed 0.7.9 earlier, but could not be detected when installing the 0.8.0 performance package. Simulator results therefore do not prove hardware smoothness or full completion. See VALIDATION-v0.8.0.md.
 
 验证中已通过 SDK 构建、33 关更新、机关交互、炮台落地、五个检查点、旧存档迁移和界面回归。模拟器导出后检查了新机关、教学阶段和地图。真机在本轮较早时成功安装过 0.7.9；准备安装 0.8.0 性能测试包时，连接已经无法识别，因此这里不把模拟器结果写成真机流畅或完整通关的证明。完整验证状态见 VALIDATION-v0.8.0.md。
 
+---
+
+<a name="entry-32"></a>
+
+# 0.7.0: Let the whole Playdate participate in control
+
 # 0.7.0：让整台 Playdate 参与控球
+
+I wanted a complete start, challenge, retry, completion, and replay loop, with a title screen that clearly expressed hamster balls and sky tracks.
 
 我希望游戏有完整的开始、挑战、失败重试、通关和再次游玩的循环，并且开始界面能更鲜明地表现仓鼠球和空中轨道的主题。
 
+I retained a copy of the most complete game and explored in another. Tilt now moves the ball: greater tilt applies more force while inertia and downhill gravity remain. A quick upward lift should also correspond to the ball jumping.
+
 这次我选择保留关卡最多的完整版，另建副本继续探索。移动改成倾斜设备控制，倾斜越大，推动球的力越大，已有惯性和下坡重力仍保留。我还想用快速向上抬的动作跳跃，让设备动作和球的动作对应起来。
+
+This frees the crank for machinery. Entering a control point slowly docks the ball; the crank adjusts a bridge or cannon. B exits, and the ball must leave before returning to redock. A fires cannons and provides fallback jumping. Up opens the paused map; Down recalibrates.
 
 摇柄因此腾出来控制机关：球低速进入控制点后自动固定，转动摇柄调整桥梁或炮口。B 用来退出，退出后必须先离开再回来，避免反复被吸住。炮台用 A 发射。A 同时作为跳跃的备用操作，方向键上打开暂停地图，下重新校准。
 
+Manual bridges, cannons, and a combined finale expand the original 14 courses. Progress and best times save on completion; finishing the last course opens the journey-complete screen, then title or selection. New monochrome hamster-ball title art includes subtle floating and sparkle.
+
 基于原来 14 关，增加手动转桥、炮台和组合终关。通关后保存最佳时间和进度，最后一关进入旅程完成画面，再返回首页或选关。标题画面采用新的黑白仓鼠球插画，局部轻微浮动和闪光。
+
+Verification: rebuilding succeeded after the SDK update. Automated tests covered proportional tilt, stationary drift, jump anti-repeat, undock/re-entry, actual cannon flight/landing, 17 course update paths, retries, saves, and the ending. Simulator checks covered title, tutorials, and HUD. Grip and lift recognition still need hardware playtesting. Installation found COM4 occupied by another Simulator that could not close automatically; it needed release before further checks.
 
 验证记录：更新 SDK 后重新构建成功；自动测试覆盖倾斜比例、静置漂移、抬手防连发、退出吸附点后重入、炮台实际飞行落地、17 关更新路径、失败重试、存档及最终结局。模拟器检查了标题、教程和游戏 HUD。真实握姿与抬手识别还需要真机试玩，不能根据自动测试就认为手感已完成。安装时 COM4 被另一个无法自动关闭的模拟器占用，需要释放后继续验证。
 
+---
+
+<a name="entry-33"></a>
+
+## 0.7.1: Make the artwork and interface one game
+
 ## 0.7.1：让画面和界面成为同一个游戏
+
+The title, background, and menu felt like three temporary pieces. I wanted full-screen artwork with integrated title and menu, including a ball in the title to express the theme.
 
 我觉得上一版最明显的问题是割裂：标题、背景和菜单像三块临时拼起来的东西。我的要求是让画面铺满屏幕，把标题和菜单直接融进场景，标题里的小球也要体现仓鼠球的主题。
 
+The entire image must not wobble. Main roads and moon stay stable; distant islands and clouds float at different rhythms, and the flag waves independently. A fixed 400 × 240 monochrome background, two separate islands, two clouds, and four flag frames avoid runtime whole-background scaling.
+
 我不希望整张图一起晃动。主道路和月亮要稳定，远处空岛和云各自按不同节奏浮动，旗帜单独挥动。这次采用固定 400×240 黑白背景、两座独立空岛、两朵独立云和四帧旗帜；不在运行时缩放整张背景。
+
+Only Start Game and Settings appear initially; selection comes after entering play. Settings saves sound, music, scene animation, and lift-to-jump toggles. A still jumps with the gesture disabled, and ball/mechanism rules remain unchanged.
 
 我希望开始时只看到 Start Game 和 Settings，选关留到进入游戏之后。设置集中管理音效、音乐、场景动画和抬手跳跃，并保存开关状态。关闭抬手跳跃后仍可用 A 跳跃，已有球的运动与机关规则不变。
 
+Other screens also needed designed interfaces rather than plain lines. Course selection gains actual route previews, ordered down the left 1/2/3 then right 4/5/6, with the full selected name above. The HUD uses clock, flag, ball, compass, segmented force, and jump-cooldown graphics. Map, tutorials, calibration, failure, completion, and ending share pixel borders and key capsules. Checkpoint and finish signs remain foreground elements drawn after the ball.
+
 我也希望其他界面有完整的设计，而不只是几行文字：选关增加真实路线的小预览，保持左列 1、2、3，再到右列 4、5、6；上方显示选中的完整关卡名。游戏仪表采用时钟、旗帜、球、方向圆盘、分段力度条和跳跃冷却条。地图、教程、校准、失败、过关与最终结局采用一致的像素边框和按键胶囊。世界中的检查点和终点继续在球之后绘制，改成统一的前景路牌。
+
+Checks:
+- An initial export had an image-path type mismatch; explicit file paths fixed regeneration of 1-bit assets.
+- At 400 × 240, flag/moon contrast was weak, so the flag became checkered. Narrow course cards abbreviate long names while the heading shows the full name.
+- The map's player/start/checkpoint markers were ambiguous. A player ball, S start, C checkpoint, finish flag, and legend distinguish them.
+- Checks covered title entries, saved settings, unchanged time/position during Settings, selection cancellation, all screen states, and column ordering.
+- SDK and all 17 host regressions passed; 11 actual Simulator screens were exported for review.
 
 这轮检查记录：
 - 第一轮导出时发现图片路径类型不匹配，修正为明确的文件路径后重新生成 1-bit 资源。
@@ -492,17 +1395,45 @@ SDK 构建及包含旧版功能的回归检查通过，模拟器导出检查了�
 - 检查了首页两个入口、设置保存、设置期间计时与位置不变、选关取消后返回原关卡、全部界面状态和按列选关。
 - SDK 构建与全部 17 关的主机回归检查通过；使用真实模拟器导出了 11 个界面用于逐页检查。
 
+Performance trade-off: fixed background art and prepared small floating/flag sprites; cached HUD plates, icons, text, and signs; time/speed refresh only on changes. Simulator evidence does not replace hardware FPS, still unconfirmed this round.
+
 性能取舍：背景只画固定图像，漂浮物与旗帜使用预先创建的小图；HUD 底板、图标、文字和路牌使用缓存，时间与速度只在数值变化时更新。模拟器结果不能替代真机帧率测试，本轮尚未确认真机性能。
+
+---
+
+<a name="entry-34"></a>
+
+# 0.7.2: Road materials, wooden menus, and animated instruction
 
 # 0.7.2：道路材质、木牌菜单与动画教学
 
+Menu and course roads looked like white prototypes: invisible title-road texture, checkerboard courses, and flat moving panels. I wanted both improved, with platforms, barriers, and cannons matching the theme.
+
 我发现主菜单的路面和实际关卡都太像白模：菜单道路看不见纹理，关卡道路像棋盘，活动机关只是平板。我希望两处都改，并让平台、挡板、大炮有符合游戏主题的造型。
+
+Rather than force a long introduction, I proposed a few images of the hamster entering sky roads, then in-course animations: device tilt, quick lift, or crank on the left; ball and machinery response on the right. Introduce each mechanism only once, not again in later jump or combined courses.
 
 我不希望玩家被迫先读一大段说明。我提出用几张图交代仓鼠进入空中道路，再在关卡里弹出动画：左边画 Playdate 如何倾斜、快速抬起或转摇柄，右边展示球和机关的反应。每种新机制第一次出现时才介绍，后面的跳跃关和复合关不能重复讲。
 
+Large menu buttons obscured the original fence-like signs, with oversized crowded type. I retained the illustrated signs and supports, restored smaller spaced lettering inside them, and raised the selected sign gently instead of covering it with a rectangle.
+
 初次调整把菜单做成了大按钮，我指出这挡住了原来的栅栏木牌，字体也太大太挤。因此最终保留原画木牌和支架，把小字放回牌面内部并拉开字距；选中时是木牌轻轻抬起，而不是用大矩形覆盖它。
 
+The flag missed the finish and the cannon was too thin and fragmented. Its disc, wheels, and narrow pipe could not plausibly hold the ball. The flag base now meets the distant road end; a thick large-bore cylinder, heavy rim, and simple wooden cradle unify title, gameplay, and tutorial imagery.
+
 我还指出旗帜没有插到最终点，炮又细又零碎，圆盘、多轮子和细管不像能装下仓鼠球。最终将旗杆底部对齐远端道路终点，炮改成粗圆筒、大口径、厚口沿和简单木托；首页、实际关卡和教学使用同一套造型。
+
+Findings and corrections:
+- Pale road detail disappeared in thresholding. Clear monochrome joints, cracks, and sidewalls replaced it.
+- Course textures still emphasized grids. I removed heavy internal tile borders, using staggered stone with strong outlines only at real road edges.
+- Flat machinery gained dark rails, rivets, pivots, and warning stripes.
+- Large menu buttons reverted to the original signs with smaller spaced letters, selection markers, and lift.
+- The flag base moved to the distant footing near (393, 86).
+- The thin cannon and elaborate base/wheels were replaced by a thick barrel with 17 cached aim views.
+- Tutorial text covered a jumping ball, and lower hints crowded borders; labels moved and baselines changed.
+- Cannon labels near START or the muzzle became side leader labels.
+- The Simulator lacked host-test debug.getupvalue, interrupting initial capture. An isolated checker gained a temporary drawing entry; production gained no debug entry.
+- Documentation hit Windows encoding defaults; explicit UTF-8 fixed it.
 
 本轮发现和修正记录：
 - 菜单插画中的浅灰路面细节在二值化后消失，重新制作了清楚的黑白砖缝、裂纹和侧壁。
@@ -516,41 +1447,96 @@ SDK 构建及包含旧版功能的回归检查通过，模拟器导出检查了�
 - 模拟器没有主机测试所用的 debug.getupvalue，首轮截图导出因此暂停；改用独立检查包中的临时绘制入口，正式游戏不加入调试入口。
 - 文档更新遇到 Windows 默认编码问题，改用明确的 UTF-8 读写。
 
+Automated checks passed for 17-course play, collision, cannon landing, saves, and the loop. New checks cover first tutorials, saving confirmation, B replay, paused time/physics, nonrepeated jumping, and unseen mechanisms when directly selecting combined courses. Native views covered the menu, nine course scenes, and eleven tutorials. No hardware was connected, so FPS and grip were not established.
+
 验证记录：17 关玩法、碰撞、炮台飞行落地、存档和完整循环的自动检查通过；新增检查覆盖首次教学、确认后保存、B 重播、教学暂停物理与计时、跳跃不重复介绍、直接选复合关时补齐未见机制。模拟器按原生尺寸检查了菜单、9 个关卡场景和 11 个教学画面。真机未连接，本轮不能视为真机帧率和握持手感已经通过。
+
+Performance trade-off: stone detail bakes into terrain caches; device poses and cannon angles use small cached images instead of rotating images every game frame.
 
 性能取舍：石路细节烘焙到已有地形缓存，设备姿态和炮管方向使用小图缓存，不在每个游戏帧旋转炮管图像。
 
+Final placement correction: the dark cannon remained unreadable against dark sky. I requested the large white road area in front-right of the hamster. The full cannon moved there; surplus diagonal base lines were removed, and a thick base with top/front/dark side replaced the flat form. Gameplay bases share that volume.
+
 本轮最后一次位置修正：我指出黑色炮放在黑色天空前仍然看不清，应直接摆到仓鼠右前方的大块白色石砖路上。最终把完整炮台移到该处，取消底座上多余的斜线，底座改成有顶面、正面和深色侧面的厚实立体块；游戏中的底座也采用同样的体积表达。
+
+---
+
+<a name="entry-35"></a>
+
+## 0.7.9: Jump relative to the current device, retain landing momentum
 
 ## 0.7.9：跳跃跟随当前设备方向，落地保留惯性
 
+After arbitrary-grip calibration, jumping still felt wrong. I wanted a quick lift along the current screen normal regardless of current tilt, not the old calibration direction. Jump pulses now use device-local Z, which rotates with the device and needs no remapping to calibrated gravity. Tilt estimation briefly holds during triggering so lift acceleration is not misread as reverse force.
+
 我发现改成任意握姿校准后，跳跃仍不符合直觉。我需要的是无论当前向哪边翻动，都沿设备此刻的屏幕垂直方向快速抬动，而不是沿之前校准时的固定方向。因此本次把跳跃脉冲改为设备自身的 Z 轴；这根轴随设备转动，无须把它再映射到校准重力方向。触发时短暂保持倾斜估计，避免抬手的瞬间加速度被误认为反向推力。
+
+I also reported sudden landing slowdown. A reproduced bug let a descending substep penetrate the floor slightly, then processed side collision first and canceled horizontal speed before landing. Top crossings now resolve first, retaining ordinary landing velocity while genuine side collisions and ground friction remain. The new case failed before the fix and passed afterward, with four movement directions checked.
 
 我还指出有时落地会突然减速。检查时复现了具体错误：下落子步略微穿入地板，代码先处理侧壁碰撞，错误抵消水平速度，然后才落地。这次优先处理从上方跨过顶面的接触，使正常落地保留水平速度；真正侧撞以及地面摩擦仍保留。修复前新增用例失败，修复后通过，并补查了四个运动方向。
 
+Some A/B keys lacked black backgrounds, and letters/arrows were off-center. Tutorials, lower HUD, menus, and results now share 17 × 17 black keycaps and fixed pixel A/B glyphs, avoiding font whitespace. Native pixel checks place all six white shapes at (8,8). Host regression caught and corrected an initial shared-helper argument-order mismatch before the full pass.
+
 界面方面，我发现一些 A/B 没有黑底，另一些字母与箭头并未在键帽内居中。现在教程、底栏、菜单、结果页共用 17×17 黑色键帽，A/B 使用固定像素字形，不再受字体留白影响。原生模拟器逐像素检查六个图形的白色边界，确认中心都位于 (8,8)。首次整合共用 helper 时参数次序不一致，主机回归检查捕获后已修正，再完成全套检查。
+
+A black-and-white state label now makes release visible: LOCKED when docked, UNLOCKED after B, hidden after leaving the re-entry exclusion area, and available for docking on return. Cannon A Fire/B Release, bridge crank/B Release, and ordinary A Jump remain.
 
 我希望解除吸附后能立即知道是否可以移动，因此上方增加黑底白字状态：自动吸附显示 LOCKED，按 B 后显示 UNLOCKED，离开重入排除范围后隐藏，重新回来可再次吸附。保留炮台 A 发射、B 解除，转桥的摇柄操作与 B 解除，普通关卡的 A 跳跃也保留。
 
+Verification covers jumping from poses different from calibration, tilt isolation during lifts, single trigger/cooldown, dock/release/leave/redock, four-direction landing speed, and existing 17-course regressions. Simulator tutorial, lower HUD, result, and status checks and builds passed. Gesture thresholds and feel still need hardware.
+
 验证覆盖当前姿态不同于校准姿态时的跳跃、抬手不污染倾斜输入、单次触发和冷却、吸附／解除／离开／重新吸附、四方向落地速度，以及原有 17 关回归。模拟器检查教学、底栏、结算和状态条，构建通过。实际手势阈值和手感仍需真机验证。
+
+---
+
+<a name="entry-36"></a>
+
+## 0.7.8: Align keys separately from their functions
 
 ## 0.7.8：让底栏的按键与功能分别对齐
 
+Up, Left, Down, and Right have different lengths, shifting Map, Help, Recenter, and Goal. I wanted direction symbols centered independently with function text in separate columns, or designed bold arrows instead of English direction words.
+
 我发现底部 Up、Left、Down、Right 的文字长度不同，连带 Map、Help、Recenter 和 Goal 的起点也参差不齐。我希望方向本身居中对齐，而旁边的功能文字另起一列，或者直接用有设计感的粗方向箭头代替英文方向词。
+
+Shared rounded black keycaps and thick white pixel arrows use one center; labels start at fixed columns. Map aligns with Help, Recenter with Goal, and A Jump gets the third column. Cannon and bridge crank/A/B hints use the same grid.
 
 这次采用统一的黑色圆角键帽和白色粗像素箭头，方向图形使用相同中心；功能文字则固定在各自的列起点。第一列 Map 与 Help 对齐，第二列 Recenter 与 Goal 对齐，第三列留给 A Jump。进入炮台或转桥时，摇柄、A 和 B 提示沿用同样的列网格。
 
+Playdate developers' 16-pixel input-icon approach informed this, but the keycaps/arrows were drawn for this game without copying outside assets. SDK and native 400 × 240 jump/cannon views confirmed both rows and right-side actions aligned within bounds. The lower HUD remains precached; gameplay and bindings are unchanged.
+
 参考了 Playdate 开发者分享的 16 像素输入图标做法，本次键帽与箭头按游戏现有风格自行绘制，未复制外部图标素材。SDK 构建通过，并在原生 400×240 模拟器导出图中检查了跳跃关和炮台状态：两行图标、功能文字和右侧动作均对齐且未越界。底栏仍然预先缓存，玩法和按键功能不变。
+
+---
+
+<a name="entry-37"></a>
+
+## 0.7.7: Road-coordinate steering, with the current grip as neutral
 
 ## 0.7.7：按道路坐标控球，并用当前握姿作为中心
 
+I clarified that a rightward device action should follow the map's right axis: down-right on screen, including the overhead arrow. Players should not need a down-right device action to move along that road. Forward maps to screen upper-right, and the other directions follow consistently.
+
 我进一步明确了方向的含义：设备向右操作时，球应该沿地图自身的右方向走。地图是斜视角，所以画面上实际表现为右下，头顶箭头也应该指向右下；不应为了沿道路向右走而要求我把设备同时往右下操作。向前则映射为画面的右上，其他方向同理。
+
+I also changed the flat-only requirement. Each course should ask for a comfortable still grip and use that angle as neutral, then detect relative tilts. Changing posture should not require permanent table-level holding; DOWN can recalibrate.
 
 我也改变了之前必须平放的设定。我希望能以舒服的姿势握着玩，每进入一关先保持不动，把当时的角度作为中心，再相对这个中心前后左右翻动。这样换姿势后不必始终保持设备与桌面平行，必要时仍可按 DOWN 重新校准。
 
+Input changed from screen to world directions, sharing an isometric projection between ball, HUD, and overhead arrow. Calibration needs about 0.8 seconds of continuous stability; significant motion or unusual acceleration restarts it. Recorded gravity defines perpendicular axes, with a fallback reference for side grips to avoid near-zero division. Existing inertia, slope gravity, and opposing-force rules remain.
+
 这次把输入从屏幕方向改成世界方向，球、HUD 和头顶箭头共用同一套等轴投影。校准采用约 0.8 秒的连续稳定采样，明显移动或加速度异常会重新计时；根据记录的重力方向建立两个垂直方向，侧立时切换备用基准，避免除以接近零的数。已有惯性、坡面重力和反向施力规则保留。
 
+Tutorial devices had merely leaned in the screen plane rather than flipping in depth. Existing art now produces seven perspective frames for each of four directions: side flips change near/far widths, and forward/back flips narrow upper/lower edges. Runtime plays prepared images rather than calculating perspective. Results use isometric stone roads and matching arrows.
+
 我指出教学设备原来只是在屏幕平面里左右歪斜，不像真实翻动。现在使用原有设备插画制作四个方向各七帧的透视图：左右翻动有左右近大远小变化，前后翻动有上下边收窄变化。运行时只播放预先生成的图，不逐帧计算透视。右侧示范改成斜视角石路，箭头与实际游戏一致。
+
+Checks and corrections:
+- Calibration accepts stable flat, angled, upright, sideways, and face-down vectors, but cannot finish while moving.
+- Each course calibrates before tutorials so viewing instruction cannot accidentally complete calibration.
+- Older regressions assumed immediate jumping. They now wait for calibration/cooldown and separately assert course-entry calibration.
+- Missing graphics-library references interrupted perspective export; restoring them produced all 28 frames.
+- Lift detection at this stage followed calibrated gravity; angled/upright/side pulses were added to automated checks. A remains an alternative to lifting the whole device.
 
 检查和修正记录：
 - 校准不再只接收平放，而是接收平放、斜握、竖握、侧握及倒扣时的稳定向量；移动期间不得完成校准。
@@ -559,27 +1545,67 @@ SDK 构建及包含旧版功能的回归检查通过，模拟器导出检查了�
 - 透视素材导出遇到绘图库依赖缺失，补齐系统绘图库引用后生成全部 28 帧。
 - 上抬检测跟随校准时的重力方向，斜握、竖握和侧握时的上抬脉冲均加入自动检查。设备保持当前握姿、整体上移，A 仍作为跳跃替代。
 
+SDK/regressions passed, with native four-direction flips and road arrows reviewed. Installation found no device, leaving hardware handling and installation unconfirmed. An accelerometer cannot detect rotation about gravity and cannot guarantee recognition of every gesture in every posture.
+
 SDK 构建与回归检查通过，模拟器按 400×240 检查了四方向翻动及道路箭头。安装尝试未检测到 Playdate，因此本轮真机手感和安装尚未确认。加速度计不能感知绕重力轴原地旋转，也不能保证识别所有握姿下的任意手势，这个硬件限制仍然存在。
+
+---
+
+<a name="entry-38"></a>
+
+## 0.7.6: Use Left and Right as accessible help
 
 ## 0.7.6：把左右键变成随时可用的帮助入口
 
+I confirmed Left/Right functions and wanted their purposes visible in the lower control slots. Left replays current-course instruction; Right shows goals and mechanism information.
+
 我确认把左右键的用途加进去，并要求在底部操作槽里明确告诉玩家每个键能做什么。左键重看本关操作教学，右键查看本关目标和机关说明。
+
+The two-row HUD keeps map, recalibration, and jump above, changing to crank/fire/release at machinery; LEFT Help and RIGHT Goal remain below. Help replays only relevant instruction, not the opening story. A advances and B returns. Goal pages cover routes, checkpoints, jumps, and machinery; A/Right advances, Left goes back, and B resumes play.
 
 底栏改为两行，上排保留地图、重新校准与跳跃，进入机关后显示摇柄、发射和退出；下排始终显示 LEFT Help 与 RIGHT Goal。帮助只重播当前关卡相关的操作和机制，不重复开场故事。A 进入下一段，B 立即返回；目标页可以逐页查看路线、检查点、跳跃规则和机关，A 或右键翻到下一页，左键返回上一页，B 回到游戏。
 
+Help must not disturb the game. Opening pauses physics, time, and machinery; closing retains position, velocity, and docking. Cannon checks ensure crank input is consumed without changing aim, B closes Help without undocking, and A turns pages without firing/jumping. All 17 courses use tilt-game explanations, not old crank-acceleration or charge text.
+
 我希望查看说明不会破坏正在玩的状态，因此打开后暂停物理、计时和机关，关闭后保留位置、速度和吸附状态。验证中特别检查了炮台：查看期间摇柄输入被消耗但不改变瞄准角，B 只关闭说明，不同时退出炮台；A 翻页也不会误发射或跳跃。所有 17 关都有与倾斜版一致的说明，不沿用旧版本的摇柄加速或蓄力文字。
+
+SDK, existing regressions, and new help replay, goal paging, pause/resume, and cannon-input checks passed. Native views checked goals and lower hints. No device was enumerated, so hardware installation remained incomplete.
 
 SDK 构建、原有回归检查及新增的帮助重播、目标翻页、暂停恢复和炮台输入检查通过。在原生 400×240 模拟器导出图中检查了目标页面和底部两行提示。设备枚举未检测到 Playdate，本次真机安装尚未完成。
 
+Later connection record: USB reconnection found COM4; 0.7.6 copied and ejected successfully and received a launch command. Restored GitHub browser authentication allowed tags 0.7.0–0.7.6 to upload. Remote main also contained control-variant changes, which were retained and merged before synchronization.
+
 后续连接记录：重新插入 USB 后检测到 COM4，0.7.6 安装复制与磁盘弹出成功，并已发送启动指令。GitHub 浏览器认证恢复后，倾斜版 0.7.0–0.7.6 标签上传成功；主分支发现远端另有控制变体修改，保留并合并这些提交后继续同步。
+
+---
+
+<a name="entry-39"></a>
+
+## 0.7.5: Explain the action accurately, then polish the interface
 
 ## 0.7.5：让教学准确表达动作，再打磨界面
 
+The tutorials moved but did not explain clearly. Two disconnected starting boards prematurely suggested jumping; the second image's ball drifted without cause. Device size, captions, and machinery positions varied. Basic instruction should show an intact road to the finish, reserving gaps for jumping and illustrating a level-held device moving upward as a whole.
+
 我发现原来的教学虽然会动，但没有把事情讲清楚。开场两块断开的板让人提前联想到跳跃，第二张图的球又会无缘无故向前飘；设备图标的大小、字幕与机关的位置也不统一。我希望基础教学只解释沿完整道路到终点，把缺口留到跳跃教学，再用保持平放、整体快速上抬的设备动作解释跳跃。
+
+Ten tutorials now use fixed regions for heading, brief text, input, result, phase, and buttons. The opening uses three stills on one complete road rather than unexplained sliding. Four-direction demonstrations use connected motion paths. Jumping keeps one level pose, translates the device vertically, and sends the ball across a gap at the corresponding time. Barriers, floors, ferries, rotating platforms, bridges, and cannons distinguish waiting, action, and result.
 
 这次把十种教学重排为固定分区：标题、短说明、操作示范、游戏结果、阶段提示和按钮各自占用独立位置。开场用一条完整石路上的三张定格图，避免不明原因的滑动；四方向示范采用相接的运动路径；跳跃示范中设备保持同一个平放姿态，只上下平移，球在相应时刻越过缺口并落到道路上。挡板、消失地板、渡船、旋转平台、转桥和大炮也明确区分等待、操作和结果。
 
+Four original illustrations—front device, level device, hamster ball, and finish emblem—became five transparent monochrome runtime assets. Device/ball art serves tutorials, the level device calibration, and hamster/finish emblems failure, success, and journey completion. The title stays unchanged. The map keeps its clear marker system; other screens are reviewed individually.
+
 我希望界面素材更统一，因此增加正面设备、平放设备、仓鼠球和终点徽章四张原始插画，转换成五张透明黑白运行素材。设备和仓鼠球用于教学；平放设备用于校准；仓鼠和终点徽章用于失败、通关与旅程结束。首页保持原样。地图保持原来清楚的标识体系，其他页面逐页检查。
+
+Findings and corrections:
+- The opening broken bridge conveyed the wrong learning order; only relevant lessons retain gaps.
+- Captions and animation shared space. Fixed columns and a separate caption line, with shorter sentences, remove collisions.
+- A thick turning-bridge line looked like a thin rod. An enclosed board with side thickness and a tighter rotation range leaves caption space.
+- Direction changes jumped between ball positions; continuous left/right and up/down paths replace them.
+- Cannon instruction used a static muzzle. Three cached views now show adjustment.
+- START covered a co-located cannon. World view uses the mechanism sign while the map retains start.
+- Course names could collide with the timer. Name width is bounded; live timing uses whole seconds, with decimals retained in results.
+- The first check package built before image conversion finished and lacked the completion emblem. Rebuilding after asset completion restored export.
 
 本轮发现与修正记录：
 - 开场的断桥表达了错误的玩法顺序，改成贯通的道路；缺口只保留在相关机制中。
@@ -591,24 +1617,54 @@ SDK 构建、原有回归检查及新增的帮助重播、目标翻页、暂停�
 - 游戏 HUD 的关卡名与计时区可能挤在一起，限制名称宽度；实时计时显示整秒，结算继续保留小数精度。
 - 首次视觉检查包在图片转换尚未全部结束时构建，缺少完成徽章素材，导出中断；等待素材完整后重建并重新导出。
 
+Lift detection also gained near-level and lateral-pulse limits at this stage. An accelerometer measures acceleration, not travel distance, and cannot distinguish all vibrations, so A jumping remains. Automated checks cover one level-lift trigger, rejection of upright/strong lateral shakes, and re-triggering after cooldown. Real thresholds still need hardware.
+
 抬手检测同步加入接近平放与横向脉冲限制。加速度计检测的是加速度，并不知道设备在空间中移动了多远，也不能绝对区分所有震动；因此保留 A 键跳跃。自动检查验证平放上抬脉冲只触发一次、竖直或明显横甩不触发、冷却后能再次触发。实际手势阈值仍需真机验证。
+
+SDK and 17-course regressions passed. The Simulator exported six phases of each of ten lessons plus calibration, failure, success, completion, and other pages for native-size review. Updated lessons replay only once, preserving scores/progress. No device was detected; installation and feel were not verified.
 
 验证记录：SDK 构建和 17 关回归检查通过。模拟器导出了十种教学各六个阶段，以及校准、失败、通关、完成和其他页面，按 400×240 尺寸检查版面。新教学只在更新后重新展示一次，保留成绩和关卡进度。安装尝试暂未检测到设备，不能视为真机安装或手感验证完成。
 
+---
+
+<a name="entry-40"></a>
+
+## 0.7.4: Make tilt direction visible
+
 ## 0.7.4：让倾斜方向直接可见
+
+Feel alone made it hard to judge input, so I requested an arrow above the ball for visible correction. I wanted the same monochrome pixel language as map and checkpoint signs.
 
 我觉得只靠手感很难判断倾斜是否正确，因此希望在仓鼠球头上放一个方向箭头，能一边看一边修正。我喜欢地图和检查点路牌的表现，希望新的提示也用一致的黑白像素语言。
 
+A white circular sign with a black outline connects above the ball. Its arrow shows tilt-generated force, not existing motion. Larger tilt lengthens it; neutral shows a center dot. During opposing correction, it immediately shows reverse force even while momentum continues forward. It hides when docked, falling, calibrating, or viewing tutorials to avoid conflicting with mechanism commands.
+
 这次增加带黑色边框和白色底的圆形指示牌，通过短线连接球的上方。箭头显示当前倾斜产生的推力方向，而不是球已有的运动方向；倾斜越大箭头越长，平放时显示中心圆点。因此反向修正时，即使球还沿原方向滑动，也能立刻看出反向推力已经生效。吸附到机关、掉落、校准和教学期间不显示，避免与机关指令混淆。
+
+Left/Right additions were deferred while directional feedback was checked. Map and Recenter remain. SDK/regressions passed, and an isolated Simulator package exported native directional and neutral views. A few lines, circles, and triangles add no per-frame image allocation.
 
 左右键的额外用途暂不加入，本次先验证头顶方向反馈。已有地图和重新校准按键保持原样。SDK 构建与现有回归检查通过，使用独立模拟器检查包导出了原生尺寸的有方向和中立状态画面；绘制仅使用少量线条、圆和三角形，没有增加逐帧图片分配。
 
+---
+
+<a name="entry-41"></a>
+
+## 0.7.3: Flat should be neutral
+
 ## 0.7.3：平放才是控球的零点
+
+During play, the ball stopped only when the device stood upright—the opposite of the tabletop rolling feel I wanted. Face-up flat should apply no propulsion; tilt should push in that direction. Tilting right after leftward acceleration should first reduce momentum, then bring the ball back.
 
 我在试玩时发现，设备必须竖起来球才不动，这与我想要的桌面滚球感觉相反。我希望屏幕朝上平放时没有推动力，向哪边倾斜就往哪边滚；向左加速后，向右倾斜应该逐渐抵消惯性，再把球带回来。
 
+The old calibration treated every still posture, including upright, as neutral. This version fixed neutral to face-up flat with only small sensor-bias correction. Calibration required about 0.8 seconds flat and still, rejecting upright, sideways, face-down, and substantial tilt, with an explicit tabletop instruction.
+
 问题来自旧校准：它把任何静止姿势都当作零点，包括竖直握持。这次把零点固定为屏幕朝上平放，只允许很小的传感器偏差修正。校准需要平放静置约 0.8 秒，竖直、侧立、倒扣和明显倾斜都会被拒绝，提示也明确要求放到桌面上。
 
+I kept force separate from speed: tilt applies force, with no extra reverse-braking bonus at this stage. Returning flat stops active propulsion without deleting velocity or slope gravity, preserving anticipation and countersteering.
+
 我保留了力度与速度的区别：倾斜施加推力，反向倾斜没有额外刹车加成；重新平放只停止主动推进，不抹掉已有速度或斜坡重力。这样才能保留提前控制速度和反向修正的过程。
+
+Added checks cover flat zero input, four screen directions, rejected poses, bias limits, and reversing only after slowing. All passed alongside the 17-course regressions and SDK build. COM4 installation, copy, and eject succeeded; launch was sent and echoed in serial logs with no runtime errors shown. Handheld tilt and lift feel still need confirmation: installation is not handling validation.
 
 检查记录：新增平放零输入、四个屏幕方向、错误姿势拒绝校准、微小偏差边界，以及反向倾斜先减速后反向的自动检查，连同原有 17 关检查全部通过。SDK 构建成功；通过 COM4 将 0.7.3 安装到真机，复制和弹出均成功，启动指令已发出并在串口日志中收到回显。日志没有显示运行错误；实际倾斜手感和抬手跳跃仍需要手持真机验证，安装成功不等于手感已经验证。
