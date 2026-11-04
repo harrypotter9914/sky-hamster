@@ -54,9 +54,9 @@ For a quick visit, **Settings → hold A+B about 2.5 seconds** enables temporary
 
 My focus was input mapping, momentum/recovery, mechanism rules, course sequencing, tutorials, feedback, and visual direction. Implementation, art production, recording, and testing used tool assistance; [credits](CREDITS.md) distinguish those contributions.
 
-- **Learnable controls:** stranger playtests led to stronger opposing braking; I then restored most acceleration when softer input required an uncomfortable lean. [Decision](experiments/tilt-adventure/REFLECTION.md#entry-08).
-- **Readable contact:** an upright spring became a low elastic ring matching lateral rebound to its visible surface; expansion stays visual-only. [Decision](experiments/tilt-adventure/REFLECTION.md#entry-16).
-- **Hardware trade-offs:** prebaked fixed art and camera-near road images reduce runtime work, with collision ready first. Measurements and remaining slow scenes are retained. [Decision](experiments/tilt-adventure/REFLECTION.md#entry-12).
+- **Learnable controls:** stranger playtests led to stronger opposing braking; I then restored most acceleration when softer input required an uncomfortable lean. [Decision](experiments/tilt-adventure/REFLECTION.md#user-content-entry-08).
+- **Readable contact:** an upright spring became a low elastic ring matching lateral rebound to its visible surface; expansion stays visual-only. [Decision](experiments/tilt-adventure/REFLECTION.md#user-content-entry-16).
+- **Hardware trade-offs:** prebaked fixed art and camera-near road images reduce runtime work, with collision ready first. Measurements and remaining slow scenes are retained. [Decision](experiments/tilt-adventure/REFLECTION.md#user-content-entry-12).
 
 ## Read the process or the source
 

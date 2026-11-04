@@ -29,8 +29,8 @@ English precedes the corresponding Chinese paragraph, list item, or table row. O
   [0.5.6 — 分块不必然更快](performance-v0.5.6.md)：区分输入丢失与力度不足，比较缓存。
 - [0.5.7 — Allocation spikes](performance-v0.5.7.md): sustained inputs, GC evidence, reused workspaces.
   [0.5.7 — 分配尖峰](performance-v0.5.7.md)：持续输入、GC 证据与工作区复用。
-- [Later hardware preparation and loading](../experiments/tilt-adventure/REFLECTION.md#entry-12): collision first, images near the camera.
-  [后期硬件准备与加载](../experiments/tilt-adventure/REFLECTION.md#entry-12)：碰撞先就绪，图像围绕相机准备。
+- [Later hardware preparation and loading](../experiments/tilt-adventure/REFLECTION.md#user-content-entry-12): collision first, images near the camera.
+  [后期硬件准备与加载](../experiments/tilt-adventure/REFLECTION.md#user-content-entry-12)：碰撞先就绪，图像围绕相机准备。
 
 ## How to read dates and authorship / 时间与署名说明
 

@@ -28,6 +28,6 @@ These paths are the current tilt game; root `source/` is historical.
 
 ## Hardware constraints → staged preparation
 
-Fixed native art prebakes with source fingerprints. Collision prepares first; nearby road images use bounded retention. Loading yields to avoid the watchdog. See [asset rebuild](../experiments/tilt-adventure/art/RUNTIME-v0.12.2.md), [validation](../experiments/tilt-adventure/VALIDATION-v0.12.2.md), and [a rejected optimization](../experiments/tilt-adventure/REFLECTION.md#entry-11): binary search was reverted when hardware benefit was negligible.
+Fixed native art prebakes with source fingerprints. Collision prepares first; nearby road images use bounded retention. Loading yields to avoid the watchdog. See [asset rebuild](../experiments/tilt-adventure/art/RUNTIME-v0.12.2.md), [validation](../experiments/tilt-adventure/VALIDATION-v0.12.2.md), and [a rejected optimization](../experiments/tilt-adventure/REFLECTION.md#user-content-entry-11): binary search was reverted when hardware benefit was negligible.
 
 Source/tests do not establish manual completion of every route. [Evidence and limitations](RELEASE.md).

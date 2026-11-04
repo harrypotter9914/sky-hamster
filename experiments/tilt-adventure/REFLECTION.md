@@ -16,48 +16,48 @@ These first-person reflections record Yibo Wang’s design decisions and observa
 
 ## Contents / 目录
 
-- [2026-10-21: Let players with limited time reach the later mechanisms](#entry-00) / 2026-10-21：让时间有限的玩家也能体验后期机制
-- [0.12.12: Controls in one row need a shared center](#entry-01) / 0.12.12：同一行里的控件要有共同的中心
-- [0.12.11: Menus should work in context; developer access should stay hidden](#entry-02) / 0.12.11：菜单要在当前场景能用，开发入口仍要隐藏
-- [0.12.10: Shortcut names alone do not teach when to use them](#entry-03) / 0.12.10：快捷键不能只给名字，不告诉玩家什么时候用
-- [0.12.9: The public download must withstand a hardware check](#entry-04) / 0.12.9：公开下载的文件也必须经得起真机检查
-- [0.12.9: The background should look finished, too](#entry-05) / 0.12.9：背景也应该像完成的游戏
-- [0.12.8: Make the choice legible, then turn progress into a journey](#entry-06) / 0.12.8：先让玩家看懂选择，再让进度形成旅程
-- [0.12.7: Updating on another device must not lose the playtest entry point](#entry-07) / 0.12.7：换设备更新，不能把新试玩入口弄丢
-- [0.12.6: A small adjustment should not make the screen hard to see](#entry-08) / 0.12.6：微调应该是一点点，不能让人看不清屏幕
-- [0.12.5: Let unfamiliar players control the ball before challenging the machinery](#entry-09) / 0.12.5：让陌生玩家先控制住球，再挑战机关
-- [0.12.4: Wind direction should shape route decisions, not just decorate them](#entry-10) / 0.12.4：风向应该影响路线选择，而不只是摆设
-- [0.12.3: Reviews should combine skills, not repeat the same road](#entry-11) / 0.12.3：复习应该组合技能，而不是重复同一条路
-- [0.12.2: Avoiding crashes must not mean a long wait](#entry-12) / 0.12.2：不能把避免崩溃变成长时间等待
-- [0.12.1: A restart error must be treated as a crash](#entry-13) / 0.12.1：报错重启必须按崩溃来处理
-- [0.12.0: The ending should test everything learned along the way](#entry-14) / 0.12.0：结尾应该考验一路学过的全部玩法
-- [0.11.0: I need to know when I can cross, not guess at a tiny seam](#entry-15) / 0.11.0：我要知道什么时候能走，而不是猜那条细缝
-- [0.10.12: The rebound contact must be readable](#entry-16) / 0.10.12：反弹的位置必须能看懂
-- [0.10.11: The spring must work from every approach](#entry-17) / 0.10.11：弹簧必须从任何方向都成立
-- [0.10.10: The upper HUD should belong to the game](#entry-18) / 0.10.10：顶部也要像游戏的一部分
-- [0.10.9: Simple courses cannot represent the whole game](#entry-19) / 0.10.9：不能只拿简单关卡代表整款游戏
-- [0.10.8: Spatial relationships must hold up on screen](#entry-20) / 0.10.8：空间关系要在画面里成立
-- [0.10.7: Machinery must actually meet the roads](#entry-21) / 0.10.7：机关必须真正接得上道路
-- [0.10.6: Moving machinery should look mechanical](#entry-22) / 0.10.6：移动机关也应该像真正的机械
-- [0.10.5: Check the sounds individually on hardware](#entry-23) / 0.10.5：把声音放到真机上逐个检查
-- [0.10.4: Machinery should sound distinct, and waiting should belong to this game](#entry-24) / 0.10.4：机关要听得出区别，等待也要属于这个游戏
-- [0.10.3: A complete game begins in the device launcher](#entry-25) / 0.10.3：从真机菜单开始就像一个完整游戏
-- [Version-number cleanup](#entry-26) / 版本编号整理
-- [0.10.2: Easier jump activation, slightly more forgiving control](#entry-27) / 0.10.2：跳跃更容易触发，控球只放宽一点点
-- [0.10.1: Keep the effect, remove repeated work](#entry-28) / 0.10.1：保留效果，把重复工作减掉
-- [0.10.0: Make machinery look like machinery](#entry-29) / 0.10.0：让机关看起来像真正的机关
-- [0.9.0: Lifts are only one example; keep adding gameplay differences](#entry-30) / 0.9.0：升降台只是其中一种，继续增加玩法差异
-- [0.8.0: Connect individual interactions into a complete journey](#entry-31) / 0.8.0：把单个玩法串成一段完整旅程
-- [0.7.0: Let the whole Playdate participate in control](#entry-32) / 0.7.0：让整台 Playdate 参与控球
-- [0.7.1: Make the artwork and interface one game](#entry-33) / 0.7.1：让画面和界面成为同一个游戏
-- [0.7.2: Road materials, wooden menus, and animated instruction](#entry-34) / 0.7.2：道路材质、木牌菜单与动画教学
-- [0.7.9: Jump relative to the current device, retain landing momentum](#entry-35) / 0.7.9：跳跃跟随当前设备方向，落地保留惯性
-- [0.7.8: Align keys separately from their functions](#entry-36) / 0.7.8：让底栏的按键与功能分别对齐
-- [0.7.7: Road-coordinate steering, with the current grip as neutral](#entry-37) / 0.7.7：按道路坐标控球，并用当前握姿作为中心
-- [0.7.6: Use Left and Right as accessible help](#entry-38) / 0.7.6：把左右键变成随时可用的帮助入口
-- [0.7.5: Explain the action accurately, then polish the interface](#entry-39) / 0.7.5：让教学准确表达动作，再打磨界面
-- [0.7.4: Make tilt direction visible](#entry-40) / 0.7.4：让倾斜方向直接可见
-- [0.7.3: Flat should be neutral](#entry-41) / 0.7.3：平放才是控球的零点
+- [2026-10-21: Let players with limited time reach the later mechanisms](#user-content-entry-00) / 2026-10-21：让时间有限的玩家也能体验后期机制
+- [0.12.12: Controls in one row need a shared center](#user-content-entry-01) / 0.12.12：同一行里的控件要有共同的中心
+- [0.12.11: Menus should work in context; developer access should stay hidden](#user-content-entry-02) / 0.12.11：菜单要在当前场景能用，开发入口仍要隐藏
+- [0.12.10: Shortcut names alone do not teach when to use them](#user-content-entry-03) / 0.12.10：快捷键不能只给名字，不告诉玩家什么时候用
+- [0.12.9: The public download must withstand a hardware check](#user-content-entry-04) / 0.12.9：公开下载的文件也必须经得起真机检查
+- [0.12.9: The background should look finished, too](#user-content-entry-05) / 0.12.9：背景也应该像完成的游戏
+- [0.12.8: Make the choice legible, then turn progress into a journey](#user-content-entry-06) / 0.12.8：先让玩家看懂选择，再让进度形成旅程
+- [0.12.7: Updating on another device must not lose the playtest entry point](#user-content-entry-07) / 0.12.7：换设备更新，不能把新试玩入口弄丢
+- [0.12.6: A small adjustment should not make the screen hard to see](#user-content-entry-08) / 0.12.6：微调应该是一点点，不能让人看不清屏幕
+- [0.12.5: Let unfamiliar players control the ball before challenging the machinery](#user-content-entry-09) / 0.12.5：让陌生玩家先控制住球，再挑战机关
+- [0.12.4: Wind direction should shape route decisions, not just decorate them](#user-content-entry-10) / 0.12.4：风向应该影响路线选择，而不只是摆设
+- [0.12.3: Reviews should combine skills, not repeat the same road](#user-content-entry-11) / 0.12.3：复习应该组合技能，而不是重复同一条路
+- [0.12.2: Avoiding crashes must not mean a long wait](#user-content-entry-12) / 0.12.2：不能把避免崩溃变成长时间等待
+- [0.12.1: A restart error must be treated as a crash](#user-content-entry-13) / 0.12.1：报错重启必须按崩溃来处理
+- [0.12.0: The ending should test everything learned along the way](#user-content-entry-14) / 0.12.0：结尾应该考验一路学过的全部玩法
+- [0.11.0: I need to know when I can cross, not guess at a tiny seam](#user-content-entry-15) / 0.11.0：我要知道什么时候能走，而不是猜那条细缝
+- [0.10.12: The rebound contact must be readable](#user-content-entry-16) / 0.10.12：反弹的位置必须能看懂
+- [0.10.11: The spring must work from every approach](#user-content-entry-17) / 0.10.11：弹簧必须从任何方向都成立
+- [0.10.10: The upper HUD should belong to the game](#user-content-entry-18) / 0.10.10：顶部也要像游戏的一部分
+- [0.10.9: Simple courses cannot represent the whole game](#user-content-entry-19) / 0.10.9：不能只拿简单关卡代表整款游戏
+- [0.10.8: Spatial relationships must hold up on screen](#user-content-entry-20) / 0.10.8：空间关系要在画面里成立
+- [0.10.7: Machinery must actually meet the roads](#user-content-entry-21) / 0.10.7：机关必须真正接得上道路
+- [0.10.6: Moving machinery should look mechanical](#user-content-entry-22) / 0.10.6：移动机关也应该像真正的机械
+- [0.10.5: Check the sounds individually on hardware](#user-content-entry-23) / 0.10.5：把声音放到真机上逐个检查
+- [0.10.4: Machinery should sound distinct, and waiting should belong to this game](#user-content-entry-24) / 0.10.4：机关要听得出区别，等待也要属于这个游戏
+- [0.10.3: A complete game begins in the device launcher](#user-content-entry-25) / 0.10.3：从真机菜单开始就像一个完整游戏
+- [Version-number cleanup](#user-content-entry-26) / 版本编号整理
+- [0.10.2: Easier jump activation, slightly more forgiving control](#user-content-entry-27) / 0.10.2：跳跃更容易触发，控球只放宽一点点
+- [0.10.1: Keep the effect, remove repeated work](#user-content-entry-28) / 0.10.1：保留效果，把重复工作减掉
+- [0.10.0: Make machinery look like machinery](#user-content-entry-29) / 0.10.0：让机关看起来像真正的机关
+- [0.9.0: Lifts are only one example; keep adding gameplay differences](#user-content-entry-30) / 0.9.0：升降台只是其中一种，继续增加玩法差异
+- [0.8.0: Connect individual interactions into a complete journey](#user-content-entry-31) / 0.8.0：把单个玩法串成一段完整旅程
+- [0.7.0: Let the whole Playdate participate in control](#user-content-entry-32) / 0.7.0：让整台 Playdate 参与控球
+- [0.7.1: Make the artwork and interface one game](#user-content-entry-33) / 0.7.1：让画面和界面成为同一个游戏
+- [0.7.2: Road materials, wooden menus, and animated instruction](#user-content-entry-34) / 0.7.2：道路材质、木牌菜单与动画教学
+- [0.7.9: Jump relative to the current device, retain landing momentum](#user-content-entry-35) / 0.7.9：跳跃跟随当前设备方向，落地保留惯性
+- [0.7.8: Align keys separately from their functions](#user-content-entry-36) / 0.7.8：让底栏的按键与功能分别对齐
+- [0.7.7: Road-coordinate steering, with the current grip as neutral](#user-content-entry-37) / 0.7.7：按道路坐标控球，并用当前握姿作为中心
+- [0.7.6: Use Left and Right as accessible help](#user-content-entry-38) / 0.7.6：把左右键变成随时可用的帮助入口
+- [0.7.5: Explain the action accurately, then polish the interface](#user-content-entry-39) / 0.7.5：让教学准确表达动作，再打磨界面
+- [0.7.4: Make tilt direction visible](#user-content-entry-40) / 0.7.4：让倾斜方向直接可见
+- [0.7.3: Flat should be neutral](#user-content-entry-41) / 0.7.3：平放才是控球的零点
 
 <a name="entry-00"></a>
 
