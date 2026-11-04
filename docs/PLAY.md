@@ -4,7 +4,7 @@
 
 ## Download for Playdate
 
-Official release: **[Sky Hamster on itch.io](https://hajimi9914.itch.io/sky-hamster)**. Download `sky-hamster-v0.12.12.zip`, containing `sky-hamster-tilt.pdx`. This is not a Windows app or browser game.
+Official release: **[Sky Hamster on itch.io](https://hajimi9914.itch.io/sky-hamster)**. Download `sky-hamster-v0.12.12.zip`, containing `sky-hamster-tilt.pdx`. The identical file is also available in the [GitHub v0.12.12 release](https://github.com/harrypotter9914/sky-hamster/releases/tag/v0.12.12). This is not a Windows app or browser game.
 
 ### Wireless sideload
 

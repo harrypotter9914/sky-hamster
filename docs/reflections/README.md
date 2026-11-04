@@ -1,5 +1,9 @@
 [← Project home](../../README.md) · [Journal index / 日志目录](../JOURNAL.md)
 
+> Later index update — 2026-11-04: the continuing journal now includes v0.12.12. The older v0.12.7 reference below is preserved as the original index text.
+>
+> 后续目录更新 — 2026-11-04：后续日志现已包含 v0.12.12。下文的 v0.12.7 保留为原目录文字。
+
 # My design reflections
 
 # 我的设计心路历程

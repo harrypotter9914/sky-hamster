@@ -3,6 +3,7 @@
 **A tilt-and-crank rolling adventure for Playdate.** Guide a hamster in a glass ball along suspended stone roads, build momentum to cross gaps, and operate machinery to reach the finish without falling.
 
 **v0.12.12 · 53 courses · Single player · Playdate**
+
 **Designed by Yibo Wang / 王奕博** — game design, gameplay systems, interaction design, course progression, and creative direction.
 
 > **Playdate hardware is required for the intended released experience.** Steering and lift-to-jump use its accelerometer; the physical crank operates machinery. The `.pdx` download is not a browser game or native Windows executable. The SDK Simulator is a development preview, not a replacement for testing handheld controls.
@@ -23,7 +24,7 @@ Hold comfortably and still to calibrate each course. **Down / Recenter** makes t
 
 ![Simulator gameplay: approach, jump across the gap, and land on the receiving road.](media/jump.gif)
 
-Build enough speed, trigger a quick lift along the device's current screen normal—or use **A**—and correct the landing. Momentum continues in air and on landing; recovery prevents immediate repeated jumps. Early courses establish rolling first; later gaps change the run-up and exit.
+Build enough speed, quickly lift the whole device perpendicular to its screen—or use **A**—and correct the landing. Momentum continues in air and on landing; recovery prevents immediate repeated jumps. Early courses establish rolling first; later gaps change the run-up and exit.
 
 ### The crank changes the route beneath you
 

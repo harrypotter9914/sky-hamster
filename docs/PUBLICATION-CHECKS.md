@@ -17,4 +17,11 @@
 
 ## Publication and visitor checks
 
-The final anonymous-access and visual review results are recorded here after deployment. The project keeps its existing repository address and Git history.
+- The existing repository is **public** at [harrypotter9914/sky-hamster](https://github.com/harrypotter9914/sky-hamster). About now describes tilt/crank gameplay and links the official itch.io page; eleven relevant Topics were set. The address and previous history are unchanged.
+- The latest GitHub release is [v0.12.12](https://github.com/harrypotter9914/sky-hamster/releases/tag/v0.12.12). Its ZIP was downloaded without authentication and matches the same SHA-256 above. Older releases remain historical archives.
+- Anonymous HTTP access verified the homepage, journal index, design log, changelog, early reflection, complete full-game journal, current engine source, all four showcase images, and both PDFs against local content. No account permissions are needed.
+- A fresh, unsigned-in browser context rendered the actual GitHub page at **1366-pixel desktop** and **430-pixel narrow** widths. All four visible images loaded. The entire README was inspected in full-size overlapping regions, including image proportions, wrapping links, text hierarchy, and the deep-reading table. The bilingual 0.3 record was also visually reviewed in GitHub's rendered preview.
+- English/Chinese correspondence was checked against the translation units and original source, not inferred solely from the presence of both languages. Historical control schemes remain explicitly separated from the current release.
+- The published changes received a second history scan: 92 reachable commits, 6,198 blobs, no matching credential patterns. Later publication-verification edits contain documentation only. No history rewrite or credential revocation was required by the findings.
+
+No new physical-device testing is claimed for this documentation/publication pass; the historical release records above retain their original scope.

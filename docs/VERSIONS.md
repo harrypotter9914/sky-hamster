@@ -1,5 +1,9 @@
 [← Project home](../README.md) · [Journal index / 日志目录](JOURNAL.md)
 
+> Current-status note — 2026-11-04: v0.12.12 uses build 62. The references to build 48 and nine variants below describe the earlier numbering cleanup; the current comparison collection has eight variants. Original statements are retained as history.
+>
+> 当前状态补充 — 2026-11-04：v0.12.12 使用 build 62。下文的 build 48 与九个变体描述当时的编号整理；当前比较合集保留八个变体。原句作为历史保留。
+
 # Full-game version table
 
 # 完整版版本总表
