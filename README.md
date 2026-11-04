@@ -2,6 +2,8 @@
 
 Playdate 单人控球原型，Lua 编写。游戏设计：Wang Yibo。
 
+[观看英文玩法与操控介绍（2:59）](https://www.youtube.com/watch?v=iNOELVQz9kg)：倾斜、重新校准中心、摇柄机关与关卡流程。视频含英文旁白及字幕，画面录制于 Playdate Simulator。
+
 公开测试版已发布：[itch.io — Sky Hamster](https://hajimi9914.itch.io/sky-hamster)，免费，可自愿打赏。公开下载目前为 0.12.9，已完成最终真机自动复测；页面包含五张截图、四段玩法／操控 GIF、操作及侧载指南和来源说明。见 [发布记录](release/itch-v0.12.9/PUBLICATION.md)、[课程要求核对](docs/PUBLIC-RELEASE-CHECKS-v0.12.9.md) 与 [Credits](CREDITS.md)。
 
 当前开发／真机版本 **0.12.12** 修正设置页布局：选择框、图标、文字和右侧开关共享行中心，ON／OFF 和 ROAD／SCREEN 使用一致的按钮高度与宽度，增加行距避免相邻边框相碰。隐藏 A+B 开发入口、菜单行为与正常进度保留。见 [验证记录](experiments/tilt-adventure/VALIDATION-v0.12.12.md)。
